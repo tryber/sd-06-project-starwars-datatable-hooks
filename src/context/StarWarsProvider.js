@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import propTypes from 'prop-types';
 import fetchStarWars from '../services/API';
 import StarWarsContext from './StarWarsContext';
 
