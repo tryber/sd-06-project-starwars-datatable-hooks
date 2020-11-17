@@ -19,7 +19,7 @@ function StarWarsProvider({ children }) {
 }
 
 StarWarsProvider.propTypes = {
-  children: propTypes.arrayOf.isRequired,
+  children: propTypes.func.isRequired,
 };
 
 export default StarWarsProvider;
