@@ -1,27 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import StarWarsContext from './context/StarWarsContext';
+import Table from './components/Table';
 
 function App() {
+  const getApiPlanets = async () => {
+    const responseApi = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
+    const dados = await responseApi.json();
+    const Planets = await dados.results
+      .map((item) => {
+        delete item.residents;
+        return item;
+      });
+    return Planets;
+  };
+
+  const data = getApiPlanets();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={ logo } className="App-logo" alt="logo" />
-        <p>
-          Edit
-          <code>src/App.js</code>
-          and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <StarWarsContext.Provider value={ data }>
+      <header>
+        Star Wars Planets
       </header>
-    </div>
+      <Table />
+    </StarWarsContext.Provider>
   );
 }
 
