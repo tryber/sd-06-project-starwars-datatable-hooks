@@ -17,6 +17,7 @@ const PlanetRow = ({ planet }) => {
     edited,
     url,
   } = planet;
+
   return (
     <tr>
       <td>{name}</td>
