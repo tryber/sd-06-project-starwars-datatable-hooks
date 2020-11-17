@@ -5,8 +5,8 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-     pagina inicial
-     <table />
+      pagina inicial
+      <table />
     </div>
   );
 }
