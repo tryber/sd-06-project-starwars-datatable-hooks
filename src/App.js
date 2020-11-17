@@ -1,12 +1,13 @@
 import React from 'react';
 import './App.css';
-import ApiProvider from './contexts/providers/ApiProvider';
+import PlanetsTable from './components/PlanetsTable';
+import StarWarsProvider from './contexts/providers/StarWarsProvider';
 
 function App() {
   return (
-    <ApiProvider>
-      teste
-    </ApiProvider>
+    <StarWarsProvider>
+      <PlanetsTable />
+    </StarWarsProvider>
   );
 }
 
