@@ -11,46 +11,60 @@ function Table() {
   return (
     <table>
       <tr>
-        <td>Name
+        <td>
+          Name
           {data.map((planet) => <tr>{ planet.name }</tr>)}
         </td>
-        <td>Rotation Period
+        <td>
+          Rotation Period
           {data.map((planet) => <tr>{ planet.rotation_period }</tr>)}
         </td>
-        <td>Orbital Period
+        <td>
+          Orbital Period
           {data.map((planet) => <tr>{ planet.orbital_period }</tr>)}
         </td>
-        <td>Diameter
+        <td>
+          Diameter
           {data.map((planet) => <tr>{ planet.diameter }</tr>)}
         </td>
-        <td>Climate
+        <td>
+          Climate
           {data.map((planet) => <tr>{ planet.climate }</tr>)}
         </td>
-        <td>Gravity
+        <td>
+          Gravity
           {data.map((planet) => <tr>{ planet.gravity }</tr>)}
         </td>
-        <td>Terrain
+        <td>
+          Terrain
           {data.map((planet) => <tr>{ planet.terrain }</tr>)}
         </td>
-        <td>Surface Water
+        <td>
+          Surface Water
           {data.map((planet) => <tr>{ planet.surface_water }</tr>)}
         </td>
-        <td>Population
+        <td>
+          Population
           {data.map((planet) => <tr>{ planet.population }</tr>)}
         </td>
-        <td>Residents
+        <td>
+          Residents
           {data.map((planet) => <tr>{ planet.residents }</tr>)}
         </td>
-        <td>Films
+        <td>
+          Films
           {data.map((planet) => <tr>{ planet.films }</tr>)}
         </td>
-        <td>Created
+        <td>
+          Created
           {data.map((planet) => <tr>{ planet.created }</tr>)}
         </td>
-        <td>Edited
+        <td>
+          Edited
           {data.map((planet) => <tr>{ planet.edited }</tr>)}
         </td>
-        <td>URL
+        <td>
+          URL
           {data.map((planet) => <tr>{ planet.url }</tr>)}
         </td>
       </tr>
