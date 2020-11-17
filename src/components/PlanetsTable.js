@@ -4,7 +4,6 @@ import PlanetsTableBody from './PlanetsTableBody';
 
 function PlanetsTable() {
   const { currentPlanets, tableHeaders } = useContext(StarWarsContext);
-
   return (
     <main>
       <table>
