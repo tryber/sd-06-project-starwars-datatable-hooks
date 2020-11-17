@@ -7,7 +7,7 @@ function Provider({ children }) {
   const [data, setData] = useState(['']);
   useEffect(() => {
     const requestAPI = async () => {
-      setData(await starWarsAPI);
+      setData(await starWarsAPI());
     };
     requestAPI();
   }, []);
@@ -23,7 +23,7 @@ function Provider({ children }) {
 }
 
 Provider.propTypes = {
-  children: PropTypes.arrayOf(Object).isRequired,
+  children: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default Provider;
