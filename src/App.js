@@ -1,14 +1,17 @@
 import React from 'react';
-
-import Table from './components/Table';
+import Provider from './context/Provider';
+import { Table, Header } from './components';
 
 import './css/App.css';
 
 function App() {
   return (
-    <div className="App">
-      <Table />
-    </div>
+    <Provider>
+      <Header />
+      <section className="App">
+        <Table />
+      </section>
+    </Provider>
   );
 }
 

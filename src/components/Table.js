@@ -1,17 +1,24 @@
-import React, { useState, useEffect } from 'react';
-
+import React, { useContext, useEffect } from 'react';
 import fetchPlanets from '../services/api';
+import starContext from '../context/starContext';
 import Loading from './Loading';
+
 import '../css/Table.css';
 
 function Table() {
-  const [data, setData] = useState({});
-  const [isFetching, setIsFetching] = useState(true);
+  const {
+    isFetching,
+    setIsFetching,
+    setData,
+    filteredData,
+    setFilteredData,
+  } = useContext(starContext);
 
   useEffect(() => {
     const fetchData = async () => {
       const planets = await fetchPlanets();
       setData(planets);
+      setFilteredData(planets);
       setIsFetching(false);
     };
 
@@ -40,7 +47,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          { data.results.map((planet) => (
+          { filteredData.results.map((planet) => (
             <tr key={ planet.name }>
               <td>{ planet.name }</td>
               <td>{ planet.rotation_period }</td>
