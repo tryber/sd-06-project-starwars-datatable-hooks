@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import propTypes from 'prop-types';
 import StarWarsContext from './StarWarsContext';
 import fetchData from '../services/starWarsService';
-import propTypes from 'prop-types';
 
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
@@ -19,7 +19,7 @@ function StarWarsProvider({ children }) {
 }
 
 StarWarsProvider.propTypes = {
-  childen: propTypes.arrayOf.isRequired,
-}
+  children: propTypes.arrayOf.isRequired,
+};
 
 export default StarWarsProvider;

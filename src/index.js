@@ -6,6 +6,6 @@ import StarWarsProvider from './context/StarWarsProvider';
 ReactDOM.render(
   <StarWarsProvider>
     <App />
-  </StarWarsProvider>, 
-  document.getElementById('root')
+  </StarWarsProvider>,
+  document.getElementById('root'),
 );
