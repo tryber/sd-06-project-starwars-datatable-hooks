@@ -71,20 +71,28 @@ function PlanetProvider({ children }) {
     return unusedFilters;
   }, [filters]);
 
+  const usedFilters = useMemo(() => {
+    const filtersInUse = availableColumnFilters.filter((filter) => (
+      !availableFilters.includes(filter)
+    ));
+
+    return filtersInUse;
+  }, [availableFilters]);
+
   const filterPlanetsByName = useCallback((nameLike) => {
     const filteredPlanets = planetsData.filter((planet) => {
       const nameRegex = new RegExp(nameLike, 'i');
       const planetMatches = nameRegex.test(planet.name);
 
-      setFilters((oldFilters) => ({
-        ...oldFilters,
-        filterByName: { name: nameLike },
-      }));
-
       return planetMatches;
     });
 
     setPlanets(filteredPlanets);
+
+    setFilters((oldFilters) => ({
+      ...oldFilters,
+      filterByName: { name: nameLike },
+    }));
   }, [planetsData]);
 
   const filterByNumerics = useCallback(({ column, value, comparison }) => {
@@ -116,6 +124,38 @@ function PlanetProvider({ children }) {
     }));
   }, [filters.filterByNumericValues, planets]);
 
+  const removeFilter = useCallback((toRemoveColumn) => {
+    const newFilters = filters
+      .filterByNumericValues
+      .filter((oldFilter) => oldFilter.column !== toRemoveColumn);
+
+    const { filterByName: { name } } = filters;
+
+    // re-applying filters
+
+    const filteredPlanetsByName = planetsData.filter((planet) => {
+      const nameRegex = new RegExp(name, 'i');
+      const planetMatches = nameRegex.test(planet.name);
+
+      return planetMatches;
+    });
+
+    let filteredPlanetsByColumns = filteredPlanetsByName;
+
+    newFilters.forEach(({ column, comparison, value }) => {
+      filteredPlanetsByColumns = filteredPlanetsByColumns.filter((planet) => (
+        compareColumns(planet[column], comparison, value)
+      ));
+    });
+
+    setFilters((oldFilters) => ({
+      ...oldFilters,
+      filterByNumericValues: newFilters,
+    }));
+
+    setPlanets(filteredPlanetsByColumns);
+  }, [filters, planetsData]);
+
   return (
     <planetContext.Provider
       value={ {
@@ -124,8 +164,10 @@ function PlanetProvider({ children }) {
         planetInfo,
         nameFiltered,
         availableFilters,
+        usedFilters,
         filterPlanetsByName,
         filterByNumerics,
+        removeFilter,
       } }
     >
       {children}

@@ -1,4 +1,5 @@
 import React, { useCallback, useRef } from 'react';
+import { FiX } from 'react-icons/fi';
 
 import { usePlanets } from '../../hooks/planets';
 import { availableNumericComparisons } from '../../hooks/utils/numericComparison';
@@ -16,8 +17,10 @@ function Planets() {
     planetInfo,
     nameFiltered,
     availableFilters,
+    usedFilters,
     filterPlanetsByName,
     filterByNumerics,
+    removeFilter,
   } = usePlanets();
 
   const handleInputChange = useCallback(({ target }) => {
@@ -36,6 +39,8 @@ function Planets() {
       comparison,
       value,
     });
+
+    valueFilterRef.current.value = '';
   }, [filterByNumerics]);
 
   if (loading) {
@@ -112,6 +117,19 @@ function Planets() {
           Filtrar
         </button>
       </form>
+
+      {!!usedFilters.length && (
+        <div className="used-filters-container">
+          {usedFilters.map((filter, index) => (
+            <div data-testid="filter" key={ `${filter}-${index}-${index}` }>
+              <strong>{filter}</strong>
+              <button type="button" onClick={ () => removeFilter(filter) }>
+                <FiX size={ 20 } />
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
 
       <div className="planet-table-container">
         <table>
