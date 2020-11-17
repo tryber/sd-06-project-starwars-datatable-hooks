@@ -10,40 +10,52 @@ function Table() {
   }, []);
 
   return (
-    <StarWarsContext.Consumer>
-      {() => (
-        <table className="table">
-          <thead className="thead-dark">
-            <tr>
-              {data.map((planet, i) => (
-                <th key={ i } scope="col">{planet.name}</th>
+    <table className="table table-striped table-dark">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Rotation_Period</th>
+          <th scope="col">Orbital_Period</th>
+          <th scope="col">Diameter</th>
+          <th scope="col">Climate</th>
+          <th scope="col">Gravity</th>
+          <th scope="col">Terrain</th>
+          <th scope="col">Surface_Water</th>
+          <th scope="col">Population</th>
+          <th scope="col">Created</th>
+          <th scope="col">Edited</th>
+          <th scope="col">URL&apos;s API</th>
+          <th scope="col">Released Films</th>
+        </tr>
+      </thead>
+      {data.map((planet, i) => (
+        <tbody key={ i }>
+          <tr>
+            <th scope="row">{planet.name}</th>
+            <td>{planet.rotation_period}</td>
+            <td>{planet.orbital_period}</td>
+            <td>{planet.diameter}</td>
+            <td>{planet.climate}</td>
+            <td>{planet.gravity}</td>
+            <td>{planet.terrain}</td>
+            <td>{planet.surface_water}</td>
+            <td>{planet.population}</td>
+            <td>{planet.created}</td>
+            <td>{planet.edited}</td>
+            <td>
+              <a href={ planet.url }>
+                More Info
+              </a>
+            </td>
+            <td>
+              {planet.films.map((film, id) => (
+                <a key={ id } href={ film }>{`Film ${` ${id + 1}`}`}</a>
               ))}
-              {console.log(data)}
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-            </tr>
-          </tbody>
-        </table>
-      )}
-    </StarWarsContext.Consumer>
+            </td>
+          </tr>
+        </tbody>
+      ))}
+    </table>
   );
 }
 
