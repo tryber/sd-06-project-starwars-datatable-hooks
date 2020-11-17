@@ -5,7 +5,7 @@ import StarWarsProvider from './context/StarWarsProvider';
 
 function App() {
   return (
-    <StarWarsProvider>    
+    <StarWarsProvider>
       <main>
         <form className="form-group">
           <SearchTerm />
