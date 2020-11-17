@@ -1,30 +1,25 @@
 import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
+import TableHeader from './TableHeader';
 
 function Table() {
   const { data, fetchAPI } = useContext(StarWarsContext);
 
   useEffect(() => {
     fetchAPI();
-  }, [fetchAPI]);
-
-  const tableHeader = data.map((element, index) => Object.keys(element)[index])
-    .filter((item) => item !== 'residents');
+  }, []);
 
   const tableBody = data.map((item) => {
     delete item.residents;
     return item;
   });
 
+  // const tableHeader = data.map((element, index) => Object.keys(element)[index])
+  // .filter((item) => item !== 'residents');
+
   return (
     <table>
-      <thead>
-        <tr>
-          {tableHeader.map((e, i) => (
-            <th key={ i }>{e}</th>
-          ))}
-        </tr>
-      </thead>
+      <TableHeader />
       <tbody>
         {tableBody.map((e, i) => (
           <tr key={ i }>
@@ -37,10 +32,15 @@ function Table() {
             <td>{e.terrain}</td>
             <td>{e.surface_water}</td>
             <td>{e.population}</td>
+            <td>{e.films}</td>
+            <td>{e.created}</td>
+            <td>{e.edited}</td>
+            <td>{e.url}</td>
           </tr>
         ))}
       </tbody>
     </table>
+
   );
 }
 
