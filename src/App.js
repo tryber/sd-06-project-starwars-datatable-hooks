@@ -1,15 +1,12 @@
-import React, { useContext } from 'react';
-import StarWarsContext from './context/StarWarsContext';
-import RequestPlanets from './hooks/RequestPlanets';
+import React from 'react';
+import Table from './components/Table';
+import ProviderContext from './context/ProviderContext';
 
 function App() {
-  RequestPlanets();
-  const { data } = useContext(StarWarsContext);
-  console.log('data', data);
   return (
-    <div>
-      ola
-    </div>
+    <ProviderContext>
+      <Table />
+    </ProviderContext>
   );
 }
 
