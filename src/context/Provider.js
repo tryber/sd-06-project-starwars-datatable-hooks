@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import StarWarsContext from './StarWarsContext';
 
 function Provider({ children }) {
-  const [planets, setPlanets] = useState('');
+  const [planets, setPlanets] = useState([]);
   const [isLoading, setIsLoading] = useState([false]);
 
   const getPlanets = async () => {

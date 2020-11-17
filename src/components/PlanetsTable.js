@@ -7,7 +7,7 @@ function PlanetsTable() {
   // }, []);
   const { planets, isLoading } = useContext(StarWarsContext);
   // const headers = Object.keys(planets);
-  console.log(planets);
+  // console.log(planets);
 
   return (
     <div>
