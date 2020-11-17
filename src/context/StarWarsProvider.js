@@ -17,7 +17,6 @@ function StarWarsProvider({ children }) {
   );
 }
 
-StarWarsProvider.propTypes =
-PropTypes.arrayOf(PropTypes.string).isRequired;
+StarWarsProvider.propTypes = PropTypes.arrayOf(PropTypes.string).isRequired;
 
 export default StarWarsProvider;
