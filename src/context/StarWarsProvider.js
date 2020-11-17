@@ -7,7 +7,7 @@ function StarWarsProvider({ children }) {
 
   const getPlanets = async () => {
     const planets = await fetchStarWars();
-    setData(planets);
+    setData(planets); //test
   };
 
   return (
