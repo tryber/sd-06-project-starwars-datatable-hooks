@@ -8,7 +8,7 @@ function Provider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({
-    filterByName: '',
+    filterByName: { name: '' },
     teste: 'UM',
   });
 

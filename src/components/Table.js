@@ -5,7 +5,7 @@ function Table() {
   const { planets, loading, filters, setFilters } = useContext(StarWarsContext);
 
   const handleName = ({ target }) => {
-    setFilters({ ...filters, filterByName: target.value });
+    setFilters({ ...filters, filterByName: { name: target.value } });
   };
 
   return (
@@ -38,7 +38,7 @@ function Table() {
         </thead>
         <tbody>
           { planets
-            .filter((planet) => planet.name.includes(filters.filterByName))
+            .filter((planet) => planet.name.includes(filters.filterByName.name))
             .map((planet) => (
               <tr key={ planet.name }>
                 <td>{ planet.climate }</td>
