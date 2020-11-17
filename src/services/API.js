@@ -8,6 +8,6 @@ const fetchStarWars = async () => {
   //   ),
   // );
   return lists;
-}
+};
 
 export default fetchStarWars;
