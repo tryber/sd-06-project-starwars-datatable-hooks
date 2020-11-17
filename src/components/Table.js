@@ -17,7 +17,6 @@ function Table() {
           <th>Orbital Period</th>
           <th>Diameter</th>
           <th>Climate</th>
-          <th>Diameter</th>
           <th>Gravity</th>
           <th>Terrain</th>
           <th>Surface Water</th>
@@ -30,7 +29,7 @@ function Table() {
       </thead>
       <tbody>
         {data.map((planet) => (
-          <tr key="planet-results">
+          <tr key={ planet}>
             <td key={ planet.name }>{ planet.name }</td>
             <td key={ planet.rotation_period }>{ planet.rotation_period }</td>
             <td key={ planet.orbital_period }>{ planet.orbital_period }</td>
