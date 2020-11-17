@@ -1,26 +1,11 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={ logo } className="App-logo" alt="logo" />
-        <p>
-          Edit
-          <code>src/App.js</code>
-          and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h3>star wars - much to learn, i have</h3>
+      <p><strong>Obi-Wan:</strong> But Master Yoda says I should be mindful of the future.</p>
+      <p><strong>Qui-Gon Jinn:</strong> But not at the expense of the moment.</p>
     </div>
   );
 }
