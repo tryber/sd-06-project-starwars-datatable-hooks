@@ -19,12 +19,6 @@ async function fetchPlanets() {
 
 function Table() {
   const { apiData, setApiData } = useContext(StarWarsContext);
-  // useEffect(() => {
-  //   (async function apiRequest() {
-  //     const data = await fetchPlanets();
-  //     return setApiData(data);
-  //   })
-  // }, [setApiData]);
   useEffect(() => {
     fetchPlanets().then((data) => setApiData(data));
   }, [setApiData]);
