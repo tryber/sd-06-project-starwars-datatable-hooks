@@ -5,9 +5,9 @@ import StarWarsProvider from './context/StarWarsProvider';
 function App() {
   return (
     <div>
-    <StarWarsProvider>
-      <Table />
-    </StarWarsProvider>,
+      <StarWarsProvider>
+        <Table />
+      </StarWarsProvider>
     </div>
   );
 }
