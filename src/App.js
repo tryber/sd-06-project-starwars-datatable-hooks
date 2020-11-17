@@ -5,11 +5,11 @@ import PlanetsProvider from './context/PlanetsProvider';
 
 function App() {
   return (
-    <div className="App">
-      <PlanetsProvider value={ planets }>
+    <PlanetsProvider>
+      <div className="App">
         <TablePlanets />
-      </PlanetsProvider>
-    </div>
+      </div>
+    </PlanetsProvider>
   );
 }
 
