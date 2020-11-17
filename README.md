@@ -119,7 +119,12 @@ Você vai desenvolver uma lista com filtros de planetas do universo de StarWars 
 
 ## COMO DESENVOLVER
 
-Você deverá cumprir os requisitos do projeto utilizando a **Context API** e **componentes funcionais com Hooks*.
+Você deverá cumprir os requisitos do projeto utilizando a **Context API** e **componentes funcionais com Hooks**.
+
+#### Observação técnica
+Para que avaliador consiga acessar o seu contexto de forma correta, coloque o Provider dentro do `App.js`.
+
+Isso é necessário porque o testes renderizam diretamente o `App` sem passar pelo arquivo `index.js`. Se você colocar o Provider no index, isso fará com que os testes não funcionem.
 
 ---
 
@@ -148,6 +153,8 @@ npm run lint
 ### 1. Faça uma requisição para o endpoint `/planets` da API de Star Wars e preencha uma tabela com os dados retornados, com exceção dos da coluna `residents`
 
 A tabela deve ser renderizada por um componente chamado `<Table />`. Os dados recebidos da API devem ser salvos num campo chamado `data` do contexto e é daí que a tabela deve lê-los. A requisição deve ser feita num componente separado do componente da tabela.
+
+A API a ser consultada está [nesse link](https://swapi-trybe.herokuapp.com/api/planets/). Ou seja, você deverá fazer um fetch para a URL `https://swapi-trybe.herokuapp.com/api/planets/`
 
 A tabela deve ter uma primeira linha com os headers e as demais com as informações de cada campo.
 
