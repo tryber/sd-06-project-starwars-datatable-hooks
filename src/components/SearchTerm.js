@@ -8,6 +8,7 @@ export default function SearchTerm() {
       Busca pelo nome:
       <input
         className="form-control"
+        data-testid="name-filter"
         type="text"
         name="search"
         id="search"
