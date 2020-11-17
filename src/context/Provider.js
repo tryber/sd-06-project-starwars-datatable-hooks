@@ -4,23 +4,32 @@ import StarWarsContext from './StarWarsContext';
 import getPlanetList from '../services/planetListAPI';
 
 function Provider({ children }) {
-  const [planets, setPlanets] = useState([]);
+  const [currentPlanets, setCurrentPlanets] = useState([]);
   const [tableHeaders, setTableHeader] = useState([]);
+  const [fetchedPlanets, setFetchedPlanets] = useState([]);
+  const [nameFilter, setNameFilter] = useState('');
 
   useEffect(() => {
     const fetchAndSavePlanets = async () => {
       const data = await getPlanetList();
 
-      setPlanets(data.results);
+      setFetchedPlanets(data.results);
       setTableHeader(Object.keys(data.results[0])
         .filter((header) => header !== 'residents'));
     };
     fetchAndSavePlanets();
   }, []);
 
+  useEffect(() => {
+    const regex = new RegExp(nameFilter, 'i');
+    const filteredPlanets = fetchedPlanets.filter((planet) => regex.test(planet.name));
+    setCurrentPlanets(filteredPlanets);
+  }, [fetchedPlanets, nameFilter]);
+
   const context = {
-    planets,
+    currentPlanets,
     tableHeaders,
+    setNameFilter,
   };
 
   return (
