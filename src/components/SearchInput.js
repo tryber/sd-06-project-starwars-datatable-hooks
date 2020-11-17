@@ -9,6 +9,7 @@ function SearchInput() {
       type="text"
       name="search"
       onChange={ (ev) => setSearchTerm(ev.target.value) }
+      data-testid="name-filter"
       value={ searchTerm }
     />
   );
