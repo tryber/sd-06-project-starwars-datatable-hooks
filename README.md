@@ -119,7 +119,7 @@ Você vai desenvolver uma lista com filtros de planetas do universo de StarWars 
 
 ## COMO DESENVOLVER
 
-Você deverá cumprir os requisitos do projeto utilizando a **Context API** e **componentes funcionais com Hooks*.
+Você deverá cumprir os requisitos do projeto utilizando a **Context API** e **componentes funcionais com Hooks**.
 
 ---
 
