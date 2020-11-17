@@ -5,7 +5,8 @@ import RequestPlanets from '../hooks/RequestPlanets';
 function Table() {
   RequestPlanets();
   const { data } = useContext(StarWarsContext);
-  if (Object.keys(data).length !== 0) {
+  const objVoid = 0;
+  if (Object.keys(data).length !== objVoid) {
     const copyResults = data.results.map((result) => ({ ...result }));
     copyResults.forEach((objPlanet) => {
       delete objPlanet.residents;
