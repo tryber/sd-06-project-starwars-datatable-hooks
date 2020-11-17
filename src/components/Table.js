@@ -2,11 +2,22 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { planets, loading } = useContext(StarWarsContext);
+  const { planets, loading, filters, setFilters } = useContext(StarWarsContext);
+
+  const handleName = ({ target }) => {
+    setFilters({ ...filters, filterByName: target.value });
+  };
 
   return (
     <div>
       { loading && 'Loading...'}
+      <div>
+        <input
+          data-testid="name-filter"
+          type="text"
+          onChange={ handleName }
+        />
+      </div>
       <table>
         <thead>
           <tr>
@@ -26,23 +37,25 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          { planets.map((planet) => (
-            <tr key={ planet.name }>
-              <td>{ planet.climate }</td>
-              <td>{ planet.created }</td>
-              <td>{ planet.diameter }</td>
-              <td>{ planet.edited }</td>
-              <td>{ planet.films }</td>
-              <td>{ planet.gravity }</td>
-              <td>{ planet.name }</td>
-              <td>{ planet.orbital_period }</td>
-              <td>{ planet.population }</td>
-              <td>{ planet.rotation_period }</td>
-              <td>{ planet.surface_water }</td>
-              <td>{ planet.terrain }</td>
-              <td>{ planet.url }</td>
-            </tr>
-          )) }
+          { planets
+            .filter((planet) => planet.name.includes(filters.filterByName))
+            .map((planet) => (
+              <tr key={ planet.name }>
+                <td>{ planet.climate }</td>
+                <td>{ planet.created }</td>
+                <td>{ planet.diameter }</td>
+                <td>{ planet.edited }</td>
+                <td>{ planet.films }</td>
+                <td>{ planet.gravity }</td>
+                <td>{ planet.name }</td>
+                <td>{ planet.orbital_period }</td>
+                <td>{ planet.population }</td>
+                <td>{ planet.rotation_period }</td>
+                <td>{ planet.surface_water }</td>
+                <td>{ planet.terrain }</td>
+                <td>{ planet.url }</td>
+              </tr>
+            )) }
         </tbody>
       </table>
     </div>

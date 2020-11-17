@@ -7,6 +7,10 @@ import { getPlanetsAPI } from '../services/starwarsAPI';
 function Provider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [filters, setFilters] = useState({
+    filterByName: '',
+    teste: 'UM',
+  });
 
   useEffect(() => {
     setLoading(true);
@@ -16,7 +20,7 @@ function Provider({ children }) {
     setLoading(false);
   }, []);
 
-  const data = { planets, loading };
+  const data = { planets, loading, filters, setFilters };
 
   return (
     <StarWarsContext.Provider value={ data }>
