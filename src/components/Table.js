@@ -10,7 +10,7 @@ export default function Table() {
 
   useEffect(() => {
     getPlanetsList();
-  }, [getPlanetsList]);
+  }, []);
 
   return (
     <table className="table table-dark">
