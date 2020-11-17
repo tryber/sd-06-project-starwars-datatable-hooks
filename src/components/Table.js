@@ -2,11 +2,11 @@ import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { resultsApi, getResults } = useContext(StarWarsContext);
+  const { resultsApi, getResults, filters } = useContext(StarWarsContext);
 
   useEffect(() => {
     getResults();
-  }, [getResults]);
+  });
 
   return (
     <table className="table-hover table">
@@ -28,7 +28,9 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {resultsApi.map((planet) => (
+        {resultsApi.filter((planet) => (
+          planet.name.toLowerCase().includes(filters.filterByName.name.toLowerCase())
+        )).map((planet) => (
           <tr key={ planet.name }>
             <td>{ planet.name }</td>
             <td>{ planet.rotation_period }</td>
