@@ -10,19 +10,17 @@ import './App.css';
 function App() {
   return (
     <StarWarsProvider>
-      <div>
-        <header>
-          <Title />
-        </header>
-        <section>
-          <FilterName />
-          <FilterNumber />
-          <FilterList />
-        </section>
-        <section>
-          <Table />
-        </section>
-      </div>
+      <header>
+        <Title />
+      </header>
+      <section>
+        <FilterName />
+        <FilterNumber />
+        <FilterList />
+      </section>
+      <section>
+        <Table />
+      </section>
     </StarWarsProvider>
   );
 }
