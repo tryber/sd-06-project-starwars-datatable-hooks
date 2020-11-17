@@ -4,7 +4,8 @@ import StarWarsContext from './StarWarsContext';
 import requestPlanets from '../services/api';
 
 export default function Provider({ children }) {
-  const [data, setData] = useState('');
+  const [data, setData] = useState([]);
+  const [isFetching, setDataisFetching] = useState(false);
 
   const starWarsPlanets = async () => {
     const planets = await requestPlanets();
@@ -18,11 +19,13 @@ export default function Provider({ children }) {
   const contextValue = {
     data,
     starWarsPlanets,
+    isFetching,
+    setDataisFetching,
   };
 
   return (
     <StarWarsContext.Provider value={ contextValue }>
-      {children}
+      { children }
     </StarWarsContext.Provider>
   );
 }
