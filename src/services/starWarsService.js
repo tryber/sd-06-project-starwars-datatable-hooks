@@ -1,5 +1,7 @@
-export const fetchStarWarsPlanets = async () => {
+const fetchStarWarsPlanets = async () => {
   const response = await ('https://swapi-trybe.herokuapp.com/api/planets/');
-  const data = await response.json();
-  return data;
-}
+  const responseJson = await response.json();
+  return responseJson;
+};
+
+export default fetchStarWarsPlanets;
