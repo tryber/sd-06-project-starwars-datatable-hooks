@@ -5,7 +5,7 @@ const usePlanets = () => {
 
   useEffect(async () => {
     const results = await fetch('https://swapi-trybe.herokuapp.com/api/planets/')
-      .then(respomse => respomse.json())
+      .then(response => response.json())
       .then(result => result.results);
     
     setData(data.concat(results));
