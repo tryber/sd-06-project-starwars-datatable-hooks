@@ -6,10 +6,12 @@ function Header() {
 
   return (
     <thead>
-      {headersTable.filter((name) => name !== 'residents')
-      .map((name) => (
-        <th>{name}</th>
-      ))}
+      <tr>
+        {headersTable.filter((name) => name !== 'residents')
+          .map((name) => (
+            <th key={ name }>{name}</th>
+          ))}
+      </tr>
     </thead>
   );
 }
