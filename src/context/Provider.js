@@ -5,11 +5,14 @@ import StarWarsContext from './StarWarsContext';
 function Provider({ children }) {
   const [dataTable, setDataTable] = useState([]);
   const [headersTable, setHeaders] = useState([]);
+  const [filterByName, setFilterName] = useState({ name: '' });
   const contextValue = {
     dataTable,
     setDataTable,
     headersTable,
     setHeaders,
+    filterByName,
+    setFilterName,
   };
 
   return (
