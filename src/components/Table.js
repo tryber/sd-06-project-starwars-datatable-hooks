@@ -1,6 +1,19 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
+import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
+  const { data, fetchPlanets } = useContext(StarWarsContext);
+  useEffect(() => {
+    fetchPlanets();
+  }, []);
+
+  const headers = ['Name', 'Rotation period',
+    'Orbital period', 'Diameter', 'Climate',
+    'Gravity', 'Terrain',
+    'Surface water', 'Population',
+    'Films', 'Created',
+    'Edited', 'url',
+  ];
   return (
     <div>
       <header>
@@ -10,31 +23,33 @@ function Table() {
         <table className="table">
           <thead>
             <tr>
-              <th scope="col">#</th>
-              <th scope="col">First</th>
-              <th scope="col">Last</th>
-              <th scope="col">Handle</th>
+              {
+                headers.map((heading, index) => (
+                  <th scope="col" key={ index }>{heading}</th>
+                ))
+              }
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-            </tr>
+            {
+              data.map((element, index) => (
+                <tr key={ index }>
+                  <td>{element.name}</td>
+                  <td>{element.rotation_period}</td>
+                  <td>{element.orbital_period}</td>
+                  <td>{element.diameter}</td>
+                  <td>{element.climate}</td>
+                  <td>{element.gravity}</td>
+                  <td>{element.terrain}</td>
+                  <td>{element.surface_water}</td>
+                  <td>{element.population}</td>
+                  <td>{element.films}</td>
+                  <td>{element.created}</td>
+                  <td>{element.edited}</td>
+                  <td>{element.url}</td>
+                </tr>
+              ))
+            }
           </tbody>
         </table>
       </div>
