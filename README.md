@@ -185,6 +185,11 @@ O que será verificado:
 - Realiza vários filtros em sequência
 ```
 
+#### Observação técnica
+Para que avaliador consiga acessar o seu contexto de forma correta, coloque o Provider dentro do `App.js`.
+
+Isso é necessário porque o testes renderizam diretamente o `App` sem passar pelo arquivo `index.js`. Se você colocar o Provider no index, isso fará com que os testes não funcionem.
+
 ### 3. Crie um filtro para valores numéricos
 
 Ele funcionará com três seletores:
