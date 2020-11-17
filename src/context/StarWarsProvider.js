@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import StarWarsContext from './StarWarsContext';
-import Table from '../components/Table';
 
-function StarWarsProvider() {
+function StarWarsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
 
   const serviceAPI = async () => {
@@ -12,11 +12,19 @@ function StarWarsProvider() {
     return setPlanets(json.results);
   };
 
+  useEffect(() => {
+    serviceAPI();
+  }, []);
+
   return (
-    <StarWarsContext.Provider value={ { planets, serviceAPI } }>
-      { () => <Table /> }
+    <StarWarsContext.Provider value={ { planets } }>
+      {children}
     </StarWarsContext.Provider>
   );
 }
+
+StarWarsProvider.propTypes = {
+  children: PropTypes.arrayOf(PropTypes.node).isRequired,
+};
 
 export default StarWarsProvider;

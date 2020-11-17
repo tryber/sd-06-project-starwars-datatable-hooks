@@ -1,12 +1,8 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { planets, serviceAPI } = useContext(StarWarsContext);
-
-  useEffect(() => {
-    serviceAPI();
-  }, []);
+  const { planets } = useContext(StarWarsContext);
 
   return (
     <table>
