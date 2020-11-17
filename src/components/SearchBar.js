@@ -17,6 +17,18 @@ function SearchBar() {
           }) }
         />
       </label>
+      <select data-testid="column-filter">
+        <option>Population</option>
+        <option>Orbital Period</option>
+        <option>Diameter</option>
+        <option>Rotation Period</option>
+        <option>Surface Water</option>
+      </select>
+      <select data-testid='comparison-filter'>
+        <option>Bigger then</option>
+        <option>Smaller then</option>
+        <option>Equal of</option>
+      </select>
     </section>
   );
 }
