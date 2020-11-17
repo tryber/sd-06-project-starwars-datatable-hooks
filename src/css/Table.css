@@ -1,0 +1,10 @@
+.planetsTable {
+  font-size: 0.8em;
+  margin: 10px;
+  text-align: center;
+  max-width: 100%;
+}
+
+.planetsTable td {
+  word-break: break-all;
+}
