@@ -18,15 +18,17 @@ async function fetchPlanets() {
 }
 
 function Table() {
-  const { apiData, setApiData } = useContext(StarWarsContext);
+  const { dataApi, setDataApi } = useContext(StarWarsContext);
+
   useEffect(() => {
-    fetchPlanets().then((data) => setApiData(data));
-  }, [setApiData]);
+    fetchPlanets().then((data) => setDataApi(data));
+  }, [setDataApi]);
+
   const zero = 0;
   return (
     <div>
-      {apiData.length === zero && <h5>Loading...</h5>}
-      {apiData.length !== zero && (
+      {dataApi.length === zero && <h5>Loading...</h5>}
+      {dataApi.length !== zero && (
         <table>
           <TableHeader />
           <TableBody />
