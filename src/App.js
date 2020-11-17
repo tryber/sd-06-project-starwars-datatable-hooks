@@ -1,10 +1,14 @@
 import React from 'react';
+import Table from './components/Table';
+import Provider from './context/Provider';
 
 function App() {
   return (
-    <div className="App">
-      Hellow Starwars!
-    </div>
+    <Provider>
+      <div className="App">
+        <Table />
+      </div>
+    </Provider>
   );
 }
 
