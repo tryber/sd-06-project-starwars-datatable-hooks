@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import StarWarsContext from './StarWarsContext';
 
-function SWProvider({ children }) {
+function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [headerKeys, setHeaderKeys] = useState([]);
 
   const getApiPlanets = async () => {
     const responseApi = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
@@ -13,15 +16,29 @@ function SWProvider({ children }) {
         return item;
       });
     setData(planets);
+    setHeaderKeys(Object.keys(planets[0]));
   };
 
-  const teste = 'teste';
+  useEffect(() => {
+    getApiPlanets();
+  }, []);
+
+  const infos = {
+    data,
+    isLoading,
+    setIsLoading,
+    headerKeys,
+  };
 
   return (
-    <StarWarsContext.Provider value={ teste }>
+    <StarWarsContext.Provider value={ infos }>
       {children}
     </StarWarsContext.Provider>
   );
 }
 
-export default SWProvider;
+StarWarsProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+export default StarWarsProvider;
