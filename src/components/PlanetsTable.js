@@ -3,7 +3,7 @@ import StarWarsContext from '../contexts/StarWarsContext';
 import PlanetsTableBody from './PlanetsTableBody';
 
 function PlanetsTable() {
-  const { planets, tableHeaders } = useContext(StarWarsContext);
+  const { currentPlanets, tableHeaders } = useContext(StarWarsContext);
 
   return (
     <main>
@@ -14,7 +14,7 @@ function PlanetsTable() {
           </tr>
         </thead>
         <tbody>
-          <PlanetsTableBody planets={ planets } tableHeaders={ tableHeaders } />
+          <PlanetsTableBody planets={ currentPlanets } tableHeaders={ tableHeaders } />
         </tbody>
       </table>
     </main>
