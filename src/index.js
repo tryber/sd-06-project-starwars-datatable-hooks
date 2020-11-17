@@ -1,5 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import JobProvider from './context/JobProvider';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+  <JobProvider>
+    <App />
+  </JobProvider>, document.getElementById('root'),
+);
