@@ -1,21 +1,19 @@
 import React, { useState } from 'react';
+import propTypes from 'prop-types';
 import StarWarsContext from './StarWarsContext';
 import StarWarsAPI from '../services/StarsWarsAPI';
 
 function Provider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [isLoading, setLoading] = useState(true);
 
   const fetchPlanets = async () => {
     const response = await StarWarsAPI();
     const planetsObject = response.results;
     setPlanets(planetsObject);
-    setLoading(false);
   };
 
   const context = {
-    isLoading,
     data: { planets },
     fetchPlanets,
     searchTerm,
@@ -28,5 +26,9 @@ function Provider({ children }) {
     </StarWarsContext.Provider>
   );
 }
+
+Provider.propTypes = {
+  children: propTypes.arrayOf(propTypes.object).isRequired,
+};
 
 export default Provider;
