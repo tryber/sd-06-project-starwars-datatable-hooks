@@ -1,39 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import PropTypes from 'prop-types';
 
 import StarWarsContext from './StarWarsContext';
-import { getPlanetList } from '../services/starwarsAPI';
+import { getPlanetList } from '../services/StarWarsAPI';
 
-class StarWarsProvider extends React.Component {
-  constructor() {
-    super();
+const StarWarsProvider = ({ children }) => {
+  const [data, setData] = useState([]);
 
-    this.state = {
-      results: [],
-    };
+  const fetchAPI = async () => {
+    getPlanetList().then((json) => {
+      setData(json.results);
+    });
+  };
 
-    this.fetchAPI = this.fetchAPI.bind(this);
-  }
+  const context = { data, setData, fetchAPI };
 
-  componentDidMount() {
-    this.fetchAPI();
-  }
-
-  fetchAPI() {
-    getPlanetList()
-      .then((response) => this.setState({ results: response.results }));
-  }
-
-  render() {
-    const { children } = this.props;
-    return (
-      <StarWarsContext.Provider value={ { ...this.state } }>
-        {children}
-      </StarWarsContext.Provider>
-    );
-  }
-}
+  return (
+    <StarWarsContext.Provider value={ context }>
+      {children}
+    </StarWarsContext.Provider>
+  );
+};
 
 StarWarsProvider.propTypes = {
   children: PropTypes.shape().isRequired,
