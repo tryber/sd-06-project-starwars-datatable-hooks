@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import Provider from './context/Provider';
+import StarWarsProvider from './context/StarWarsProvider';
 
 ReactDOM.render(
-  <Provider>
+  <StarWarsProvider>
     <App />
-  </Provider>,
+  </StarWarsProvider>,
   document.getElementById('root'),
 );
