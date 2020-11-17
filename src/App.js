@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Home from './pages/home';
+import PlanetContext from './context/PlanetContext';
 import './App.css';
 
 function App() {
+  const [planets, setPlanets] = useState('');
+  const state = {
+    planets,
+    setPlanets,
+  };
   return (
-    <div className="App">
-      <h1>B A N I D O ! !</h1>
-    </div>
+    <PlanetContext.Provider value={ state }>
+      <Home />
+    </PlanetContext.Provider>
   );
 }
 
