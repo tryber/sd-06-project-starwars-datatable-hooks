@@ -5,6 +5,7 @@ import StarWarsContext from './StarWarsContext';
 function Provider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [isLoading, setIsLoading] = useState([false]);
+  const [filterByName, setFilterByName] = useState({ name: '' });
 
   const getPlanets = async () => {
     setIsLoading(true);
@@ -18,7 +19,13 @@ function Provider({ children }) {
     getPlanets();
   }, []);
 
-  const contextValue = { planets, isLoading };
+  const contextValue = {
+    planets,
+    isLoading,
+    setPlanets,
+    filterByName,
+    setFilterByName,
+  };
 
   return (
     <StarWarsContext.Provider value={ contextValue }>
