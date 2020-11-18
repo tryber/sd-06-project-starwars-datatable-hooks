@@ -25,6 +25,22 @@ function Table() {
       </thead>
       <tbody>
         {data && data.filter((planet) => planet.name.includes(name))
+          .filter((planet) => {
+            if (filters.filterByNumericValues[0] !== undefined) {
+              const { column, comparison, value } = filters.filterByNumericValues[0];
+              switch (comparison) {
+              case 'maior que':
+                return parseInt(planet[column], 10) > parseInt(value, 10);
+              case 'menor que':
+                return parseInt(planet[column], 10) < parseInt(value, 10);
+              case 'igual a':
+                return parseInt(planet[column], 10) === parseInt(value, 10);
+              default:
+                return true;
+              }
+            }
+            return true;
+          })
           .map((planet, index) => (
             <tr key={ index }>
               <td>{planet.name}</td>
