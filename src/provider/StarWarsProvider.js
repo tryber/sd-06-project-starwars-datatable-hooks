@@ -7,7 +7,9 @@ function Provider({ children }) {
   const [data, setData] = useState(['']);
   const [filters, setFilter] = useState({
     filterByName: { name: '' },
-    filterByNumericValues: [] });
+    filterByNumericValues: [],
+    order: { column: 'name', sort: 'ASC',
+    } });
   useEffect(() => {
     const requestAPI = async () => {
       const results = await starWarsAPI();

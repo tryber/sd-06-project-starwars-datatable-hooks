@@ -2,9 +2,10 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
+  const lessOne = -1;
   const { data,
     filters: { filterByName: { name },
-      filterByNumericValues } } = useContext(StarWarsContext);
+      filterByNumericValues, order } } = useContext(StarWarsContext);
   const filteringName = (e) => typeof e.name === 'string' && e.name
     .includes(name);
   const filteringNumeric = (e) => {
@@ -32,6 +33,16 @@ function Table() {
     }
     return result;
   };
+  const crazy = (a, b) => {
+    let result;
+    if (order.sort === 'DESC') {
+      result = (parseInt(a[order.column], 10) < parseInt(b[order.column], 10)
+        ? 1 : lessOne);
+    } else {
+      result = (a.name > b.name ? 1 : lessOne);
+    }
+    return result;
+  };
   return (
     <table className="table table-bordered">
       <thead className="thead-dark">
@@ -43,9 +54,13 @@ function Table() {
       <tbody>
         {data
           .filter((e) => filteringName(e) && filteringNumeric(e))
+          .sort((a, b) => crazy(a, b))
           .map((planet, index) => (
             <tr className="table-active" key={ index }>
-              {Object.values(planet).map((col, i) => (<td key={ i }>{ col }</td>))}
+              {Object.entries(planet)
+                .map((col, i) => (col[0] === 'name'
+                  ? (<td data-testid="planet-name" key={ i }>{ col[1] }</td>)
+                  : (<td key={ i }>{ col[1] }</td>)))}
             </tr>))}
       </tbody>
     </table>

@@ -65,7 +65,7 @@ p {
 
 .navbar {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   height: 111px;
 }
 
