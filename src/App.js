@@ -1,13 +1,15 @@
 import React from 'react';
-import Provider from './context/Provider';
+import StarWarProvider from './context/StarWarProvider';
 import './App.css';
 import Table from './components/Table';
+import SearchInput from './components/searchInput';
 
 function App() {
   return (
-    <Provider>
+    <StarWarProvider>
+      <SearchInput />
       <Table />
-    </Provider>
+    </StarWarProvider>
   );
 }
 

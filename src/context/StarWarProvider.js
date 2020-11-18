@@ -5,14 +5,32 @@ import fetchAPI from '../service/API';
 
 function StarWarProvider({ children }) {
   const [planets, setPlanets] = useState([]);
+  const [searchTerm, setSearchTerm] = useState(
+    {
+      filters:
+        {
+          filterByName:
+            {
+              name: '',
+            },
+        },
+    },
+  );
 
   const getPlanets = async () => {
     const allPlanets = await fetchAPI();
     setPlanets(allPlanets);
   };
 
+  const value = {
+    planets,
+    getPlanets,
+    searchTerm,
+    setSearchTerm,
+  };
+
   return (
-    <StarWarsContext.Provider value={ { planets, getPlanets } }>
+    <StarWarsContext.Provider value={ value }>
       { children }
     </StarWarsContext.Provider>
 
