@@ -12,7 +12,7 @@ async function fetchPlanets() {
     const response = await apiRequest.json();
     data = await response.results;
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
   }
   return data;
 }

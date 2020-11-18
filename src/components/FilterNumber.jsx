@@ -15,11 +15,16 @@ const FilterNumber = () => {
   const [localFilter, setLocalFilter] = useState(
     { column: '', comparison: '', value: '' },
   );
+
   const { dataApi, filterNumber, setFilterNumber } = useContext(StarWarsContext);
+
   const columnFilters = filterNumber.map((filter) => filter.column);
+
   const remainingColumns = columnOptions
     .filter((column) => !columnFilters.includes(column));
+
   const zero = 0;
+
   return (
     <div>
       {dataApi.length !== zero && (
@@ -35,18 +40,20 @@ const FilterNumber = () => {
           </select>
           <select
             data-testid="comparison-filter"
-            onChange={ (e) => setLocalFilter(
-              { ...localFilter, comparison: e.target.value },
+            onChange={ (event) => setLocalFilter(
+              { ...localFilter, comparison: event.target.value },
             ) }
           >
-            {comparisonOptions.map((c) => (
-              <option key={ c } value={ c }>{c}</option>
+            {comparisonOptions.map((eachComparison, index) => (
+              <option key={ index } value={ eachComparison }>{eachComparison}</option>
             ))}
           </select>
           <input
             data-testid="value-filter"
             type="number"
-            onChange={ (e) => setLocalFilter({ ...localFilter, value: e.target.value }) }
+            onChange={ (event) => setLocalFilter(
+              { ...localFilter, value: event.target.value },
+            ) }
           />
           <button
             type="button"

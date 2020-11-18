@@ -4,10 +4,10 @@ import StarWarsContext from '../context/StarWarsContext';
 const FilterList = () => {
   const zero = 0;
   const { filterNumber, setFilterNumber } = useContext(StarWarsContext);
-  const cancelFilter = (i) => {
+  const removeFilters = (index) => {
     const remainingFiltersNumber = [
-      ...filterNumber.slice(zero, i),
-      ...filterNumber.slice(i + 1, filterNumber.length),
+      ...filterNumber.slice(zero, index),
+      ...filterNumber.slice(index + 1, filterNumber.length),
     ];
     setFilterNumber(remainingFiltersNumber);
   };
@@ -15,17 +15,17 @@ const FilterList = () => {
   return (
     <div className="filters-list">
       <h4> Current filters: </h4>
-      {filterNumber.map((filter, i) => (
-        <div data-testid="filter" key={ filter.column }>
+      {filterNumber.map((eachFilter, index) => (
+        <div data-testid="filter" key={ index }>
           <span>
             <button
               type="button"
               className="red-button"
-              onClick={ () => cancelFilter(i) }
+              onClick={ () => removeFilters(index) }
             >
               X
             </button>
-            {`${filter.column} ${filter.comparison} ${filter.value}`}
+            {`${eachFilter.column} ${eachFilter.comparison} ${eachFilter.value}`}
           </span>
         </div>
       ))}
