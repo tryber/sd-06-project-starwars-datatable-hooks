@@ -8,8 +8,6 @@ function Table() {
   const { filterByName, filterByNumericValues } = filters;
   const { column, comparison, value, button } = filterByNumericValues[0];
 
-  console.log(comparison);
-
   useEffect(() => {
     if (data !== undefined) {
       setPlanetsName(data);
