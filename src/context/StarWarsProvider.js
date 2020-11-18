@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import StarWarsContext from './StarWarsContext';
 
 function StarWarsProvider({ children }) {
-  const [data, setData] = useState(['oi']);
-  const contextValue = { data, setData };
+  const [data, setData] = useState([]);
+  const [dataShowed, setDataShowed] = useState([]);
+  const contextValue = { data, setData, dataShowed, setDataShowed };
   return (
     <StarWarsContext.Provider value={ contextValue }>
       {children}

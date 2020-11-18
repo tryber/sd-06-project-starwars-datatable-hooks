@@ -2,13 +2,14 @@ import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { data, setData } = useContext(StarWarsContext);
+  const { setData, dataShowed, setDataShowed } = useContext(StarWarsContext);
   useEffect(() => {
     const fetchPlanets = async () => {
       const planetsFetch = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
       const response = await planetsFetch.json();
       const { results } = response;
       setData(results);
+      setDataShowed(results);
     };
     fetchPlanets();
   }, []);
@@ -34,7 +35,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {data.map((p) => (
+          {dataShowed.map((p) => (
             <tr key={ p.name }>
               <td>{p.name}</td>
               <td>{p.rotation_period}</td>
