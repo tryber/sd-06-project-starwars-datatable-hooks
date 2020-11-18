@@ -11,10 +11,13 @@ function SearchForm() {
     setFields({ ...fields, [event.target.id]: event.target.value });
   };
   const clickButton = () => {
-    setFilter({ ...filters, filterByNumericValues: [fields] });
+    setFilter({ ...filters,
+      filterByNumericValues: [...filters.filterByNumericValues, fields] });
+    setFields({ column: '', comparison: '', value: '' });
   };
   const dropColumn = ['population',
-    'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
+    'orbital_period', 'diameter', 'rotation_period', 'surface_water']
+    .filter((e) => !filters.filterByNumericValues.some((item) => item.column === e));
   const dropComp = ['maior que', 'menor que', 'igual a'];
   return (
     <form className="navbar fixed-top bg-light">
@@ -34,11 +37,12 @@ function SearchForm() {
             id="column"
             data-testid="column-filter"
             className="form-control form-control-sm"
+            value={ fields.column }
             onChange={ fieldChange }
           >
-            <option value="" selected disabled>Selecione uma coluna</option>
+            <option>Escolha a coluna</option>
             {dropColumn
-              .map((item) => (<option value={ item } key={ item }>{item}</option>))}
+              .map((item) => (<option key={ item }>{item}</option>))}
           </select>
         </div>
         <div className="col">
@@ -46,11 +50,12 @@ function SearchForm() {
             id="comparison"
             data-testid="comparison-filter"
             className="form-control form-control-sm"
+            value={ fields.comparison }
             onChange={ fieldChange }
           >
-            <option value="" selected disabled>Selecione uma opção</option>
+            <option>Escolha uma opção</option>
             {dropComp
-              .map((item) => (<option value={ item } key={ item }>{item}</option>))}
+              .map((item) => (<option key={ item }>{item}</option>))}
           </select>
         </div>
         <div className="col">

@@ -7,7 +7,7 @@ function Provider({ children }) {
   const [data, setData] = useState(['']);
   const [filters, setFilter] = useState({
     filterByName: { name: '' },
-    filterByNumericValues: [{ column: '', comparison: '', value: '' }] });
+    filterByNumericValues: [] });
   useEffect(() => {
     const requestAPI = async () => {
       const results = await starWarsAPI();
@@ -30,7 +30,7 @@ function Provider({ children }) {
 }
 
 Provider.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.string).isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default Provider;

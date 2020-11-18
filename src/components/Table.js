@@ -4,24 +4,26 @@ import StarWarsContext from '../context/StarWarsContext';
 function Table() {
   const { data,
     filters: { filterByName: { name },
-      filterByNumericValues: [{ column, comparison, value }] },
-  } = useContext(StarWarsContext);
+      filterByNumericValues } } = useContext(StarWarsContext);
   const filteringName = (e) => typeof e.name === 'string' && e.name
     .includes(name);
   const filteringNumeric = (e) => {
     let result = false;
-    if (column === '' || comparison === '' || value === '') {
+    if (filterByNumericValues.length < 1) {
       result = true;
     } else {
-      if (comparison === 'maior que' && parseInt(e[column], 10) > value) {
-        result = true;
-      }
-      if (comparison === 'menor que' && parseInt(e[column], 10) < value) {
-        result = true;
-      }
-      if (comparison === 'igual a' && e[column] === value.toString()) {
-        result = true;
-      }
+      filterByNumericValues
+        .forEach((it) => {
+          if (it.comparison === 'maior que' && parseInt(e[it.column], 10) > it.value) {
+            result = true;
+          }
+          if (it.comparison === 'menor que' && parseInt(e[it.column], 10) < it.value) {
+            result = true;
+          }
+          if (it.comparison === 'igual a' && e[it.column] === it.value.toString()) {
+            result = true;
+          }
+        });
     }
     return result;
   };
@@ -30,15 +32,17 @@ function Table() {
       <thead className="thead-dark">
         <tr>
           {Object.keys(data[0])
-            .map((header) => (<th key={ header }>{header}</th>))}
+            .map((header, index) => (<th key={ index }>{header}</th>))}
         </tr>
       </thead>
-      {data
-        .filter((e) => filteringName(e) && filteringNumeric(e))
-        .map((planet) => (
-          <tr className="table-active" key={ planet }>
-            {Object.values(planet).map((col) => (<td key={ col }>{ col }</td>))}
-          </tr>))}
+      <tbody>
+        {data
+          .filter((e) => filteringName(e) && filteringNumeric(e))
+          .map((planet, index) => (
+            <tr className="table-active" key={ index }>
+              {Object.values(planet).map((col, i) => (<td key={ i }>{ col }</td>))}
+            </tr>))}
+      </tbody>
     </table>
   );
 }
