@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import fetchAPI from '../services/fetchData';
 import StarWarsContext from './StarWarsContext';
-import InputNumber from '../components/InputNumbers';
 
 function Provider({ children }) {
   const [dataAPI, setData] = useState([]);
   const [nameInput, setName] = useState({ filters: { filterByName: { name: '' } } });
   const [btnStatus, setBtnStatus] = useState(false);
-  const [numInput, setNumbers] = useState({ 
+  const [numInput, setNumbers] = useState({
     filters: {
       filterByNumber: {
         option: 'population',
@@ -35,9 +34,9 @@ function Provider({ children }) {
           compare: comp,
           number: num,
         },
-      }
+      },
     });
-  }
+  };
 
   const value = {
     dataAPI,

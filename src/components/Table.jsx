@@ -13,12 +13,13 @@ function Table() {
   const [filteredData, setFilter] = useState([]);
   const tableHeaders = ['Name', 'Rotation Period', 'Orbital Periode',
     'Diameter', 'Climate', 'Gravity', 'Terrain', 'Surface Water',
-    'Population', 'Films', 'Created', 'Edited', 'URL'
+    'Population', 'Films', 'Created', 'Edited', 'URL',
   ];
 
   const handleData = () => {
+    const mNumber = 0;
     const fName = nameInput.filters.filterByName.name;
-    const fNum = numInput.filters.filterByNumber.number;
+    const fNum = parseInt(numInput.filters.filterByNumber.number, 10);
     const fComp = numInput.filters.filterByNumber.compare;
     const fOpt = numInput.filters.filterByNumber.option;
 
@@ -27,26 +28,24 @@ function Table() {
       setFilter(newData);
     }
 
-    if (fName === '' && fNum === '') {
+    if (fName === '' && !fNum) {
       const newData = dataAPI;
       setFilter(newData);
     }
 
-    if (fNum >= 0 && fComp === "maior que" && fOpt && fName === '') {
+    if (fNum >= mNumber && fComp === 'maior que' && fOpt && fName === '') {
       parseInt(fNum, 10);
-      const newData = dataAPI.filter((obj) => parseInt(obj[fOpt], 10) > parseInt(fNum, 10))
+      const newData = dataAPI.filter((obj) => parseInt(obj[fOpt], 10) > fNum);
       setFilter(newData);
     }
 
-    if (fNum >= 0 && fComp === "menor que" && fOpt && fName === '') {
-      parseInt(fNum, 10);
-      const newData = dataAPI.filter((obj) => parseInt(obj[fOpt], 10) < parseInt(fNum, 10))
+    if (fNum >= mNumber && fComp === 'menor que' && fOpt && fName === '') {
+      const newData = dataAPI.filter((obj) => parseInt(obj[fOpt], 10) < fNum);
       setFilter(newData);
     }
 
-    if (fNum >= 0 && fComp === "igual a" && fOpt && fName === '') {
-      
-      const newData = dataAPI.filter((obj) => parseInt(obj[fOpt], 10) === parseInt(fNum, 10))
+    if (fNum >= mNumber && fComp === 'igual a' && fOpt && fName === '') {
+      const newData = dataAPI.filter((obj) => parseInt(obj[fOpt], 10) === fNum);
       setFilter(newData);
     }
   };
