@@ -5,33 +5,37 @@ function TableBody() {
   const {
     dataTable,
     filterByName,
-    isFiltered,
     filterByNumericValues,
+    isLoading,
   } = useContext(StarWarsContext);
 
-  let dataFiltered = [...dataTable];
-
-  if (isFiltered) {
-    console.log(filterByNumericValues);
-    const { column, comparision, value } = filterByNumericValues;
-    if (comparision === 'maior que') {
+  let dataFiltered = dataTable;
+  const firstPosition = 0;
+  for (let i = firstPosition; i < filterByNumericValues.length; i += 1) {
+    if (filterByNumericValues[i].comparison === 'maior que') {
       dataFiltered = dataFiltered.filter(
-        (planet) => parseInt(planet[column], 10) > parseInt(value, 10),
+        (planet) => parseInt(
+          planet[filterByNumericValues[i].column], 10,
+        ) > parseInt(filterByNumericValues[i].value, 10),
       );
-    } else if (comparision === 'menor que') {
+    } else if (filterByNumericValues[i].comparison === 'menor que') {
       dataFiltered = dataFiltered.filter(
-        (planet) => parseInt(planet[column], 10) < parseInt(value, 10),
+        (planet) => parseInt(
+          planet[filterByNumericValues[i].column], 10,
+        ) < parseInt(filterByNumericValues[i].value, 10),
       );
-    } else if (comparision === 'igual a') {
+    } else if (filterByNumericValues[i].comparison === 'igual a') {
       dataFiltered = dataFiltered.filter(
-        (planet) => parseInt(planet[column], 10) === parseInt(value, 10),
+        (planet) => parseInt(
+          planet[filterByNumericValues[i].column], 10,
+        ) === parseInt(filterByNumericValues[i].value, 10),
       );
     }
   }
 
   return (
     <tbody>
-      {dataFiltered.filter(
+      {isLoading ? <h2>Carregando...</h2> : dataFiltered.filter(
         (planet) => planet.name.toLowerCase().includes(filterByName.name),
       )
         .map((planet) => (

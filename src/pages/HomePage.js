@@ -4,22 +4,26 @@ import TableBody from '../components/TableBody';
 import SearchBar from '../components/SearchBar';
 import Header from '../components/Header';
 import StarWarsContext from '../context/StarWarsContext';
+import FilterList from '../components/FilterList';
 
 function HomePage() {
-  const { setDataTable, setHeaders } = useContext(StarWarsContext);
+  const { setDataTable, setHeaders, setLoading } = useContext(StarWarsContext);
+
+  const getPlanets = async () => {
+    const data = await starWarsAPI();
+    setDataTable(data);
+    setHeaders(Object.keys(data[0]));
+    setLoading(false);
+  };
 
   useEffect(() => {
-    async function fetchData() {
-      const data = await starWarsAPI();
-      setDataTable(data);
-      setHeaders(Object.keys(data[0]));
-    }
-    fetchData();
-  }, [setDataTable, setHeaders]);
+    getPlanets();
+  }, []);
 
   return (
     <section>
       <SearchBar />
+      <FilterList />
       <table>
         <Header />
         <TableBody />

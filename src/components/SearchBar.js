@@ -7,10 +7,29 @@ function SearchBar() {
     setFilterName,
     filterByNumericValues,
     setNumericValues,
-    setFilters } = useContext(StarWarsContext);
+  } = useContext(StarWarsContext);
 
-  const clearFilter = () => {
-    console.log(filterByNumericValues);
+  const handleClick = () => {
+    const getColumn = document.getElementById('column-filter');
+    const columnValue = getColumn.options[getColumn.selectedIndex].value;
+    const getComparison = document.getElementById('comparison-filter');
+    const comparisonValue = getComparison
+      .options[getComparison.selectedIndex].value;
+    const getValue = document.getElementById('value-filter').value;
+
+    if (filterByNumericValues[0] === null || filterByNumericValues[0].column === '') {
+      setNumericValues([{
+        column: columnValue,
+        comparison: comparisonValue,
+        value: getValue,
+      }]);
+    } else {
+      setNumericValues([...filterByNumericValues, {
+        column: columnValue,
+        comparison: comparisonValue,
+        value: getValue,
+      }]);
+    }
   };
 
   return (
@@ -27,10 +46,8 @@ function SearchBar() {
         />
       </label>
       <select
+        id="column-filter"
         data-testid="column-filter"
-        onChange={ (event) => setNumericValues({
-          ...filterByNumericValues, column: event.target.value,
-        }) }
       >
         <option value="population">population</option>
         <option value="orbital_period">orbital_period</option>
@@ -40,32 +57,21 @@ function SearchBar() {
       </select>
       <select
         data-testid="comparison-filter"
-        onChange={ (event) => setNumericValues({
-          ...filterByNumericValues, comparision: event.target.value,
-        }) }
+        id="comparison-filter"
       >
         <option value="maior que">maior que</option>
         <option value="menor que">menor que</option>
         <option value="igual a">igual a</option>
       </select>
-      <button
-        type="button"
-        data-testid='filter'
-        onClick={ clearFilter }
-      >
-        X
-      </button>
       <input
         type="number"
         data-testid="value-filter"
-        onChange={ (event) => setNumericValues({
-          ...filterByNumericValues, value: event.target.value,
-        }) }
+        id="value-filter"
       />
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ () => setFilters(true) }
+        onClick={ handleClick }
       >
         Aplly Filters
       </button>
