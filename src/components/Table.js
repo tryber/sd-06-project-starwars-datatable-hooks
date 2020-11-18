@@ -21,7 +21,8 @@ function Table() {
         </thead>
         {
           state.data.results.map((result, index) => {
-            if (result.name.toLowerCase().includes(state.filters.filterByName.name.toLowerCase())) {
+            if (result.name.toLowerCase()
+              .includes(state.filters.filterByName.name.toLowerCase())) {
               return (
                 <tbody key={ index }>
                   <tr>
