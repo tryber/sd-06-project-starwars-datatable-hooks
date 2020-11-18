@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import StarWarsContext from './StarWarsContext';
 import propTypes from 'prop-types';
+import StarWarsContext from './StarWarsContext';
 
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
@@ -17,7 +17,7 @@ function StarWarsProvider({ children }) {
       });
     setData(planets);
     setHeaders(Object.keys(planets[0]));
-  }
+  };
 
   useEffect(() => {
     requestPlanetsAPI();
@@ -28,7 +28,7 @@ function StarWarsProvider({ children }) {
     isLoading,
     setIsLoading,
     headers,
-  }
+  };
 
   return (
     <StarWarsContext.Provider value={ info }>
