@@ -5,7 +5,6 @@ import StarWarsContext from '../context/StarWarsContext';
 const StarWarsProvider = ({ children }) => {
   const [dataApi, setDataApi] = useState([]);
   const [filterName, setFilterName] = useState({ filterByName: { name: '' } });
-
   const [filterNumber, setFilterNumber] = useState([]);
 
   const infos = {

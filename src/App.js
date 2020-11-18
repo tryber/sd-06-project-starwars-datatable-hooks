@@ -1,6 +1,6 @@
 import React from 'react';
 import Table from './components/Table';
-import StarWarsProvider from './context/StarWarsContext';
+import StarWarsProvider from './provider/Provider';
 import Title from './components/Title';
 import FilterName from './components/FilterName';
 import FilterNumber from './components/FilterNumber';

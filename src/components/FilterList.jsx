@@ -11,6 +11,7 @@ const FilterList = () => {
     ];
     setFilterNumber(remainingFiltersNumber);
   };
+
   return (
     <div className="filters-list">
       <h4> Current filters: </h4>
