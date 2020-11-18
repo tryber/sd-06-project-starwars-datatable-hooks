@@ -1,11 +1,20 @@
 import React, { useState } from 'react';
+import fetchPlanetsInfo from '../services/apiServices';
 import StarWarsContext from './StarWarsContext';
-import fetchPlanetsInfo from '../services/apiFetch';
 
 function StarWarsProvider(props) {
   const [ data, setData ] = useState([]);
 
-  const contextValue = {};
+  const getPlanetsInfo = async () => {
+    const planetsInfo = await fetchPlanetsInfo();
+    setData(planetsInfo);
+  };
+
+  const contextValue = {
+    data,
+    getPlanetsInfo,
+  };
+
   return (
     <StarWarsContext.Provider value={ contextValue }>
       { props.children }
