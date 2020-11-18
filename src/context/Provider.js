@@ -4,13 +4,21 @@ import AppContext from './starContext';
 
 function Provider({ children }) {
   const [isFetching, setIsFetching] = useState(true);
-  const [data, setData] = useState({});
+  const [data, setData] = useState({ results: [] });
   const [filteredData, setFilteredData] = useState({});
   const [filters, setFilters] = useState({
     filters: {
       filterByName: {
         name: '',
       },
+      filterColumns: [
+        ['default', 'Selecione coluna'],
+        ['population', 'Population'],
+        ['orbital_period', 'Orbital period'],
+        ['diameter', 'Diameter'],
+        ['rotation_period', 'Rotation period'],
+        ['surface_water', 'Surface water'],
+      ],
     },
   });
 

@@ -25,9 +25,14 @@ function Table() {
     fetchData();
   }, []);
 
-  return (isFetching)
-    ? <Loading />
-    : (
+  const emptyList = 0;
+
+  if (isFetching) {
+    return <Loading />;
+  }
+
+  return (filteredData.results.length > emptyList)
+    ? (
       <table className="planetsTable">
         <thead>
           <tr>
@@ -66,7 +71,8 @@ function Table() {
           )) }
         </tbody>
       </table>
-    );
+    )
+    : <p>No planets found. Please change your query.</p>;
 }
 
 export default Table;
