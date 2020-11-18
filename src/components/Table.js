@@ -8,7 +8,7 @@ function Table() {
     comparison,
     data,
     getData,
-    name
+    name,
   } = useContext(StarWarsContext).context;
 
   useEffect(() => {
