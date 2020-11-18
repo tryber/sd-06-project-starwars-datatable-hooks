@@ -30,33 +30,33 @@ function Table() {
       {data
         .filter((planet) => planet.name.toLowerCase()
           .includes(filters.filterByName.name.toLowerCase()))
-            .map((planet, i) => (
-        <tbody key={ i }>
-          <tr>
-            <th scope="row">{planet.name}</th>
-            <td>{planet.rotation_period}</td>
-            <td>{planet.orbital_period}</td>
-            <td>{planet.diameter}</td>
-            <td>{planet.climate}</td>
-            <td>{planet.gravity}</td>
-            <td>{planet.terrain}</td>
-            <td>{planet.surface_water}</td>
-            <td>{planet.population}</td>
-            <td>{planet.created}</td>
-            <td>{planet.edited}</td>
-            <td>
-              <a href={ planet.url }>
-                More Info
-              </a>
-            </td>
-            <td>
-              {planet.films.map((film, id) => (
-                <a key={ id } href={ film }>{`Film ${` ${id + 1}`}`}</a>
-              ))}
-            </td>
-          </tr>
-        </tbody>
-      ))}
+        .map((planet, i) => (
+          <tbody key={ i }>
+            <tr>
+              <th scope="row">{planet.name}</th>
+              <td>{planet.rotation_period}</td>
+              <td>{planet.orbital_period}</td>
+              <td>{planet.diameter}</td>
+              <td>{planet.climate}</td>
+              <td>{planet.gravity}</td>
+              <td>{planet.terrain}</td>
+              <td>{planet.surface_water}</td>
+              <td>{planet.population}</td>
+              <td>{planet.created}</td>
+              <td>{planet.edited}</td>
+              <td>
+                <a href={ planet.url }>
+                  More Info
+                </a>
+              </td>
+              <td>
+                {planet.films.map((film, id) => (
+                  <a key={ id } href={ film }>{`Film ${` ${id + 1}`}`}</a>
+                ))}
+              </td>
+            </tr>
+          </tbody>
+        ))}
     </table>
   );
 }
