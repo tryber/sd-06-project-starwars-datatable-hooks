@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function ComparisonInputs() {
-  const magic = 0
+  const magic = 0;
   const { setFilters, filters } = useContext(StarWarsContext);
   const [localColumn, setLocalColumn] = useState('');
   const [localComparison, setLocalComparison] = useState('');
