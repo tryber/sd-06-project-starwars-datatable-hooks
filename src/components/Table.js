@@ -11,7 +11,6 @@ function Table() {
   if (data.length !== zero) {
     const dataHeaders = Object.keys(data[0])
       .filter((item) => item !== 'residents');
-    console.log(data);
     return (
       <table>
         <tbody>
