@@ -12,7 +12,7 @@ function Input() {
           name="name-filter"
           data-testid="name-filter"
           type="text"
-          onChange={({ target }) => getFilterName(target.value)}
+          onChange={( { target } ) => getFilterName(target.value)}
         />
       </label>
       <p>{ name }</p>

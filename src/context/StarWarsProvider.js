@@ -6,7 +6,7 @@ import fetchData from '../services/starWarsService';
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
   const [filters, setFilters] = useState({
-    filterByName: { 
+    filterByName: {
       name: '',
     },
   });
@@ -22,15 +22,15 @@ function StarWarsProvider({ children }) {
       filterByName: {
         name: nameInput,
       },
-    })
-  }
+    });
+  };
 
   const context = {
     data,
     getData,
     name: filters.filterByName.name,
     getFilterName,
-  }
+  };
 
   return (
     <StarWarsContext.Provider value={ { context } }>
