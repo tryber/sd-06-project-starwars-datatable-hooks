@@ -17,10 +17,29 @@ function StarWarsProvider({ children }) {
     setData(planetsInfo.results);
   }
 
+  function filterForms() {
+    const { filterByNumericValues } = filters;
+    const { column, comparison, value } = filterByNumericValues;
+    const dropFilter = data.filter((planet) => {
+      if (comparison === 'maior que') {
+        return planet[column] > parseInt(value, 10);
+      }
+      if (comparison === 'menor que') {
+        return planet[column] < parseInt(value, 10);
+      }
+      if (comparison === 'igual a') {
+        return planet[column] === value;
+      }
+      return data;
+    });
+    return setData(dropFilter);
+  }
+
   return (
     <StarWarsContext.Provider
       value={ {
         data,
+        filterForms,
         getPlanetsData,
         filters,
         setFilters,
@@ -36,9 +55,3 @@ StarWarsProvider.propTypes = {
 };
 
 export default StarWarsProvider;
-
-// const [forms, setForms] = useState(
-//   {
-//     filterByNumericValues: [{ column: '', comparison: '', value: '' }],
-//   },
-// );

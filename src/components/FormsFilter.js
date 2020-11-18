@@ -40,7 +40,7 @@ function FormsFilter() {
           { ...formsFilter, value: target.value },
         ) }
       />
-      <input
+      <button
         type="button"
         value="Filter"
         data-testid="button-filter"
@@ -48,7 +48,9 @@ function FormsFilter() {
           ...filters,
           filterByNumericValues: { ...formsFilter },
         }) }
-      />
+      >
+        Filter
+      </button>
     </fieldset>
   );
 }
