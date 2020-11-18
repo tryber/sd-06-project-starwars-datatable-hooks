@@ -5,6 +5,7 @@ import StarWarsContext from './StarWarsContext';
 
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
+  const [searchPlanet, setsearchPlanet] = useState([]);
 
   const getPlanetsData = async () => {
     const planets = await fetchStarWarsPlanets();
@@ -12,7 +13,14 @@ function StarWarsProvider({ children }) {
   };
 
   return (
-    <StarWarsContext.Provider value={ { data, getPlanetsData } }>
+    <StarWarsContext.Provider
+      value={
+        { data,
+          getPlanetsData,
+          searchPlanet,
+          setsearchPlanet }
+      }
+    >
       { children }
     </StarWarsContext.Provider>
   );

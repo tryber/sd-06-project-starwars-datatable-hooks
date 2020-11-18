@@ -6,7 +6,7 @@ function Table() {
   const tableHeader = ['name', 'rotation_period', 'orbital_period', 'diameter', 'climate',
     'gravity', 'terrain', 'surface_water', 'population', 'films', 'created', 'edited',
     'url'];
-  const { data, getPlanetsData } = useContext(StarWarsContext);
+  const { data, getPlanetsData, searchPlanet } = useContext(StarWarsContext);
 
   useEffect(() => {
     getPlanetsData();
@@ -20,7 +20,9 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        { data.map((dataPlanets) => (
+        { data.filter((dataPlanets) => (
+          dataPlanets.name.toLowerCase().includes(searchPlanet.toString().toLowerCase())
+        )).map((dataPlanets) => (
           <tr key={ dataPlanets.name }>
             <td>{ dataPlanets.name }</td>
             <td>{ dataPlanets.rotation_period }</td>
