@@ -4,6 +4,7 @@ import './App.css';
 
 function App() {
   return (
+    // COLOCAR O PROVIDER AQUI
     <div>
       <h1>Star Wars Datatable Hooks</h1>
       <Table />
