@@ -5,25 +5,49 @@ import starWarsContext from './starWarsContext';
 import { getPlanets } from '../services/starWarsApi';
 
 function Provider({ children }) {
-  const [data, setPlanets] = useState([]);
+  const INITIAL_FILTERS = {
+    filterByName: {
+      name: '',
+    },
+  };
+
+  const [filters, setFilters] = useState({ ...INITIAL_FILTERS });
+  // const [allPlanets, setAllPlanets] = useState([]); // Informações dos planetas originais
+  const [data, setPlanets] = useState([]); // planetas filtrados
 
   useEffect(() => {
     async function fetchData() {
       const response = await getPlanets();
-      setPlanets(response.results);
+      const planets = [...response.results];
+      setPlanets(planets);
+      // setAllPlanets(planets);
     }
     fetchData();
   }, []);
 
-  const contextValue = {
-    data,
+  // useEffect(assyn () => {
+  //   const { name } = filters.filterByName;
+  //   let planetsFiltered = allPlanets;
+  //   if (name !== '') {
+  //     planetsFiltered = planetsFiltered.filter((item) => item.name.includes(name));
+  //   }
+  //   setPlanets(planetsFiltered);
+  //   console.log(data);
+  //   console.log(planetsFiltered);
+  // }, [filters]);
+
+  const handleChangeName = (name) => {
+    setFilters({ ...filters, filterByName: { name } });
   };
 
-  // const arrayEmpty = 0;
+  const contextValue = {
+    data,
+    filters,
+    handleChangeName,
+  };
 
   return (
     <starWarsContext.Provider value={ contextValue }>
-      {/* {(data.length > arrayEmpty) && children} */}
       {children}
     </starWarsContext.Provider>
   );

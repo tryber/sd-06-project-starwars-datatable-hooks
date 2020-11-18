@@ -1,10 +1,12 @@
 import React from 'react';
-import Table from './components/Table';
 import Provider from './context/Provider';
+import Table from './components/Table';
+import SearchBar from './components/SearchBar';
 
 function App() {
   return (
     <Provider>
+      <SearchBar />
       <Table />
     </Provider>
   );
