@@ -39,7 +39,7 @@ describe.only('Faça uma requisição para o endpoint `/planets` da API de Star 
     expect(global.fetch).toHaveBeenCalled();
   });
 
-  it.skip('Preenche a tabela com os dados retornados', async () => {
+  it('Preenche a tabela com os dados retornados', async () => {
     await act(async () => {
       render(<App />);
     });
@@ -67,7 +67,7 @@ describe.only('Faça uma requisição para o endpoint `/planets` da API de Star 
     };
   });
 
-  it.skip('A tabela deve ter 13 colunas', async () => {
+  it('A tabela deve ter 13 colunas', async () => {
     await act(async () => {
       render(<App />);
     });
@@ -75,7 +75,7 @@ describe.only('Faça uma requisição para o endpoint `/planets` da API de Star 
     expect(await screen.findAllByRole(COLUMN_ROLE_SELECTOR)).toHaveLength(13);
   });
 
-  it.skip('A tabela deve ter uma linha para cada planeta retornado', async () => {
+  it('A tabela deve ter uma linha para cada planeta retornado', async () => {
     await act(async () => {
       render(<App />);
     });

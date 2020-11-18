@@ -4,12 +4,14 @@ import Context from './StarWarsContext';
 import fetchPlanets from '../services/FetchPlanets';
 
 function StarWarsProvider({ children }) {
-  const [data, setData] = useState({default: 'value'});
-  const [loading, setLoading] = useState();
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const getPlanets = async () => {
+    setLoading(true);
     const planets = await fetchPlanets();
     setData(planets);
+    setLoading(false);
   };
 
   const contextValue = {
