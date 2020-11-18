@@ -5,9 +5,16 @@ import './App.css';
 
 function App() {
   const [planets, setPlanets] = useState('');
+  const [name, setName] = useState('');
   const state = {
     planets,
     setPlanets,
+    filters: {
+      filterByName: {
+        name,
+        setName,
+      },
+    },
   };
   return (
     <PlanetContext.Provider value={ state }>
