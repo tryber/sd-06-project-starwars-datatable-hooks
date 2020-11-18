@@ -43,7 +43,7 @@ function Provider({ children }) {
 }
 
 Provider.propTypes = {
-  children: PropTypes.shape().isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default Provider;
