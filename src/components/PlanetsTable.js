@@ -1,8 +1,12 @@
 import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
+import filterPlanets from '../services';
 
 function PlanetsTable() {
-  const { planets, isLoading, filterByName } = useContext(StarWarsContext);
+  const { planets,
+    isLoading, filterByName, filterByNumericValues } = useContext(StarWarsContext);
+
+  const filteredPlanets = filterPlanets(planets, filterByNumericValues);
 
   return (
     <div>
@@ -26,7 +30,8 @@ function PlanetsTable() {
         </thead>
         <tbody>
           {isLoading ? <p>Carregando</p>
-            : planets.filter((planet) => planet.name.includes(filterByName.name))
+            : filteredPlanets.filter((planet) => planet.name
+              .toLowerCase().includes(filterByName.name))
               .map((planet) => (
                 <tr key={ planet.name }>
                   <td>{planet.name}</td>
