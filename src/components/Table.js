@@ -2,11 +2,48 @@ import React, { useEffect, useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { planets, getPlanets, searchTerm } = useContext(StarWarsContext);
+  const {
+    planets,
+    getPlanets,
+    searchTerm,
+    filteredByNumber,
+  } = useContext(StarWarsContext);
 
   useEffect(() => {
     getPlanets();
   }, []);
+
+  function numericFilter(allPlanets) {
+    let resp = [];
+    const ZERO = 0;
+    if (filteredByNumber.length === ZERO) return allPlanets;
+
+    const tudo = filteredByNumber.map((number) => {
+      if (number.comparison === 'maior que') {
+        resp = [...resp, allPlanets.filter((planet) => (
+          (number.value < parseInt(planet[number.column], 10))))];
+        // console.log(resp);
+        // return resp;
+      }
+      if (number.comparison === 'menor que') {
+        resp = [...resp, allPlanets.filter((planet) => (
+          (number.value > parseInt(planet[number.column], 10))))];
+        // console.log(resp);
+        // return resp;
+      }
+      if (number.comparison === 'igual a') {
+        resp = [...resp, allPlanets.filter((planet) => (
+          (number.value === planet[number.column])))];
+        // console.log(resp);
+        // return resp;
+      }
+      console.log(resp);
+      return resp[0];
+    });
+    const final = tudo[0];
+    console.log(final);
+    return final;
+  }
 
   return (
     <table className="table">
@@ -28,7 +65,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {planets
+        {numericFilter(planets)
           .filter((planet) => planet.name
             .includes(searchTerm.filters.filterByName.name))
           .map((planet) => (

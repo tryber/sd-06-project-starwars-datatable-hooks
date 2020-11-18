@@ -17,6 +17,8 @@ function StarWarProvider({ children }) {
     },
   );
 
+  const [filteredByNumber, setFilterByNumber] = useState([]);
+
   const getPlanets = async () => {
     const allPlanets = await fetchAPI();
     setPlanets(allPlanets);
@@ -27,6 +29,8 @@ function StarWarProvider({ children }) {
     getPlanets,
     searchTerm,
     setSearchTerm,
+    filteredByNumber,
+    setFilterByNumber,
   };
 
   return (
