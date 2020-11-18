@@ -10,6 +10,7 @@ function SearchInput() {
       name="search"
       id="search"
       onChange={ (e) => setSearchPlanet(e.target.value) }
+      data-testid="name-filter"
       value={ searchPlanet }
     />
   );
