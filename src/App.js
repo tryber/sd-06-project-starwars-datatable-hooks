@@ -1,11 +1,15 @@
 import React from 'react';
 import './App.css';
+import NovoTetse from './NovoTeste';
+import StarWarsProvider from './StarWarsProvider';
 
 function App() {
   return (
-    <div className="App">
-      <h1>Título Teste - Primeiro Commit</h1>
-    </div>
+    <StarWarsProvider>
+      <div className="App">
+        <NovoTetse />
+      </div>
+    </StarWarsProvider>
   );
 }
 
