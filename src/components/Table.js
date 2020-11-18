@@ -1,27 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import StarWarsAPI from '../services/StarWarsAPI';
+
+import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const [tableArray, setTableArray] = useState([]);
-  const [filterByName, setFilterByName] = useState('');
+  const {
+    tableArray,
+    filterByName,
+    setFilterByName,
+  } = useContext(StarWarsContext);
 
   const tableHeaders = ['Name', 'Rotation Period',
     'Orbital Period', 'Diameter', 'Climate', 'Gravity', 'Terrain',
     'Surface Water', 'Population', 'Films', 'Created', 'Edited', 'URL'];
 
-  useEffect(() => {
-    async function fetchAPI() {
-      const data = await StarWarsAPI();
-      setTableArray(data.results);
-    }
-    fetchAPI();
-  }, []);
-
   return (
     <div>
       <form>
-        <label htmlFor="filterByName">
+        <label
+          htmlFor="filterByName"
+          className="name-filter"
+        >
           Filtro por Nome
           {' '}
           <input
