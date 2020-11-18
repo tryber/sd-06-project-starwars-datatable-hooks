@@ -8,8 +8,9 @@ function StarWarsProvider({ children }) {
 
   const getPlanetsData = async () => {
     const planets = await fetchStarWarsPlanets();
-    setData(planets);
+    setData(planets.results);
   };
+
   return (
     <StarWarsContext.Provider value={ { data, getPlanetsData } }>
       { children }
