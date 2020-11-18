@@ -14,6 +14,7 @@ import {
   compareColumns,
 } from './utils/numericComparison';
 import fetchPlanets from '../services/api';
+import sortPlanetsByColumn from './utils/sortPlanets';
 
 const planetContext = createContext();
 
@@ -22,6 +23,10 @@ const filterStructure = {
     name: '',
   },
   filterByNumericValues: [],
+  order: {
+    column: 'name',
+    sort: 'ASC',
+  },
 };
 
 function PlanetProvider({ children }) {
@@ -32,8 +37,11 @@ function PlanetProvider({ children }) {
 
   useEffect(() => {
     fetchPlanets().then((data) => {
-      setPlanets(data);
-      setPlanetsData(data);
+      const apiPlanetsData = [...data];
+      apiPlanetsData.sort((a, b) => (a.name).localeCompare(b.name));
+
+      setPlanets(apiPlanetsData);
+      setPlanetsData(apiPlanetsData);
       setLoading(false);
     });
   }, []);
@@ -52,6 +60,23 @@ function PlanetProvider({ children }) {
 
     return headers;
   }, [planetsData]);
+
+  const planetsSortOptions = useMemo(() => {
+    const badOptions = [
+      'created',
+      'updated',
+      'films',
+      'url',
+    ];
+
+    let sortOptions;
+
+    if (planetInfo) {
+      sortOptions = planetInfo.filter((info) => !badOptions.includes(info));
+    }
+
+    return sortOptions;
+  }, [planetInfo]);
 
   const nameFiltered = useMemo(() => {
     const { filterByName: { name } } = filters;
@@ -156,18 +181,26 @@ function PlanetProvider({ children }) {
     setPlanets(filteredPlanetsByColumns);
   }, [filters, planetsData]);
 
+  const sortPlanets = useCallback((column, direction) => {
+    const sortedPlanets = sortPlanetsByColumn(planets, column, direction);
+
+    setPlanets(sortedPlanets);
+  }, [planets]);
+
   return (
     <planetContext.Provider
       value={ {
         loading,
         planets,
         planetInfo,
+        planetsSortOptions,
         nameFiltered,
         availableFilters,
         usedFilters,
         filterPlanetsByName,
         filterByNumerics,
         removeFilter,
+        sortPlanets,
       } }
     >
       {children}

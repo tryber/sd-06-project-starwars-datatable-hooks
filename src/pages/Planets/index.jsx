@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { FiX } from 'react-icons/fi';
 
 import { usePlanets } from '../../hooks/planets';
@@ -10,22 +10,38 @@ function Planets() {
   const columnFilterRef = useRef();
   const comparisonFilterRef = useRef();
   const valueFilterRef = useRef();
+  const [sortOption, setSortOption] = useState('name');
+  const [sortOrder, setSortOrder] = useState('ASC');
 
   const {
     planets,
     loading,
     planetInfo,
+    planetsSortOptions,
     nameFiltered,
     availableFilters,
     usedFilters,
     filterPlanetsByName,
     filterByNumerics,
+    sortPlanets,
     removeFilter,
   } = usePlanets();
 
   const handleInputChange = useCallback(({ target }) => {
     filterPlanetsByName(target.value);
   }, [filterPlanetsByName]);
+
+  const handleSort = useCallback(() => {
+    sortPlanets(sortOption, sortOrder);
+  }, [sortOption, sortOrder, sortPlanets]);
+
+  const handleRadioChange = useCallback(({ target }) => {
+    setSortOrder(target.value);
+  }, []);
+
+  const sortOptionChange = useCallback(({ target }) => {
+    setSortOption(target.value);
+  }, []);
 
   const handleSubmit = useCallback((formEvent) => {
     formEvent.preventDefault();
@@ -110,11 +126,62 @@ function Planets() {
           </div>
         </div>
 
+        <div className="sort-container">
+          <label htmlFor="column">Sort</label>
+          <select
+            name="column"
+            id="column"
+            data-testid="column-sort"
+            value={ sortOption }
+            onChange={ sortOptionChange }
+            required
+          >
+            {planetsSortOptions.map((sortInfo, index) => (
+              <option key={ `${sortInfo}-${index}` } value={ sortInfo }>
+                {sortInfo}
+              </option>
+            ))}
+          </select>
+
+          <div className="ordering-sort-container">
+            <div className="radio-container">
+              <label htmlFor="ASC">Ascending</label>
+              <input
+                type="radio"
+                name="sort"
+                id="ASC"
+                value="ASC"
+                onChange={ handleRadioChange }
+                data-testid="column-sort-input-asc"
+              />
+            </div>
+            <div className="radio-container">
+              <label htmlFor="DESC">Descending</label>
+              <input
+                type="radio"
+                name="sort"
+                id="DESC"
+                value="DESC"
+                onChange={ handleRadioChange }
+                data-testid="column-sort-input-desc"
+              />
+            </div>
+          </div>
+        </div>
+
         <button
           type="submit"
           data-testid="button-filter"
         >
-          Filtrar
+          Filter
+        </button>
+
+        <button
+          type="button"
+          data-testid="column-sort-button"
+          onClick={ handleSort }
+        >
+          Sort
         </button>
       </form>
 
@@ -145,7 +212,10 @@ function Planets() {
             {planets.map((planet) => (
               <tr key={ `${planet.url}-${Math.random()}` }>
                 {planetInfo.map((header) => (
-                  <td key={ `${planet.name}-${header}` }>
+                  <td
+                    key={ `${planet.name}-${header}` }
+                    data-testid={ header === 'name' ? 'planet-name' : '' }
+                  >
                     {
                       planet[header]
                     }
