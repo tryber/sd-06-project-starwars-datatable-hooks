@@ -6,7 +6,10 @@ import StarWarsContext from './StarWarsContext';
 import { getPlanetList } from '../services/StarWarsAPI';
 
 const StarWarsProvider = ({ children }) => {
+  const initialObj = { filterByName: { name: '' } };
+
   const [data, setData] = useState([]);
+  const [filters, setFilters] = useState(initialObj);
 
   const fetchAPI = async () => {
     getPlanetList().then((json) => {
@@ -14,7 +17,22 @@ const StarWarsProvider = ({ children }) => {
     });
   };
 
-  const context = { data, setData, fetchAPI };
+  const setFilterByName = (value) => {
+    setFilters({
+      ...filters,
+      filterByName: { name: value },
+    });
+  };
+
+  const context = {
+    data,
+    setData,
+    fetchAPI,
+    filters,
+    inputName: filters.filterByName.name,
+    setFilters,
+    setFilterByName,
+  };
 
   return (
     <StarWarsContext.Provider value={ context }>
