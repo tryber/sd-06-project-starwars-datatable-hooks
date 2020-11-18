@@ -1,30 +1,33 @@
 import React, { useEffect, useContext } from 'react';
 import { StarWarsContext } from '../context/StarWarsContext';
-import fetchPlanets from '../services/api';
 
 const Body = () => {
   const {
-    planetsData, setPlanetsData, fetching, setFetching, filterByName,
+    fetching,
+    setFetching,
+    planetsData,
+    segundoFiltro,
+    requisicaoAPI,
+    filterProvider: { filters: { filterByName: { name }, filterByNumericValues } },
   } = useContext(StarWarsContext);
 
   // Isa Rosa me lembrou que Ícaro deu a dica que devemos chamar a useEffect
   // onde vamos usar
+  // Formato de componentShoudMount?
   useEffect(() => {
+    requisicaoAPI();
     setFetching(true);
-    fetchPlanets().then((response) => {
-      setPlanetsData(response.results);
-      setFetching(false);
-    });
-  }, [setPlanetsData, setFetching]);
+    setFetching(false);
+  }, [setFetching]);
 
-  const filters = filterByName.name;
   if (fetching) {
     return (<tbody><tr><td>Loading...</td></tr></tbody>);
   }
+  const filtrado = segundoFiltro(planetsData, filterByNumericValues);
   return (
     <tbody>
-      {planetsData
-        .filter((planet) => planet.name.includes(filters))
+      {filtrado
+        .filter((planet) => planet.name.toLowerCase().includes(name.toLowerCase()))
         .map((planet) => (
           <tr key={ planet.name }>
             <td data-testid="planet-name">{planet.name}</td>

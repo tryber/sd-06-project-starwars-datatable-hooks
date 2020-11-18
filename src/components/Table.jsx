@@ -1,5 +1,7 @@
 import React from 'react';
 import Header from './Header';
+import Filter from './FilterNumeric';
+import FilterNumeric from './Filter';
 import PlanetsTable from './PlanetsTable';
 
 class Table extends React.Component {
@@ -7,6 +9,8 @@ class Table extends React.Component {
     return (
       <div>
         <table>
+          <Filter />
+          <FilterNumeric />
           <Header />
           <PlanetsTable />
         </table>
