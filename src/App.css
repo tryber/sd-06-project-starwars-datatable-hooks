@@ -43,9 +43,32 @@
 
 th {
   position: sticky;
-  top: 50px;
+  top: 110px;
 }
 
 table {
-  margin-top: 50px;
+  margin-top: 110px;
+}
+
+.filter {
+  color: rgb(121, 121, 180);
+  margin: 15px;
+  max-height: 30px;
+  border: solid 3px rgb(165, 165, 165);
+  border-radius: 5px;
+  display: flex;
+}
+
+p {
+  padding: 2px;
+}
+
+.navbar {
+  display: flex;
+  flex-direction: column;
+  height: 111px;
+}
+
+.filter-component {
+  display: flex;
 }

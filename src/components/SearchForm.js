@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
+import Filter from './Filter';
 
 function SearchForm() {
   const { filters, setFilter } = useContext(StarWarsContext);
@@ -80,6 +81,7 @@ function SearchForm() {
           </button>
         </div>
       </div>
+      <Filter />
     </form>
   );
 }

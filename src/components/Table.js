@@ -9,21 +9,26 @@ function Table() {
     .includes(name);
   const filteringNumeric = (e) => {
     let result = false;
+    const zero = 0;
+    let counter = zero;
     if (filterByNumericValues.length < 1) {
       result = true;
     } else {
       filterByNumericValues
         .forEach((it) => {
           if (it.comparison === 'maior que' && parseInt(e[it.column], 10) > it.value) {
-            result = true;
+            counter += 1;
           }
           if (it.comparison === 'menor que' && parseInt(e[it.column], 10) < it.value) {
-            result = true;
+            counter += 1;
           }
           if (it.comparison === 'igual a' && e[it.column] === it.value.toString()) {
-            result = true;
+            counter += 1;
           }
         });
+      if (counter === filterByNumericValues.length) {
+        result = true;
+      }
     }
     return result;
   };
