@@ -1,9 +1,17 @@
 import React, { useContext } from 'react';
 import StarWarsContext from '../contexts/StarWarsContext';
+import mainFilter from '../helpers/filters';
 import PlanetsTableBody from './PlanetsTableBody';
 
 function PlanetsTable() {
-  const { currentPlanets, tableHeaders } = useContext(StarWarsContext);
+  const { fetchedPlanets,
+    tableHeaders,
+    filters: { filterByName: { name } },
+    filters: { filterByNumericValues: { firstFilter } },
+  } = useContext(StarWarsContext);
+
+  const filteredPlanets = mainFilter(fetchedPlanets, name, firstFilter);
+
   return (
     <main>
       <table>
@@ -13,7 +21,7 @@ function PlanetsTable() {
           </tr>
         </thead>
         <tbody>
-          <PlanetsTableBody planets={ currentPlanets } tableHeaders={ tableHeaders } />
+          <PlanetsTableBody planets={ filteredPlanets } tableHeaders={ tableHeaders } />
         </tbody>
       </table>
     </main>

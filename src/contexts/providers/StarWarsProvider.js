@@ -7,7 +7,7 @@ function StarWarsProvider({ children }) {
   const [fetchedPlanets, setFetchedPlanets] = useState([]);
   const [tableHeaders, setTableHeader] = useState([]);
   const [nameFilter, setNameFilter] = useState('');
-  const [currentPlanets, setCurrentPlanets] = useState([]);
+  const [firstFilter, setFirstFilter] = useState({});
 
   useEffect(() => {
     const fetchAndSavePlanets = async () => {
@@ -20,16 +20,19 @@ function StarWarsProvider({ children }) {
     fetchAndSavePlanets();
   }, []);
 
-  useEffect(() => {
-    const regex = new RegExp(nameFilter, 'i');
-    const filteredPlanets = fetchedPlanets.filter((planet) => regex.test(planet.name));
-    setCurrentPlanets(filteredPlanets);
-  }, [fetchedPlanets, nameFilter]);
-
   const context = {
-    currentPlanets,
+    fetchedPlanets,
     tableHeaders,
     setNameFilter,
+    setFirstFilter,
+    filters: {
+      filterByName: {
+        name: nameFilter,
+      },
+      filterByNumericValues: {
+        firstFilter,
+      },
+    },
   };
 
   return (

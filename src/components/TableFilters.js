@@ -2,10 +2,10 @@ import React, { useContext, useState } from 'react';
 import StarWarsContext from '../contexts/StarWarsContext';
 
 function TableFilters() {
-  const { setNameFilter } = useContext(StarWarsContext);
-  const [columnToFilter, setColumnToFilter] = useState('');
-  const [comparisonFilter, setComparisonFilter] = useState('');
-  const [valueFilter, setValueFilter] = useState('');
+  const { setNameFilter, setFirstFilter } = useContext(StarWarsContext);
+  const [column, setColumn] = useState('');
+  const [comparison, setComparison] = useState('');
+  const [value, setValue] = useState('');
 
   const columnFilter = [
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
@@ -21,12 +21,20 @@ function TableFilters() {
 
     switch (event.target.name) {
     case 'column-filter':
-      return setColumnToFilter(selected);
+      return setColumn(selected);
     case 'comparison-filter':
-      return setComparisonFilter(selected);
+      return setComparison(selected);
     default:
       return null;
     }
+  }
+
+  function handleButtonClick() {
+    setFirstFilter({
+      column,
+      comparison,
+      value: parseInt(value, 10),
+    });
   }
 
   return (
@@ -44,9 +52,9 @@ function TableFilters() {
           name="column-filter"
         >
           <option selected disabled>-- Filter property --</option>
-          {columnFilter.map((column) => (
-            <option value={ column } key={ column }>
-              { column }
+          {columnFilter.map((filter) => (
+            <option value={ filter } key={ filter }>
+              { filter }
             </option>
           ))}
         </select>
@@ -68,10 +76,10 @@ function TableFilters() {
           type="number"
           data-testid="value-filter"
           placeholder="Filter by value"
-          onChange={ (event) => setValueFilter(event.target.value) }
+          onChange={ (event) => setValue(event.target.value) }
         />
 
-        <button type="button">
+        <button type="button" onClick={ handleButtonClick } data-testid="button-filter">
           Filter!
         </button>
       </div>
