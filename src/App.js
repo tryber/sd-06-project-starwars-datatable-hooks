@@ -35,6 +35,14 @@ function App() {
     // setNumberFilter('');
   };
 
+  const handleButtonExclude = () => {
+    setButtonFilter(false);
+    setFilterByName('');
+    setColumnFilter('');
+    setComparisonFilter('');
+    setNumberFilter('');
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       const apiResponse = await getPlanets();
@@ -106,7 +114,13 @@ function App() {
         onClick={ handleButtonClick }
       >
         Filtrar
-
+      </button>
+      <button
+        type="button"
+        data-testid="filter"
+        onClick={ handleButtonExclude }
+      >
+        X
       </button>
       <Table />
     </StarWarsContext.Provider>

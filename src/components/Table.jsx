@@ -36,53 +36,55 @@ function Table() {
         </tr>
         {
           planetsName.filter((f) => {
+            const nValue = Number(value);
+
             if (filterByName.name !== '') {
               return f.name.includes(filterByName.name);
             }
             if (button && column === 'population' && comparison === 'maior que') {
-              return Number(f.population) > Number(value);
+              return Number(f.population) > nValue;
             }
             if (button && column === 'population' && comparison === 'menor que') {
-              return Number(f.population) < Number(value);
+              return Number(f.population) < nValue;
             }
             if (button && column === 'population' && comparison === 'igual a') {
-              return Number(f.population) === Number(value);
+              return Number(f.population) === nValue;
             }
             if (button && column === 'orbital_period' && comparison === 'maior que') {
-              return Number(f.orbital_period) > Number(value);
+              return Number(f.orbital_period) > nValue;
             }
             if (button && column === 'orbital_period' && comparison === 'menor que') {
-              return Number(f.orbital_period) < Number(value);
+              return Number(f.orbital_period) < nValue;
             }
             if (button && column === 'orbital_period' && comparison === 'igual a') {
-              return Number(f.orbital_period) === Number(value);
+              return Number(f.orbital_period) === nValue;
             }
             if (button && column === 'diameter' && comparison === 'maior que') {
-              return Number(f.diameter) > Number(value);
+              return Number(f.diameter) > nValue;
             }
             if (button && column === 'diameter' && comparison === 'menor que') {
-              return Number(f.diameter) < Number(value);
+              return Number(f.diameter) < nValue;
             }
             if (button && column === 'diameter' && comparison === 'igual a') {
-              return Number(f.diameter) === Number(value);
+              return Number(f.diameter) === nValue;
             }
             if (button && column === 'rotation_period' && comparison === 'maior que') {
-              return Number(f.rotation_period) > Number(value);
+              return Number(f.rotation_period) > nValue;
             }
             if (button && column === 'rotation_period' && comparison === 'menor que') {
-              return Number(f.rotation_period) < Number(value);
+              return Number(f.rotation_period) < nValue;
             }
             if (button && column === 'rotation_period' && comparison === 'igual a') {
-              return Number(f.rotation_period) === Number(value);
+              return Number(f.rotation_period) === nValue;
             }
             if (button && column === 'surface_water' && comparison === 'maior que') {
-              return Number(f.surface_water) > Number(value);
+              return Number(f.surface_water) > nValue;
             }
             if (button && column === 'surface_water' && comparison === 'menor que') {
-              return Number(f.surface_water) < Number(value);
+              return Number(f.surface_water) < nValue;
             }
             if (button && column === 'surface_water' && comparison === 'igual a') {
-              return Number(f.surface_water) === Number(value);
+              return Number(f.surface_water) === nValue;
             }
             return f;
           }).map((e, id) => (
