@@ -6,8 +6,8 @@ function StarWarsProvider({ children }) {
   const [data, setData] = useState();
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const { results } = fetch('http://swapi-trybe.herokuapp.com/api/planets')
+  useEffect(async () => {
+    const { results } = await fetch('http://swapi-trybe.herokuapp.com/api/planets')
       .then((response) => response.json());
 
     setData(results);
