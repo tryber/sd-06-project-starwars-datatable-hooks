@@ -20,11 +20,11 @@ function Table() {
   ];
 
   return (
-    <>
+    <div>
       <table>
         <thead>
           <tr>
-            {/* sera renderizado keys na primeira linha e em cada coluna */}
+            {/* sera renderizado as keys na primeira linha e em cada coluna */}
             {keys.map((key) => <th key={ key }>{ key }</th>)}
           </tr>
         </thead>
@@ -48,7 +48,7 @@ function Table() {
           ))}
         </tbody>
       </table>
-    </>
+    </div>
   );
 }
 
