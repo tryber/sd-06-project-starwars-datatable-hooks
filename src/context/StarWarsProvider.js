@@ -30,36 +30,6 @@ function StarWarsProvider({ children }) {
     });
   };
 
-  // const getFilterColumn = (columnInput) => {
-  //   setFilters({
-  //     ...filters,
-  //     filterByNumericValues: [{
-  //       ...filterByNumericValues,
-  //       columnn: columnInput,
-  //     }]
-  //   })
-  // }
-
-  // const getFilterComparison = (comparisonInput) => {
-  //   setFilters({
-  //     ...filters,
-  //     filterByNumericValues: [{
-  //       ...filterByNumericValues,
-  //       columnn: comparisonInput,
-  //     }]
-  //   })
-  // }
-
-  // const getFilterValue = (valueInput) => {
-  //   setFilters({
-  //     ...filters,
-  //     filterByNumericValues: [{
-  //       ...filterByNumericValues,
-  //       columnn: valueInput,
-  //     }]
-  //   })
-  // }
-
   const context = {
     data,
     getData,
