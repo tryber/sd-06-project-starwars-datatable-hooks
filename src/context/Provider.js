@@ -7,7 +7,7 @@ function Provider({ children }) {
   const [data, setData] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState(null);
-  const [filters, setFilters] = useState({});
+  const [filters, setFilters] = useState({ filterByName: '' });
   const [filteredData, setFilteredData] = useState([]);
 
   const getPlanets = async () => {
@@ -20,15 +20,34 @@ function Provider({ children }) {
 
   const filterByName = () => {
     setFilteredData(
+      data.filter((planet) => {
+        if (
+          filters.filterByName
+          && filters.filterByName.name
+          && filters.filterByName.name !== ''
+        ) {
+          return planet.name.toLowerCase().includes(filters.filterByName.name);
+        }
+        return true;
+      }),
+    );
+  };
+
+  const buildComparisonExp = (column, comparison, value) => {
+    if (comparison === 'maior que') {
+      return column > value;
+    }
+    if (comparison === 'menor que') {
+      return column < value;
+    }
+    return column === value;
+  };
+
+  const filterByNumericValues = () => {
+    const { column, comparison, value } = filters.filterByNumericValues[0];
+    setFilteredData(
       data.filter(
-        (planet) => {
-          if (filters.filterByName
-            && filters.filterByName.name
-            && filters.filterByName.name !== '') {
-            return planet.name.toLowerCase().includes(filters.filterByName.name);
-          }
-          return true;
-        },
+        (planet) => buildComparisonExp(Number(planet[column]), comparison, Number(value)),
       ),
     );
   };
@@ -45,6 +64,7 @@ function Provider({ children }) {
         setFilters,
         filterByName,
         filteredData,
+        filterByNumericValues,
       } }
     >
       {children}
