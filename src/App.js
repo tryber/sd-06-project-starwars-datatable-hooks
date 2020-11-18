@@ -1,11 +1,11 @@
 import React from 'react';
 import Provider from './context/Provider';
-import Table from './components/Table';
+import Home from './pages/Home';
 
 export default function App() {
   return (
     <Provider>
-      <Table />
+      <Home />
     </Provider>
   );
 }

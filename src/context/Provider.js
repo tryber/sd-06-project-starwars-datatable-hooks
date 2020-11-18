@@ -4,8 +4,13 @@ import StarWarsContext from './StarWarsContext';
 import requestPlanets from '../services/api';
 
 export default function Provider({ children }) {
+  const INITIAL_FILTERS = {
+    filterByName: {
+      name: '',
+    },
+  };
   const [data, setData] = useState([]);
-  const [isFetching, setDataisFetching] = useState(false);
+  const [filters, setFilterName] = useState({ ...INITIAL_FILTERS });
 
   const starWarsPlanets = async () => {
     const planets = await requestPlanets();
@@ -16,11 +21,16 @@ export default function Provider({ children }) {
     starWarsPlanets();
   }, []);
 
+  const handleInputChange = (name) => {
+    setFilterName({ ...filters, filterByName: { name } });
+  };
+
   const contextValue = {
     data,
     starWarsPlanets,
-    isFetching,
-    setDataisFetching,
+    filters,
+    setFilterName,
+    handleInputChange,
   };
 
   return (
