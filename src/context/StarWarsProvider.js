@@ -6,6 +6,7 @@ import StarWarsServeApi from '../services/StarWarsService';
 function StarWarsProvider({ children }) {
   const [headers, setHeaders] = useState([]);
   const [planets, setPlanets] = useState([]);
+  const [filterPlanet, setFilterPlanet] = useState('');
 
   const getPlanetsApi = async () => {
     const planetsFromApi = await StarWarsServeApi();
@@ -15,7 +16,11 @@ function StarWarsProvider({ children }) {
   };
 
   return (
-    <StarWarsContext.Provider value={ { headers, planets, getPlanetsApi } }>
+    <StarWarsContext.Provider
+      value={
+        { headers, planets, getPlanetsApi, filterPlanet, setFilterPlanet }
+      }
+    >
       { children }
     </StarWarsContext.Provider>
   );
