@@ -6,5 +6,5 @@ import Provider from './context/Provider';
 ReactDOM.render(
   <Provider>
     <App />
-  </Provider>, document.getElementById('root')
+  </Provider>, document.getElementById('root'),
 );
