@@ -1,12 +1,19 @@
-import React, { useContext, useEffect } from 'react';
-import fetchApi from '../services/api';
+import React, { useContext, useEffect, useState } from 'react';
 import '../App.css';
 import PlanetContext from '../context/PlanetContext';
 
 function Home() {
   const {
-    planets, setPlanets, btnFilter, setBtnFilter, filters: { filterByName, filterByNumericValues: [{ column, setColumn, comparison, setComparison, value, setValue }] },
+    planets, getApi, filters: { filterByName,
+      filterByNumericValues: [
+        { column, setColumn, comparison, setComparison, value, setValue },
+      ] },
   } = useContext(PlanetContext);
+
+  const ZERO = 0;
+  const [tempCol, setTempCol] = useState('rotation_period');
+  const [tempComp, setTempComp] = useState('>');
+  const [tempVal, setTempVal] = useState(ZERO);
 
   const columnTitle = [
     'name', 'rotation_period', 'orbital_period', 'diameter', 'climate', 'gravity',
@@ -18,8 +25,14 @@ function Home() {
   ];
 
   useEffect(() => {
-    fetchApi(setPlanets);
+    getApi();
   }, []);
+
+  const setFilters = () => {
+    setColumn(tempCol);
+    setComparison(tempComp);
+    setValue(tempVal);
+  };
 
   return (
     <div className="App">
@@ -31,24 +44,45 @@ function Home() {
             data-testid="name-filter"
             id="nameFilter"
             value={ filterByName.name }
-            onChange={({target}) => filterByName.setName(target.value)}
+            onChange={ ({ target }) => filterByName.setName(target.value) }
           />
         </label>
         <label htmlFor="filters">
           Escolha o campo:
-          <select data-testid="column-filter" name="filters" value={column} onChange={({target}) => setColumn(target.value)}>
+          <select
+            data-testid="column-filter"
+            name="filters"
+            value={ tempCol }
+            onChange={ ({ target }) => setTempCol(target.value) }
+          >
             {columnFilter.map((filters) => (
-              <option key={filters} value={filters}>{filters}</option>
+              <option key={ filters } value={ filters }>{ filters }</option>
             ))}
           </select>
-          <select data-testid="comparison-filter" name="filters" value={comparison} onChange={({target}) => setComparison(target.value) }>
-            <option value=">">maior que</option>
-            <option value="<">menor que</option>
-            <option value="==">igual a</option>
+          <select
+            data-testid="comparison-filter"
+            name="filters"
+            value={ tempComp }
+            onChange={ ({ target }) => setTempComp(target.value) }
+          >
+            <option>maior que</option>
+            <option>menor que</option>
+            <option>igual a</option>
           </select>
-          <input type="number" data-testid="value-filter" value={value} onChange={({target}) => setValue(target.value)} />
+          <input
+            type="number"
+            data-testid="value-filter"
+            value={ tempVal }
+            onChange={ ({ target }) => setTempVal(target.value) }
+          />
         </label>
-        <button type="button" data-testid="button-filter" onClick={() => setBtnFilter((btnFilter === true) ? false : true)}>Filtrar</button>
+        <button
+          type="button"
+          data-testid="button-filter"
+          onClick={ setFilters }
+        >
+          Filtrar
+        </button>
       </form>
       <table>
         <thead>
@@ -59,19 +93,16 @@ function Home() {
         <tbody>
           {(!planets) ? <h1>LOADING...</h1>
             : planets.filter((name) => name.name.match(filterByName.name))
-            .filter((filter) => {
-              if (btnFilter === true) {
-                let result = false;
-                if(comparison === '>') {
-                  result = filter[column] > parseInt(value);
-                } else if (comparison === '<') {
-                  result = filter[column] < parseInt(value);
-                } else if (comparison === '==') {
-                  result = filter[column] == parseInt(value);
+              .filter((filter) => {
+                if (!column && !comparison && !value) return filter;
+                if (comparison === 'maior que') {
+                  return Number(filter[column]) > Number(value);
                 }
-                return result
-              }
-            })
+                if (comparison === 'menor que') {
+                  return Number(filter[column]) < Number(value);
+                }
+                return Number(filter[column]) === Number(value);
+              })
               .map((item) => (
                 <tr key={ item.name }>
                   <td>{ item.name }</td>
@@ -87,7 +118,6 @@ function Home() {
                   <td>{ item.created }</td>
                   <td>{ item.edited }</td>
                   <td>{ item.url }</td>
-                  {console.log(value)}
                 </tr>
               ))}
         </tbody>
