@@ -185,6 +185,7 @@ function Header() {
                 id="ASC"
                 value="ASC"
                 data-testid="column-sort-input-asc"
+                defaultChecked
               />
               Ascending
             </label>
