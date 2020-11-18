@@ -3,16 +3,19 @@ import StarWarsContext from '../../context/StarWarsContext';
 import request from '../../services/request';
 
 const CustomFilters = () => {
-  const { filters, setFilters, setData } = useContext(StarWarsContext);
+  const { filters, setFilters, setData, id, setId } = useContext(StarWarsContext);
   const { filterByNumericValues } = filters;
   const [planet, setPlanet] = useState([]);
-  const handleRemove = async () => {
+  const handleRemove = ({ target }) => {
+    console.log(filterByNumericValues);
+    const newArray = filterByNumericValues
+      .filter((array) => array.id !== parseInt(target.id, 10));
     setFilters({
       ...filters,
-      filterByNumericValues: [],
+      filterByNumericValues: newArray,
     });
-    console.log(planet);
     setData(planet);
+    setId(id - 1);
   };
 
   const reqPlanets = async () => {
@@ -27,12 +30,12 @@ const CustomFilters = () => {
   return (
     <div>
       <h1>Filtros: </h1>
-      {filterByNumericValues.map(({ column, comparison, value }, index) => {
+      {filterByNumericValues.map((planets, index) => {
         if (filterByNumericValues) {
           return (
             <div key={ index } data-testid="filter">
-              <span>{ `${column} ${comparison} ${value} ` }</span>
-              <button id={ index } type="button" onClick={ handleRemove }>X</button>
+              <span>{ `${planets.column} ${planets.comparison} ${planets.value} ` }</span>
+              <button id={ planets.id } type="button" onClick={ handleRemove }>X</button>
             </div>
           );
         }

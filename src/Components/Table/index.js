@@ -10,6 +10,7 @@ const Table = () => {
     setData,
     filters } = useContext(StarWarsContext);
   const { name } = filters.filterByName;
+  const { filterByNumericValues } = filters;
   useEffect(() => {
     const reqPlanets = async () => {
       const planets = await request();
@@ -46,9 +47,12 @@ const Table = () => {
               .includes(name.toUpperCase()))
               .filter((array) => {
                 if (filters.filterByNumericValues[0]) {
-                  const columns = filters.filterByNumericValues[0].column;
-                  const comparisons = filters.filterByNumericValues[0].comparison;
-                  const values = filters.filterByNumericValues[0].value;
+                  const columns = filters
+                    .filterByNumericValues[filterByNumericValues.length - 1].column;
+                  const comparisons = filters
+                    .filterByNumericValues[filterByNumericValues.length - 1].comparison;
+                  const values = filters
+                    .filterByNumericValues[filterByNumericValues.length - 1].value;
                   if (comparisons === 'maior que') {
                     return array[columns] > parseInt(values, 10);
                   } if (comparisons === 'menor que') {
