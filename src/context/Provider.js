@@ -7,6 +7,8 @@ function Provider({ children }) {
   const [data, setData] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState(null);
+  const [filters, setFilters] = useState({});
+  const [filteredData, setFilteredData] = useState([]);
 
   const getPlanets = async () => {
     setIsFetching(true);
@@ -14,6 +16,21 @@ function Provider({ children }) {
       .then((response) => setData(response.results))
       .catch((response) => setError(response.message))
       .then(() => setIsFetching(false));
+  };
+
+  const filterByName = () => {
+    setFilteredData(
+      data.filter(
+        (planet) => {
+          if (filters.filterByName
+            && filters.filterByName.name
+            && filters.filterByName.name !== '') {
+            return planet.name.toLowerCase().includes(filters.filterByName.name);
+          }
+          return true;
+        },
+      ),
+    );
   };
 
   return (
@@ -24,6 +41,10 @@ function Provider({ children }) {
         isFetching,
         fetchPlanets: getPlanets,
         setIsFetching,
+        filters,
+        setFilters,
+        filterByName,
+        filteredData,
       } }
     >
       {children}

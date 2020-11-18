@@ -1,8 +1,12 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { data } = useContext(StarWarsContext);
+  const { filteredData, filters, filterByName } = useContext(StarWarsContext);
+
+  useEffect(() => {
+    filterByName();
+  }, [filters]);
 
   const renderPlanet = (planet) => Object.entries(planet).map(([key, value]) => {
     if (key !== 'residents') {
@@ -31,7 +35,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {data.map((planet) => (
+        {filteredData.map((planet) => (
           <tr key={ planet.name }>{renderPlanet(planet)}</tr>
         ))}
       </tbody>
