@@ -29,12 +29,14 @@ const Filters = () => {
     return byName;
   };
 
-  const handleName = async ({ target }) => {
-    setFilters({ ...filters, filterByName: { name: target.value } });
-    const byName = await filterByName();
-    setData(byName);
+  const handleNaming = async () => {
+    const byname = await filterByName();
+    return setData(byname);
   };
 
+  const handleName = async ({ target }) => {
+    setFilters({ ...filters, filterByName: { name: target.value } });
+  };
   const handleColumn = ({ target }) => {
     setColumn(target.value);
   };
@@ -47,6 +49,24 @@ const Filters = () => {
     setValue(target.value);
   };
 
+  const filterByNumericValues = async () => {
+    const byName = await filterByName();
+    await filters.filterByNumericValues.map((element, index) => {
+      const fullFiltered = byName.filter((array) => {
+        const columns = filters.filterByNumericValues[index].column;
+        const comparisons = filters.filterByNumericValues[index].comparison;
+        const values = filters.filterByNumericValues[index].value;
+        if (comparisons === 'maior que') {
+          return array[columns] > parseInt(values, 10);
+        } if (comparisons === 'menor que') {
+          return array[columns] < parseInt(values, 10);
+        }
+        return array[columns] === values;
+      });
+      return setData(fullFiltered);
+    });
+  };
+
   const handleButton = async () => {
     setFilters(
       {
@@ -57,26 +77,9 @@ const Filters = () => {
     );
   };
 
-  const filterByNumericValues = async () => {
-    const byName = await filterByName();
-    await filters.filterByNumericValues.map((element, index) => {
-      const fullFiltered = byName.filter((array) => {
-        const columns = filters.filterByNumericValues[index].column;
-        const comparisons = filters.filterByNumericValues[index].comparison;
-        const values = filters.filterByNumericValues[index].value;
-        if (comparisons === 'maior que') {
-          return array[columns] >= parseInt(values, 10);
-        } if (comparisons === 'menor que') {
-          return array[columns] <= parseInt(values, 10);
-        }
-        return array[columns] === values;
-      });
-      return setData(fullFiltered);
-    });
-  };
-
   useEffect(() => {
     const zero = 0;
+    handleNaming();
     if (filters.filterByNumericValues.length > zero) {
       filterByNumericValues();
     }
