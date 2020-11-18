@@ -7,6 +7,12 @@ const urlAPI = 'https://swapi-trybe.herokuapp.com/api/planets/';
 export default function Provider({ children }) {
   const [planets, setPlanets] = useState(null);
   const [loading, setLoading] = useState(false);
+  const INITIAL_FILTERS = {
+    filterByName: {
+      name: '',
+    },
+  };
+  const [filters, setFilters] = useState({ ...INITIAL_FILTERS });
 
   const fetchPlanets = async () => {
     const requestData = await fetch(urlAPI);
@@ -18,7 +24,7 @@ export default function Provider({ children }) {
   };
 
   const context = {
-    planets, fetchPlanets, loading, setLoading,
+    planets, fetchPlanets, loading, setLoading, filters, setFilters,
   };
   return (
     <StarWarsContext.Provider value={ context }>
