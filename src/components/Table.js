@@ -1,13 +1,13 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 // import axios from 'axios';
 import StarWarsContext from '../context/StarWarsContext';
 import API from '../services/api';
 
 function Table() {
-  const { state, setState } = useContext(StarWarsContext);
+  const { state } = useContext(StarWarsContext);
 
   if (state.data) {
-    console.log(state.data.results);
+    // console.log(state.data.results);
   }
 
   let table;
@@ -20,9 +20,18 @@ function Table() {
       <p>
         <table>
           <tr>
-            {Object.keys(state.data.results[0]).map((result) => <th>{result}</th>)}
+            {
+              Object.keys(state.data.results[0])
+                .map((result, index) => <th key={ index }>{result}</th>)
+            }
           </tr>
-          {state.data.results.map((result) => <tr>{Object.values(result).map((each) => <td>{each}</td>)}</tr>)}
+          {
+            state.data.results.map((result, index) => (
+              <tr key={ index }>
+                {Object.values(result).map((each, i) => <td key={ i }>{each}</td>)}
+              </tr>
+            ))
+          }
         </table>
       </p>);
   }
