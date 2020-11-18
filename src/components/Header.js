@@ -179,11 +179,23 @@ function Header() {
           </select>
           <div onChange={ handleSort }>
             <label htmlFor="ASC">
-              <input type="radio" name="sort" id="ASC" value="ASC" />
+              <input
+                type="radio"
+                name="sort"
+                id="ASC"
+                value="ASC"
+                data-testid="column-sort-input-asc"
+              />
               Ascending
             </label>
             <label htmlFor="DESC">
-              <input type="radio" id="DESC" name="sort" value="DESC" />
+              <input
+                type="radio"
+                id="DESC"
+                name="sort"
+                value="DESC"
+                data-testid="column-sort-input-desc"
+              />
               Descending
             </label>
           </div>

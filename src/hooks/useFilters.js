@@ -15,6 +15,10 @@ const useFilters = () => {
         rotation_period: 'Rotation period',
         surface_water: 'Surface water',
       },
+      order: {
+        column: 'name',
+        sort: 'ASC',
+      },
     },
   });
 
@@ -76,7 +80,7 @@ const useFilters = () => {
 
     const orderedList = [...filteredList];
 
-    if (currFilters.order && stringColumns.includes(currFilters.order.column)) {
+    if (stringColumns.includes(currFilters.order.column)) {
       const { column, sort } = currFilters.order;
 
       switch (sort) {
@@ -89,11 +93,9 @@ const useFilters = () => {
       default:
         break;
       }
-
-      console.log(orderedList);
     }
 
-    if (currFilters.order && numberColumns.includes(currFilters.order.column)) {
+    if (numberColumns.includes(currFilters.order.column)) {
       const { column, sort } = currFilters.order;
 
       switch (sort) {

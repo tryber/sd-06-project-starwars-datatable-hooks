@@ -4,6 +4,7 @@ import starContext from '../context/starContext';
 import Loading from './Loading';
 
 import '../css/Table.css';
+import useFilters from '../hooks/useFilters';
 
 function Table() {
   const {
@@ -11,14 +12,15 @@ function Table() {
     setIsFetching,
     setData,
     filteredData,
-    setFilteredData,
   } = useContext(starContext);
+
+  const [filters, setFilters] = useFilters();
 
   useEffect(() => {
     const fetchData = async () => {
       const planets = await fetchPlanets();
       setData(planets);
-      setFilteredData(planets);
+      setFilters({ ...filters });
       setIsFetching(false);
     };
 
@@ -54,7 +56,7 @@ function Table() {
         <tbody>
           { filteredData.results.map((planet) => (
             <tr key={ planet.name }>
-              <td data-testid={ planet.name }>{ planet.name }</td>
+              <td data-testid="planet-name">{ planet.name }</td>
               <td>{ planet.rotation_period }</td>
               <td>{ planet.orbital_period }</td>
               <td>{ planet.diameter }</td>
