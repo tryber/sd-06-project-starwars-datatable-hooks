@@ -5,6 +5,7 @@ import starWarsAPI from '../API/starWarsAPI';
 
 function Provider({ children }) {
   const [data, setData] = useState(['']);
+  const [filters, setFilter] = useState({ filterByName: { name: '' } });
   useEffect(() => {
     const requestAPI = async () => {
       setData(await starWarsAPI());
@@ -13,6 +14,8 @@ function Provider({ children }) {
   }, []);
   const contextValue = {
     data,
+    filters,
+    setFilter,
   };
 
   return (
