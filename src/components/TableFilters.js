@@ -2,7 +2,9 @@ import React, { useContext, useState } from 'react';
 import StarWarsContext from '../contexts/StarWarsContext';
 
 function TableFilters() {
-  const { setNameFilter, setFirstFilter } = useContext(StarWarsContext);
+  const {
+    setNameFilter, setNumericFilters, filters: { filterByNumericValues },
+  } = useContext(StarWarsContext);
   const [column, setColumn] = useState('');
   const [comparison, setComparison] = useState('');
   const [value, setValue] = useState('');
@@ -30,11 +32,11 @@ function TableFilters() {
   }
 
   function handleButtonClick() {
-    setFirstFilter({
+    setNumericFilters([...filterByNumericValues, {
       column,
       comparison,
       value: parseInt(value, 10),
-    });
+    }]);
   }
 
   return (

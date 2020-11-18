@@ -7,10 +7,10 @@ function PlanetsTable() {
   const { fetchedPlanets,
     tableHeaders,
     filters: { filterByName: { name } },
-    filters: { filterByNumericValues: { firstFilter } },
+    filters: { filterByNumericValues },
   } = useContext(StarWarsContext);
 
-  const filteredPlanets = mainFilter(fetchedPlanets, name, firstFilter);
+  const filteredPlanets = mainFilter(fetchedPlanets, name, filterByNumericValues);
 
   return (
     <main>

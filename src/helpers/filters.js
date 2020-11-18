@@ -4,23 +4,29 @@ export function filterByName(planets, nameString) {
   return filteredByName;
 }
 
-export function filterByColumn(planets, filter) {
-  switch (filter.comparison) {
+export function filterByColumn(planets, filters) {
+  switch (filters.comparison) {
   case 'maior que':
-    return planets.filter((planet) => parseInt(planet[filter.column], 10) > filter.value);
+    return planets.filter((planet) => (
+      parseInt(planet[filters.column], 10) > filters.value));
   case 'menor que':
-    return planets.filter((planet) => parseInt(planet[filter.column], 10) < filter.value);
+    return planets.filter((planet) => (
+      parseInt(planet[filters.column], 10) < filters.value));
   case 'igual a':
     return planets.filter((planet) => (
-      parseInt(planet[filter.column], 10) === filter.value));
+      parseInt(planet[filters.column], 10) === filters.value));
   default:
     return planets;
   }
 }
 
-export default function mainFilter(planets, nameFilter, columnFilter) {
+export default function mainFilter(planets, nameFilter, columnFilters) {
   const filteredByName = filterByName(planets, nameFilter);
-  const filteredByColumn = filterByColumn(filteredByName, columnFilter);
+  let filteredByColumn = filteredByName;
+
+  columnFilters.forEach((filter) => {
+    filteredByColumn = filterByColumn(filteredByColumn, filter);
+  });
 
   return filteredByColumn;
 }
