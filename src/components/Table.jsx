@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
+import '../style/table.css';
 
 function Table() {
   const { dataAPI, getData } = useContext(StarWarsContext);
@@ -15,14 +16,14 @@ function Table() {
   return (
     <table>
       <thead>
-        <tr>
-          { tableHeaders.map((title, index) => <th key={ `title${index}` }>{title}</th>) }
+        <tr className="table-row">
+          { tableHeaders.map((title, index) => <th className="table-header" key={ `title${index}` }>{title}</th>) }
         </tr>
       </thead>
       <tbody>
         {dataAPI.map((obj, index) => {
           const tableRows = (
-            <tr key={ `planet${index}` }>
+            <tr key={ `planet${index}` } className="table-row">
               <td>{obj.name}</td>
               <td>{obj.rotation_period}</td>
               <td>{obj.orbital_period}</td>
