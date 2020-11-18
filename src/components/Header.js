@@ -1,8 +1,10 @@
 import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
+// import Filters from './Filters';
 
 function Header() {
-  const { setFilterByName, setFilterByNumericValues } = useContext(StarWarsContext);
+  const { setFilterByName, setFilterByNumericValues,
+    filterByNumericValues } = useContext(StarWarsContext);
   const columns = ['population', 'orbital_period',
     'diameter', 'rotation_period', 'surface_water'];
   const comparison = ['maior que', 'menor que', 'igual a'];
@@ -19,11 +21,19 @@ function Header() {
       .options[comparisonFilter.selectedIndex].value;
     const valueFilter = document.querySelector('#value-filter').value;
 
-    setFilterByNumericValues({
-      column: columnSelected,
-      comparison: comparisonSelected,
-      value: valueFilter,
-    });
+    if (filterByNumericValues[0].column === '') {
+      setFilterByNumericValues([{
+        column: columnSelected,
+        comparison: comparisonSelected,
+        value: valueFilter,
+      }]);
+    } else {
+      setFilterByNumericValues([...filterByNumericValues, {
+        column: columnSelected,
+        comparison: comparisonSelected,
+        value: valueFilter,
+      }]);
+    }
   };
 
   return (
@@ -60,6 +70,7 @@ function Header() {
       >
         Adicionar filtro
       </button>
+      {/* <Filters /> */}
     </div>
   );
 }

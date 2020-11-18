@@ -6,11 +6,11 @@ function Provider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [isLoading, setIsLoading] = useState([false]);
   const [filterByName, setFilterByName] = useState({ name: '' });
-  const [filterByNumericValues, setFilterByNumericValues] = useState({
+  const [filterByNumericValues, setFilterByNumericValues] = useState([{
     column: '',
     comparison: '',
     value: '',
-  });
+  }]);
 
   const getPlanets = async () => {
     setIsLoading(true);
