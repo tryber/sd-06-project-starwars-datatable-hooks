@@ -2,10 +2,16 @@ import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { data, fetchPlanets } = useContext(StarWarsContext);
+  const { data, fetchPlanets, searchPlanet } = useContext(StarWarsContext);
   useEffect(() => {
     fetchPlanets();
   }, []);
+
+  const filterData = () => {
+    const filteredData = data.filter((item) => item.name.toLowerCase()
+      .includes(searchPlanet.toLowerCase()));
+    return filteredData;
+  };
 
   const headers = ['Name', 'Rotation period',
     'Orbital period', 'Diameter', 'Climate',
@@ -16,9 +22,6 @@ function Table() {
   ];
   return (
     <div>
-      <header>
-        <h1>Welcome to the starwars database!</h1>
-      </header>
       <div>
         <table className="table">
           <thead>
@@ -32,7 +35,7 @@ function Table() {
           </thead>
           <tbody>
             {
-              data.map((element, index) => (
+              filterData().map((element, index) => (
                 <tr key={ index }>
                   <td>{element.name}</td>
                   <td>{element.rotation_period}</td>
