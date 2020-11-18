@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // importo React pois um provider sempre será um componente e
 // o contexto, que será utilizado no provider
 
@@ -18,17 +18,26 @@ function Provider({ children }) {
   // ApiRequest recebe o retorno da requisição da API
   const [ApiRequest, setApiRequest] = useState([]);
 
-  // Essa função recebe o resultado que veio da requisição e eu passo ela logo abaixo
-  // no value do provider
-  const getResults = async () => {
-    setApiRequest(await fetchAPI());
+  // Aqui eu faço a requisição, pego a resposta e coloco dentro da variável ApiRequest
+  // depois passo ela no value do provider
+  useEffect(() => {
+    const fetchPlanets = async () => {
+      const data = await fetchAPI();
+      setApiRequest(data.results);
+    };
+
+    fetchPlanets();
+  }, []);
+
+  // aqui eu agrupo todos os values que pretendo prover
+  const context = {
+    ApiRequest,
   };
 
   // agora eu compartilho os dados com os componentes filhos (ou filho ? (≖_≖ ) )
   return (
-    // como value eu passo a variável ApiRequest que contém a resposta da requisição
-    // para que assim eu consiga compartilhar os dados que vierem com os componentes filhos
-    <StarWarsContext.Provider value={ { ApiRequest, getResults } }>
+    // como value eu passo o context que é um objeto que contém os valores que serão compartilhados
+    <StarWarsContext.Provider value={ context }>
       { children }
     </StarWarsContext.Provider>
   );

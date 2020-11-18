@@ -1,45 +1,47 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
-function Table() {
-  const { ApiRequest, getResults } = useContext(StarWarsContext);
-
-  useEffect(() => {
-    ApiRequest.concat(getResults());
-  }, []);
+export default function Table() {
+  const { ApiRequest } = useContext(StarWarsContext);
 
   return (
     <table className="table">
       <thead>
         <tr>
-          <th scope="col">#</th>
-          <th scope="col">First</th>
-          <th scope="col">Last</th>
-          <th scope="col">Handle</th>
+          <th scope="col">ID</th>
+          <th scope="col">NAME</th>
+          <th scope="col">DIAMETER</th>
+          <th scope="col">CLIMATE</th>
+          <th scope="col">GRAVITY</th>
+          <th scope="col">TERRAIN</th>
+          <th scope="col">SURFACE WATER</th>
+          <th scope="col">POPULATION</th>
+          <th scope="col">RESIDENTS</th>
+          <th scope="col">FILMS</th>
+          <th scope="col">CREATED</th>
+          <th scope="col">EDITED</th>
+          <th scope="col">URL</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-        </tr>
+        {ApiRequest.map((planet, index) => (
+          <tr key={ index }>
+            <td>{index}</td>
+            <td>{planet.name}</td>
+            <td>{planet.diameter}</td>
+            <td>{planet.climate}</td>
+            <td>{planet.gravity}</td>
+            <td>{planet.terrain}</td>
+            <td>{planet.surface_water}</td>
+            <td>{planet.population}</td>
+            <td>{planet.resident}</td>
+            <td>{planet.films}</td>
+            <td>{planet.created}</td>
+            <td>{planet.edited}</td>
+            <td>{planet.url}</td>
+          </tr>
+        ))}
       </tbody>
     </table>
   );
 }
-
-export default Table;
