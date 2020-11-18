@@ -10,7 +10,6 @@ function PlanetsTable() {
   const INITIAL_POSITION = 0;
   for (let i = INITIAL_POSITION; i < filterByNumericValues.length; i += 1) {
     filteredPlanets = filterPlanets(filteredPlanets, filterByNumericValues[i]);
-    console.log('FOR:', i);
   }
 
   return (

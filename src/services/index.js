@@ -1,9 +1,3 @@
-// export const getPlanets = async () => {
-//   const apiRequest = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
-//   const apiResponse = await apiRequest.json();
-//   return apiResponse.results;
-// };
-
 export const filter = (planets, filterByNumericValues) => {
   switch (filterByNumericValues.comparison) {
   case 'maior que':

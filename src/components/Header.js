@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
-// import Filters from './Filters';
 
 function Header() {
   const { setFilterByName, setFilterByNumericValues,

@@ -3,21 +3,19 @@ import StarWarsContext from '../context/StarWarsContext';
 
 function Filters() {
   const { filterByNumericValues, setFilterByNumericValues } = useContext(StarWarsContext);
-  const formatedFilter = filterByNumericValues;
 
   const handleClick = ({ target }) => {
-    formatedFilter.splice(target.value, 1);
+    const formatedFilter = filterByNumericValues
+      .filter((filter) => filter.column !== target.value);
     setFilterByNumericValues(formatedFilter);
-    console.log(filterByNumericValues);
-    console.log(formatedFilter);
   };
 
   return (
     <ul>
       {filterByNumericValues.map((filter, index) => (
-        <li key={ index }>
+        <li key={ index } data-testid="filter">
           {`${filter.column} ${filter.comparison} ${filter.value} `}
-          <button type="button" onClick={ handleClick } value={ index }>X</button>
+          <button type="button" onClick={ handleClick } value={ filter.column }>X</button>
         </li>
       ))}
     </ul>
