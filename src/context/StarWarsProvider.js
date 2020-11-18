@@ -5,7 +5,7 @@ import fetchData from '../services/starWarsService';
 
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
-  const [filters, setFilters] = useState({
+  const [filters, setFilters] = useState({
     filterByName: {
       name: '',
     },
