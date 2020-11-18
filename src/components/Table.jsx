@@ -27,7 +27,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {data.filter((planets) => planets.name.includes(name))
+        {data.filter((planets) => planets.name.toLowerCase().includes(name.toLowerCase()))
             .map((planet) => (
               <tr key={ planet.name }>
                 <td data-testid="planet-name">{planet.name}</td>
