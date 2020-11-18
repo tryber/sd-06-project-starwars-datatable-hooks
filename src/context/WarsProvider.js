@@ -5,6 +5,7 @@ import WarsApi from '../service/API';
 
 export default function WarsProvider({ children }) {
   const [star, setstar] = useState([]);
+  const [searchName, setsearchName] = useState('');
 
   const getApi = async () => {
     const fetchApi = await WarsApi();
@@ -12,16 +13,12 @@ export default function WarsProvider({ children }) {
   };
 
   return (
-    <StarWarsContext.Provider value={ { star, getApi } }>
+    <StarWarsContext.Provider value={ { star, getApi, searchName, setsearchName } }>
       { children }
     </StarWarsContext.Provider>
   );
 }
 
 WarsProvider.propTypes = {
-// email: propTypes.string.isRequired,
-// currencAPI: propTypes.func.isRequired,
-//   currencies: propTypes.objectOf(propTypes.string).isRequired,
   children: propTypes.objectOf(propTypes.string).isRequired,
-//  walletState: propTypes.arrayOf(Object).isRequired,
 };

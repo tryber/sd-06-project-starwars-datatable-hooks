@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/starWarsContext';
 
 function Table() {
-  const { star, getApi } = useContext(StarWarsContext);
+  const { star, getApi, searchName } = useContext(StarWarsContext);
 
   useEffect(() => {
     getApi();
@@ -28,23 +28,26 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {star.map((el, idx) => (
-          <tr key={ idx }>
-            <td>{ el.name }</td>
-            <td>{ el.climate }</td>
-            <td>{ el.created }</td>
-            <td>{ el.diameter }</td>
-            <td>{ el.edited }</td>
-            <td>{ el.films }</td>
-            <td>{ el.gravity }</td>
-            <td>{ el.orbital_period }</td>
-            <td>{ el.population }</td>
-            <td>{ el.rotation_period }</td>
-            <td>{ el.surface_water }</td>
-            <td>{ el.terrain }</td>
-            <td>{ el.url }</td>
-          </tr>
-        ))}
+        {star
+          .filter((el) => el.name.toLowerCase()
+            .includes(searchName.toLowerCase()))
+          .map((el, idx) => (
+            <tr key={ idx }>
+              <td>{ el.name }</td>
+              <td>{ el.climate }</td>
+              <td>{ el.created }</td>
+              <td>{ el.diameter }</td>
+              <td>{ el.edited }</td>
+              <td>{ el.films }</td>
+              <td>{ el.gravity }</td>
+              <td>{ el.orbital_period }</td>
+              <td>{ el.population }</td>
+              <td>{ el.rotation_period }</td>
+              <td>{ el.surface_water }</td>
+              <td>{ el.terrain }</td>
+              <td>{ el.url }</td>
+            </tr>
+          ))}
       </tbody>
     </table>
   );
