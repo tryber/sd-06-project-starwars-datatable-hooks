@@ -19,7 +19,22 @@ function Provider({ children }) {
     fetchData();
   }, []);
 
-  const context = { data, isFetching };
+  function filterPlanets({ target }) {
+    setFilters({ ...filters, filterByName: { name: target.value } });
+  }
+
+  const [filters, setFilters] = useState({
+    filterByName: {
+      name: '',
+    },
+    filterByNumericValues: [],
+    order: {
+      column: '',
+      sort: '',
+    }
+  });
+
+  const context = { data, isFetching, filters, setFilters, filterPlanets };
 
   return (
     <StarWarsContext.Provider value={ context }>
