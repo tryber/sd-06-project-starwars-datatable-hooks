@@ -1,16 +1,20 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Context from '../context/StarWarsContext';
 import TableHeader from './TableHeader';
-// import fetchData from '../services/FetchPlanets';
+import fetchData from '../services/FetchPlanets';
 
 function Table() {
-  const { loading, data } = useContext(Context);
+  const { loading, data, setLoading, setData, getPlanets } = useContext(Context);
+
+  useEffect(() => {
+    getPlanets();
+  }, []);
 
   return (
     <div>
       {loading ? 'Loading...' : (
         <table>
-          <TableHeader keys={ Object.keys(data[0]) } />
+          {/* <TableHeader keys={ Object.keys(data[0]) } /> */}meh
         </table>)}
     </div>
   );

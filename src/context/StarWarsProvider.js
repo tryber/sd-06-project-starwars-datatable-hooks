@@ -1,24 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Context from './StarWarsContext';
+import fetchPlanets from '../services/FetchPlanets';
 
 function StarWarsProvider({ children }) {
-  const [data, setData] = useState();
-  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState({default: 'value'});
+  const [loading, setLoading] = useState();
 
-  useEffect(async () => {
-    const { results } = await fetch('http://swapi-trybe.herokuapp.com/api/planets')
-      .then((response) => response.json());
-
-    setData(results);
-    setLoading(false);
-  }, []);
+  const getPlanets = async () => {
+    const planets = await fetchPlanets();
+    setData(planets);
+  };
 
   const contextValue = {
     data,
     setData,
     loading,
     setLoading,
+    getPlanets,
   };
 
   return (
