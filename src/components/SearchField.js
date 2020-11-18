@@ -1,9 +1,20 @@
-import React, { useContext } from 'react';
-import StarWarsContext from '../context/StarWarsContext';
+import React, { useContext, useState } from 'react';
+import FilterContext from '../context/FilterContext';
 
 function SearchField() {
-  const { searchPlanet, setSearchPlanet } = useContext(StarWarsContext);
+  const { filterName, setFilterName, filterByNumber } = useContext(FilterContext);
+  const [column, setColumn] = useState('');
+  const [comparison, setComparison] = useState('');
+  const [value, setValue] = useState();
 
+  const addFilter = () => {
+    filterByNumber(column, comparison, value);
+  };
+
+  const columns = ['population', 'orbital_period',
+    'diameter', 'rotation_period',
+    'surface_water',
+  ];
   return (
     <div>
       <label htmlFor="name-input">
@@ -14,10 +25,51 @@ function SearchField() {
           type="text"
           placeholder="name"
           name="planet-name"
-          value={ searchPlanet }
-          onChange={ (event) => setSearchPlanet(event.target.value) }
+          value={ filterName }
+          onChange={ (event) => setFilterName(event.target.value) }
         />
       </label>
+      <label htmlFor="filter-column">
+        Filter by:
+        <select
+          data-testid="column-filter"
+          value={ column }
+          onChange={ (event) => setColumn(event.target.value) }
+        >
+          {
+            columns.map((filterColumn, index) => (
+              <option
+                key={ index }
+                value={ filterColumn }
+              >
+                {filterColumn}
+              </option>
+            ))
+          }
+        </select>
+      </label>
+      <select
+        data-testid="comparison-filter"
+        value={ comparison }
+        onChange={ (event) => setComparison(event.target.value) }
+      >
+        <option>maior que</option>
+        <option>menor que</option>
+        <option>igual</option>
+      </select>
+      <input
+        data-testid="value-filter"
+        type="number"
+        value={ value }
+        onChange={ (event) => setValue(event.target.value) }
+      />
+      <button
+        type="button"
+        data-testid="button-filter"
+        onClick={ addFilter }
+      >
+        Filter
+      </button>
     </div>
   );
 }

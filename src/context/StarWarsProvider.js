@@ -6,7 +6,6 @@ import fetchApi from '../services/fetchApi';
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
-  const [searchPlanet, setSearchPlanet] = useState('');
 
   const fetchPlanets = async () => {
     const planetsApi = await fetchApi();
@@ -18,8 +17,6 @@ function StarWarsProvider({ children }) {
     data,
     isFetching,
     fetchPlanets,
-    searchPlanet,
-    setSearchPlanet,
   };
   return (
     <StarWarsContext.Provider value={ contextValue }>

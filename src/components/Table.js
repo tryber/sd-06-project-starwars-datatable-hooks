@@ -1,15 +1,18 @@
 import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
+import FilterContext from '../context/FilterContext';
 
 function Table() {
-  const { data, fetchPlanets, searchPlanet } = useContext(StarWarsContext);
+  const { data, fetchPlanets } = useContext(StarWarsContext);
+  const { filterName } = useContext(FilterContext);
+
   useEffect(() => {
     fetchPlanets();
   }, []);
 
-  const filterData = () => {
+  const filterByName = () => {
     const filteredData = data.filter((item) => item.name.toLowerCase()
-      .includes(searchPlanet.toLowerCase()));
+      .includes(filterName.toLowerCase()));
     return filteredData;
   };
 
@@ -35,7 +38,7 @@ function Table() {
           </thead>
           <tbody>
             {
-              filterData().map((element, index) => (
+              filterByName().map((element, index) => (
                 <tr key={ index }>
                   <td>{element.name}</td>
                   <td>{element.rotation_period}</td>
