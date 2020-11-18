@@ -1,0 +1,135 @@
+.Header {
+  align-items: space-around;
+  background-color: #20242c;
+  color: white;
+  display: flex;
+  flex-flow: row nowrap;
+  font-size: 16px;
+  justify-content: space-around;
+  margin: 0;
+  padding: 20px;
+}
+
+.Header input, .Header select, .Header button {
+  box-shadow: 2px 2px 6px 1px rgba(10, 10, 20, .7);
+}
+
+.Header input:not( [type="number"], [type="radio"] ) {
+  background-color: #eceff3;
+  border: 0;
+  border-radius: 10px;
+  color: rgb(20, 20, 30);
+  font-size: 0.9em;
+  padding: 8px 14px;
+  width: 260px;
+}
+
+.Header select {
+  appearance: none;
+  background-color: #dae0e7;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+  background-repeat: no-repeat;
+  background-position-x: 101%;
+  background-position-y: 5px;
+  border: 0;
+  border-radius: 5px;
+  font-size: 0.9em;
+  margin: 0 4px;
+  padding: 4px 8px;
+  min-width: 160px;
+}
+
+.Header input[type="number"] {
+  background-color: #dae0e7;
+  border: 0;
+  border-radius: 5px;
+  font-size: 0.9em;
+  margin: 0 4px;
+  padding: 5px 8px;
+  width: 120px;
+}
+
+.Header input[type="radio"] {
+  margin: 0 5px;
+}
+
+.Header button {
+  background-color: #42648a;
+  color: #e0eaf5;
+  border: 0;
+  border-radius: 9px;
+  font-size: 1em;
+  font-weight: 700;
+  margin: 0 0 0 14px;
+  padding: 5px 15px 6px;
+}
+/* 395575 4a6f99 */
+
+.Header button:hover {
+  background-color: #4a6f99;
+}
+
+.Header button:focus {
+  background-color: #395f8a;
+}
+
+.Header button:active {
+  background-color: #375170;
+  left: 1px;
+  position: relative;
+  top: 1px;
+
+}
+
+.filters {
+  align-items: center;
+  background-color: #20242c;
+  color: #e0eaf5;
+  display: flex;
+  flex-flow: row nowrap;
+  font-size: 16px;
+  justify-content: flex-end;
+  margin: 0;
+  padding: 0 40px;
+}
+
+.filter-bubble {
+  background-color: #395f8a;
+  border-radius: 8px;
+  margin: 0 0 10px 20px;
+  padding: 0 0 0 6px;
+}
+
+.remove-filter-btn {
+  background-color: #4b76a8;
+  border: 0;
+  border-radius: 8px;
+  color: #e0eaf5;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 3px 10px 6px;
+  margin: 0 0 0 5px;
+}
+
+.remove-filter-btn:hover {
+  background-color: #5b89bd;
+}
+
+.remove-filter-btn:focus {
+  background-color: #547ba8;
+}
+
+.remove-filter-btn:active {
+  background-color: #cc4239;
+}
+
+.sort-wrapper {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.sort-wrapper label {
+  margin: 0 4px;
+}
