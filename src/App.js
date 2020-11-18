@@ -1,17 +1,17 @@
 import React from 'react';
 
-import StarWarsProvider from './Context/StarWarsProvider';
+import Provider from './Context/StarWarsProvider';
 
-import TableInformatio from './components/Table/';
+import Table from './components/Table/';
 
-function Table() {
+function App() {
   return (
     <div>
-      <StarWarsProvider>
-        <TableInformatio />
-      </StarWarsProvider>
+      <Provider>
+        <Table />
+      </Provider>
     </div>
   );
 }
 
-export default Table;
+export default App;
