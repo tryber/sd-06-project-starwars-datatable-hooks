@@ -5,11 +5,10 @@ import '../css/Header.css';
 
 function Header() {
   const [filters, setFilters] = useFilters();
-  const [currFilter, setCurrFilter] = useState({
-    column: 'population',
-    comparison: 'maior que',
-    value: '0',
-  });
+
+  const notEmpty = 0;
+  const noEmptyFilters = filters.filters.filterByNumericValues.length > notEmpty;
+
   const usedColumns = filters.filters.filterByNumericValues.reduce(
     (array, curr) => [...array, curr.column], [],
   );
@@ -22,6 +21,12 @@ function Header() {
     ),
     [],
   );
+
+  const [currFilter, setCurrFilter] = useState({
+    column: 'population',
+    comparison: 'maior que',
+    value: '0',
+  });
 
   function handleInput({ target }) {
     setFilters({
@@ -42,7 +47,7 @@ function Header() {
     });
   }
 
-  function submitComparisonFilter() {
+  function submitComparison() {
     const validateForm = (currFilter.column !== 'default'
       && currFilter.comparison !== 'default'
       && currFilter.value !== '0');
@@ -60,51 +65,100 @@ function Header() {
           ],
         },
       });
+
       document.getElementById('comparison-form').reset();
+      setCurrFilter({
+        column: (enableColumns.length > 1) ? enableColumns[1][0] : '',
+        comparison: 'maior que',
+        value: '0',
+      });
     }
   }
 
+  function removeFilter({ target }) {
+    const currFilters = filters.filters.filterByNumericValues.filter(
+      (filter) => filter.column !== target.id,
+    );
+    setFilters({
+      ...filters,
+      filters: {
+        ...filters.filters,
+        filterByNumericValues: [
+          ...currFilters,
+        ],
+      },
+    });
+  }
+
   return (
-    <header className="Header">
-      <input
-        type="text"
-        placeholder="Digite para filtrar planetas pelo nome."
-        onChange={ handleInput }
-        data-testid="name-filter"
-      />
-      <form id="comparison-form">
-        <select data-testid="column-filter" id="column" onChange={ handleComparison }>
-          { enableColumns.map((filter) => (
-            <option value={ filter[0] } key={ filter[0] }>
-              { filter[0] }
-            </option>
-          )) }
-        </select>
-        <select
-          id="comparison"
-          onChange={ handleComparison }
-          data-testid="comparison-filter"
-        >
-          <option value="maior que">maior que</option>
-          <option value="menor que">menor que</option>
-          <option value="igual a">igual a</option>
-        </select>
+    <header className="header-wrapper">
+      <section className="Header">
         <input
-          type="number"
-          id="value"
-          placeholder="valor"
-          minvalue="0"
-          onChange={ handleComparison }
-          data-testid="value-filter"
+          type="text"
+          placeholder="Digite para filtrar planetas pelo nome."
+          onChange={ handleInput }
+          data-testid="name-filter"
         />
-        <button
-          type="button"
-          onClick={ submitComparisonFilter }
-          data-testid="button-filter"
-        >
-          Filtrar
-        </button>
-      </form>
+        { enableColumns.length > notEmpty
+          ? (
+            <form id="comparison-form">
+              <select
+                id="column"
+                onChange={ handleComparison }
+                data-testid="column-filter"
+              >
+                { enableColumns.map((filter) => (
+                  <option value={ filter[0] } key={ filter[0] }>
+                    { filter[0] }
+                  </option>
+                )) }
+              </select>
+              <select
+                id="comparison"
+                onChange={ handleComparison }
+                data-testid="comparison-filter"
+              >
+                <option value="maior que">maior que</option>
+                <option value="menor que">menor que</option>
+                <option value="igual a">igual a</option>
+              </select>
+              <input
+                type="number"
+                id="value"
+                placeholder="valor"
+                minvalue="0"
+                onChange={ handleComparison }
+                data-testid="value-filter"
+              />
+              <button
+                type="button"
+                onClick={ submitComparison }
+                data-testid="button-filter"
+              >
+                Filtrar
+              </button>
+            </form>
+          )
+          : <span>Todos os filtros já foram ativados.</span>}
+      </section>
+      <section className="filters">
+        { (noEmptyFilters)
+        && filters.filters.filterByNumericValues.map(
+          (filter) => (
+            <p key={ filter.column } data-testid="filter" className="filter-bubble">
+              { filter.column }
+              <button
+                type="button"
+                className="remove-filter-btn"
+                id={ filter.column }
+                onClick={ removeFilter }
+              >
+                x
+              </button>
+            </p>
+          ),
+        )}
+      </section>
     </header>
   );
 }

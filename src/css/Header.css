@@ -71,7 +71,50 @@
 
 .Header button:active {
   background-color: #375170;
+  left: 1px;
   position: relative;
   top: 1px;
-  left: 1px;
+
+}
+
+.filters {
+  align-items: center;
+  background-color: #20242c;
+  color: #e0eaf5;
+  display: flex;
+  flex-flow: row nowrap;
+  font-size: 16px;
+  justify-content: flex-end;
+  margin: 0;
+  padding: 0 40px;
+}
+
+.filter-bubble {
+  background-color: #395f8a;
+  border-radius: 8px;
+  margin: 0 0 10px 20px;
+  padding: 0 0 0 6px;
+}
+
+.remove-filter-btn {
+  background-color: #4b76a8;
+  border: 0;
+  border-radius: 8px;
+  color: #e0eaf5;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 3px 10px 6px;
+  margin: 0 0 0 5px;
+}
+
+.remove-filter-btn:hover {
+  background-color: #5b89bd;
+}
+
+.remove-filter-btn:focus {
+  background-color: #547ba8;
+}
+
+.remove-filter-btn:active {
+  background-color: #cc4239;
 }
