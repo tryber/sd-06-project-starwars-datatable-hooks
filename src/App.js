@@ -1,25 +1,14 @@
-import React, { useContext, useEffect } from 'react';
-import StarWarsContext from './context/StarWarsContext';
+import React from 'react';
+import Provider from './context/Provider';
+import Home from './pages/Home';
+
 import './App.css';
 
 function App() {
-  const { isFetching, planets, fetchPlanets, setIsFetching } = useContext(StarWarsContext);
-
-  useEffect(() => {
-    fetchPlanets();
-  }, []);
-
-  // useEffect(() => {
-  //   // fetchPlanets();
-  //   setIsFetching(false);
-  // }, []);
-
-  console.log(planets)
-
   return (
-    <div className="App">
-      {!isFetching ? (<p>opa</p>) : <p>Loading...</p>}
-    </div>
+    <Provider>
+      <Home />
+    </Provider>
   );
 }
 
