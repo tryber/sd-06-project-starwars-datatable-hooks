@@ -11,7 +11,7 @@ function Provider({ children }) {
       column: '',
       comparison: '',
       value: 0,
-    }]
+    }],
   });
   const [columns, setColumn] = useState([
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
@@ -29,7 +29,7 @@ function Provider({ children }) {
   };
 
   return (
-    <MyContext.Provider value={contextValue}>
+    <MyContext.Provider value={ contextValue }>
       {children}
     </MyContext.Provider>
   );

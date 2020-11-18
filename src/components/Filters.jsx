@@ -29,13 +29,13 @@ function Filters() {
     setFilter({
       ...filters,
       filterByNumericValues: [{
-        column,
-        comparison,
-        value,
-      }]
+        column: column,
+        comparison: comparison,
+        value: value,
+      }],
     });
 
-    // removeColumn(column);
+    removeColumn(column);
   };
 
   return (
