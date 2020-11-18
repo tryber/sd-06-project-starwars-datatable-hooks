@@ -1,14 +1,14 @@
 import React from 'react';
-import { fetchAPI } from './service/API';
+import Provider from './context/Provider';
 import './App.css';
+import Table from './components/Table';
 
 function App() {
-  fetchAPI();
   return (
-    <div className="App">
-    </div>
+    <Provider>
+      <Table />
+    </Provider>
   );
 }
-StarWarsProvider.propTypes = PropTypes.arrayOf(PropTypes.string).isRequired; 
 
 export default App;
