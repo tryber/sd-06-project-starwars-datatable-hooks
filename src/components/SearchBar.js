@@ -9,6 +9,10 @@ function SearchBar() {
     setNumericValues,
     setFilters } = useContext(StarWarsContext);
 
+  const clearFilter = () => {
+    console.log(filterByNumericValues);
+  };
+
   return (
     <section>
       <label htmlFor="name-filter">
@@ -44,6 +48,13 @@ function SearchBar() {
         <option value="menor que">menor que</option>
         <option value="igual a">igual a</option>
       </select>
+      <button
+        type="button"
+        data-testid='filter'
+        onClick={ clearFilter }
+      >
+        X
+      </button>
       <input
         type="number"
         data-testid="value-filter"

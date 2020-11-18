@@ -12,6 +12,7 @@ function TableBody() {
   let dataFiltered = [...dataTable];
 
   if (isFiltered) {
+    console.log(filterByNumericValues);
     const { column, comparision, value } = filterByNumericValues;
     if (comparision === 'maior que') {
       dataFiltered = dataFiltered.filter(
