@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
@@ -38,7 +38,7 @@ function Table() {
   const filterPlanets = () => {
     const planetsByName = filterPlanetsByName(planets);
     const planetsByNumericValue = filterPlanetsByNumericValues(planetsByName);
-    console.log(planetsByNumericValue, filters);
+
     return planetsByNumericValue;
   };
 
@@ -62,7 +62,14 @@ function Table() {
     setValue(target.value);
   };
 
+  useEffect(() => {
+    if (filters.availableColumns.length > 0) setColumn(filters.availableColumns[0]);
+  }, [filters.availableColumns])
+
   const handleFilter = () => {
+    const newAvailableColumns = filters.availableColumns
+      .filter(element => element !== column);
+
     setFilters(
       { ...filters,
         filterByNumericValues: [
@@ -73,6 +80,7 @@ function Table() {
             value,
           },
         ],
+        availableColumns: newAvailableColumns,
       },
     );
   };
@@ -94,11 +102,9 @@ function Table() {
               name="column"
               onChange={ handleColumn }
             >
-              <option value="population">population</option>
-              <option value="orbital_period">orbital_period</option>
-              <option value="diameter">diameter</option>
-              <option value="rotation_period">rotation_period</option>
-              <option value="surface_water">surface_water</option>
+              { filters.availableColumns.map((column) => (
+                <option value={ column } key={ column }>{ column }</option>
+              )) }
             </select>
             <select
               data-testid="comparison-filter"
