@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { data, getPlanetsData } = useContext(StarWarsContext);
+  const { data, getPlanetsData, filters } = useContext(StarWarsContext);
 
   useEffect(() => {
     getPlanetsData();
@@ -27,7 +27,10 @@ function Table() {
           <th scope="col">Released Films</th>
         </tr>
       </thead>
-      {data.map((planet, i) => (
+      {data
+        .filter((planet) => planet.name.toLowerCase()
+          .includes(filters.filterByName.name.toLowerCase()))
+            .map((planet, i) => (
         <tbody key={ i }>
           <tr>
             <th scope="row">{planet.name}</th>

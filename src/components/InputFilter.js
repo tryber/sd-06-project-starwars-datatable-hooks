@@ -1,19 +1,16 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function InputFilter() {
-  const { filter } = useContext(StarWarsContext);
-
-  useEffect(() => {
-    console.log(filter);
-  }, []);
-
+  const { filters, setFilters } = useContext(StarWarsContext);
   return (
     <label htmlFor="name-filter">
       <input
         data-testid="name-filter"
         id="name-filter"
         type="text"
+        onChange={ ({target}) => setFilters({ filterByName: { name: target.value } }) }
+        value={ filters.filterByName.name }
         placeholder="Search by Name"
       />
     </label>
