@@ -41,7 +41,7 @@ function SortFilterRow() {
 
   return (
     <div className="assortment-filters">
-      <select data-tesid="column-sort" onChange={ handleSelectChange }>
+      <select data-testid="column-sort" onChange={ handleSelectChange }>
         <option>-- Sort alphabetically --</option>
         {tableHeaders.map((header) => (
           <option key={ header } value={ header }>

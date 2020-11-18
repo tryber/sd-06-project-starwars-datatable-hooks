@@ -21,9 +21,19 @@ export function filterByColumn(planets, filters) {
 }
 
 function assortByColumn(planets, column, type) {
-  console.log(column);
-  console.log(type);
-  console.log(parseInt(column, 10));
+  const stringHeaders = ['name', 'climate', 'terrain', 'films', 'url'];
+  const ascend = 1;
+  const descend = -1;
+  if (stringHeaders.includes(column)) {
+    switch (type) {
+    case 'ascending':
+      return planets.sort((a, b) => (a[column] > b[column] ? ascend : descend));
+    case 'descending':
+      return planets.sort((a, b) => (a[column] < b[column] ? ascend : descend));
+    default:
+      return planets;
+    }
+  }
   switch (type) {
   case 'ascending':
     return planets.sort((a, b) => parseInt(a[column], 10) - parseInt(b[column], 10));
@@ -43,7 +53,6 @@ export default function mainFilter(
   columnFilters.forEach((filter) => {
     filteredByColumn = filterByColumn(filteredByColumn, filter);
   });
-
   return assortByColumn(filteredByColumn, assortmentColumn, assortmentType);
 }
 
