@@ -33,19 +33,19 @@ const Table = () => {
             .includes(search.toLowerCase()))
           .map((planet, index) => (
             <tr key={ index }>
-              <td scope="row">{ planet.name }</td>
-              <td scope="row">{ planet.rotation_period }</td>
-              <td scope="row">{ planet.orbital_period }</td>
-              <td scope="row">{ planet.diameter }</td>
-              <td scope="row">{ planet.climate }</td>
-              <td scope="row">{ planet.gravity }</td>
-              <td scope="row">{ planet.terrain }</td>
-              <td scope="row">{ planet.surface_water }</td>
-              <td scope="row">{ planet.population }</td>
-              <td scope="row">{ planet.films }</td>
-              <td scope="row">{ planet.created }</td>
-              <td scope="row">{ planet.edited }</td>
-              <td scope="row">{ planet.url }</td>
+              <th scope="row">{ planet.name }</th>
+              <th scope="row">{ planet.rotation_period }</th>
+              <th scope="row">{ planet.orbital_period }</th>
+              <th scope="row">{ planet.diameter }</th>
+              <th scope="row">{ planet.climate }</th>
+              <th scope="row">{ planet.gravity }</th>
+              <th scope="row">{ planet.terrain }</th>
+              <th scope="row">{ planet.surface_water }</th>
+              <th scope="row">{ planet.population }</th>
+              <th scope="row">{ planet.films }</th>
+              <th scope="row">{ planet.created }</th>
+              <th scope="row">{ planet.edited }</th>
+              <th scope="row">{ planet.url }</th>
             </tr>
           ))}
       </tbody>

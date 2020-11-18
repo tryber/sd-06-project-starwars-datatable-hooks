@@ -10,7 +10,7 @@ const SearchInput = () => {
         type="text"
         name="search"
         id="search"
-        data-testid= "name-filter"
+        data-testid="name-filter"
         onChange={ (event) => setSearch(event.target.value) }
         value={ search }
       />
