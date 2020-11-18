@@ -11,7 +11,7 @@ function StarWarsProvider({ children }) {
     const getPlanets = async () => {
       const planets = await fetchPlanetsData();
       planets.map((orb) => delete orb.residents);
-      console.log('planets provider', planets);
+      // console.log('planets provider', planets);
       setData(planets);
     };
     getPlanets();
