@@ -2,37 +2,37 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  font: 75%/1.6 "Myriad Pro", Frutiger, "Lucida Grande", "Lucida Sans", "Lucida Sans Unicode", Verdana, sans-serif;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+table {
+  border-collapse: collapse;
+  width: 50em;
+  border: 1px solid #666;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+thead {
+  background: #ccc;
+  border-top: 1px solid #a5a5a5;
+  border-bottom: 1px solid #a5a5a5;
 }
 
-.App-link {
-  color: #61dafb;
+tr:hover {
+  background-color:#3d80df;
+  columns: #000000;;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+thead tr:hover {
+  background-color: transparent;
+  color: inherit;
+}
+
+th {
+  font-weight: normal;
+  text-align: center;
+}
+
+th, td {
+  padding: 0.1em 1em;
 }

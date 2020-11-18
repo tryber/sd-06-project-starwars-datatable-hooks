@@ -1,28 +1,20 @@
 import React from 'react';
-import logo from './logo.svg';
+import { Provider } from './context/StarWarsContext';
+import Table from './components/Table';
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
+    <Provider>
       <header className="App-header">
-        <img src={ logo } className="App-logo" alt="logo" />
-        <p>
-          Edit
-          <code>src/App.js</code>
-          and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <Table />
       </header>
-    </div>
+    </Provider>
   );
 }
+
+// Ícaro explicando no Slack:
+// Nesse caso não vamos poder utilizar aquela estratégia que eu mostrei
+// de por o index no Provider Porque o teste verifica apenas o App
 
 export default App;
