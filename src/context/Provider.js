@@ -6,6 +6,7 @@ import SWAPIFetch from '../services/SWAPIFetch';
 function Provider({ children }) {
   const [isFetching, setIsFetching] = useState(true);
   const [data, setData] = useState();
+  const [filters, setFilters] = useState({ filters: { filterByName: { name: '' } } });
   const getData = async () => {
     const { results } = await SWAPIFetch('planets/');
     setData(results);
@@ -32,7 +33,8 @@ function Provider({ children }) {
     data,
     setData,
     isFetching,
-    setIsFetching,
+    filters,
+    setFilters,
     getData,
   };
   return (

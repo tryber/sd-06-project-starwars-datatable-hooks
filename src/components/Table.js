@@ -3,7 +3,7 @@ import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
   const zero = 0;
-  const { data, getData, isFetching } = useContext(StarWarsContext);
+  const { data, getData, isFetching, filters } = useContext(StarWarsContext);
   if (isFetching === true) {
     getData();
     return (<h1>Loading...</h1>);
@@ -11,6 +11,9 @@ function Table() {
   if (data.length !== zero) {
     const dataHeaders = Object.keys(data[0])
       .filter((item) => item !== 'residents');
+    const nameToFilter = filters.filters.filterByName.name;
+    const filteredData = data
+      .filter(({ name }) => name.toLowerCase().includes(nameToFilter));
     return (
       <table>
         <tbody>
@@ -21,7 +24,7 @@ function Table() {
                   { header.split('_').join(' ') }
                 </th>))}
           </tr>
-          { data.map((planet, index) => (
+          { filteredData.map((planet, index) => (
             <tr key={ index }>
               { dataHeaders.map((info, i) => (<td key={ i }>{ planet[info] }</td>))}
             </tr>
