@@ -4,7 +4,7 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { data } = useContext(StarWarsContext);
+  const { data, filteredName } = useContext(StarWarsContext);
   const headers = [
     'Nome',
     'Período de Rotação',
@@ -21,28 +21,35 @@ function Table() {
     'URL',
   ];
 
-  return (
-    <div>
-      <table className="table">
-        <thead>
-          <tr>
-            {
-              headers.map((header) => <th key={ header } scope="col">{ header }</th>)
-            }
-          </tr>
-        </thead>
-        <tbody>
-          { data.map((planet, index) => (
-            <tr key={ index }>
-              { Object.values(planet).map((info, indKey) => (
-                <td key={ indKey }>{ info }</td>
-              )) }
+  const filterName = () => {
+    const filteredData = data.filter((term) => term.name.toLowerCase()
+      .includes(filteredName.toLowerCase()));
+    return filteredData;
+  };
+
+  return !data ? <h1>Loading...</h1>
+    : (
+      <div>
+        <table className="table">
+          <thead>
+            <tr>
+              {
+                headers.map((header) => <th key={ header } scope="col">{ header }</th>)
+              }
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
+          </thead>
+          <tbody>
+            { filterName().map((planet, index) => (
+              <tr key={ index }>
+                { Object.values(planet).map((info, indKey) => (
+                  <td key={ indKey }>{ info }</td>
+                )) }
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    );
 }
 
 Table.propTypes = {

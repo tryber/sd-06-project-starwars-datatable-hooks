@@ -6,19 +6,19 @@ import fetchPlanetsData from '../services/dataServicesAPI';
 
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
+  const [filteredName, setFilteredName] = useState('');
 
   useEffect(() => {
     const getPlanets = async () => {
       const planets = await fetchPlanetsData();
       planets.map((orb) => delete orb.residents);
-      // console.log('planets provider', planets);
       setData(planets);
     };
     getPlanets();
   }, []);
 
   return (
-    <StarWarsContext.Provider value={ { data, setData } }>
+    <StarWarsContext.Provider value={ { data, setData, filteredName, setFilteredName } }>
       { children }
     </StarWarsContext.Provider>
   );
