@@ -2,24 +2,42 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { data, filters } = useContext(StarWarsContext);
+  const { data,
+    filters: { filterByName: { name },
+      filterByNumericValues: [{ column, comparison, value }] },
+  } = useContext(StarWarsContext);
+  const filteringName = (e) => typeof e.name === 'string' && e.name
+    .includes(name);
+  const filteringNumeric = (e) => {
+    let result = false;
+    if (column === '' || comparison === '' || value === '') {
+      result = true;
+    } else {
+      if (comparison === 'maior que' && parseInt(e[column], 10) > value) {
+        result = true;
+      }
+      if (comparison === 'menor que' && parseInt(e[column], 10) < value) {
+        result = true;
+      }
+      if (comparison === 'igual a' && e[column] === value.toString()) {
+        result = true;
+      }
+    }
+    return result;
+  };
   return (
     <table className="table table-bordered">
       <thead className="thead-dark">
         <tr>
           {Object.keys(data[0])
-            .filter((header) => header !== 'residents')
-            .map((header) => (<th scope="col" key={ header }>{header}</th>))}
+            .map((header) => (<th key={ header }>{header}</th>))}
         </tr>
       </thead>
       {data
-        .filter((e) => typeof e.name === 'string' && e.name
-          .includes(filters.filterByName.name))
+        .filter((e) => filteringName(e) && filteringNumeric(e))
         .map((planet) => (
           <tr className="table-active" key={ planet }>
-            {Object.entries(planet)
-              .filter((value) => value[0] !== 'residents')
-              .map((value) => (<td key={ value[1] }>{ value[1] }</td>))}
+            {Object.values(planet).map((col) => (<td key={ col }>{ col }</td>))}
           </tr>))}
     </table>
   );

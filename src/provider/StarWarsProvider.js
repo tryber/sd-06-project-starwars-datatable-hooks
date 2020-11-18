@@ -5,10 +5,14 @@ import starWarsAPI from '../API/starWarsAPI';
 
 function Provider({ children }) {
   const [data, setData] = useState(['']);
-  const [filters, setFilter] = useState({ filterByName: { name: '' } });
+  const [filters, setFilter] = useState({
+    filterByName: { name: '' },
+    filterByNumericValues: [{ column: '', comparison: '', value: '' }] });
   useEffect(() => {
     const requestAPI = async () => {
-      setData(await starWarsAPI());
+      const results = await starWarsAPI();
+      results.forEach((r) => delete r.residents);
+      setData(results);
     };
     requestAPI();
   }, []);
