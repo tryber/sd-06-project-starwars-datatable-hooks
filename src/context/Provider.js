@@ -5,10 +5,16 @@ import StarWarsContext from './StarWarsContext';
 
 function Provider(props) {
   const [resultsApi, setResultsApi] = useState([]);
-  const [filters, setFilters] = useState({ filterByName: { name: '' } });
+  const [filters, setFilters] = useState({
+    filterByName: {
+      name: '',
+    },
+    filterByNumericValues: [],
+  });
 
   const getResults = async () => {
     const resultApi = await fetchResults();
+
     setResultsApi(resultApi);
   };
 

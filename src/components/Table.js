@@ -8,6 +8,24 @@ function Table() {
     getResults();
   }, []);
 
+  const filterComparison = (results) => {
+    let resultFiltered = results;
+
+    filters.filterByNumericValues.forEach((filter) => {
+      const { column } = filter;
+      const { valueComparison } = filter;
+      if (filter.comparison === 'maior que') {
+        resultFiltered = results
+          .filter((planet) => Number(planet[column]) > Number(valueComparison));
+      } else if (filter.comparison === 'menor que') {
+        resultFiltered = results.filter((planet) => Number(planet[column]) < Number(valueComparison));
+      } else if (filter.comparison === 'igual a') {
+        resultFiltered = results.filter((planet) => Number(planet[column]) === Number(valueComparison));
+      }
+    });
+    return resultFiltered;
+  };
+
   return (
     <table className="table-hover table">
       <thead className="thead-dark">
@@ -28,7 +46,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {resultsApi.filter((planet) => (
+        {filterComparison(resultsApi).filter((planet) => (
           planet.name.toLowerCase().includes(filters.filterByName.name.toLowerCase())
         )).map((planet) => (
           <tr key={ planet.name }>
