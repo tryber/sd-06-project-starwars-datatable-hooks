@@ -5,13 +5,16 @@ import Context from './Context';
 function Provider({ children }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState([false]);
+  const [filteredPlanets, setFilteredPlanets] = useState([]);
+
   const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
   const fetchData = async () => {
     setLoading(true);
     const response = await fetch(url);
     const results = await response.json();
-    await setData(results.results);
+    setData(results.results);
+    setFilteredPlanets(results.results);
     setLoading(false);
   };
 
@@ -19,7 +22,7 @@ function Provider({ children }) {
     fetchData();
   }, []);
 
-  const context = { data, loading };
+  const context = { data, loading, filteredPlanets, setFilteredPlanets };
 
   return (
     <Context.Provider value={ context }>

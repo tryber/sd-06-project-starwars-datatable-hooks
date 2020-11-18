@@ -1,11 +1,28 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Context from '../context/Context';
 
 export default function Table() {
-  const { data, loading } = useContext(Context);
+  const { data, loading, filteredPlanets, setFilteredPlanets } = useContext(Context);
+  const [name, setName] = useState('');
+
+  const handleChange = (e) => {
+    const { value } = e.target;
+    setName(value);
+    const newPlanets = data.filter((planet) => planet.name.toLowerCase().includes(value));
+    setFilteredPlanets(newPlanets);
+    console.log(newPlanets);
+  };
 
   return (
     <div>
+      <header>
+        <input
+          type="text"
+          name="name-filter"
+          data-testid="name-filter"
+          onChange={ handleChange }
+        />
+      </header>
       <table>
         <thead>
           <tr>
@@ -25,8 +42,8 @@ export default function Table() {
           </tr>
         </thead>
         <tbody>
-          {loading ? <p>Loading</p>
-            : data.map((planet) => (
+          {loading ? <tr><td>Loading</td></tr>
+            : filteredPlanets.map((planet) => (
               <tr key={ planet.name }>
                 <td>{planet.name}</td>
                 <td>{planet.rotation_period}</td>
@@ -42,7 +59,7 @@ export default function Table() {
                 <td>{planet.edited}</td>
                 <td>{planet.url}</td>
               </tr>
-            ))}
+            )) }
         </tbody>
       </table>
     </div>
