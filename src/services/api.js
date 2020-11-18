@@ -7,17 +7,19 @@ function API() {
   const { setState } = useContext(StarWarsContext);
 
   useEffect(() => {
-    setState({
+    setState((state) => ({
+      ...state,
       isFetching: true,
-    });
+    }));
     async function fetchData() {
       await fetch('https://swapi-trybe.herokuapp.com/api/planets/')
         .then((result) => result.json())
         .then((json) => {
-          setState({
+          setState((state) => ({
+            ...state,
             isFetching: false,
             data: json,
-          });
+          }));
         });
     }
     fetchData();

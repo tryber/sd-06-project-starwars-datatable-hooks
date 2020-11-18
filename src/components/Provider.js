@@ -6,6 +6,11 @@ function Provider({ children }) {
   const [state, setState] = useState({
     isFetching: false,
     data: undefined,
+    filters: {
+      filterByName: {
+        name: '',
+      },
+    },
   });
 
   const contextValue = { state, setState };
