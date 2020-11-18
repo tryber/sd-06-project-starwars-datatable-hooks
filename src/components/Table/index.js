@@ -15,7 +15,7 @@ const Table = () => {
 
   useEffect(() => {
     handleApiPlanets();
-  }, []);
+  }, [handleApiPlanets]);
 
   return (
     <StyledTable>
@@ -27,8 +27,8 @@ const Table = () => {
         </thead>
         <tbody>
           { !stateStarWars.data ? <Loading />
-            : stateStarWars.data.results.map((planet) =>
-              (<tr key={ planet.name }>
+            : stateStarWars.data.results.map((planet) => (
+              <tr key={ planet.name }>
                 <td>{ planet.name }</td>
                 <td>{ planet.rotation_period }</td>
                 <td>{ planet.orbital_period }</td>
