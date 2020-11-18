@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import propTypes from 'prop-types';
 import StarWarsContext from './StarWarsContext';
 import StarWarsAPI from '../services/StarsWarsAPI';
@@ -10,6 +10,10 @@ function Provider({ children }) {
     filterByNumericValues: [],
     order: { column: 'Name', sort: 'ASC' }, 
   })
+
+  useEffect(() => {
+    fetchPlanets();
+  }, []);
 
   const fetchPlanets = async () => {
     const response = await StarWarsAPI();

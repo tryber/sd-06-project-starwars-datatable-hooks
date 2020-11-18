@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 const titles = ['name', 'rotation period', 'orbital period', 'diameter',
@@ -12,29 +12,30 @@ function Table() {
     fetchPlanets,
     filters: { filterByName: { name: nameFilter }, filterByNumericValues },
   } = useContext(StarWarsContext).context;
-
-  let filteredPlanets = [];
+  const [filteredPlanets, setFilteredPlanets] = useState([]);
+  
+  // const renderHeaders = (planet) => {
+  //   const headers = Object.keys(planet).filter((key) => key !== 'url')
+  //   return headers.map((item, index) => <th key={ index }>{item}</th>)
+  // }
+  useEffect(() => 
+    setFilteredPlanets(planets)
+  , [planets])
 
   useEffect(() => {
-    fetchPlanets();
-  }, []);
-
-  useEffect(() => {
-    filteredPlanets = planets.filter((planet) => planet.name.toLowerCase()
-    .includes(nameFilter.toLowerCase()))
+    setFilteredPlanets(planets.filter((planet) => planet.name.toLowerCase()
+    .includes(nameFilter.toLowerCase())))
   }, [nameFilter]);
   
   return (
     <table className="table">
       <thead>
         <tr>
-          {titles.map((title, index) => (
-            <th scope="col" key={ index }>{title}</th>
-          ))}
+          {titles.map((title, index) => <th key={ index }>{title}</th> )}
         </tr>
       </thead>
       <tbody>
-        {filteredPlanets.length !== 0 ? filteredPlanets 
+        {filteredPlanets
           .map(({
             name, rotation_period: rotationPeriod, orbital_period: orbitalPeriod,
             diameter, climate, gravity, terrain, surface_water: surfaceWater,
