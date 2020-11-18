@@ -69,7 +69,50 @@ const useFilters = () => {
       )
       : filteredByName;
 
-    setFilteredData({ results: filteredList });
+    const stringColumns = ['name', 'climate', 'terrain',
+      'residents', 'films', 'created', 'url'];
+    const numberColumns = ['rotation_period', 'orbital_period', 'diameter',
+      'gravity', 'surface_water', 'population'];
+
+    const orderedList = [...filteredList];
+
+    if (currFilters.order && stringColumns.includes(currFilters.order.column)) {
+      const { column, sort } = currFilters.order;
+
+      switch (sort) {
+      case 'ASC':
+        orderedList.sort((a, b) => a[column].localeCompare(b[column]));
+        break;
+      case 'DESC':
+        orderedList.sort((a, b) => b[column].localeCompare(a[column]));
+        break;
+      default:
+        break;
+      }
+
+      console.log(orderedList);
+    }
+
+    if (currFilters.order && numberColumns.includes(currFilters.order.column)) {
+      const { column, sort } = currFilters.order;
+
+      switch (sort) {
+      case 'ASC':
+        orderedList.sort((a, b) => (
+          (a[column] === 'unknown') ? 1 : parseFloat(a[column]) - parseFloat(b[column])
+        ));
+        break;
+      case 'DESC':
+        orderedList.sort((a, b) => (
+          (a[column] === 'unknown') ? 1 : parseFloat(b[column]) - parseFloat(a[column])
+        ));
+        break;
+      default:
+        break;
+      }
+    }
+
+    setFilteredData({ results: orderedList });
   }, [filters]);
 
   return [filters, setFilters];

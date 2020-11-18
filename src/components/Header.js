@@ -22,10 +22,20 @@ function Header() {
     [],
   );
 
+  const sortColumns = ['name', 'climate', 'terrain',
+    'residents', 'films', 'created', 'url',
+    'rotation_period', 'orbital_period', 'diameter',
+    'gravity', 'surface_water', 'population'];
+
   const [currFilter, setCurrFilter] = useState({
     column: 'population',
     comparison: 'maior que',
     value: '0',
+  });
+
+  const [sort, setSort] = useState({
+    column: 'name',
+    sort: '',
   });
 
   function handleInput({ target }) {
@@ -45,6 +55,25 @@ function Header() {
       ...currFilter,
       [target.id]: target.value,
     });
+  }
+
+  function handleSort({ target }) {
+    setSort({
+      ...sort,
+      [target.name]: target.value,
+    });
+  }
+
+  function submitSorting() {
+    if (sort.sort !== '') {
+      setFilters({
+        ...filters,
+        filters: {
+          ...filters.filters,
+          order: sort,
+        },
+      });
+    }
   }
 
   function submitComparison() {
@@ -140,6 +169,32 @@ function Header() {
             </form>
           )
           : <span>Todos os filtros já foram ativados.</span>}
+        <section className="sort-wrapper">
+          <select data-testid="column-sort" name="column" onChange={ handleSort }>
+            { sortColumns.map((filter) => (
+              <option value={ filter } key={ filter }>
+                { filter }
+              </option>
+            )) }
+          </select>
+          <div onChange={ handleSort }>
+            <label htmlFor="ASC">
+              <input type="radio" name="sort" id="ASC" value="ASC" />
+              Ascending
+            </label>
+            <label htmlFor="DESC">
+              <input type="radio" id="DESC" name="sort" value="DESC" />
+              Descending
+            </label>
+          </div>
+          <button
+            type="button"
+            onClick={ submitSorting }
+            data-testid="column-sort-button"
+          >
+            Sort!
+          </button>
+        </section>
       </section>
       <section className="filters">
         { (noEmptyFilters)

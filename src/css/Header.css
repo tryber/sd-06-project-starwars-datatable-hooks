@@ -14,7 +14,7 @@
   box-shadow: 2px 2px 6px 1px rgba(10, 10, 20, .7);
 }
 
-.Header input:not( [type="number"] ) {
+.Header input:not( [type="number"], [type="radio"] ) {
   background-color: #eceff3;
   border: 0;
   border-radius: 10px;
@@ -47,6 +47,10 @@
   margin: 0 4px;
   padding: 5px 8px;
   width: 120px;
+}
+
+.Header input[type="radio"] {
+  margin: 0 5px;
 }
 
 .Header button {
@@ -117,4 +121,15 @@
 
 .remove-filter-btn:active {
   background-color: #cc4239;
+}
+
+.sort-wrapper {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.sort-wrapper label {
+  margin: 0 4px;
 }
