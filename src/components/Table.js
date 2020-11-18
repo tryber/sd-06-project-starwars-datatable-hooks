@@ -4,12 +4,30 @@ import StarWarsContext from '../context/StarWarsContext';
 function Table() {
   const { data, isLoading, setIsLoading,
     headerKeys, filters } = useContext(StarWarsContext);
-  const { filterByName } = filters;
+  const { filterByName, filterByNumericValues } = filters;
   const { name } = filterByName;
+  const { column, comparison, value } = filterByNumericValues[0];
   const zero = 0;
   if (data.length && headerKeys.length > zero) {
     setIsLoading(true);
   }
+
+  function filtersOptions(planetss) {
+    if (comparison === '') {
+      return true;
+    }
+    if (comparison === 'maior que') {
+      if (Number(planetss[column]) > Number(value)) return true;
+    }
+    if (comparison === 'menor que') {
+      if (Number(planetss[column]) < Number(value)) return true;
+    }
+    if (comparison === 'igual a') {
+      if (Number(planetss[column]) === Number(value)) return true;
+    }
+    return false;
+  }
+
   return (
     <table>
       <tr>
@@ -20,7 +38,8 @@ function Table() {
       </tr>
       <tbody>
         {isLoading
-          ? data.filter((planets) => planets.name.includes(name))
+          ? data.filter((planetss) => filtersOptions(planetss))
+            .filter((planets) => planets.name.includes(name))
             .map((planet) => (
               <tr key={ planet.name }>
                 <td data-testid="planet-name">{planet.name}</td>
