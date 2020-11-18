@@ -22,8 +22,8 @@ function StarWarsProvider({ children }) {
       filterByName: {
         name: nameInput,
       },
-    })
-  }
+    });
+  };
 
   return (
     <StarWarsContext.Provider
@@ -31,7 +31,7 @@ function StarWarsProvider({ children }) {
         data,
         getPlanets,
         getFilterName,
-        name: filters.filterByName.name
+        name: filters.filterByName.name,
       } }
     >
       {children}

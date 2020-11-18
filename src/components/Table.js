@@ -30,24 +30,24 @@ function Table() {
       <tbody>
         {data
           .filter((e) => e.name.toLowerCase()
-          .includes(name.toLowerCase()))
+            .includes(name.toLowerCase()))
           .map((planet) => (
-          <tr key={ planet }>
-            <td key={ planet.name }>{ planet.name }</td>
-            <td key={ planet.rotation_period }>{ planet.rotation_period }</td>
-            <td key={ planet.orbital_period }>{ planet.orbital_period }</td>
-            <td key={ planet.diameter }>{ planet.diameter }</td>
-            <td key={ planet.climate }>{ planet.climate }</td>
-            <td key={ planet.gravity }>{ planet.gravity }</td>
-            <td key={ planet.terraini }>{ planet.terrain }</td>
-            <td key={ planet.surface_water }>{ planet.surface_water }</td>
-            <td key={ planet.population }>{ planet.population }</td>
-            <td key={ planet.films }>{ planet.films }</td>
-            <td key={ planet.created }>{ planet.created }</td>
-            <td key={ planet.edited }>{ planet.edited }</td>
-            <td key={ planet.url }>{ planet.url }</td>
-          </tr>
-        ))}
+            <tr key={planet}>
+              <td key={planet.name}>{planet.name}</td>
+              <td key={planet.rotation_period}>{planet.rotation_period}</td>
+              <td key={planet.orbital_period}>{planet.orbital_period}</td>
+              <td key={planet.diameter}>{planet.diameter}</td>
+              <td key={planet.climate}>{planet.climate}</td>
+              <td key={planet.gravity}>{planet.gravity}</td>
+              <td key={planet.terraini}>{planet.terrain}</td>
+              <td key={planet.surface_water}>{planet.surface_water}</td>
+              <td key={planet.population}>{planet.population}</td>
+              <td key={planet.films}>{planet.films}</td>
+              <td key={planet.created}>{planet.created}</td>
+              <td key={planet.edited}>{planet.edited}</td>
+              <td key={planet.url}>{planet.url}</td>
+            </tr>
+          ))}
       </tbody>
     </table>
   );
