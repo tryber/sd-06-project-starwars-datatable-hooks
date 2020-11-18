@@ -12,6 +12,7 @@ function Table() {
 
   if (loading) return (<h1>Loading...</h1>);
 
+  // refatorar os dados passados para o TableHeader, pois do jeito que está vai quebrar se o filtro retornar vazio
   return (
     <div>
       <table>
