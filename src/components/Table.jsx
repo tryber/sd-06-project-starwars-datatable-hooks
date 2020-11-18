@@ -1,27 +1,46 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 import '../style/table.css';
 
 function Table() {
-  const { dataAPI, getData } = useContext(StarWarsContext);
+  const { dataAPI, getData, nameInput } = useContext(StarWarsContext);
+  const [filteredData, setFilter] = useState([]);
   const tableHeaders = ['Name', 'Rotation Period', 'Orbital Periode',
     'Diameter', 'Climate', 'Gravity', 'Terrain', 'Surface Water',
     'Population', 'Residents', 'Films', 'Created', 'Edited',
   ];
 
+  const handleData = () => {
+    const fName = nameInput.filters.filterByName.name;
+
+    if (fName !== '') {
+      const newData = dataAPI.filter((obj) => obj.name.toLowerCase().includes(fName));
+      setFilter(newData);
+    }
+
+    if (fName === '') {
+      const newData = dataAPI;
+      setFilter(newData);
+    }
+  };
+
   useEffect(() => {
     getData();
   }, []);
+
+  useEffect(() => {
+    handleData();
+  }, [nameInput, dataAPI]);
 
   return (
     <table>
       <thead>
         <tr className="table-row">
-          { tableHeaders.map((title, index) => <th className="table-header" key={ `title${index}` }>{title}</th>) }
+          { tableHeaders.map((title, index) => <th key={ `title${index}` }>{title}</th>) }
         </tr>
       </thead>
       <tbody>
-        {dataAPI.map((obj, index) => {
+        {filteredData.map((obj, index) => {
           const tableRows = (
             <tr key={ `planet${index}` } className="table-row">
               <td>{obj.name}</td>
