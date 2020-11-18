@@ -1,10 +1,10 @@
 import React from 'react';
-import MyContext from './MyContext';
 import PropTypes from 'prop-types';
+import MyContext from './MyContext';
 
-const Provider = ({ children }) => {
+function Provider({ children }) {
   return (
-    <MyContext.Provider value={ 'teste' }>
+    <MyContext.Provider value='teste'>
       {children}
     </MyContext.Provider>
   );
