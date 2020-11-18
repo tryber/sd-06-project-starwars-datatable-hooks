@@ -1,0 +1,53 @@
+/* table */
+
+.planet-table-container {
+  margin: 64px auto 0;
+  overflow-x: auto;
+  max-width: 1300px;
+  padding: 0 20px;
+}
+
+.planet-table-container table {
+  width: 100%;
+  border-spacing: 0 8px;
+}
+
+.planet-table-container table th {
+  color: #969cb3;
+  font-weight: normal;
+  padding: 20px 16px;
+  text-align: left;
+  font-size: 16px;
+  line-height: 24px;
+  border: 1px solid black;
+
+}
+
+.planet-table-container table td {
+  padding: 20px 16px;
+  border: 1px solid black;
+  background: #fff;
+  font-size: 16px;
+  font-weight: normal;
+  color: #808cbd;
+}
+
+.planet-table-container table td.field {
+  color: #363f5f;
+}
+
+.planet-table-container table td:first-child {
+  border-radius: 8px 0 0 8px;
+}
+
+.planet-table-container table td:last-child {
+  border-radius: 0 8px 8px 0;
+}
+
+.planet-table-container table th:first-child {
+  border-radius: 8px 0 0 8px;
+}
+
+.planet-table-container table th:last-child {
+  border-radius: 0 8px 8px 0;
+}

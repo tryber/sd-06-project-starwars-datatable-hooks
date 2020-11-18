@@ -22,7 +22,9 @@ const filterStructure = {
   filterByName: {
     name: '',
   },
+
   filterByNumericValues: [],
+
   order: {
     column: 'name',
     sort: 'ASC',
@@ -64,7 +66,7 @@ function PlanetProvider({ children }) {
   const planetsSortOptions = useMemo(() => {
     const badOptions = [
       'created',
-      'updated',
+      'edited',
       'films',
       'url',
     ];
@@ -82,6 +84,12 @@ function PlanetProvider({ children }) {
     const { filterByName: { name } } = filters;
 
     return name;
+  }, [filters]);
+
+  const sortSelected = useMemo(() => {
+    const { order } = filters;
+
+    return order;
   }, [filters]);
 
   const availableFilters = useMemo(() => {
@@ -185,6 +193,14 @@ function PlanetProvider({ children }) {
     const sortedPlanets = sortPlanetsByColumn(planets, column, direction);
 
     setPlanets(sortedPlanets);
+
+    setFilters((oldFilters) => ({
+      ...oldFilters,
+      sort: {
+        column,
+        sort: direction,
+      },
+    }));
   }, [planets]);
 
   return (
@@ -195,6 +211,7 @@ function PlanetProvider({ children }) {
         planetInfo,
         planetsSortOptions,
         nameFiltered,
+        sortSelected,
         availableFilters,
         usedFilters,
         filterPlanetsByName,

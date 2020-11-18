@@ -1,83 +1,171 @@
-.planet-table-container {
-  margin: 64px auto 0;
-  overflow-x: auto;
-  max-width: 1300px;
-  padding: 0 20px;
+.app-header {
+  padding: 20px;
+  text-align: center;
+  border-bottom: 0.3px dashed white;
 }
 
-.planet-table-container table {
-  width: 100%;
-  border-spacing: 0 8px;
+.planets-page form {
+  max-width: 800px;
+  margin: 30px auto 0;
 }
 
-.planet-table-container table th {
-  color: #969cb3;
-  font-weight: normal;
-  padding: 20px 16px;
-  text-align: left;
-  font-size: 16px;
-  line-height: 24px;
-  border: 1px solid black;
 
-}
-
-.planet-table-container table td {
-  padding: 20px 16px;
-  border: 1px solid black;
-  background: #fff;
-  font-size: 16px;
-  font-weight: normal;
-  color: #969cb3;
-}
-
-.planet-table-container table td.field {
-  color: #363f5f;
-}
-
-.planet-table-container table td.outcome {
-  color: #e83f5b;
-}
-
-.planet-table-container table td div {
-  width: 50%;
-  margin: 0 auto;
+.planets-page form h3 {
+  margin-bottom: 20px;
+  font-size: 20px;
   display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.planets-page form h3 svg {
+  margin-right: 12px;
+}
+
+.planets-page form .name-input-container {
+  text-align: center;
+}
+
+.planets-page form .name-input-container input {
+  width: 75%;
+  padding: 8px;
+  border-radius: 5px;
+  border: none;
+  text-align: center;
+}
+
+.planets-page form .numeric-selectors-container {
+  display: flex;
+  margin: 25px 0;
+}
+
+form .numeric-selectors-container .numeric-singleton-container {
+  flex-basis: 33%;
+  text-align: center;
+}
+
+form .numeric-selectors-container .numeric-singleton-container label {
+  display: block;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+form .numeric-selectors-container .numeric-singleton-container select,
+form .numeric-selectors-container .numeric-singleton-container input {
+  width: 40%;
+  border-radius: 5px;
+  background: white;
+  padding: 8px;
+  border: none;
+  text-align: center;
+}
+
+form .sort-container {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+form .sort-container .sort-select-container {
+  margin-right: 12px;
+}
+
+form .sort-container .sort-select-container label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+form .sort-container .sort-select-container select {
+  border-radius: 5px;
+  background: white;
+  padding: 8px;
+  border: none;
+  text-align: center;
+}
+
+form .sort-container .ordering-sort-container .radio-container {
+  display: flex;
+  align-items: center;
   justify-content: space-between;
 }
 
-.planet-table-container table td button {
-  height: 100%;
+form .sort-container .ordering-sort-container .radio-container label {
+  font-size: 80%;
+  margin-right: 8px;
+}
+
+form .sort-container .ordering-sort-container .radio-container + div {
+  margin-top: 6px;
+}
+
+form .btn-container {
+  text-align: center;
+  margin-top: 24px;
+}
+
+form .btn-container button {
+  height: 36px;
+  width: 80px;
+  background: rgb(218, 99, 198);
+  border-radius: 5px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
   border: none;
+}
+
+form .btn-container button + button {
+  margin-left: 30px;
+}
+
+.planets-page .used-filters-container {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.planets-page .used-filters-container h2 {
+  margin-bottom: 24px;
+}
+
+.planets-page .used-filters-container div {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.planets-page .used-filters-container div + div {
+  margin-top: 20px;
+}
+
+.planets-page .used-filters-container div svg {
+  font-size: 22px;
+  justify-self: start;
+}
+
+.planets-page .used-filters-container div strong {
+  margin: 0 14px;
+}
+
+.planets-page .used-filters-container div button {
+  border: none;
+  border-radius: 100%;
   display: flex;
   align-items: center;
-  background: none;
   color: red;
+  background-color: transparent;
+  cursor: pointer;
+  justify-self: end;
 }
 
-.planet-table-container table td button.edit-btn {
-  color: rgb(255, 139, 62);
+.planets-page footer {
+  margin-top: 50px;
+  text-align: center;
+  padding: 20px 0;
+  border-top: 0.5px dashed white;
 }
 
-.planet-table-container table td button + button {
-  margin-left: 5px;
-}
-
-.planet-table-container table td button svg {
-  pointer-events: none;
-}
-
-.planet-table-container table td:first-child {
-  border-radius: 8px 0 0 8px;
-}
-
-.planet-table-container table td:last-child {
-  border-radius: 0 8px 8px 0;
-}
-
-.planet-table-container table th:first-child {
-  border-radius: 8px 0 0 8px;
-}
-
-.planet-table-container table th:last-child {
-  border-radius: 0 8px 8px 0;
+.planets-page footer p + p {
+  margin-top: 12px;
 }

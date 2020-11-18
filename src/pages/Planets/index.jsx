@@ -1,6 +1,10 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { FiX } from 'react-icons/fi';
+import { FiX, FiFilter, FiAlignCenter } from 'react-icons/fi';
 
+import Loading from '../../components/Loading';
+import PlanetsTable from '../../components/PlanetsTable';
+
+import renderFilterIcon from './utils/renderFIlterIcon';
 import { usePlanets } from '../../hooks/planets';
 import { availableNumericComparisons } from '../../hooks/utils/numericComparison';
 
@@ -10,15 +14,12 @@ function Planets() {
   const columnFilterRef = useRef();
   const comparisonFilterRef = useRef();
   const valueFilterRef = useRef();
-  const [sortOption, setSortOption] = useState('name');
-  const [sortOrder, setSortOrder] = useState('ASC');
 
   const {
-    planets,
     loading,
-    planetInfo,
     planetsSortOptions,
     nameFiltered,
+    sortSelected,
     availableFilters,
     usedFilters,
     filterPlanetsByName,
@@ -26,6 +27,9 @@ function Planets() {
     sortPlanets,
     removeFilter,
   } = usePlanets();
+
+  const [sortOption, setSortOption] = useState(sortSelected.column);
+  const [sortOrder, setSortOrder] = useState(sortSelected.sort);
 
   const handleInputChange = useCallback(({ target }) => {
     filterPlanetsByName(target.value);
@@ -61,172 +65,181 @@ function Planets() {
 
   if (loading) {
     return (
-      <p>Loading...</p>
+      <Loading />
     );
   }
 
   return (
-    <>
-      <h1>Star Wars Planets</h1>
+    <div className="planets-page">
+      <header className="app-header">
+        <h1>Star Wars Planets</h1>
+      </header>
 
-      <form onSubmit={ handleSubmit }>
-        <input
-          data-testid="name-filter"
-          placeholder="name"
-          value={ nameFiltered }
-          onChange={ handleInputChange }
-        />
+      <div className="filter-container">
+        <form onSubmit={ handleSubmit }>
 
-        <div className="numeric-selectors-container">
-          <div className="numeric-singleton-container">
-            <label htmlFor="column">Column</label>
-            <select
-              name="column"
-              id="column"
-              data-testid="column-filter"
-              ref={ columnFilterRef }
-              required
-            >
-              {availableFilters.map((filter, index) => (
-                <option key={ `${filter}-${index}` } value={ filter }>
-                  {filter}
-                </option>
-              ))}
-            </select>
-          </div>
+          <h3>
+            <FiFilter />
+            Filter
+          </h3>
 
-          <div className="numeric-singleton-container">
-            <label htmlFor="comparison">Comparison</label>
-            <select
-              name="comparison"
-              id="comparison"
-              data-testid="comparison-filter"
-              ref={ comparisonFilterRef }
-              required
-            >
-              {availableNumericComparisons.map((comparison, index) => (
-                <option key={ `${comparison}-${index}` } value={ comparison }>
-                  {comparison}
-                </option>
-              ))}
-            </select>
-          </div>
+          <div className="name-input-container">
 
-          <div className="numeric-singleton-container">
-            <label htmlFor="value">Value</label>
             <input
-              data-testid="value-filter"
-              placeholder="Valor"
-              type="number"
-              min={ 0 }
-              step={ 1 }
-              ref={ valueFilterRef }
-              required
+              data-testid="name-filter"
+              placeholder="Planet's name"
+              value={ nameFiltered }
+              onChange={ handleInputChange }
             />
+
           </div>
-        </div>
 
-        <div className="sort-container">
-          <label htmlFor="column">Sort</label>
-          <select
-            name="column"
-            id="column"
-            data-testid="column-sort"
-            value={ sortOption }
-            onChange={ sortOptionChange }
-            required
-          >
-            {planetsSortOptions.map((sortInfo, index) => (
-              <option key={ `${sortInfo}-${index}` } value={ sortInfo }>
-                {sortInfo}
-              </option>
-            ))}
-          </select>
-
-          <div className="ordering-sort-container">
-            <div className="radio-container">
-              <label htmlFor="ASC">Ascending</label>
-              <input
-                type="radio"
-                name="sort"
-                id="ASC"
-                value="ASC"
-                onChange={ handleRadioChange }
-                data-testid="column-sort-input-asc"
-              />
-            </div>
-            <div className="radio-container">
-              <label htmlFor="DESC">Descending</label>
-              <input
-                type="radio"
-                name="sort"
-                id="DESC"
-                value="DESC"
-                onChange={ handleRadioChange }
-                data-testid="column-sort-input-desc"
-              />
-            </div>
-          </div>
-        </div>
-
-        <button
-          type="submit"
-          data-testid="button-filter"
-        >
-          Filter
-        </button>
-
-        <button
-          type="button"
-          data-testid="column-sort-button"
-          onClick={ handleSort }
-        >
-          Sort
-        </button>
-      </form>
-
-      {!!usedFilters.length && (
-        <div className="used-filters-container">
-          {usedFilters.map((filter, index) => (
-            <div data-testid="filter" key={ `${filter}-${index}-${index}` }>
-              <strong>{filter}</strong>
-              <button type="button" onClick={ () => removeFilter(filter) }>
-                <FiX size={ 20 } />
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
-
-      <div className="planet-table-container">
-        <table>
-          <thead>
-            <tr>
-              {planetInfo.map((header, index) => (
-                <th key={ `${header}-${index}` }>{header}</th>
-              ))}
-            </tr>
-          </thead>
-
-          <tbody>
-            {planets.map((planet) => (
-              <tr key={ `${planet.url}-${Math.random()}` }>
-                {planetInfo.map((header) => (
-                  <td
-                    key={ `${planet.name}-${header}` }
-                    data-testid={ header === 'name' ? 'planet-name' : '' }
-                  >
-                    {
-                      planet[header]
-                    }
-                  </td>
+          <div className="numeric-selectors-container">
+            <div className="numeric-singleton-container">
+              <label htmlFor="column">Column</label>
+              <select
+                name="column"
+                id="column"
+                data-testid="column-filter"
+                ref={ columnFilterRef }
+                required
+              >
+                {availableFilters.map((filter, index) => (
+                  <option key={ `${filter}-${index}` } value={ filter }>
+                    {filter}
+                  </option>
                 ))}
-              </tr>
+              </select>
+            </div>
+
+            <div className="numeric-singleton-container">
+              <label htmlFor="comparison">Comparison</label>
+              <select
+                name="comparison"
+                id="comparison"
+                data-testid="comparison-filter"
+                ref={ comparisonFilterRef }
+                required
+              >
+                {availableNumericComparisons.map((comparison, index) => (
+                  <option key={ `${comparison}-${index}` } value={ comparison }>
+                    {comparison}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="numeric-singleton-container">
+              <label htmlFor="value">Value</label>
+              <input
+                data-testid="value-filter"
+                placeholder="Valor"
+                type="number"
+                min={ 0 }
+                step={ 1 }
+                ref={ valueFilterRef }
+                required
+              />
+            </div>
+          </div>
+
+          <h3>
+            <FiAlignCenter />
+            Sort
+          </h3>
+
+          <div className="sort-container">
+            <div className="sort-select-container">
+              <select
+                name="sort"
+                id="sort"
+                data-testid="column-sort"
+                value={ sortOption }
+                onChange={ sortOptionChange }
+                required
+              >
+                {planetsSortOptions.map((sortInfo, index) => (
+                  <option key={ `${sortInfo}-${index}` } value={ sortInfo }>
+                    {sortInfo}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="ordering-sort-container">
+              <div className="radio-container">
+                <label htmlFor="ASC">Ascending</label>
+                <input
+                  type="radio"
+                  name="sort"
+                  id="ASC"
+                  value="ASC"
+                  onChange={ handleRadioChange }
+                  checked={ sortOrder === 'ASC' }
+                  data-testid="column-sort-input-asc"
+                />
+              </div>
+              <div className="radio-container">
+                <label htmlFor="DESC">Descending</label>
+                <input
+                  type="radio"
+                  name="sort"
+                  id="DESC"
+                  value="DESC"
+                  checked={ sortOrder === 'DESC' }
+                  onChange={ handleRadioChange }
+                  data-testid="column-sort-input-desc"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="btn-container">
+            <button
+              type="submit"
+              data-testid="button-filter"
+            >
+              Filter
+            </button>
+
+            <button
+              type="button"
+              data-testid="column-sort-button"
+              onClick={ handleSort }
+            >
+              Sort
+            </button>
+
+          </div>
+        </form>
+
+        {!!usedFilters.length && (
+          <div className="used-filters-container">
+
+            <h2>Active Filters</h2>
+
+            {usedFilters.map((filter, index) => (
+              <div data-testid="filter" key={ `${filter}-${index}-${index}` }>
+                {renderFilterIcon(filter)}
+                <strong>{filter}</strong>
+                <button type="button" onClick={ () => removeFilter(filter) }>
+                  <FiX size={ 20 } />
+                </button>
+              </div>
             ))}
-          </tbody>
-        </table>
+          </div>
+        )}
+
       </div>
-    </>
+
+      <PlanetsTable />
+
+      <footer>
+        <p>Developed by @fabiosc</p>
+        <p>Contact me at fabiosenracorrea@gmail.com</p>
+      </footer>
+
+    </div>
   );
 }
 
