@@ -1,9 +1,10 @@
-import React, { useContext } from 'react';
-import starContext from '../context/starContext';
+import React from 'react';
+import useFilters from '../hooks/useFilters';
+
 import '../css/Header.css';
 
 function Header() {
-  const { filters, setFilters } = useContext(starContext);
+  const [filters, setFilters] = useFilters();
 
   function handleInput({ target }) {
     setFilters({
