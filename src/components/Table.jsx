@@ -4,7 +4,11 @@ import MyContext from '../context/MyContext';
 import usePlanets from '../hooks/usePlanets';
 
 function Table() {
-  const { isFetching, setFetch, data, filters: { filterByName: { name } } } = useContext(MyContext);
+  const {
+    isFetching, setFetch, data,
+    filters: { filterByName: { name } },
+    filters: { filterByNumericValues: [{ column, comparison, value }] }
+  } = useContext(MyContext);
 
   usePlanets(setFetch);
 
@@ -13,23 +17,37 @@ function Table() {
     'terrain', 'surface_water', 'population', 'films', 'created', 'edited', 'url',
   ];
 
-  return ( (isFetching)
+  const filterByColumn = (data) => {
+    switch (comparison) {
+      case 'maior que':
+        return data.filter(planet => Number(planet[column]) > Number(value));
+      case 'menor que':
+        return data.filter(planet => Number(planet[column]) < Number(value));
+      case 'igual a':
+        return data.filter(planet => Number(planet[column]) === Number(value));
+      default:
+        return data;
+    };
+  };
+
+  return ((isFetching)
     ? <div>loading...</div>
     : (
-    <table>
-      <thead>
-        <tr>
-          {keys.map((key, index) => (
-            <th key={index}>
-              {key}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {data.filter((planets) => planets.name.toLowerCase().includes(name.toLowerCase()))
+      <table>
+        <thead>
+          <tr>
+            {keys.map((key, index) => (
+              <th key={index}>
+                {key}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {filterByColumn(data)
+            .filter((planets) => planets.name.toLowerCase().includes(name.toLowerCase()))
             .map((planet) => (
-              <tr key={ planet.name }>
+              <tr key={planet.name}>
                 <td data-testid="planet-name">{planet.name}</td>
                 <td>{planet.rotation_period}</td>
                 <td>{planet.orbital_period}</td>
@@ -44,12 +62,11 @@ function Table() {
                 <td>{planet.edited}</td>
                 <td>{planet.url}</td>
               </tr>
-            )
-          )
-        }
-      </tbody>
-    </table>
-  ));
+            ))
+          }
+        </tbody>
+      </table>
+    ));
 };
 
 export default Table;
