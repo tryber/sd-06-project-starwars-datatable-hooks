@@ -6,4 +6,9 @@ const fetchStarWarsPlanets = async () => {
   return json.results;
 };
 
+// const fetchStarWarsPlanets = async () => {
+//   console.log('Chamada API');
+//   return results;
+// };
+
 export default fetchStarWarsPlanets;

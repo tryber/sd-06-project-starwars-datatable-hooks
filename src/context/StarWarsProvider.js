@@ -6,23 +6,24 @@ import fetchStarWarsPlanets from '../services/fetchApi';
 
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
+  const [searchText, setSearchText] = useState('');
 
   const getStarWarsPlanets = async () => {
     const resultsFromApi = await fetchStarWarsPlanets();
     setData(resultsFromApi);
   };
 
-  getStarWarsPlanets();
-
   return (
-    <starWarsContext.Provider value={ { data } }>
+    <starWarsContext.Provider
+      value={ { data, getStarWarsPlanets, searchText, setSearchText } }
+    >
       { children }
     </starWarsContext.Provider>
   );
 }
 
 StarWarsProvider.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.instanceOf(Array).isRequired,
 };
 
 export default StarWarsProvider;

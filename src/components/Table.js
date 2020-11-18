@@ -1,8 +1,27 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import starWarsContext from '../context/starWarsContext';
 
 function Table() {
-  const { data } = useContext(starWarsContext);
+  const { data, getStarWarsPlanets, searchText } = useContext(starWarsContext);
+  const [filteredPlanet, setFilteredPlanet] = useState([]);
+
+  useEffect(() => {
+    getStarWarsPlanets();
+  }, []);
+
+  // useEffect(() => {
+  //   if (data.length > 0) {
+  //     setFilteredPlanet(data);
+  //   }
+  // }, [data]);
+
+  useEffect(() => {
+    const filtered = data.filter((planet) => planet.name.includes(searchText));
+    setFilteredPlanet(filtered);
+    if (data.length < 1) {
+      setFilteredPlanet(data);
+    }
+  }, [searchText, data]);
 
   return (
     <table className="table table-hover">
@@ -11,7 +30,7 @@ function Table() {
           <th>Name</th>
           <th>Rotation Period</th>
           <th>Orbital Period</th>
-          <th>diameter</th>
+          <th>Diameter</th>
           <th>Climate</th>
           <th>Gravity</th>
           <th>Terrain</th>
@@ -25,7 +44,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {data.map((planet, index) => (
+        {filteredPlanet.map((planet, index) => (
           <tr key={ index }>
             <td>{ planet.name }</td>
             <td>{ planet.rotation_period }</td>
