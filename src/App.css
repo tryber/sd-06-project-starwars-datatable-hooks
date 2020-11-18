@@ -1,3 +1,15 @@
 body {
+  background-color: mintcream;
   font-family: 'Ubuntu';
+}
+
+.navbar {
+  background-color: indigo;
+  border: 2px solid white;
+  border-radius: 10px;
+  color: white;
+  margin: 0 auto 20px auto;
+  padding: 10px;
+  text-align: center;
+  width: 500px;
 }
