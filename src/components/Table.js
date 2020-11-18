@@ -12,12 +12,15 @@ function Table() {
             .map((header) => (<th scope="col" key={ header }>{header}</th>))}
         </tr>
       </thead>
-      {data.filter((e) => typeof e.name === 'string' && e.name.includes(filters.filterByName.name)).map((planet) => (
-        <tr className="table-active" key={ planet }>
-          {Object.entries(planet)
-            .filter((value) => value[0] !== 'residents')
-            .map((value) => (<td key={ value[1] }>{ value[1] }</td>))}
-        </tr>))}
+      {data
+        .filter((e) => typeof e.name === 'string' && e.name
+          .includes(filters.filterByName.name))
+        .map((planet) => (
+          <tr className="table-active" key={ planet }>
+            {Object.entries(planet)
+              .filter((value) => value[0] !== 'residents')
+              .map((value) => (<td key={ value[1] }>{ value[1] }</td>))}
+          </tr>))}
     </table>
   );
 }
