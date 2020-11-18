@@ -25,28 +25,40 @@ function Table() {
       </thead>
       <tbody>
         {data && data
-          .map((planet, index) => {
-            if (planet.name.includes(name)) {
-              return (
-                <tr key={ index }>
-                  <td>{planet.name}</td>
-                  <td>{planet.rotation_period}</td>
-                  <td>{planet.orbital_period}</td>
-                  <td>{planet.diameter}</td>
-                  <td>{planet.climate}</td>
-                  <td>{planet.created}</td>
-                  <td>{planet.edited}</td>
-                  <td>{planet.films}</td>
-                  <td>{planet.gravity}</td>
-                  <td>{planet.population}</td>
-                  <td>{planet.surface_water}</td>
-                  <td>{planet.terrain}</td>
-                  <td>{planet.url}</td>
-                </tr>
-              );
+          .filter((planet) => planet.name.toLowerCase().includes(name.toLowerCase()))
+          .filter((planet) => {
+            if (filters.filterByNumericValues[0] !== undefined) {
+              const { column, comparison, value } = filters.filterByNumericValues[0];
+              switch (comparison) {
+              case 'maior que':
+                return parseInt(planet[column], 10) > parseInt(value, 10);
+              case 'menor que':
+                return parseInt(planet[column], 10) < parseInt(value, 10);
+              case 'igual a':
+                return parseInt(planet[column], 10) === parseInt(value, 10);
+              default:
+                return true;
+              }
             }
-            return undefined;
-          })}
+            return true;
+          })
+          .map((planet, index) => (
+            <tr key={ index }>
+              <td>{planet.name}</td>
+              <td>{planet.rotation_period}</td>
+              <td>{planet.orbital_period}</td>
+              <td>{planet.diameter}</td>
+              <td>{planet.climate}</td>
+              <td>{planet.created}</td>
+              <td>{planet.edited}</td>
+              <td>{planet.films}</td>
+              <td>{planet.gravity}</td>
+              <td>{planet.population}</td>
+              <td>{planet.surface_water}</td>
+              <td>{planet.terrain}</td>
+              <td>{planet.url}</td>
+            </tr>
+          ))}
       </tbody>
     </table>
   );

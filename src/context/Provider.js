@@ -4,11 +4,12 @@ import StarWarsAPI from '../services/StarWarsAPI';
 import StarWarsContext from './StarWarsContext';
 
 function Provider({ children }) {
-  const [data, setData] = useState();
-  const [filters, setFilters] = useState({
+  const FILTER_INITIAL_STATE = {
     filterByName: { name: '' },
-    filterByNumericValues: [{}],
-  });
+    filterByNumericValues: [],
+  };
+  const [data, setData] = useState();
+  const [filters, setFilters] = useState(FILTER_INITIAL_STATE);
 
   const getPlanets = async () => {
     const planets = await StarWarsAPI();
@@ -24,7 +25,14 @@ function Provider({ children }) {
     });
   };
 
-  const contextValue = { data, filters, handleFilterByName };
+  const handleFilterByNumericValues = (value) => {
+    setFilters({
+      ...filters,
+      filterByNumericValues: filters.filterByNumericValues.concat(value),
+    });
+  };
+
+  const contextValue = { data, filters, handleFilterByName, handleFilterByNumericValues };
 
   return (
     <StarWarsContext.Provider value={ contextValue }>
