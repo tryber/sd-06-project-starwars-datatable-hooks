@@ -8,6 +8,7 @@ function SearchBox() {
     <div>
       <input
         type="text"
+        data-testid="name-filter"
         onChange={ (e) => {
           setState({ ...state, filters: { filterByName: { name: e.target.value } } });
           // console.log(state.filters.filterByName);
