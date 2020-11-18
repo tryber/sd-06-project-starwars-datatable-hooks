@@ -8,8 +8,9 @@ const url = `${apiInfo.api}${apiInfo.endpoint}`;
 async function fetchPlanetsInfo() {
   const requestResponse = await fetch(url);
   const data = await requestResponse.json();
+  console.log('Fetched data from API:', data.results);
 
-  return data;
+  return data.results;
 }
 
 export default fetchPlanetsInfo;
