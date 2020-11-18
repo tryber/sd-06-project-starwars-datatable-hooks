@@ -9,6 +9,19 @@ const columnOptions = [
   'rotation_period',
   'surface_water',
 ];
+
+const orderOptions = [
+  'Name',
+  'population',
+  'orbital_period',
+  'diameter',
+  'rotation_period',
+  'surface_water',
+  'climate',
+  'gravity',
+  'terrain',
+];
+
 const comparisonOptions = ['', 'maior que', 'menor que', 'igual a'];
 
 const FilterNumber = () => {
@@ -16,7 +29,27 @@ const FilterNumber = () => {
     { column: '', comparison: '', value: '' },
   );
 
-  const { dataApi, filterNumber, setFilterNumber } = useContext(StarWarsContext);
+  const [orderBy, setOrderby] = useState(
+    { column: 'Name', sort: '' },
+  );
+
+  const handleOrder = (event) => {
+    setOrderby({ ...orderBy, sort: event.target.value });
+  };
+
+  const handleOrderColumn = (event) => {
+    setOrderby({ ...orderBy, column: event.target.value });
+  };
+
+  const { dataApi,
+    filterNumber,
+    setFilterNumber,
+    setOrder } = useContext(StarWarsContext);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setOrder(orderBy);
+  };
 
   const columnFilter = filterNumber.map((filter) => filter.column);
 
@@ -27,9 +60,6 @@ const FilterNumber = () => {
 
   return (
     <div>
-      {console.log(filterNumber)}
-      {console.log(columnFilter)}
-      {console.log(remainingColumns)}
       {dataApi.length !== zero && (
         <div>
           <h4>Apply more filters:</h4>
@@ -67,6 +97,44 @@ const FilterNumber = () => {
           >
             Filtrar
           </button>
+          <form onSubmit={ handleSubmit }>
+            <div onChange={ handleOrder }>
+              <label htmlFor="ASC">
+                ASC
+                <input
+                  value="ASC"
+                  type="radio"
+                  datatestid="column-sort-input-asc"
+                  name="radio"
+                  id="ASC"
+                />
+              </label>
+              <label htmlFor="DESC">
+                DESC
+                <input
+                  value="DESC"
+                  type="radio"
+                  datatestid="column-sort-input-desc"
+                  name="radio"
+                  id="DESC"
+                />
+              </label>
+            </div>
+            <select
+              data-testid="column-sort"
+              onChange={ handleOrderColumn }
+            >
+              {orderOptions.map((eachPlanet) => (
+                <option key={ eachPlanet } value={ eachPlanet }>{eachPlanet}</option>
+              ))}
+            </select>
+            <button
+              type="submit"
+              data-testid="column-sort-button"
+            >
+              Order by
+            </button>
+          </form>
         </div>
       )}
     </div>

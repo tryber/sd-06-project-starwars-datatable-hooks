@@ -15,8 +15,18 @@ function filterByNumber(planets, filter) {
   return planets;
 }
 
+const ASC = (a, b) => {
+  const { order } = useContext(StarWarsContext);
+  return a[order.column] - b[order.column];
+};
+
+const DESC = (a, b) => {
+  const { order } = useContext(StarWarsContext);
+  return b[order.column] - a[order.column];
+};
+
 function TableBody() {
-  const { dataApi, filterName, filterNumber } = useContext(StarWarsContext);
+  const { dataApi, filterName, filterNumber, order } = useContext(StarWarsContext);
   let allPlanets = dataApi;
   filterNumber.forEach((filter) => {
     allPlanets = filterByNumber(allPlanets, filter);
@@ -25,6 +35,7 @@ function TableBody() {
     <tbody className="planets-table">
       {allPlanets
         .filter((planet) => planet.name.includes(filterName.name))
+        .sort(order.sort === 'ASC' ? ASC : DESC)
         .map((planet) => (
           <tr key={ planet.name }>
             <td key={ planet.name }>{planet.name}</td>

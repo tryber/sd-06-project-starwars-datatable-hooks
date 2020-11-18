@@ -6,6 +6,7 @@ const StarWarsProvider = ({ children }) => {
   const [dataApi, setDataApi] = useState([]);
   const [filterName, setFilterName] = useState({ filterByName: { name: '' } });
   const [filterNumber, setFilterNumber] = useState([]);
+  const [order, setOrder] = useState({});
 
   const infos = {
     dataApi,
@@ -14,6 +15,8 @@ const StarWarsProvider = ({ children }) => {
     setFilterName,
     filterNumber,
     setFilterNumber,
+    order,
+    setOrder,
   };
 
   return (
