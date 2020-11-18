@@ -1,12 +1,18 @@
 import React from 'react';
 
-import { StarWarsProvider } from './context';
 import './App.css';
+import Table from './pages/Table';
+import { FilterByName, FilterByNumber, FilterByOrder, Filters } from './components';
+import { StarWarsProvider } from './context';
 
 function App() {
   return (
     <StarWarsProvider>
-      <div>...</div>
+      <FilterByName />
+      <FilterByNumber />
+      <FilterByOrder />
+      <Filters />
+      <Table />
     </StarWarsProvider>
   );
 }
