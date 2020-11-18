@@ -5,6 +5,7 @@ import CustomFilters from './CustomFilters';
 
 const Filters = () => {
   const {
+    setIsFetching,
     setData,
     filters,
     setFilters,
@@ -23,6 +24,7 @@ const Filters = () => {
     'surface_water'];
 
   const filterByName = async () => {
+    setIsFetching(true);
     const data = await request();
     const byName = await data.filter((planet) => planet.name.toUpperCase()
       .includes(name.toUpperCase()));
@@ -67,7 +69,7 @@ const Filters = () => {
     });
   };
 
-  const handleButton = async () => {
+  const handleButton = () => {
     setFilters(
       {
         ...filters,
@@ -75,14 +77,22 @@ const Filters = () => {
           .concat({ column, comparison, value }),
       },
     );
+    setIsFetching(true);
   };
 
   useEffect(() => {
-    const zero = 0;
+  }, [column, comparison, value]);
+
+  useEffect(() => {
     handleNaming();
+  }, [name]);
+
+  useEffect(() => {
+    const zero = 0;
     if (filters.filterByNumericValues.length > zero) {
       filterByNumericValues();
     }
+    setIsFetching(false);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters]);
 

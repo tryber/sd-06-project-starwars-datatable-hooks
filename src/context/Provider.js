@@ -12,6 +12,7 @@ function Provider({ children }) {
   const reqPlanets = async () => {
     const planets = await request();
     setData(planets);
+    setIsFetching(false);
   };
 
   useEffect(() => {

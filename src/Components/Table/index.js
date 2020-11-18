@@ -8,7 +8,7 @@ const Table = () => {
     const reqPlanets = async () => {
       const planets = await request();
       setData(planets);
-      setIsFetching(false);
+      setIsFetching(true);
     };
     reqPlanets();
   // eslint-disable-next-line react-hooks/exhaustive-deps
