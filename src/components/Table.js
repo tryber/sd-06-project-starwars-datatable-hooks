@@ -1,8 +1,9 @@
 import React, { useContext, useEffect } from 'react';
-import planetsContext from '../context/PlanetsContext';
+import PlanetsContext from '../context/PlanetsContext';
 
 function Table() {
-  const { data, getPlanets } = useContext(planetsContext);
+  const { data, getPlanets, filters } = useContext(PlanetsContext);
+  const { filterByName: { nameFilter } } = filters;
   useEffect(() => {
     getPlanets();
   });
@@ -26,23 +27,24 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {data.map((element) => (
-          <tr key={ element.name }>
-            <th scope="row">{element.name}</th>
-            <td>{element.rotation_period}</td>
-            <td>{element.orbital_period}</td>
-            <td>{element.diameter}</td>
-            <td>{element.climate}</td>
-            <td>{element.gravity}</td>
-            <td>{element.terrain}</td>
-            <td>{element.surface_water}</td>
-            <td>{element.population}</td>
-            <td>{element.films}</td>
-            <td>{element.created}</td>
-            <td>{element.edited}</td>
-            <td>{element.url}</td>
-          </tr>
-        ))}
+        {data ? data.filter((element) => element.name.includes(nameFilter))
+          .map((element) => (
+            <tr key={ element.name }>
+              <th scope="row">{element.name}</th>
+              <td>{element.rotation_period}</td>
+              <td>{element.orbital_period}</td>
+              <td>{element.diameter}</td>
+              <td>{element.climate}</td>
+              <td>{element.gravity}</td>
+              <td>{element.terrain}</td>
+              <td>{element.surface_water}</td>
+              <td>{element.population}</td>
+              <td>{element.films}</td>
+              <td>{element.created}</td>
+              <td>{element.edited}</td>
+              <td>{element.url}</td>
+            </tr>
+          )) : null}
       </tbody>
     </table>
   );

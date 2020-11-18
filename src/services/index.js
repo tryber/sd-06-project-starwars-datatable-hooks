@@ -1,5 +1,5 @@
 export default () => (
-  fetch('https://swapi-trybe.herokuapp.com/api/planets/?format=json')
+  fetch('https://swapi.dev/api/planets/')
     .then((response) => (response.json()))
     .then((response) => response.results)
 );
