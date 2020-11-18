@@ -5,16 +5,27 @@ import PlanetsAPI from './services/RequestPlanetsAPI';
 
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
+  const [name, setName] = useState('');
 
   const requestPlanets = async () => {
     const planetsReturneds = await PlanetsAPI();
     setData(planetsReturneds);
   };
 
+  const filtersProvider = {
+    filters: {
+      filterByName: {
+        name,
+      },
+    },
+  };
+
   const contextValue = {
     data,
     setData,
     requestPlanets,
+    filtersProvider,
+    setName,
   };
 
   return (
