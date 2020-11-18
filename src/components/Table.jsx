@@ -2,11 +2,16 @@ import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { data, getPlanetList } = useContext(StarWarsContext);
+  const { data, getPlanetList, searchTerm } = useContext(StarWarsContext).context;
 
   useEffect(() => {
     getPlanetList();
-  }, [getPlanetList]);
+  }, []);
+
+  const filterData = () => {
+    const filtered = data.filter((planet) => planet.name.includes(searchTerm));
+    return filtered;
+  };
 
   return (
     <table className="table">
@@ -28,21 +33,21 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {data.map((planet) => (
+        {filterData().map((planet) => (
           <tr key={ planet.name }>
             <td>{planet.name}</td>
             <td>{planet.rotation_period}</td>
-            <td>{ planet.orbital_period }</td>
-            <td>{ planet.diameter }</td>
-            <td>{ planet.climate }</td>
-            <td>{ planet.gravity }</td>
-            <td>{ planet.terrain }</td>
-            <td>{ planet.surface_water }</td>
-            <td>{ planet.population }</td>
-            <td>{ planet.films }</td>
-            <td>{ planet.created }</td>
-            <td>{ planet.edited }</td>
-            <td>{ planet.url }</td>
+            <td>{planet.orbital_period}</td>
+            <td>{planet.diameter}</td>
+            <td>{planet.climate}</td>
+            <td>{planet.gravity}</td>
+            <td>{planet.terrain}</td>
+            <td>{planet.surface_water}</td>
+            <td>{planet.population}</td>
+            <td>{planet.films}</td>
+            <td>{planet.created}</td>
+            <td>{planet.edited}</td>
+            <td>{planet.url}</td>
           </tr>
         ))}
       </tbody>
