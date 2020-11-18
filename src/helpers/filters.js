@@ -30,3 +30,7 @@ export default function mainFilter(planets, nameFilter, columnFilters) {
 
   return filteredByColumn;
 }
+
+export function setCurrentFilters(mainFilters, selectedFilters) {
+  return mainFilters.filter((filter) => !selectedFilters.includes(filter));
+}
