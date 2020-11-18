@@ -1,5 +1,5 @@
 import React from 'react';
-import Table from './component/Table';
+import Table from './components/Table';
 import StarWarsProvider from './context/StarWarsProvider';
 
 function App() {

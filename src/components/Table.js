@@ -1,5 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
+import '../App.css';
 
 function Table() {
   const tableHeader = ['name', 'rotation_period', 'orbital_period', 'diameter', 'climate',
@@ -12,10 +13,10 @@ function Table() {
   }, []);
 
   return (
-    <table>
-      <thead>
+    <table className="table table-striped table-hover">
+      <thead className="thead-dark">
         <tr>
-          { tableHeader.map((header) => <th key={ header }>{ header }</th>) }
+          { tableHeader.map((header) => <th key={ header } scope="col">{ header }</th>) }
         </tr>
       </thead>
       <tbody>
