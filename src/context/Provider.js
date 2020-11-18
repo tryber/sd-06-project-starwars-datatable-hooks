@@ -23,6 +23,32 @@ function Provider({ children }) {
     filterByName: { name: '' },
     filterByNumericValues: [],
   });
+
+  const filterByName = async () => {
+    const { name } = filters.filterByName;
+    const planets = await request();
+    const byName = await planets.filter((planet) => planet.name.toUpperCase()
+      .includes(name.toUpperCase()));
+    return byName;
+  };
+
+  const filterByNumericValues = async () => {
+    const byName = await filterByName();
+    await filters.filterByNumericValues.map((element, index) => {
+      const fullFiltered = byName.filter((array) => {
+        const columns = filters.filterByNumericValues[index].column;
+        const comparisons = filters.filterByNumericValues[index].comparison;
+        const values = filters.filterByNumericValues[index].value;
+        if (comparisons === 'maior que') {
+          return array[columns] > parseInt(values, 10);
+        } if (comparisons === 'menor que') {
+          return array[columns] < parseInt(values, 10);
+        }
+        return array[columns] === values;
+      });
+      return fullFiltered;
+    });
+  };
   const contextValue = {
     data,
     setData,
@@ -36,6 +62,8 @@ function Provider({ children }) {
     setValue,
     isFetching,
     setIsFetching,
+    filterByNumericValues,
+
   };
 
   return (

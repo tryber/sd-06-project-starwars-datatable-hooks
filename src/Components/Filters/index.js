@@ -31,11 +31,6 @@ const Filters = () => {
     return byName;
   };
 
-  const handleNaming = async () => {
-    const byname = await filterByName();
-    return setData(byname);
-  };
-
   const handleName = async ({ target }) => {
     setFilters({ ...filters, filterByName: { name: target.value } });
   };
@@ -80,11 +75,13 @@ const Filters = () => {
     setIsFetching(true);
   };
 
-  useEffect(() => {
-  }, [column, comparison, value]);
+  const filterName = async () => {
+    const byname = await filterByName();
+    return setData(byname);
+  };
 
   useEffect(() => {
-    handleNaming();
+    filterName();
   }, [name]);
 
   useEffect(() => {

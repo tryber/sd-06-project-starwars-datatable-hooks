@@ -3,7 +3,13 @@ import StarWarsContext from '../../context/StarWarsContext';
 import request from '../../services/request';
 
 const Table = () => {
-  const { isFetching, setIsFetching, data, setData } = useContext(StarWarsContext);
+  const {
+    isFetching,
+    setIsFetching,
+    data,
+    setData,
+    filters } = useContext(StarWarsContext);
+  const { name } = filters.filterByName;
   useEffect(() => {
     const reqPlanets = async () => {
       const planets = await request();
@@ -36,23 +42,39 @@ const Table = () => {
         </thead>
         <tbody>
           {
-            data.map((planet, index) => (
-              <tr key={ index }>
-                <td>{ planet.name }</td>
-                <td>{ planet.rotation_period }</td>
-                <td>{ planet.orbital_period }</td>
-                <td>{ planet.diameter }</td>
-                <td>{ planet.climate }</td>
-                <td>{ planet.gravity }</td>
-                <td>{ planet.terrain }</td>
-                <td>{ planet.surface_water }</td>
-                <td>{ planet.population }</td>
-                <td>{ planet.films }</td>
-                <td>{ planet.created }</td>
-                <td>{ planet.edited }</td>
-                <td>{ planet.url }</td>
-              </tr>
-            ))
+            data.filter((planet) => planet.name.toUpperCase()
+              .includes(name.toUpperCase()))
+              .filter((array) => {
+                if (filters.filterByNumericValues[0]) {
+                  const columns = filters.filterByNumericValues[0].column;
+                  const comparisons = filters.filterByNumericValues[0].comparison;
+                  const values = filters.filterByNumericValues[0].value;
+                  if (comparisons === 'maior que') {
+                    return array[columns] > parseInt(values, 10);
+                  } if (comparisons === 'menor que') {
+                    return array[columns] < parseInt(values, 10);
+                  }
+                  return array[columns] === values;
+                }
+                return array;
+              })
+              .map((planet, index) => (
+                <tr key={ index }>
+                  <td>{ planet.name }</td>
+                  <td>{ planet.rotation_period }</td>
+                  <td>{ planet.orbital_period }</td>
+                  <td>{ planet.diameter }</td>
+                  <td>{ planet.climate }</td>
+                  <td>{ planet.gravity }</td>
+                  <td>{ planet.terrain }</td>
+                  <td>{ planet.surface_water }</td>
+                  <td>{ planet.population }</td>
+                  <td>{ planet.films }</td>
+                  <td>{ planet.created }</td>
+                  <td>{ planet.edited }</td>
+                  <td>{ planet.url }</td>
+                </tr>
+              ))
           }
         </tbody>
       </table>
