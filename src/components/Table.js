@@ -16,7 +16,6 @@ export default function Table() {
           <th scope="col">TERRAIN</th>
           <th scope="col">SURFACE WATER</th>
           <th scope="col">POPULATION</th>
-          <th scope="col">RESIDENTS</th>
           <th scope="col">FILMS</th>
           <th scope="col">CREATED</th>
           <th scope="col">EDITED</th>
@@ -34,7 +33,6 @@ export default function Table() {
             <td>{planet.terrain}</td>
             <td>{planet.surface_water}</td>
             <td>{planet.population}</td>
-            <td />
             <td>{planet.films}</td>
             <td>{planet.created}</td>
             <td>{planet.edited}</td>
