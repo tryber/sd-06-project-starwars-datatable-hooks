@@ -21,7 +21,11 @@ function Table() {
   const { dataApi, setDataApi } = useContext(StarWarsContext);
 
   useEffect(() => {
-    fetchPlanets().then((data) => setDataApi(data));
+    async function getPlanets() {
+      const data = await fetchPlanets();
+      setDataApi(data);
+    }
+    getPlanets();
   }, [setDataApi]);
 
   const zero = 0;
