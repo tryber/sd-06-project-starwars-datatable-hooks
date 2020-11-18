@@ -12,7 +12,7 @@ function InputText() {
         <input
           type="text"
           id="User"
-          date-testid="name-filter"
+          data-testid="name-filter"
           value={ inputName }
           onChange={ ({ target }) => setFilterByName(target.value) }
         />
