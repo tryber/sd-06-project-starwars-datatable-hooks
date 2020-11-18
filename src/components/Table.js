@@ -10,7 +10,7 @@ function Table() {
   const {
     data: { planets },
     fetchPlanets,
-    searchTerm,
+    filters: { filterByName: { name }},
   } = useContext(StarWarsContext).context;
 
   useEffect(() => {
@@ -29,7 +29,7 @@ function Table() {
       <tbody>
         {planets
           .filter((planet) => planet.name.toLowerCase()
-            .includes(searchTerm.toLowerCase()))
+            .includes(name.toLowerCase()))
           .map(({
             name, rotation_period: rotationPeriod, orbital_period: orbitalPeriod,
             diameter, climate, gravity, terrain, surface_water: surfaceWater,

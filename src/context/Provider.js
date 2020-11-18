@@ -5,7 +5,11 @@ import StarWarsAPI from '../services/StarsWarsAPI';
 
 function Provider({ children }) {
   const [planets, setPlanets] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [filters, setFilters] = useState({ 
+    filterByName: { name: ''},
+    filterByNumericValues: [],
+    order: { column: 'Name', sort: 'ASC' }, 
+  })
 
   const fetchPlanets = async () => {
     const response = await StarWarsAPI();
@@ -13,11 +17,30 @@ function Provider({ children }) {
     setPlanets(planetsObject);
   };
 
+  const setFilterByName = (searchTerm) => {
+    setFilters({
+      ...filters,
+      filterByName: { name: searchTerm },
+    })
+  }
+
+  const setFilterNumericOptions = (column, comparison, value) => {
+    setFilters({
+      ...filters,
+      filterByNumericValues: [{
+        column,
+        comparison,
+        value,
+      }],
+    })
+  }
+
   const context = {
-    data: { planets },
     fetchPlanets,
-    searchTerm,
-    setSearchTerm,
+    data: { planets },
+    filters,
+    setFilterByName,
+    setFilterNumericOptions,
   };
 
   return (
