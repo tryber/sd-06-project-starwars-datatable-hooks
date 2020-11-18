@@ -33,13 +33,24 @@ function Table() {
     }
     return result;
   };
-  const crazy = (a, b) => {
+  const columnNumbers = () => (order.column === 'rotation_period'
+  || order.column === 'orbital_period' || order.column === 'surface_water'
+  || order.column === 'diameter' || order.column === 'population');
+  const sorting = (a, b) => {
     let result;
-    if (order.sort === 'DESC') {
+    if (order.sort === 'DESC' && columnNumbers()) {
       result = (parseInt(a[order.column], 10) < parseInt(b[order.column], 10)
         ? 1 : lessOne);
-    } else {
-      result = (a.name > b.name ? 1 : lessOne);
+    }
+    if (order.sort === 'ASC' && columnNumbers()) {
+      result = (parseInt(a[order.column], 10) > parseInt(b[order.column], 10)
+        ? 1 : lessOne);
+    }
+    if (order.sort === 'DESC' && !columnNumbers()) {
+      result = (a[order.column] < b[order.column] ? 1 : lessOne);
+    }
+    if (order.sort === 'ASC' && !columnNumbers()) {
+      result = (a[order.column] > b[order.column] ? 1 : lessOne);
     }
     return result;
   };
@@ -54,7 +65,7 @@ function Table() {
       <tbody>
         {data
           .filter((e) => filteringName(e) && filteringNumeric(e))
-          .sort((a, b) => crazy(a, b))
+          .sort((a, b) => sorting(a, b))
           .map((planet, index) => (
             <tr className="table-active" key={ index }>
               {Object.entries(planet)
