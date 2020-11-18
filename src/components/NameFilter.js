@@ -7,6 +7,7 @@ function NameFilter() {
   const onChange = ({ target }) => {
     const typingName = target.value;
     setFilters({
+      ...filters,
       filters: {
         filterByName: {
           name: typingName,
