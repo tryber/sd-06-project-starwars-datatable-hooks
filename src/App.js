@@ -4,10 +4,19 @@ import Table from './component/Table';
 
 function App() {
   const [planets, setPlanets] = useState('');
-  // 4 - criar o state que sera armazenado no value do Provider no context
+  const [name, setName] = useState('');
+  // 4 - criar o state que sera armazenado
+  // no value do Provider
   const state = {
     planets,
     setPlanets,
+    // incluir o state do filtro do input
+    filters: {
+      filterByName: {
+        name,
+        setName,
+      },
+    },
   };
 
   return (
@@ -17,7 +26,6 @@ function App() {
       <PlanetsContext.Provider value={ state }>
         <Table />
       </PlanetsContext.Provider>
-      {console.log(state)}
     </main>
   );
 }

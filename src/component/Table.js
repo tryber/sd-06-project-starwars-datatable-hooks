@@ -6,7 +6,8 @@ import PlanetsContext from '../context/PlanetsContext';
 
 function Table() {
   // Cria passagem para que o useEffect possa acessar os dados da API
-  const { planets, setPlanets } = useContext(PlanetsContext);
+  // filterByName e chamado pelo handleChange do input
+  const { planets, setPlanets, filters: { filterByName } } = useContext(PlanetsContext);
   // acessar os dados da API na hora de montar a pagina, segundo argumento
   useEffect(() => {
     fetchApi(setPlanets);
@@ -19,8 +20,25 @@ function Table() {
     'terrain', 'surface_water', 'population', 'films', 'created', 'edited', 'url',
   ];
 
+  // criar um handleChange para pegar os length do input
+  const handleChange = (({ target }) => {
+    filterByName.setName(target.value);
+  });
+
   return (
     <div>
+      <form>
+        <label htmlFor="nameFilter">
+          Nome:
+          <input
+            id="nameFilter"
+            type="text"
+            data-testid="name-filter"
+            onChange={ handleChange }
+            value={ filterByName.name }
+          />
+        </label>
+      </form>
       <table>
         <thead>
           <tr>
@@ -29,23 +47,24 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {[...planets].map((planet) => (
-            <tr key={ planet.name }>
-              <td>{ planet.name }</td>
-              <td>{ planet.rotation_period }</td>
-              <td>{ planet.orbital_period }</td>
-              <td>{ planet.diameter }</td>
-              <td>{ planet.climate }</td>
-              <td>{ planet.gravity }</td>
-              <td>{ planet.terrain }</td>
-              <td>{ planet.surface_water }</td>
-              <td>{ planet.population }</td>
-              <td>{ planet.films }</td>
-              <td>{ planet.created }</td>
-              <td>{ planet.edited }</td>
-              <td>{ planet.url }</td>
-            </tr>
-          ))}
+          {[...planets].filter((item) => item.name.match(filterByName.name))
+            .map((planet) => (
+              <tr key={ planet.name }>
+                <td>{ planet.name }</td>
+                <td>{ planet.rotation_period }</td>
+                <td>{ planet.orbital_period }</td>
+                <td>{ planet.diameter }</td>
+                <td>{ planet.climate }</td>
+                <td>{ planet.gravity }</td>
+                <td>{ planet.terrain }</td>
+                <td>{ planet.surface_water }</td>
+                <td>{ planet.population }</td>
+                <td>{ planet.films }</td>
+                <td>{ planet.created }</td>
+                <td>{ planet.edited }</td>
+                <td>{ planet.url }</td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>
