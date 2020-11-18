@@ -7,11 +7,11 @@ const usePlanets = (callback) => {
   useEffect(() => {
     async function fetchData() {
       const results = await fetchPlanets();
-      
+
       setData(data.concat(results));
       callback(false);
-    };
-    
+    }
+
     fetchData();
   }, []);
 

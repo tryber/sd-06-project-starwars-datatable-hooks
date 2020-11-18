@@ -1,7 +1,7 @@
 import React from 'react';
 import { useContext } from 'react';
-import MyContext from './context/MyContext';
-import usePlanets from './context/usePlanets';
+import MyContext from '../context/MyContext';
+import usePlanets from '../context/usePlanets';
 
 function Table() {
   const { isFetching, setFetch } = useContext(MyContext);
