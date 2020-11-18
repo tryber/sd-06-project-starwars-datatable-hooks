@@ -11,4 +11,4 @@ export const Table = Styled.div`
   tbody tr td {
     border: 1px solid black;
   }
-`
+`;

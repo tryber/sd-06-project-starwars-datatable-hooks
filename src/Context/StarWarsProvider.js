@@ -13,7 +13,7 @@ const StarWarsProvider = ({ children }) => {
     setStarWars({
       ...stateStarWars,
       data: planets,
-    })
+    });
   };
 
   const contextStarWars = {
