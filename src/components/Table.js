@@ -17,8 +17,11 @@ function Table() {
           <th>Terrain</th>
           <th>Surface Water</th>
           <th>Population</th>
-          <th>Residents</th>
+          {/* <th>Residents</th> */}
           <th>Films</th>
+          <th>Created</th>
+          <th>Edited</th>
+          <th>URL</th>
         </tr>
       </thead>
       <tbody>
@@ -33,8 +36,11 @@ function Table() {
             <td>{ planet.terrain }</td>
             <td>{ planet.surface_water }</td>
             <td>{ planet.population }</td>
-            <td>{ planet.residents }</td>
+            {/* <td>{ planet.residents }</td> */}
             <td>{ planet.films }</td>
+            <td>{ planet.created }</td>
+            <td>{ planet.edited }</td>
+            <td>{ planet.url }</td>
           </tr>
         ))}
       </tbody>
@@ -43,49 +49,3 @@ function Table() {
 }
 
 export default Table;
-
-// <table>
-// <thead>
-//   <tr>
-//     <th>Descrição</th>
-//     <th>Tag</th>
-//     <th>Método de pagamento</th>
-//     <th>Valor</th>
-//     <th>Moeda</th>
-//     <th>Câmbio utilizado</th>
-//     <th>Valor convertido</th>
-//     <th>Moeda de conversão</th>
-//     <th>Editar/Excluir</th>
-//   </tr>
-// </thead>
-// <tbody>
-
-// name": "Dagobah",
-//             "rotation_period": "23",
-//             "orbital_period": "341",
-//             "diameter": "8900",
-//             "climate": "murky",
-//             "gravity": "N/A",
-//             "terrain": "swamp, jungles",
-//             "surface_water": "8",
-//             "population": "unknown",
-//             "residents": [],
-//             "films": [
-
-//   <table>
-//   <thead>
-//     <tr>
-//       <th>Name</th>
-//       <th>Rotation Period</th>
-//       <th>Orbital Period</th>
-//       <th>Climate</th>
-//       <th>Gravity</th>
-//       <th>Terrain</th>
-//       <th>Surface Water</th>
-//       <th>Population</th>
-//       <th>Residents</th>
-//       <th>Films</th>
-
-//     </tr>
-//   </thead>
-// </table>
