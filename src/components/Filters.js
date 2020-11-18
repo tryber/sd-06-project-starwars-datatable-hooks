@@ -20,6 +20,8 @@ const Filters = () => {
     columnSortFilter,
     setColumnSortFilter,
     setSortFilter,
+    activeFilters,
+    setActiveFilters,
   } = filterActions;
   const [showFilters, setShowFilters] = useState({
     message: '',
@@ -38,8 +40,8 @@ const Filters = () => {
           value: valueFilter,
         },
       },
-      activeFilters: true,
     });
+    setActiveFilters(true);
   }
 
   useEffect(() => {
@@ -51,13 +53,10 @@ const Filters = () => {
         show: true,
       });
     }
-  }, [filtersState]);
+  }, [filtersState, activeFilters]);
 
   function clearFilters() {
-    setFiltersState({
-      ...filtersState,
-      activeFilters: false,
-    });
+    setActiveFilters(false);
     setShowFilters({
       message: '',
       show: false,

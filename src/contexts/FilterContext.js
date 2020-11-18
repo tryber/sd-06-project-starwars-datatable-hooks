@@ -11,13 +11,13 @@ const FilterContextProvider = (props) => {
   const [valueFilter, setValueFilter] = useState(ZERO);
   const [sortOptionFilter, setSortOptionFilter] = useState('ASC');
   const [columnSortFilter, setColumnSortFilter] = useState('name');
+  const [activeFilters, setActiveFilters] = useState(false);
   const [filtersState, setFiltersState] = useState({
     filters: {
       filterByName: {
         name: '',
       },
     },
-    activeFilters: false,
   });
   const [sortFilter, setSortFilter] = useState({
     ...filtersState,
@@ -54,6 +54,8 @@ const FilterContextProvider = (props) => {
     setSortOptionFilter,
     sortFilter,
     setSortFilter,
+    activeFilters,
+    setActiveFilters,
   };
   const { children } = props;
 

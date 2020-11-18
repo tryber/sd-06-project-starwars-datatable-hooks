@@ -88,9 +88,9 @@ function getPlanetsSortedByName(planets) {
 const PlanetsTable = () => {
   const { planets } = useContext(PlanetContext);
   const { filterActions } = useContext(filterContext);
-  const { filtersState, sortFilter } = filterActions;
+  const { filtersState, sortFilter, activeFilters } = filterActions;
   const { sorted } = sortFilter;
-  const { activeFilters, filters } = filtersState;
+  const { filters } = filtersState;
   const { filterByName, filterByNumericValue } = filters;
 
   if (planets) {
@@ -105,9 +105,17 @@ const PlanetsTable = () => {
         </tr>
       </thead>
       <tbody>
-        {sorted && handleSorted(planets, sortFilter).map((planet) => (
-          <PlanetRow key={ planet.name } planet={ planet } />
-        ))}
+        {sorted && handleSorted(planets, sortFilter).map((planet) => {
+          if (activeFilters && filterByNumericValue) {
+            const { column, comparison, value } = filterByNumericValue;
+            const selectedColumnValue = getColumnValue(planet, column);
+            return (getNameComparison(planet, filterByName))
+              && filterPlanet(selectedColumnValue, comparison, value)
+              && <PlanetRow key={ planet.name } planet={ planet } />;
+          }
+          return (getNameComparison(planet, filterByName))
+            && <PlanetRow key={ planet.name } planet={ planet } />;
+        })}
         {!sorted && !activeFilters && planets.map((planet) => (
           (getNameComparison(planet, filterByName))
             && <PlanetRow key={ planet.name } planet={ planet } />
@@ -119,10 +127,6 @@ const PlanetsTable = () => {
             && filterPlanet(selectedColumnValue, comparison, value)
             && <PlanetRow key={ planet.name } planet={ planet } />;
         })}
-        {!sorted && activeFilters && !filterByNumericValue && planets.map((planet) => (
-          (getNameComparison(planet, filterByName))
-            && <PlanetRow key={ planet.name } planet={ planet } />
-        ))}
       </tbody>
     </table>
   ) : (
