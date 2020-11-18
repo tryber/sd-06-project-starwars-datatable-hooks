@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { fetchStarWarsData } from '../services/starWarsAPI';
+import PropTypes from 'prop-types';
+import fetchStarWarsData from '../services/starWarsAPI';
 import StarWarsContext from './StarWarsContext';
 
 function StarWarsProvider({ children }) {
@@ -7,14 +8,18 @@ function StarWarsProvider({ children }) {
 
   const getData = async () => {
     const results = await fetchStarWarsData();
-    setData(results)
-  }
+    setData(results);
+  };
 
   return (
-    <StarWarsContext.Provider value={ { data, getData }}>
+    <StarWarsContext.Provider value={ { data, getData } }>
       { children }
     </StarWarsContext.Provider>
   );
 }
+
+StarWarsProvider.propTypes = {
+  children: PropTypes.shape.isRequired,
+};
 
 export default StarWarsProvider;
