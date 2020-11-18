@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { filterContext } from '../contexts/FilterContext';
 
 const Filters = () => {
@@ -12,8 +12,64 @@ const Filters = () => {
     setComparisonFilter,
     valueFilter,
     setValueFilter,
+    filtersState,
     setFiltersState,
   } = filterActions;
+  const [showFilters, setShowFilters] = useState({
+    message: '',
+    show: false,
+  });
+
+  function handleClick() {
+    setFiltersState({
+      filters: {
+        filterByName: {
+          name: nameFilter,
+        },
+        filterByNumericValue: {
+          column: columnFilter,
+          comparison: comparisonFilter,
+          value: valueFilter,
+        },
+      },
+      activeFilters: true,
+    });
+  }
+
+  useEffect(() => {
+    const { filterByNumericValue } = filterActions.filtersState.filters;
+    if (filterByNumericValue) {
+      const { column, comparison, value } = filterByNumericValue;
+      setShowFilters({
+        message: `${column} ${comparison} ${value}`,
+        show: true,
+      });
+    }
+  }, [filtersState]);
+
+  function clearFilters() {
+    setFiltersState({
+      ...filtersState,
+      activeFilters: false,
+    });
+    setShowFilters({
+      message: '',
+      show: false,
+    });
+  }
+
+  function renderFilters() {
+    if (showFilters.show) {
+      return (
+        <h4 data-testid="filter">
+          {showFilters.message}
+          <button type="button" onClick={ clearFilters }>X</button>
+        </h4>
+      );
+    }
+    return <p>no filters</p>;
+  }
+
   return (
     <div className="filters">
       <input
@@ -53,22 +109,11 @@ const Filters = () => {
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ () => setFiltersState({
-          filters: {
-            filterByName: {
-              name: nameFilter,
-            },
-            filterByNumericValue: {
-              column: columnFilter,
-              comparison: comparisonFilter,
-              value: valueFilter,
-            },
-          },
-          activeFilters: true,
-        }) }
+        onClick={ handleClick }
       >
         aplicar filtros
       </button>
+      {renderFilters()}
     </div>
   );
 };
