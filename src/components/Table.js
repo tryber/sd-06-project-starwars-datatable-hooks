@@ -7,6 +7,7 @@ function Table() {
   const { data } = useContext(StarWarsContext);
   const objVoid = 0;
   if (Object.keys(data).length !== objVoid) {
+    // pegar a copia feita aqui em baixa mandar ela para o state golbal e fazer que ela seja chamada toda vez que o data for atualizado ou imput do name for madado
     const copyResults = data.results.map((result) => ({ ...result }));
     copyResults.forEach((objPlanet) => {
       delete objPlanet.residents;
