@@ -6,6 +6,7 @@ function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [headerKeys, setHeaderKeys] = useState([]);
+  const [nameFilter, setNameFilter] = useState('');
 
   const getApiPlanets = async () => {
     const responseApi = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
@@ -28,6 +29,12 @@ function StarWarsProvider({ children }) {
     isLoading,
     setIsLoading,
     headerKeys,
+    setNameFilter,
+    filters: {
+      filterByName: {
+        name: nameFilter,
+      },
+    },
   };
 
   return (
