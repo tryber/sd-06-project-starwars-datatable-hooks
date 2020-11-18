@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import fetchPlanetsAPI from '../services/StarWarsService'
+import fetchPlanetsAPI from '../services/StarWarsService';
 import StarWarsContext from './StarWarsContext';
 
 function StarWarsProvider({ children }) {
