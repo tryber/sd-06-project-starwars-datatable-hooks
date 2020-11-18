@@ -10,7 +10,7 @@ import './App.css';
 function App() {
   return (
     <StarWarsProvider>
-      <div className="form-inline">
+      <div className="App">
         <div className="form-group mx-sm-3 mb-2">
           <InputFilter />
           <FormsFilter />

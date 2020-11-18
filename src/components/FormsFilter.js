@@ -10,7 +10,7 @@ function FormsFilter() {
   });
   return (
     <form className="btn-group">
-      <div className="form-group mx-sm-3 mb-2">
+      <div className="btn-group mr-2">
         <select
           className="btn btn-secondary dropdown-toggle"
           data-testid="column-filter"
@@ -24,8 +24,9 @@ function FormsFilter() {
           <option value="rotation_period">rotation_period</option>
           <option value="surface_water">surface_water</option>
         </select>
+        <button type="button" className="btn btn-secondary">X</button>
       </div>
-      <div className="form-group mx-sm-3 mb-2">
+      <div className="btn-group mr-2">
         <select
           className="btn btn-secondary dropdown-toggle"
           data-testid="comparison-filter"
@@ -37,8 +38,9 @@ function FormsFilter() {
           <option value="menor que">menor que</option>
           <option value="igual a">igual a</option>
         </select>
+        <button type="button" className="btn btn-secondary">X</button>
       </div>
-      <div className="form-group mx-sm-3 mb-2">
+      <div className="btn-group mr-2">
         <input
           className="form-control"
           data-testid="value-filter"
@@ -48,8 +50,9 @@ function FormsFilter() {
             { ...formsFilter, value: target.value },
           ) }
         />
+        <button type="button" className="btn btn-secondary">X</button>
       </div>
-      <div className="form-group mx-sm-3 mb-2">
+      <div className="btn-group mr-2">
         <button
           className="btn btn-secondary"
           type="button"
@@ -62,6 +65,7 @@ function FormsFilter() {
         >
           Filter
         </button>
+        <button type="button" className="btn btn-secondary">X</button>
       </div>
     </form>
   );

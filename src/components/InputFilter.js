@@ -4,7 +4,7 @@ import StarWarsContext from '../context/StarWarsContext';
 function InputFilter() {
   const { filters, setFilters } = useContext(StarWarsContext);
   return (
-    <div className="form-group mx-sm-3 mb-2">
+    <div className="btn-group mr-2">
       <input
         className="form-control"
         data-testid="name-filter"
