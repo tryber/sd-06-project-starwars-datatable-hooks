@@ -2,7 +2,12 @@ import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 export default function Table() {
-  const { planets, fetchPlanets } = useContext(StarWarsContext);
+  const { planets, fetchPlanets,
+    filters: { filterByName: { name } } } = useContext(StarWarsContext);
+
+  const filteredPlanets = name
+    ? planets.filter((planet) => planet.name.match(`${name}`) && planet)
+    : planets;
 
   useEffect(() => {
     fetchPlanets();
@@ -20,7 +25,7 @@ export default function Table() {
         </tr>
       </thead>
       <tbody>
-        {planets && planets.map((planet) => (
+        {filteredPlanets && filteredPlanets.map((planet) => (
           <tr key={ planet.name }>
             {Object.values(planet).map((value, index) => <td key={ index }>{value}</td>)}
           </tr>
