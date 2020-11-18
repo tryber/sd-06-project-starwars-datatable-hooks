@@ -1,27 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import Home from './pages/home';
+import PlanetContext from './context/PlanetContext';
+import fetchApi from './services/api';
 import './App.css';
 
 function App() {
+  const ZERO = 0;
+  const [planets, setPlanets] = useState([]);
+  const [name, setName] = useState('');
+  const [column, setColumn] = useState('');
+  const [comparison, setComparison] = useState('');
+  const [value, setValue] = useState(ZERO);
+
+  const getApi = async () => {
+    const api = await fetchApi();
+    setPlanets(api);
+  };
+
+  const state = {
+    planets,
+    setPlanets,
+    getApi,
+    filters: {
+      filterByName: {
+        name,
+        setName,
+      },
+      filterByNumericValues: [
+        {
+          column,
+          setColumn,
+          comparison,
+          setComparison,
+          value,
+          setValue,
+        },
+      ],
+    },
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={ logo } className="App-logo" alt="logo" />
-        <p>
-          Edit
-          <code>src/App.js</code>
-          and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <PlanetContext.Provider value={ state }>
+      <Home />
+    </PlanetContext.Provider>
   );
 }
 
