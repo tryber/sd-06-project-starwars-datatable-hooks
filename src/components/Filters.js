@@ -32,8 +32,21 @@ function Filters() {
     setFilters((prevState) => ({
       ...prevState,
       filterByNumericValues:
-        prevState.filterByNumericValues.concat({ column, comparison, valueComparison }),
+      prevState.filterByNumericValues.concat({ column, comparison, valueComparison }),
     }));
+  };
+
+  const setOptions = () => {
+    let options = [
+      ' ', 'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+    ];
+
+    const filteredOptions = filters.filterByNumericValues
+      .map((filter) => Object.values(filter)[0]);
+
+    options = options.filter((option) => !filteredOptions.includes(option));
+
+    return options;
   };
 
   return (
@@ -46,12 +59,9 @@ function Filters() {
       />
       <br />
       <select data-testid="column-filter" onChange={ handleChangeColumn }>
-        <option>{' '}</option>
-        <option>population</option>
-        <option>orbital_period</option>
-        <option>diameter</option>
-        <option>rotation_period</option>
-        <option>surface_water</option>
+        {setOptions().map((option) => (
+          <option key={ option }>{option}</option>
+        ))}
       </select>
       {' '}
       <select data-testid="comparison-filter" onChange={ handleChangeComparison }>
