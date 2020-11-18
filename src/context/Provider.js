@@ -5,7 +5,13 @@ import StarWarsContext from './StarWarsContext';
 function Provider({ children }) {
   const [dataTable, setDataTable] = useState([]);
   const [headersTable, setHeaders] = useState([]);
+  const [isFiltered, setFilters] = useState(false);
   const [filterByName, setFilterName] = useState({ name: '' });
+  const [filterByNumericValues, setNumericValues] = useState({
+    column: 'population',
+    comparision: 'maior que',
+    value: 0,
+  });
   const contextValue = {
     dataTable,
     setDataTable,
@@ -13,6 +19,10 @@ function Provider({ children }) {
     setHeaders,
     filterByName,
     setFilterName,
+    filterByNumericValues,
+    setNumericValues,
+    isFiltered,
+    setFilters,
   };
 
   return (

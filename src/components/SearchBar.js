@@ -2,12 +2,17 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function SearchBar() {
-  const { filterByName, setFilterName } = useContext(StarWarsContext);
+  const {
+    filterByName,
+    setFilterName,
+    filterByNumericValues,
+    setNumericValues,
+    setFilters } = useContext(StarWarsContext);
 
   return (
     <section>
       <label htmlFor="name-filter">
-        Filtrar por nome:
+        Name:
         <input
           type="text"
           name="name-filter"
@@ -17,18 +22,42 @@ function SearchBar() {
           }) }
         />
       </label>
-      <select data-testid="column-filter">
-        <option>Population</option>
-        <option>Orbital Period</option>
-        <option>Diameter</option>
-        <option>Rotation Period</option>
-        <option>Surface Water</option>
+      <select
+        data-testid="column-filter"
+        onChange={ (event) => setNumericValues({
+          ...filterByNumericValues, column: event.target.value,
+        }) }
+      >
+        <option value="population">population</option>
+        <option value="orbital_period">orbital_period</option>
+        <option value="diameter">diameter</option>
+        <option value="rotation_period">rotation_period</option>
+        <option value="surface_water">surface_water</option>
       </select>
-      <select data-testid='comparison-filter'>
-        <option>Bigger then</option>
-        <option>Smaller then</option>
-        <option>Equal of</option>
+      <select
+        data-testid="comparison-filter"
+        onChange={ (event) => setNumericValues({
+          ...filterByNumericValues, comparision: event.target.value,
+        }) }
+      >
+        <option value="maior que">maior que</option>
+        <option value="menor que">menor que</option>
+        <option value="igual a">igual a</option>
       </select>
+      <input
+        type="number"
+        data-testid="value-filter"
+        onChange={ (event) => setNumericValues({
+          ...filterByNumericValues, value: event.target.value,
+        }) }
+      />
+      <button
+        type="button"
+        data-testid="button-filter"
+        onClick={ () => setFilters(true) }
+      >
+        Aplly Filters
+      </button>
     </section>
   );
 }
