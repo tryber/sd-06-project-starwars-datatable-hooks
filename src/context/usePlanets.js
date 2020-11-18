@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const usePlanets = () => {
+const usePlanets = (callback) => {
   const [data, setData] = useState([]);
 
   useEffect(async () => {
@@ -9,7 +9,9 @@ const usePlanets = () => {
       .then((result) => result.results);
 
     setData(data.concat(results));
+    callback(false);
   }, []);
+
   return data;
 };
 

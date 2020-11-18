@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import MyContext from './MyContext';
 
 function Provider({ children }) {
+  const [isFetching, setFetch] = useState(true);
+  
+  const contextValue = {
+    isFetching,
+    setFetch,
+  };
+
   return (
-    <MyContext.Provider value="teste">
+    <MyContext.Provider value={ contextValue }>
       {children}
     </MyContext.Provider>
   );
