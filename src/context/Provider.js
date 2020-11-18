@@ -4,7 +4,7 @@ import MyContext from './MyContext';
 
 function Provider({ children }) {
   const [isFetching, setFetch] = useState(true);
-  
+
   const contextValue = {
     isFetching,
     setFetch,
