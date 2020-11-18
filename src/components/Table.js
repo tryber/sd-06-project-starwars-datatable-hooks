@@ -63,12 +63,15 @@ function Table() {
   };
 
   useEffect(() => {
-    if (filters.availableColumns.length > 0) setColumn(filters.availableColumns[0]);
-  }, [filters.availableColumns])
+    const zero = 0;
+    if (filters.availableColumns.length > zero) {
+      setColumn(filters.availableColumns[zero]);
+    }
+  }, [filters.availableColumns]);
 
   const handleFilter = () => {
     const newAvailableColumns = filters.availableColumns
-      .filter(element => element !== column);
+      .filter((element) => element !== column);
 
     setFilters(
       { ...filters,
@@ -102,8 +105,10 @@ function Table() {
               name="column"
               onChange={ handleColumn }
             >
-              { filters.availableColumns.map((column) => (
-                <option value={ column } key={ column }>{ column }</option>
+              { filters.availableColumns.map((availableColumn) => (
+                <option value={ availableColumn } key={ availableColumn }>
+                  { availableColumn }
+                </option>
               )) }
             </select>
             <select
