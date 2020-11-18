@@ -9,7 +9,6 @@ const useFilters = () => {
       filterByName: { name: '' },
       filterByNumericValues: [],
       filterColumns: {
-        default: 'Selecione coluna',
         population: 'Population',
         orbital_period: 'Orbital period',
         diameter: 'Diameter',
@@ -37,20 +36,19 @@ const useFilters = () => {
       let result = false;
 
       switch (op) {
-      case 'Maior que':
+      case 'maior que':
         result = columnValue > parsedValue;
         break;
-      case 'Menor que':
+      case 'menor que':
         result = columnValue < parsedValue;
         break;
-      case 'Igual a':
+      case 'igual a':
         result = columnValue === parsedValue;
         break;
       default:
         break;
       }
 
-      console.log(result);
       return result;
     }
 
@@ -70,8 +68,6 @@ const useFilters = () => {
         ),
       )
       : filteredByName;
-
-    console.log(currFilters.filterByNumericValues);
 
     setFilteredData({ results: filteredList });
   }, [filters]);

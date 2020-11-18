@@ -6,8 +6,8 @@ import '../css/Header.css';
 function Header() {
   const [filters, setFilters] = useFilters();
   const [currFilter, setCurrFilter] = useState({
-    column: 'default',
-    comparison: 'default',
+    column: 'population',
+    comparison: 'maior que',
     value: '0',
   });
   const usedColumns = filters.filters.filterByNumericValues.reduce(
@@ -76,7 +76,7 @@ function Header() {
         <select data-testid="column-filter" id="column" onChange={ handleComparison }>
           { enableColumns.map((filter) => (
             <option value={ filter[0] } key={ filter[0] }>
-              { filter[1] }
+              { filter[0] }
             </option>
           )) }
         </select>
@@ -85,10 +85,9 @@ function Header() {
           onChange={ handleComparison }
           data-testid="comparison-filter"
         >
-          <option value="default">Comparação</option>
-          <option value="Maior que">Maior que</option>
-          <option value="Menor que">Menor que</option>
-          <option value="Igual a">Igual a</option>
+          <option value="maior que">maior que</option>
+          <option value="menor que">menor que</option>
+          <option value="igual a">igual a</option>
         </select>
         <input
           type="number"

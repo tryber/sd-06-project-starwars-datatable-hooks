@@ -12,7 +12,6 @@ function Provider({ children }) {
         name: '',
       },
       filterColumns: [
-        ['default', 'Selecione coluna'],
         ['population', 'Population'],
         ['orbital_period', 'Orbital period'],
         ['diameter', 'Diameter'],
