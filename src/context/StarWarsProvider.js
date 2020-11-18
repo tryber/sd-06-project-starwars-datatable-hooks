@@ -63,7 +63,6 @@ function StarWarsProvider({ children }) {
   const context = {
     data,
     getData,
-    name: filters.filterByName.name,
     getFilterName,
     filters,
     setFilters,

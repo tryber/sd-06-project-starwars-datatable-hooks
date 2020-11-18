@@ -6,7 +6,8 @@ function ComparisonInput() {
 
   const [localColumn, setLocalColumn] = useState('');
   const [localComparison, setLocalComparison] = useState('');
-  const [localValue, setLocalValue] = useState(0);
+  const zero = 0;
+  const [localValue, setLocalValue] = useState(zero);
 
   const setLocalState = () => {
     setFilters({
@@ -21,7 +22,7 @@ function ComparisonInput() {
 
   return (
     <div>
-      <select 
+      <select
         onChange={ ({ target }) => setLocalColumn(target.value) }
         data-testid="column-filter"
       >
@@ -31,7 +32,7 @@ function ComparisonInput() {
         <option>rotation_period</option>
         <option>surface_water</option>
       </select>
-      <select 
+      <select
         onChange={ ({ target }) => setLocalComparison(target.value) }
         data-testid="comparison-filter"
       >
@@ -41,9 +42,14 @@ function ComparisonInput() {
       </select>
       <input
         onChange={ ({ target }) => setLocalValue(target.value) }
-        data-testid="value-filter" type="number"
+        data-testid="value-filter"
+        type="number"
       />
-      <button onClick={setLocalState} data-testid="button-filter">
+      <button
+        onClick={ setLocalState }
+        data-testid="button-filter"
+        type="button"
+      >
         Adicionar filtro
       </button>
     </div>

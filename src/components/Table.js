@@ -2,7 +2,14 @@ import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { column, value, comparison, data, getData, name } = useContext(StarWarsContext).context;
+  const {
+    column,
+    value,
+    comparison,
+    data,
+    getData,
+    name
+  } = useContext(StarWarsContext).context;
 
   useEffect(() => {
     getData();
@@ -13,7 +20,7 @@ function Table() {
     if (comparison === 'maior que') return Number(element[column]) > Number(value);
     if (comparison === 'menor que') return Number(element[column]) < Number(value);
     if (comparison === 'igual a') return Number(element[column]) === Number(value);
-  }
+  };
 
   return (
     <table>

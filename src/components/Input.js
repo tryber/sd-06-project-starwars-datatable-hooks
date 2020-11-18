@@ -4,7 +4,6 @@ import StarWarsContext from '../context/StarWarsContext';
 function Input() {
   const { getFilterName } = useContext(StarWarsContext).context;
 
-
   return (
     <div>
       <label htmlFor="name-filter">
