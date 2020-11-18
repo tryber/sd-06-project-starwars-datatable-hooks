@@ -9,6 +9,8 @@ function Table() {
   if (state.isFetching || !state.data) {
     table = <p>Loading...</p>;
   } else {
+    state.data.results.map((result) => delete result.residents);
+
     table = (
       <table>
         <thead>
