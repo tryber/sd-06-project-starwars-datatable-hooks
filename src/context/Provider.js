@@ -5,7 +5,7 @@ import StarWarsAPI from '../services/StarsWarsAPI';
 
 function Provider({ children }) {
   const [planets, setPlanets] = useState([]);
-  const [filters, setFilters] = useState({ 
+  const [filters, setFilters] = useState({
     filterByName: { name: ''},
     filterByNumericValues: [],
     order: { column: 'Name', sort: 'ASC' }, 
@@ -27,11 +27,19 @@ function Provider({ children }) {
   const setFilterNumericOptions = (column, comparison, value) => {
     setFilters({
       ...filters,
-      filterByNumericValues: [{
+      filterByNumericValues: filters.filterByNumericValues.concat({
         column,
         comparison,
         value,
-      }],
+      }),
+    })
+  }
+
+  const deleteNumericFilter = (deleteFilter) => {
+    const filtered = filters.filterByNumericValues.filter((filter) => filter !== deleteFilter);
+    setFilters({
+      ...filters,
+      filterByNumericValues: filtered,
     })
   }
 
@@ -41,6 +49,7 @@ function Provider({ children }) {
     filters,
     setFilterByName,
     setFilterNumericOptions,
+    deleteNumericFilter,
   };
 
   return (

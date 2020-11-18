@@ -3,14 +3,15 @@ import StarWarsContext from '../context/StarWarsContext';
 
 function SearchInput() {
   const {
-    filters: { filterByName: { name }},
+    filters: { filterByName: { name } },
     setFilterByName,
     setFilterNumericOptions,
   } = useContext(StarWarsContext).context;
-  const numericOptions = ["population", "orbital_period", "diameter", "rotation_period", "surface_water"];
+  const numericOptions = ['population', 'orbital_period', 'diameter',
+    'rotation_period', 'surface_water'];
 
-  const [column, setColumnFilter] = useState('population');
-  const [comparison, setComparisionFilter] = useState('greater-than');
+  const [column, setColumnFilter] = useState("population");
+  const [comparison, setComparisionFilter] = useState("greater-than");
   const [value, setValueFilter] = useState(0);
 
   return (
