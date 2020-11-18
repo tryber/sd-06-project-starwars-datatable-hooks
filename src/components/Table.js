@@ -1,15 +1,25 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { planets, text } = useContext(StarWarsContext);
-  const [filter, setFilter] = useState([]);
+  const { planets, text, numFilter } = useContext(StarWarsContext);
 
-  useEffect(() => {
+  const filterNumbers = () => {
+    numFilter.forEach(numFilter[i]) {
     if (planets !== undefined) {
-      setFilter(planets.filter((p) => p.name.includes(text)));
+      return planets.filter((p) => p[numFilter[i].column] === numFilter[i].column);
     }
-  }, [planets, text]);
+    if (numFilter.comparison === 'maior que') {
+      return planets.filter((p) => p[numFilter[i].column] > numFilter[i].number);
+    }
+    if (numFilter.comparison === 'menor que') {
+      return planets.filter((p) => p[numFilter[i].column] < numFilter[i].number);
+    }
+    if (numFilter.comparison === 'igual a') {
+      return planets.filter((p) => p[numFilter[i].column] === numFilter[i].number);
+    }
+    };
+  };
 
   return (
     <table>
@@ -31,7 +41,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {filter.map((planet) => (
+        {filterNumbers(planets).filter((p) => p.name.includes(text)).map((planet) => (
           <tr key={ planet.name }>
             <td>{ planet.name }</td>
             <td>{ planet.rotation_period }</td>

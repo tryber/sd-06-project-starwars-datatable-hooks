@@ -5,6 +5,7 @@ import StarWarsContext from './StarWarsContext';
 function StarWarsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [text, setText] = useState('');
+  const [numFilter, setNumFilter] = useState([]);
 
   const serviceAPI = async () => {
     const responseAPI = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
@@ -18,7 +19,11 @@ function StarWarsProvider({ children }) {
   }, []);
 
   return (
-    <StarWarsContext.Provider value={ { planets, setText, text } }>
+    <StarWarsContext.Provider
+      value={
+        { planets, text, setText, numFilter, setNumFilter }
+      }
+    >
       {children}
     </StarWarsContext.Provider>
   );
