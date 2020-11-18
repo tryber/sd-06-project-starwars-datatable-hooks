@@ -10,7 +10,7 @@ function SearchBox() {
         type="text"
         onChange={ (e) => {
           setState({ ...state, filters: { filterByName: { name: e.target.value } } });
-          // console.log(state);
+          // console.log(state.filters.filterByName);
         } }
       />
     </div>
