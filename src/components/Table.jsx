@@ -21,7 +21,7 @@ export default function Table() {
     setFilteredPlanets(newPlanets);
   };
 
-  const handleClick = () => {
+  const handleFilter = () => {
     const coluna = document.getElementById('column-filter').value;
     const comp = document.getElementById('comparison-filter').value;
     const input = document.getElementById('value-filter').value;
@@ -40,16 +40,21 @@ export default function Table() {
     if (comparison === '') {
       return true;
     }
-    if (comparison === 'maior_que') {
+    if (comparison === 'maior que') {
       if (Number(column) > Number(value)) return true;
     }
-    if (comparison === 'menor_que') {
+    if (comparison === 'menor que') {
       if (Number(column) < Number(value)) return true;
     }
-    if (comparison === 'igual_a') {
+    if (comparison === 'igual a') {
       if (Number(column) === Number(value)) return true;
     }
     return false;
+  };
+
+  const handleClick = () => {
+    const newPlanets = filteredPlanets.filter((planet) => filterConditions(planet));
+    setFilteredPlanets(newPlanets);
   };
 
   return (
@@ -62,19 +67,32 @@ export default function Table() {
           onChange={ handleChange }
         />
         <div>
-          <select data-testid="column-filter" id="column-filter">
+          <select
+            onChange={ handleFilter }
+            data-testid="column-filter"
+            id="column-filter"
+          >
             <option value="population">population</option>
             <option value="orbital_period">orbital_period</option>
             <option value="diameter">diameter</option>
             <option value="rotation_period ">rotation_period</option>
             <option value="surface_water">surface_water</option>
           </select>
-          <select data-testid="comparison-filter" id="comparison-filter">
-            <option value="maior_que">maior que</option>
-            <option value="menor_que">menor que</option>
-            <option value="igual_a">igual a</option>
+          <select
+            onChange={ handleFilter }
+            data-testid="comparison-filter"
+            id="comparison-filter"
+          >
+            <option value="maior que">maior que</option>
+            <option value="menor que">menor que</option>
+            <option value="igual a">igual a</option>
           </select>
-          <input type="text" data-testid="value-filter" id="value-filter" />
+          <input
+            onChange={ handleFilter }
+            type="text"
+            data-testid="value-filter"
+            id="value-filter"
+          />
           <button
             type="button"
             onClick={ handleClick }
@@ -104,7 +122,7 @@ export default function Table() {
         </thead>
         <tbody>
           {loading ? <tr><td>Loading</td></tr>
-            : filteredPlanets.filter((planet) => filterConditions(planet))
+            : filteredPlanets
               .map((planet) => (
                 <tr key={ planet.name }>
                   <td>{planet.name}</td>
