@@ -19,10 +19,6 @@ function Provider({ children }) {
     fetchData();
   }, []);
 
-  function filterPlanets({ target }) {
-    setFilters({ ...filters, filterByName: { name: target.value } });
-  }
-
   const [filters, setFilters] = useState({
     filterByName: {
       name: '',
@@ -31,8 +27,12 @@ function Provider({ children }) {
     order: {
       column: '',
       sort: '',
-    }
+    },
   });
+
+  function filterPlanets({ target }) {
+    setFilters({ ...filters, filterByName: { name: target.value } });
+  }
 
   const context = { data, isFetching, filters, setFilters, filterPlanets };
 

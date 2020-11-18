@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
-import HeaderFilters from './HeaderFilters';
 import Planet from './Planet';
 
 function Table() {
@@ -11,10 +10,11 @@ function Table() {
     'Population', 'Films', 'Created', 'Edited', 'Url'];
 
   function filtersOptions(planet) {
-    if (filterByNumericValues.length > 0) {
-      const { comparison } = filterByNumericValues[0];
-      const column = planet[filterByNumericValues[0].column];
-      const { value } = filterByNumericValues[0];
+    const zero = 0;
+    if (filterByNumericValues.length > zero) {
+      const { comparison } = filterByNumericValues[zero];
+      const column = planet[filterByNumericValues[zero].column];
+      const { value } = filterByNumericValues[zero];
       if (comparison === '') return true;
       if (comparison === 'maior que') return (Number(column) > Number(value));
       if (comparison === 'menor que') return (Number(column) < Number(value));
