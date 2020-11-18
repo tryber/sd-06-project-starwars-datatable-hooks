@@ -9,35 +9,26 @@ function Table() {
   const { column, comparison, value } = filterByNumericValues[0];
   const zero = 0;
   if (data.length && headerKeys.length > zero) {
-    setIsLoading(true);
+    setIsLoading(false);
   }
 
   function filtersOptions(planetss) {
-    if (comparison === '') {
-      return true;
-    }
-    if (comparison === 'maior que') {
-      if (Number(planetss[column]) > Number(value)) return true;
-    }
-    if (comparison === 'menor que') {
-      if (Number(planetss[column]) < Number(value)) return true;
-    }
-    if (comparison === 'igual a') {
-      if (Number(planetss[column]) === Number(value)) return true;
-    }
-    return false;
+    if (comparison === '') return true;
+    if (comparison === 'maior que') return Number(planetss[column]) > Number(value);
+    if (comparison === 'menor que') return Number(planetss[column]) < Number(value);
+    if (comparison === 'igual a') return Number(planetss[column]) === Number(value);
   }
 
   return (
-    <table>
+    <table border="1">
       <tr>
-        {isLoading
+        {!isLoading
           ? headerKeys.map((tableHeader) => (
             <th key={ tableHeader }>{tableHeader}</th>
           )) : null}
       </tr>
       <tbody>
-        {isLoading
+        {!isLoading
           ? data.filter((planetss) => filtersOptions(planetss))
             .filter((planets) => planets.name.includes(name))
             .map((planet) => (
