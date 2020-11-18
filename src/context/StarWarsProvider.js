@@ -9,6 +9,11 @@ function StarWarsProvider({ children }) {
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [{
+      column: '',
+      comparison: '',
+      value: 0,
+    }],
   });
 
   const getData = async () => {
@@ -25,11 +30,47 @@ function StarWarsProvider({ children }) {
     });
   };
 
+  // const getFilterColumn = (columnInput) => {
+  //   setFilters({
+  //     ...filters,
+  //     filterByNumericValues: [{
+  //       ...filterByNumericValues,
+  //       columnn: columnInput,
+  //     }]
+  //   })
+  // }
+
+  // const getFilterComparison = (comparisonInput) => {
+  //   setFilters({
+  //     ...filters,
+  //     filterByNumericValues: [{
+  //       ...filterByNumericValues,
+  //       columnn: comparisonInput,
+  //     }]
+  //   })
+  // }
+
+  // const getFilterValue = (valueInput) => {
+  //   setFilters({
+  //     ...filters,
+  //     filterByNumericValues: [{
+  //       ...filterByNumericValues,
+  //       columnn: valueInput,
+  //     }]
+  //   })
+  // }
+
   const context = {
     data,
     getData,
     name: filters.filterByName.name,
     getFilterName,
+    filters,
+    setFilters,
+    name: filters.filterByName.name,
+    column: filters.filterByNumericValues[0].column,
+    comparison: filters.filterByNumericValues[0].comparison,
+    value: filters.filterByNumericValues[0].value,
   };
 
   return (

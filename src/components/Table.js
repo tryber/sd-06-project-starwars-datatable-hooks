@@ -2,11 +2,18 @@ import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { data, getData, name } = useContext(StarWarsContext).context;
+  const { column, value, comparison, data, getData, name } = useContext(StarWarsContext).context;
 
   useEffect(() => {
     getData();
   }, []);
+
+  const tableFilter = (element) => {
+    if (comparison === '') return true;
+    if (comparison === 'maior que') return Number(element[column]) > Number(value);
+    if (comparison === 'menor que') return Number(element[column]) < Number(value);
+    if (comparison === 'igual a') return Number(element[column]) === Number(value);
+  }
 
   return (
     <table>
@@ -28,7 +35,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {data
+        {data.filter((element) => tableFilter(element))
           .filter((e) => e.name.toLowerCase()
             .includes(name.toLowerCase()))
           .map((planet) => (

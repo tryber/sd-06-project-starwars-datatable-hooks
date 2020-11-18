@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Input() {
-  const { name, getFilterName } = useContext(StarWarsContext).context;
+  const { getFilterName } = useContext(StarWarsContext).context;
+
 
   return (
     <div>
@@ -15,7 +16,6 @@ function Input() {
           onChange={ ({ target }) => getFilterName(target.value) }
         />
       </label>
-      <p>{ name }</p>
     </div>
   );
 }
