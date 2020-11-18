@@ -2,7 +2,11 @@ import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 const Table = () => {
-  const { planets, getStarWarsPlanet, search } = useContext(StarWarsContext);
+  const {
+    planets,
+    getStarWarsPlanet,
+    // search
+  } = useContext(StarWarsContext);
 
   useEffect(() => {
     getStarWarsPlanet();
@@ -21,7 +25,6 @@ const Table = () => {
           <th scope="col">Terrain</th>
           <th scope="col">Surface Water</th>
           <th scope="col">Population</th>
-          <th scope="col">Residents</th>
           <th scope="col">Films</th>
           <th scope="col">Created</th>
           <th scope="col">Edited</th>
@@ -30,8 +33,8 @@ const Table = () => {
       </thead>
       <tbody>
         {planets
-          .filter((planet) => planet.name.toLowerCase()
-            .includes(search.toLowerCase()))
+          // .filter((planet) => planet.name.toLowerCase()
+          //   .includes(search.toLowerCase()))
           .map((planet) => (
             <tr key={ planet.name }>
               <th scope="row">{ planet.name }</th>
@@ -43,7 +46,6 @@ const Table = () => {
               <th scope="row">{ planet.terrain }</th>
               <th scope="row">{ planet.surface_water }</th>
               <th scope="row">{ planet.population }</th>
-              <th scope="row">{ planet.residents }</th>
               <th scope="row">{ planet.films }</th>
               <th scope="row">{ planet.created }</th>
               <th scope="row">{ planet.edited }</th>
