@@ -1,12 +1,35 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
   const { data, getPlanetsData, filters } = useContext(StarWarsContext);
+  const [newData, setNewData] = useState(data);
+
+  function filterForms() {
+    const { filterByNumericValues } = filters;
+    const { column, comparison, value } = filterByNumericValues;
+    const dropFilter = data.filter((planet) => {
+      if (comparison === 'maior que') {
+        return planet[column] > parseInt(value, 10);
+      }
+      if (comparison === 'menor que') {
+        return planet[column] < parseInt(value, 10);
+      }
+      if (comparison === 'igual a') {
+        return planet[column] === value;
+      }
+      return data;
+    });
+    return setNewData(dropFilter);
+  }
 
   useEffect(() => {
     getPlanetsData();
   }, []);
+
+  useEffect(() => {
+    filterForms();
+  }, [filters.filterByNumericValues]);
 
   return (
     <table className="table table-striped table-dark">
@@ -27,7 +50,7 @@ function Table() {
           <th scope="col">Released Films</th>
         </tr>
       </thead>
-      {data
+      {newData
         .filter((planet) => planet.name.toLowerCase()
           .includes(filters.filterByName.name.toLowerCase()))
         .map((planet, i) => (

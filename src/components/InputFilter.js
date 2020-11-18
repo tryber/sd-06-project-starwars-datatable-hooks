@@ -9,7 +9,10 @@ function InputFilter() {
         data-testid="name-filter"
         id="name-filter"
         type="text"
-        onChange={ ({ target }) => setFilters({ filterByName: { name: target.value } }) }
+        onChange={ ({ target }) => setFilters({
+          ...filters,
+          filterByName: { name: target.value },
+        }) }
         value={ filters.filterByName.name }
         placeholder="Search by Name"
       />

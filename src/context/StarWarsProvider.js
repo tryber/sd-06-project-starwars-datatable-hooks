@@ -5,7 +5,12 @@ import fetchPlanets from '../services/StarWarsService';
 
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
-  const [filters, setFilters] = useState({ filterByName: { name: '' } });
+  const [filters, setFilters] = useState(
+    {
+      filterByName: { name: '' },
+      filterByNumericValues: [],
+    },
+  );
 
   async function getPlanetsData() {
     const planetsInfo = await fetchPlanets();
@@ -13,7 +18,14 @@ function StarWarsProvider({ children }) {
   }
 
   return (
-    <StarWarsContext.Provider value={ { data, getPlanetsData, filters, setFilters } }>
+    <StarWarsContext.Provider
+      value={ {
+        data,
+        getPlanetsData,
+        filters,
+        setFilters,
+      } }
+    >
       {children}
     </StarWarsContext.Provider>
   );
@@ -24,3 +36,9 @@ StarWarsProvider.propTypes = {
 };
 
 export default StarWarsProvider;
+
+// const [forms, setForms] = useState(
+//   {
+//     filterByNumericValues: [{ column: '', comparison: '', value: '' }],
+//   },
+// );
