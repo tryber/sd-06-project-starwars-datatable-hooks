@@ -6,7 +6,7 @@ function Table() {
 
   useEffect(() => {
     getResults();
-  });
+  }, []);
 
   return (
     <table className="table-hover table">
