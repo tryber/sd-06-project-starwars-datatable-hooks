@@ -8,6 +8,7 @@ function SearchBar() {
     comparison: '',
     value: '',
   };
+
   const [numericFilters, setNumericFilters] = useState({ ...INITIAL_NUMERIC_FILTERS });
   const { column, comparison, value } = numericFilters;
   const { filters, handleChangeName, newFilter } = useContext(StarWarsContext);
@@ -24,7 +25,21 @@ function SearchBar() {
     newFilter({ column, comparison, value });
     resetFilters();
   };
+
   // ===== CONTEXTO LOCAL
+
+  const arrayAllColumns = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
+
+  const myColumnsFilter = filters.filterByNumericValues.map((item) => item.column);
+  const arrayColumnsFiltered = arrayAllColumns
+    .filter((item) => !myColumnsFilter.includes(item));
+  console.log(arrayColumnsFiltered);
 
   return (
     <div>
@@ -48,11 +63,14 @@ function SearchBar() {
         onChange={ (e) => handleChangeNumeric('column', e.target.value) }
       >
         <option disabled selected value="noSelect">-- Selecione uma opção --</option>
-        <option value="population">population</option>
+        { arrayColumnsFiltered.map((item, index) => (
+          <option key={ index } value={ item }>{ item }</option>
+        ))}
+        {/* <option value="population">population</option>
         <option value="orbital_period">orbital_period</option>
         <option value="diameter">diameter</option>
         <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        <option value="surface_water">surface_water</option> */}
       </select>
 
       {/* Dropdown para seleção do campo comparison */}
