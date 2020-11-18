@@ -8,9 +8,10 @@ export default function Provider({ children }) {
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [],
   };
   const [data, setData] = useState([]);
-  const [filters, setFilterName] = useState({ ...INITIAL_FILTERS });
+  const [filters, setFilter] = useState({ ...INITIAL_FILTERS });
 
   const starWarsPlanets = async () => {
     const planets = await requestPlanets();
@@ -22,15 +23,19 @@ export default function Provider({ children }) {
   }, []);
 
   const handleInputChange = (name) => {
-    setFilterName({ ...filters, filterByName: { name } });
+    setFilter({ ...filters, filterByName: { name } });
+  };
+
+  const newFilters = (filter) => {
+    setFilter({ ...filters,
+      filterByNumericValues: [...filters.filterByNumericValues, filter] });
   };
 
   const contextValue = {
     data,
-    starWarsPlanets,
     filters,
-    setFilterName,
     handleInputChange,
+    newFilters,
   };
 
   return (

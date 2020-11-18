@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
 
-class Input extends Component {
+export default class Input extends Component {
   render() {
     const { testId, name, className, type, max, min, onChange, place, id } = this.props;
     return (
@@ -39,5 +39,3 @@ Input.propTypes = {
   id: propTypes.string,
   onChange: propTypes.func.isRequired,
 };
-
-export default Input;
