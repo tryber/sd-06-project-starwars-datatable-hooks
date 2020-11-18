@@ -1,11 +1,67 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
   const { planets, loading, filters, setFilters } = useContext(StarWarsContext);
 
+  const filterPlanetsByName = (_planets) => {
+    return _planets.filter((planet) => planet.name.includes(filters.filterByName.name));
+  };
+
+  const filterPlanetsByNumericValues = (_planets) => {
+    const { filterByNumericValues } = filters;
+
+    if (filterByNumericValues.length === 0) {
+      return _planets;
+    }
+    if (filterByNumericValues[0].comparison === 'maior que') {
+      return _planets.filter((planet) => (parseInt(planet[filterByNumericValues[0].column]) > parseInt(filterByNumericValues[0].value)));
+    } else if (filterByNumericValues[0].comparison === 'igual a') {
+      return _planets.filter((planet) => (parseInt(planet[filterByNumericValues[0].column]) === parseInt(filterByNumericValues[0].value)));
+    } else if (filterByNumericValues[0].comparison === 'menor que') {
+      return _planets.filter((planet) => (parseInt(planet[filterByNumericValues[0].column]) < parseInt(filterByNumericValues[0].value)));
+    }
+  }
+
+  const filterPlanets = (_planets) => {
+    const planetsByName = filterPlanetsByName(_planets);
+    const planetsByNumericValue = filterPlanetsByNumericValues(planetsByName);
+    return planetsByNumericValue;
+  };
+
+  const [column, setColumn] = useState('');
+  const [comparison, setComparison] = useState('');
+  const [value, setValue] = useState('');
+
   const handleName = ({ target }) => {
     setFilters({ ...filters, filterByName: { name: target.value } });
+  };
+
+  const handleColumn = ({ target }) => {
+    setColumn(target.value);
+  };
+
+  const handleComparison = ({ target }) => {
+    setComparison(target.value);
+  };
+
+  const handleValue = ({ target }) => {
+    setValue(target.value);
+  };
+
+  const handleFilter = () => {
+    setFilters(
+      { ...filters,
+        filterByNumericValues: [
+          ...filters.filterByNumericValues,
+          {
+            column,
+            comparison,
+            value,
+          }
+        ]
+      }
+    );
   };
 
   return (
@@ -17,6 +73,41 @@ function Table() {
           type="text"
           onChange={ handleName }
         />
+      </div>
+      <div>
+        <select
+          data-testid="column-filter"
+          name="column"
+          onChange={ handleColumn }
+        >
+          <option value="population">population</option>
+          <option value="orbital_period">orbital_period</option>
+          <option value="diameter">diameter</option>
+          <option value="rotation_period">rotation_period</option>
+          <option value="surface_water">surface_water</option>
+        </select>
+        <select
+          data-testid="comparison-filter"
+          name="comparison"
+          onChange={ handleComparison }
+        >
+          <option value="maior que">maior que</option>
+          <option value="igual a">igual a</option>
+          <option value="menor que">menor que</option>
+        </select>
+        <input
+          data-testid="value-filter"
+          name="value"
+          type="number"
+          onChange={ handleValue }
+        />
+        <button
+          data-testid="button-filter"
+          type="button"
+          onClick={ handleFilter }
+        >
+          Filter
+        </button>
       </div>
       <table>
         <thead>
@@ -37,8 +128,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          { planets
-            .filter((planet) => planet.name.includes(filters.filterByName.name))
+          { filterPlanets(planets)
             .map((planet) => (
               <tr key={ planet.name }>
                 <td>{ planet.climate }</td>

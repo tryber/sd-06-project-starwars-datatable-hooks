@@ -9,7 +9,7 @@ function Provider({ children }) {
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({
     filterByName: { name: '' },
-    teste: 'UM',
+    filterByNumericValues: [],
   });
 
   useEffect(() => {
