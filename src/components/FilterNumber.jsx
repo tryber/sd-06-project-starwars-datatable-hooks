@@ -18,24 +18,29 @@ const FilterNumber = () => {
 
   const { dataApi, filterNumber, setFilterNumber } = useContext(StarWarsContext);
 
-  const columnFilters = filterNumber.map((filter) => filter.column);
+  const columnFilter = filterNumber.map((filter) => filter.column);
 
   const remainingColumns = columnOptions
-    .filter((column) => !columnFilters.includes(column));
+    .filter((column) => !columnFilter.includes(column));
 
   const zero = 0;
 
   return (
     <div>
+      {console.log(filterNumber)}
+      {console.log(columnFilter)}
+      {console.log(remainingColumns)}
       {dataApi.length !== zero && (
         <div>
           <h4>Apply more filters:</h4>
           <select
             data-testid="column-filter"
-            onChange={ (e) => setLocalFilter({ ...localFilter, column: e.target.value }) }
+            onChange={ (event) => setLocalFilter(
+              { ...localFilter, column: event.target.value },
+            ) }
           >
-            {remainingColumns.map((c) => (
-              <option key={ c } value={ c }>{c}</option>
+            {remainingColumns.map((column) => (
+              <option key={ column } value={ column }>{column}</option>
             ))}
           </select>
           <select

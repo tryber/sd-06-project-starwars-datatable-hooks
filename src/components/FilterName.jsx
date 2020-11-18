@@ -13,7 +13,9 @@ const FilterName = () => {
             data-testid="name-filter"
             type="text"
             name=""
-            onChange={ (e) => setFilterName({ filterByName: { name: e.target.value } }) }
+            onChange={ (event) => setFilterName(
+              { filterByName: { name: event.target.value } },
+            ) }
           />
         </div>
       )}
