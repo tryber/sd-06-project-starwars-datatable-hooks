@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import fetchApiplanets from '../Services/fetchApiPlanets';
 
 function Table() {
-
   const [tablePalnets, setTablePlanets] = useState([]);
 
   useEffect(() => {
