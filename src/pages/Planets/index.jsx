@@ -143,7 +143,7 @@ function Planets() {
 
           <tbody>
             {planets.map((planet) => (
-              <tr key={ planet.url }>
+              <tr key={ `${planet.url}-${Math.random()}` }>
                 {planetInfo.map((header) => (
                   <td key={ `${planet.name}-${header}` }>
                     {
