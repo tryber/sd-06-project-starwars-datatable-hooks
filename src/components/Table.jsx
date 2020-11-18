@@ -7,7 +7,7 @@ function Table() {
   const {
     isFetching, setFetch, data,
     filters: { filterByName: { name } },
-    filters: { filterByNumericValues: [{ column, comparison, value }] }
+    filters: { filterByNumericValues }
   } = useContext(MyContext);
 
   usePlanets(setFetch);
@@ -17,7 +17,9 @@ function Table() {
     'terrain', 'surface_water', 'population', 'films', 'created', 'edited', 'url',
   ];
 
-  const filterByColumn = (data) => {
+  const filterByColumn = (data, state) => {
+    const { column, comparison, value } = state;
+
     switch (comparison) {
       case 'maior que':
         return data.filter(planet => Number(planet[column]) > Number(value));
@@ -28,6 +30,20 @@ function Table() {
       default:
         return data;
     };
+  };
+
+  const filterByNumber = (data) => {
+    if(filterByNumericValues.length) {
+      let planets = data;
+      
+      filterByNumericValues.forEach(filter => {
+        planets = filterByColumn(planets, filter);
+      });
+
+      return planets;
+    } else {
+      return data;
+    }
   };
 
   return ((isFetching)
@@ -44,7 +60,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {filterByColumn(data)
+          {filterByNumber(data)
             .filter((planets) => planets.name.toLowerCase().includes(name.toLowerCase()))
             .map((planet) => (
               <tr key={planet.name}>

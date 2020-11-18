@@ -28,11 +28,11 @@ function Filters() {
 
     setFilter({
       ...filters,
-      filterByNumericValues: [{
+      filterByNumericValues: filters.filterByNumericValues.concat({
         column: column,
         comparison: comparison,
         value: value,
-      }],
+      }),
     });
 
     removeColumn(column);

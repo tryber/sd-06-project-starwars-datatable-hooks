@@ -7,11 +7,7 @@ function Provider({ children }) {
   const [isFetching, setFetch] = useState(true);
   const [filters, setFilter] = useState({
     filterByName: { name: '' },
-    filterByNumericValues: [{
-      column: '',
-      comparison: '',
-      value: 0,
-    }],
+    filterByNumericValues: [],
   });
   const [columns, setColumn] = useState([
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
