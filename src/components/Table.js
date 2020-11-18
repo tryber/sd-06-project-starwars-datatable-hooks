@@ -13,8 +13,8 @@ function Table() {
   }, [filters.filterByNumericValues]);
 
   return (
-    <table className="table table-striped table-dark">
-      <thead>
+    <table className="table table-bordered table-striped">
+      <thead className="thead-dark">
         <tr>
           <th scope="col">Name</th>
           <th scope="col">Rotation_Period</th>
@@ -27,8 +27,8 @@ function Table() {
           <th scope="col">Population</th>
           <th scope="col">Created</th>
           <th scope="col">Edited</th>
-          <th scope="col">URL&apos;s API</th>
-          <th scope="col">Released Films</th>
+          <th scope="col">URL&apos;s</th>
+          <th scope="col">Films</th>
         </tr>
       </thead>
       {data

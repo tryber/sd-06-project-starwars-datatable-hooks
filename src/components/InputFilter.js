@@ -4,8 +4,9 @@ import StarWarsContext from '../context/StarWarsContext';
 function InputFilter() {
   const { filters, setFilters } = useContext(StarWarsContext);
   return (
-    <label htmlFor="name-filter">
+    <div className="form-group mx-sm-3 mb-2">
       <input
+        className="form-control"
         data-testid="name-filter"
         id="name-filter"
         type="text"
@@ -14,9 +15,9 @@ function InputFilter() {
           filterByName: { name: target.value },
         }) }
         value={ filters.filterByName.name }
-        placeholder="Search by Name"
+        placeholder="Search by name"
       />
-    </label>
+    </div>
   );
 }
 

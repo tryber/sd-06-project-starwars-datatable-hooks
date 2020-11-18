@@ -10,8 +10,12 @@ import './App.css';
 function App() {
   return (
     <StarWarsProvider>
-      <InputFilter />
-      <FormsFilter />
+      <div className="form-inline">
+        <div className="form-group mx-sm-3 mb-2">
+          <InputFilter />
+          <FormsFilter />
+        </div>
+      </div>
       <Table />
     </StarWarsProvider>
   );
