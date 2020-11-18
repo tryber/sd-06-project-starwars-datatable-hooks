@@ -13,6 +13,14 @@ export default function Table() {
       value: '',
     }],
   });
+  const initialFilters = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
+  const [filterColumn, setFilterColumn] = useState(initialFilters);
 
   const handleChange = (e) => {
     const { value } = e.target;
@@ -55,6 +63,9 @@ export default function Table() {
   const handleClick = () => {
     const newPlanets = filteredPlanets.filter((planet) => filterConditions(planet));
     setFilteredPlanets(newPlanets);
+    const coluna = document.getElementById('column-filter').value;
+    const newFilters = filterColumn.filter((f) => f !== coluna);
+    setFilterColumn(newFilters);
   };
 
   return (
@@ -72,11 +83,17 @@ export default function Table() {
             data-testid="column-filter"
             id="column-filter"
           >
-            <option value="population">population</option>
-            <option value="orbital_period">orbital_period</option>
-            <option value="diameter">diameter</option>
-            <option value="rotation_period ">rotation_period</option>
-            <option value="surface_water">surface_water</option>
+            {filterColumn.map((f) => (
+              <option
+                key={ f }
+                value={ f }
+                data-testid="filter"
+              >
+                {f}
+              </option>
+
+            ))}
+
           </select>
           <select
             onChange={ handleFilter }
