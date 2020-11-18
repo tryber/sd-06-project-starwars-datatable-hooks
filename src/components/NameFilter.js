@@ -18,7 +18,7 @@ function NameFilter() {
     <input
       value={ nameToFilter }
       onChange={ onChange }
-      data-tetid="name-filter"
+      data-testid="name-filter"
       type="text"
     />
   );
