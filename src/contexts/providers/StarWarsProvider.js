@@ -8,6 +8,8 @@ function StarWarsProvider({ children }) {
   const [tableHeaders, setTableHeader] = useState([]);
   const [nameFilter, setNameFilter] = useState('');
   const [numericFilters, setNumericFilters] = useState([]);
+  const [assortmentType, setAssortmentType] = useState('ascending');
+  const [assortmentColumn, setAssortmentColumn] = useState('name');
 
   useEffect(() => {
     const fetchAndSavePlanets = async () => {
@@ -31,6 +33,14 @@ function StarWarsProvider({ children }) {
       },
       filterByNumericValues: numericFilters,
     },
+    order: {
+      column: assortmentColumn,
+      sort: assortmentType,
+    },
+    setAssortmentColumn,
+    setAssortmentType,
+    assortmentColumn,
+    assortmentType,
   };
 
   return (

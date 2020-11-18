@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../contexts/StarWarsContext';
 import { setCurrentFilters } from '../helpers/filters';
 import NumericFilterRow from './NumericFilterRow';
+import SortFilterRow from './SortFilterRow';
 
 function TableFilters() {
   const {
@@ -42,6 +43,7 @@ function TableFilters() {
         currentFilters={ currentFilters }
         saveFilter={ saveFilter }
       />
+      <SortFilterRow />
       <div>
         <p>
           Selected Filters:

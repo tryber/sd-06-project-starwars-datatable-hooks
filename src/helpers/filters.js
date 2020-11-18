@@ -20,7 +20,23 @@ export function filterByColumn(planets, filters) {
   }
 }
 
-export default function mainFilter(planets, nameFilter, columnFilters) {
+function assortByColumn(planets, column, type) {
+  console.log(column);
+  console.log(type);
+  console.log(parseInt(column, 10));
+  switch (type) {
+  case 'ascending':
+    return planets.sort((a, b) => parseInt(a[column], 10) - parseInt(b[column], 10));
+  case 'descending':
+    return planets.sort((a, b) => parseInt(b[column], 10) - parseInt(a[column], 10));
+  default:
+    return planets;
+  }
+}
+
+export default function mainFilter(
+  planets, nameFilter, columnFilters, assortmentColumn, assortmentType,
+) {
   const filteredByName = filterByName(planets, nameFilter);
   let filteredByColumn = filteredByName;
 
@@ -28,7 +44,7 @@ export default function mainFilter(planets, nameFilter, columnFilters) {
     filteredByColumn = filterByColumn(filteredByColumn, filter);
   });
 
-  return filteredByColumn;
+  return assortByColumn(filteredByColumn, assortmentColumn, assortmentType);
 }
 
 export function setCurrentFilters(mainFilters, selectedFilters) {

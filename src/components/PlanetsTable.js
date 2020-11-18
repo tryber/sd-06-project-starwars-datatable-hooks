@@ -8,9 +8,13 @@ function PlanetsTable() {
     tableHeaders,
     filters: { filterByName: { name } },
     filters: { filterByNumericValues },
+    assortmentColumn,
+    assortmentType,
   } = useContext(StarWarsContext);
 
-  const filteredPlanets = mainFilter(fetchedPlanets, name, filterByNumericValues);
+  const filteredPlanets = mainFilter(
+    fetchedPlanets, name, filterByNumericValues, assortmentColumn, assortmentType,
+  );
 
   return (
     <main>
