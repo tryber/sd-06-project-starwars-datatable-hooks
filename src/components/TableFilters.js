@@ -46,9 +46,13 @@ function TableFilters() {
         <p>
           Selected Filters:
           {selectedFilters.map((filter) => (
-            <button type="button" key={ filter } name={ filter } onClick={ removeFilter }>
-              {`${filter} `}
-            </button>
+            <span data-testid="filter" key={ filter }>
+              {filter}
+              <button type="button" name={ filter } onClick={ removeFilter }>
+                X
+              </button>
+            </span>
+
           ))}
         </p>
       </div>
