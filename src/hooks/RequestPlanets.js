@@ -3,7 +3,7 @@ import StarWarsContext from '../context/StarWarsContext';
 import ApiRequestPlanets from '../services/ApiRequestPlanets';
 
 function RequestPlanets() {
-  const { setData } = useContext(StarWarsContext);
+  const { dataTable: { setData } } = useContext(StarWarsContext);
 
   useEffect(() => {
     ApiRequestPlanets().then((objPlanets) => {

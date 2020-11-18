@@ -4,15 +4,12 @@ import RequestPlanets from '../hooks/RequestPlanets';
 
 function Table() {
   RequestPlanets();
-  const { data } = useContext(StarWarsContext);
-  const objVoid = 0;
-  if (Object.keys(data).length !== objVoid) {
+  const { dataTable: { copyDataResultsTable } } = useContext(StarWarsContext);
+  const arrayVoid = 0;
+  if (copyDataResultsTable.length !== arrayVoid) {
     // pegar a copia feita aqui em baixa mandar ela para o state golbal e fazer que ela seja chamada toda vez que o data for atualizado ou imput do name for madado
-    const copyResults = data.results.map((result) => ({ ...result }));
-    copyResults.forEach((objPlanet) => {
-      delete objPlanet.residents;
-    });
-    const arrayKeysResults = Object.keys(copyResults[0]);
+    const arrayKeysResults = Object.keys(copyDataResultsTable[0]);
+    // console.log('arrayKeysResults', arrayKeysResults)
     // console.log('copyResults', copyResults)
     // console.log('results', data.results)
     return (
@@ -23,7 +20,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {copyResults.map((objPlanet, index1) => (
+          {copyDataResultsTable.map((objPlanet, index1) => (
             <tr key={ index1 }>
               {arrayKeysResults.map((key, index2) => (
                 <td key={ index2 }>{ objPlanet[key] }</td>
