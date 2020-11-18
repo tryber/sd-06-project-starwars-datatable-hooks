@@ -18,9 +18,11 @@ function Table() {
         resultFiltered = results
           .filter((planet) => Number(planet[column]) > Number(valueComparison));
       } else if (filter.comparison === 'menor que') {
-        resultFiltered = results.filter((planet) => Number(planet[column]) < Number(valueComparison));
+        resultFiltered = results
+          .filter((planet) => Number(planet[column]) < Number(valueComparison));
       } else if (filter.comparison === 'igual a') {
-        resultFiltered = results.filter((planet) => Number(planet[column]) === Number(valueComparison));
+        resultFiltered = results
+          .filter((planet) => Number(planet[column]) === Number(valueComparison));
       }
     });
     return resultFiltered;
