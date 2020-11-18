@@ -5,7 +5,7 @@ import StarWarsContext from './StarWarsContext';
 const urlAPI = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
 export default function Provider({ children }) {
-  const [planets, setPlanets] = useState(null);
+  const [planets, setPlanets] = useState([]);
   const [loading, setLoading] = useState(false);
   const INITIAL_FILTERS = {
     filterByName: {
@@ -15,12 +15,14 @@ export default function Provider({ children }) {
   const [filters, setFilters] = useState({ ...INITIAL_FILTERS });
 
   const fetchPlanets = async () => {
+    setLoading(true);
     const requestData = await fetch(urlAPI);
     const receivedData = await requestData.json();
     receivedData.results.forEach((planet) => {
       delete planet.residents;
     });
     setPlanets(receivedData.results);
+    setLoading(false);
   };
 
   const context = {
