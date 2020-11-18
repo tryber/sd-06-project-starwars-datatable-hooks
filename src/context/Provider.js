@@ -9,6 +9,7 @@ function Provider({ children }) {
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [],
   };
 
   const [filters, setFilters] = useState({ ...INITIAL_FILTERS });
@@ -40,10 +41,16 @@ function Provider({ children }) {
     setFilters({ ...filters, filterByName: { name } });
   };
 
+  const newFilter = (filter) => {
+    setFilters({ ...filters,
+      filterByNumericValues: [...filters.filterByNumericValues, filter] });
+  };
+
   const contextValue = {
     data,
     filters,
     handleChangeName,
+    newFilter,
   };
 
   return (

@@ -1,22 +1,94 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import StarWarsContext from '../context/starWarsContext';
 
-function TablePlanets() {
-  const { filters, handleChangeName } = useContext(StarWarsContext);
+function SearchBar() {
+  // === CONTEXTO LOCAL
+  const INITIAL_NUMERIC_FILTERS = {
+    column: '',
+    comparison: '',
+    value: '',
+  };
+  const [numericFilters, setNumericFilters] = useState({ ...INITIAL_NUMERIC_FILTERS });
+  const { column, comparison, value } = numericFilters;
+  const { filters, handleChangeName, newFilter } = useContext(StarWarsContext);
+
+  const handleChangeNumeric = (key, valueField) => {
+    setNumericFilters({ ...numericFilters, [key]: valueField });
+  };
+
+  const resetFilters = () => {
+    setNumericFilters(INITIAL_NUMERIC_FILTERS);
+  };
+
+  const addFilter = () => {
+    newFilter({ column, comparison, value });
+    resetFilters();
+  };
+  // ===== CONTEXTO LOCAL
+
   return (
     <div>
       <h1>Filtros</h1>
+
+      {/* Campo para pesquisa pelo nome */}
       <input
         className="input-form"
-        name="name-filter"
+        data-testid="name-filter"
         placeholder="Informe o nome"
         type="text"
         value={ filters.filterByName.name }
         onChange={ (e) => handleChangeName(e.target.value) }
-        data-testid="name-filter"
       />
+
+      {/* Dropdown para seleção do campo column */}
+      <select
+        className="input-form"
+        data-testid="column-filter"
+        value={ column === '' ? 'noSelect' : column }
+        onChange={ (e) => handleChangeNumeric('column', e.target.value) }
+      >
+        <option disabled selected value="noSelect">-- Selecione uma opção --</option>
+        <option value="population">population</option>
+        <option value="orbital_period">orbital_period</option>
+        <option value="diameter">diameter</option>
+        <option value="rotation_period">rotation_period</option>
+        <option value="surface_water">surface_water</option>
+      </select>
+
+      {/* Dropdown para seleção do campo comparison */}
+      <select
+        className="input-form"
+        data-testid="comparison-filter"
+        value={ comparison === '' ? 'noSelect' : comparison }
+        onChange={ (e) => handleChangeNumeric('comparison', e.target.value) }
+      >
+        <option disabled selected value="noSelect">-- Selecione uma opção --</option>
+        <option value="maior que">maior que</option>
+        <option value="igual a">igual a</option>
+        <option value="menor que">menor que</option>
+      </select>
+
+      {/* Campo para pesquisa pelo value */}
+      <input
+        className="input-form"
+        data-testid="value-filter"
+        placeholder="Informe o valor"
+        type="text"
+        value={ value }
+        onChange={ (e) => handleChangeNumeric('value', e.target.value) }
+      />
+
+      {/* Botão para filtro */}
+      <button
+        className="button-form"
+        data-testid="button-filter"
+        type="button"
+        onClick={ () => addFilter() }
+      >
+        Filtrar
+      </button>
     </div>
   );
 }
 
-export default TablePlanets;
+export default SearchBar;
