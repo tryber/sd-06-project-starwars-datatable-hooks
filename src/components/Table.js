@@ -47,7 +47,7 @@ function Table() {
               <td key={ planet.edited }>{ planet.edited }</td>
               <td key={ planet.url }>{ planet.url }</td>
             </tr>
-        ))}
+          ))}
       </tbody>
     </table>
   );
