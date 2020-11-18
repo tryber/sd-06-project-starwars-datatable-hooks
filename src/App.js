@@ -10,7 +10,7 @@ function App() {
     <div>
       <StarWarsProvider>
         <SearchInput />
-        <ComparisonInputs /> 
+        <ComparisonInputs />
         <Table />
       </StarWarsProvider>
     </div>

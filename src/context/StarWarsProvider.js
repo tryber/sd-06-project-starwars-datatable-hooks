@@ -6,19 +6,19 @@ import StarWarsContext from './StarWarsContext';
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
   const [filters, setFilters] = useState({
-      filterByName: {
-        name: ''
+    filterByName: {
+      name: ''
+    },
+    filterByNumericValues: [
+      {
+        column: '',
+        comparison: '',
+        value: 0,
       },
-      filterByNumericValues: [
-        {
-          column: '',
-          comparison: '',
-          value: 0,
-        }
-      ]
+    ],
   });
 
-  const getPlanets = async () => {
+  const getData = async () => {
     const planets = await fetchStarWars();
     setData(planets);
   };
@@ -32,43 +32,11 @@ function StarWarsProvider({ children }) {
     });
   };
 
-  // const getFilterColumn = (columnInput) => {
-  //   setFilters({
-  //     ...filters,
-  //     ...filterByName,
-  //     filterByNumericValues: [{
-  //       column: columnInput,
-  //       ...filterByNumericValues,
-  //     }],
-  //   });
-  // };
-
-  // const getFilterComparison = (comparisonInput) => {
-  //   setFilters({
-  //     ...filters,
-  //     filterByNumericValues: [{
-  //       ...filterByNumericValues,
-  //       comparison: comparisonInput,
-  //       ...filterByNumericValues,
-  //     }],
-  //   });
-  // };
-
-  // const getFilterValue = (valueInput) => {
-  //   setFilters({
-  //     ...filters,
-  //     filterByNumericValues: [{
-  //       ...filterByNumericValues,
-  //       value: valueInput,
-  //     }],
-  //   });
-  // };
-
   return (
     <StarWarsContext.Provider
-      value={{
+      value={ {
         data,
-        getPlanets,
+        getData,
         getFilterName,
         setFilters,
         filters,
@@ -76,7 +44,7 @@ function StarWarsProvider({ children }) {
         column: filters.filterByNumericValues[0].column,
         comparison: filters.filterByNumericValues[0].comparison,
         value: filters.filterByNumericValues[0].value,
-      }}
+      } }
     >
       {children}
     </StarWarsContext.Provider>

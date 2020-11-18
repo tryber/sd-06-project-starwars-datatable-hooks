@@ -2,10 +2,11 @@ import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function ComparisonInputs() {
-  const { column, value, comparison, setFilters, filters } = useContext(StarWarsContext);
+  const magic = 0
+  const { setFilters, filters } = useContext(StarWarsContext);
   const [localColumn, setLocalColumn] = useState('');
   const [localComparison, setLocalComparison] = useState('');
-  const [localValue, setLocalValue] = useState(0);
+  const [localValue, setLocalValue] = useState(magic);
 
   const setLocalState = () => {
     setFilters({
@@ -15,8 +16,8 @@ function ComparisonInputs() {
           column: localColumn,
           comparison: localComparison,
           value: localValue,
-        }
-      ]
+        },
+      ],
     });
   };
 
@@ -46,17 +47,12 @@ function ComparisonInputs() {
         onChange={ ({ target }) => setLocalValue(target.value) }
       />
       <button
+        type="button"
         data-testid="button-filter"
         onClick={ setLocalState }
       >
         Adicionar filtro
       </button>
-      <p> { localColumn }</p>
-      <p> { localComparison }</p>
-      <p> { localValue }</p>
-      <p> { column }</p>
-      <p> { comparison }</p>
-      <p> { value }</p>
     </div>
   );
 }
