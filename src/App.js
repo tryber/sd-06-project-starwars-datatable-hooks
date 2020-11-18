@@ -1,27 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import PlanetsContext from './context/PlanetsContext';
+import Table from './component/Table';
 
 function App() {
+  const [planets, setPlanets] = useState('');
+  // 4 - criar o state que sera armazenado no value do Provider no context
+  const state = {
+    planets,
+    setPlanets,
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={ logo } className="App-logo" alt="logo" />
-        <p>
-          Edit
-          <code>src/App.js</code>
-          and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main>
+      {/* 3- criar Provider: Componentes acessa dados. Value state padroniza
+       os dados que deverao ser lidos pelos componentes. */}
+      <PlanetsContext.Provider value={ state }>
+        <Table />
+      </PlanetsContext.Provider>
+      {console.log(state)}
+    </main>
   );
 }
 
