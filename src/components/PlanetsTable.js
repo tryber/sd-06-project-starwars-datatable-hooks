@@ -42,12 +42,60 @@ function getNameComparison({ name }, input) {
   return (lowerCasedPlanetName.match(lowerCasedNameFilter));
 }
 
+function handleSorted(planets, sortFilter) {
+  const { column, sort } = sortFilter.filters.order;
+  const stringColumn = ['name', 'climate', 'terrain', 'films', 'url'];
+  const NEG_ONE = -1;
+  const ZERO = 0;
+  if (stringColumn.includes(column)) {
+    const sortedPlanets = planets.sort((a, b) => {
+      const nameA = a[column].toLowerCase();
+      const nameB = b[column].toLowerCase();
+      if (sort === 'ASC') {
+        if (nameA < nameB) return NEG_ONE;
+        if (nameA > nameB) return 1;
+        return ZERO;
+      }
+      if (nameA < nameB) return 1;
+      if (nameA > nameB) return NEG_ONE;
+      return ZERO;
+    });
+    return sortedPlanets;
+  }
+  return planets.sort((a, b) => {
+    const numberA = parseInt(a[column], ZERO);
+    const numberB = parseInt(b[column], ZERO);
+    if (sort === 'ASC') {
+      return numberA - numberB;
+    }
+    return numberB - numberA;
+  });
+}
+
+function getPlanetsSortedByName(planets) {
+  const NEG_ONE = -1;
+  const ZERO = 0;
+  const sortedPlanets = planets.sort((a, b) => {
+    const nameA = a.name.toLowerCase();
+    const nameB = b.name.toLowerCase();
+    if (nameA < nameB) return NEG_ONE;
+    if (nameA > nameB) return 1;
+    return ZERO;
+  });
+  return sortedPlanets;
+}
+
 const PlanetsTable = () => {
   const { planets } = useContext(PlanetContext);
   const { filterActions } = useContext(filterContext);
-  const { filtersState } = filterActions;
+  const { filtersState, sortFilter } = filterActions;
+  const { sorted } = sortFilter;
   const { activeFilters, filters } = filtersState;
   const { filterByName, filterByNumericValue } = filters;
+
+  if (planets) {
+    getPlanetsSortedByName(planets);
+  }
 
   return planets ? (
     <table className="table">
@@ -57,18 +105,21 @@ const PlanetsTable = () => {
         </tr>
       </thead>
       <tbody>
-        {!activeFilters && planets.map((planet) => (
+        {sorted && handleSorted(planets, sortFilter).map((planet) => (
+          <PlanetRow key={ planet.name } planet={ planet } />
+        ))}
+        {!sorted && !activeFilters && planets.map((planet) => (
           (getNameComparison(planet, filterByName))
             && <PlanetRow key={ planet.name } planet={ planet } />
         ))}
-        {activeFilters && filterByNumericValue && planets.map((planet) => {
+        {!sorted && activeFilters && filterByNumericValue && planets.map((planet) => {
           const { column, comparison, value } = filterByNumericValue;
           const selectedColumnValue = getColumnValue(planet, column);
           return (getNameComparison(planet, filterByName))
             && filterPlanet(selectedColumnValue, comparison, value)
             && <PlanetRow key={ planet.name } planet={ planet } />;
         })}
-        {activeFilters && !filterByNumericValue && planets.map((planet) => (
+        {!sorted && activeFilters && !filterByNumericValue && planets.map((planet) => (
           (getNameComparison(planet, filterByName))
             && <PlanetRow key={ planet.name } planet={ planet } />
         ))}

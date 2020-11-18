@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { filterContext } from '../contexts/FilterContext';
+import headers from '../services/headers';
 
 const Filters = () => {
   const { filterActions } = useContext(filterContext);
@@ -14,13 +15,18 @@ const Filters = () => {
     setValueFilter,
     filtersState,
     setFiltersState,
+    sortOptionFilter,
+    setSortOptionFilter,
+    columnSortFilter,
+    setColumnSortFilter,
+    setSortFilter,
   } = filterActions;
   const [showFilters, setShowFilters] = useState({
     message: '',
     show: false,
   });
 
-  function handleClick() {
+  function handleFilters() {
     setFiltersState({
       filters: {
         filterByName: {
@@ -55,6 +61,19 @@ const Filters = () => {
     setShowFilters({
       message: '',
       show: false,
+    });
+  }
+
+  function handleSortFilter() {
+    setSortFilter({
+      ...filtersState,
+      filters: {
+        order: {
+          column: columnSortFilter,
+          sort: sortOptionFilter,
+        },
+      },
+      sorted: true,
     });
   }
 
@@ -109,9 +128,40 @@ const Filters = () => {
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ handleClick }
+        onClick={ handleFilters }
       >
         aplicar filtros
+      </button>
+      <select
+        data-testid="column-sort"
+        onChange={ (e) => setColumnSortFilter(e.target.value) }
+      >
+        {headers.map((header) => (
+          <option key={ header }>{header}</option>
+        ))}
+      </select>
+      <input
+        type="radio"
+        name="list-order"
+        data-testid="column-sort-input-asc"
+        value="ASC"
+        onChange={ (e) => setSortOptionFilter(e.target.value) }
+      />
+      <span>asc</span>
+      <input
+        type="radio"
+        name="list-order"
+        data-testid="column-sort-input-desc"
+        value="DESC"
+        onChange={ (e) => setSortOptionFilter(e.target.value) }
+      />
+      <span>desc</span>
+      <button
+        type="button"
+        data-testid="column-sort-button"
+        onClick={ handleSortFilter }
+      >
+        sort
       </button>
       {renderFilters()}
     </div>

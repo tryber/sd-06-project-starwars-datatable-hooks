@@ -9,6 +9,8 @@ const FilterContextProvider = (props) => {
   const [comparisonFilter, setComparisonFilter] = useState('maior que');
   const ZERO = 0;
   const [valueFilter, setValueFilter] = useState(ZERO);
+  const [sortOptionFilter, setSortOptionFilter] = useState('ASC');
+  const [columnSortFilter, setColumnSortFilter] = useState('name');
   const [filtersState, setFiltersState] = useState({
     filters: {
       filterByName: {
@@ -16,6 +18,16 @@ const FilterContextProvider = (props) => {
       },
     },
     activeFilters: false,
+  });
+  const [sortFilter, setSortFilter] = useState({
+    ...filtersState,
+    filters: {
+      order: {
+        column: 'name',
+        sort: 'ASC',
+      },
+    },
+    sorted: false,
   });
 
   useEffect(() => {
@@ -36,8 +48,15 @@ const FilterContextProvider = (props) => {
     valueFilter,
     setValueFilter,
     setFiltersState,
+    columnSortFilter,
+    setColumnSortFilter,
+    sortOptionFilter,
+    setSortOptionFilter,
+    sortFilter,
+    setSortFilter,
   };
   const { children } = props;
+
   return (
     <filterContext.Provider value={ { filterActions } }>
       {children}
