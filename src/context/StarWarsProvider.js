@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
@@ -77,7 +78,6 @@ function StarWarsProvider({ children }) {
     };
 
     planets.sort((a, b) => {
-      // eslint-disable-next-line no-restricted-globals
       if (isNaN(parseFloat(a[column])) && a[column] !== 'unknown') {
         return compareString[sort](
           a[column].toLowerCase(), b[column].toLowerCase(), false,
