@@ -21,7 +21,7 @@ function Table() {
     'URL',
   ];
 
-  const filterName = () => {
+  const filterByName = () => {
     const filteredData = data.filter((term) => term.name.toLowerCase()
       .includes(filteredName.toLowerCase()));
     return filteredData;
@@ -39,7 +39,7 @@ function Table() {
             </tr>
           </thead>
           <tbody>
-            { filterName().map((planet, index) => (
+            { filterByName().map((planet, index) => (
               <tr key={ index }>
                 { Object.values(planet).map((info, indKey) => (
                   <td key={ indKey }>{ info }</td>
