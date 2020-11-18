@@ -4,9 +4,24 @@ import PlanetsContext from '../context/PlanetsContext';
 function Table() {
   const { data, getPlanets, filters } = useContext(PlanetsContext);
   const { filterByName: { nameFilter } } = filters;
+  const { filterByNumericValues: [{ column, comparison, value }] } = filters;
   useEffect(() => {
     getPlanets();
   });
+
+  function numericFilter(planets) {
+    if (comparison === '<') {
+      return planets.filter((planet) => planet[column] < Number(value));
+    }
+    if (comparison === '>') {
+      return planets.filter((planet) => planet[column] > Number(value));
+    }
+    if (comparison === '===') {
+      return planets.filter((planet) => planet[column] === value);
+    }
+    return planets;
+  }
+
   return (
     <table className="table">
       <thead>
@@ -27,7 +42,10 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {data ? data.filter((element) => element.name.includes(nameFilter))
+        {data ? numericFilter(data)
+          .filter(
+            (element) => element.name.includes(nameFilter),
+          )
           .map((element) => (
             <tr key={ element.name }>
               <th scope="row">{element.name}</th>
