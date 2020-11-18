@@ -1,6 +1,6 @@
 import Styled from 'styled-components';
 
-export const Table = Styled.div`
+const styledTable = Styled.div`
   width: 100%;
 
   thead tr th {
@@ -12,3 +12,5 @@ export const Table = Styled.div`
     border: 1px solid black;
   }
 `;
+
+export default styledTable;

@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from 'react';
 import StarWarsContext from '../../Context/StarWarsContext';
 
-import * as S from './styled';
+import StyledTable from './styled';
 
 import Loading from '../Loading';
 
@@ -20,15 +20,15 @@ const Table = () => {
   return (
     <>
       {console.log(planetsStarWars)}
-      <S.Table>
+      <StyledTable>
         <table>
           <thead>
             <tr>
-              {header.map(hea => <th key={hea}>{hea}</th>)}
+              { header.map((hea) => <th key={hea}>{hea}</th>) }
             </tr>
           </thead>
           <tbody>
-            {!stateStarWars.data ? <Loading/> : stateStarWars.data.results.map(planet => 
+            { !stateStarWars.data ? <Loading/> : stateStarWars.data.results.map((planet) =>
               <tr key={ planet.name }>
                 <td>{ planet.name }</td>
                 <td>{ planet.rotation_period }</td>
@@ -44,10 +44,11 @@ const Table = () => {
                 <td>{ planet.edited }</td>
                 <td>{ planet.url }</td>
               </tr>,
-              )}
+              )
+            }
           </tbody>
         </table>
-      </S.Table>
+      </StyledTable>
     </>
   );
 };
