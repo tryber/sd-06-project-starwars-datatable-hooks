@@ -1,4 +1,3 @@
-/* eslint-disable radix */
 import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
@@ -6,7 +5,7 @@ function FilterHelper() {
   const { data, column, comparison, value } = useContext(StarWarsContext);
   if (comparison === 'maior que') {
     return (
-      data.filter((item) => parseInt(item[column]) > value)
+      data.filter((item) => parseInt(item[column], 10) > value)
         .map((e, i) => (
           <tr key={ i }>
             <td>{e.name}</td>
@@ -28,7 +27,7 @@ function FilterHelper() {
   }
   if (comparison === 'menor que') {
     return (
-      data.filter((item) => parseInt(item[column]) < value)
+      data.filter((item) => parseInt(item[column], 10) < value)
         .map((e, i) => (
           <tr key={ i }>
             <td>{e.name}</td>

@@ -2,11 +2,14 @@ import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function InputText() {
-  const { inputName, setFilterByName, setFilterByNumericValues } = useContext(StarWarsContext);
+  const { inputName, setFilterByName,
+    setFilterByNumericValues } = useContext(StarWarsContext);
+
+  const MAGIC_NUMBER = 0;
 
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(MAGIC_NUMBER);
 
   const dropdown = [
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
