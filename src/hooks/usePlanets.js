@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
+import MyContext from '../context/MyContext';
 import fetchPlanets from '../services';
 
 const usePlanets = (callback) => {
-  const [data, setData] = useState([]);
+  const { data, setData } = useContext(MyContext);
 
   useEffect(() => {
     async function fetchData() {
@@ -14,8 +15,6 @@ const usePlanets = (callback) => {
 
     fetchData();
   }, []);
-
-  return data;
 };
 
 export default usePlanets;

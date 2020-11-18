@@ -1,9 +1,26 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import MyContext from '../context/MyContext';
 
-function filters() {
+function Filters() {
+  const { filters, setFilter } = useContext(MyContext);
+
+  const handleChange = ({ target: { value } }) => {
+    setFilter({
+      ...filters,
+      filterByName: {
+        name: value,
+      },
+    });
+  }
+
   return (
-    <div>filters</div>
+    <div>
+      <label>
+        Planet Name
+        <input data-testid='name-filter' onChange={handleChange} />
+      </label>
+    </div>
   );
 };
 
-export default filters;
+export default Filters;
