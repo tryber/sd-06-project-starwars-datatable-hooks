@@ -6,11 +6,22 @@ import fetchPlanets from '../services/FetchPlanets';
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [planetKeys, setPlanetKeys] = useState([]);
 
   const getPlanets = async () => {
     setLoading(true);
-    const planets = await fetchPlanets();
+
+    let planets = await fetchPlanets();
+
+    planets = planets.map((planet) => {
+      delete planet.residents;
+      return planet;
+    });
+
+    const usedKeys = Object.keys(planets[0]);
+
     setData(planets);
+    setPlanetKeys(usedKeys);
     setLoading(false);
   };
 
@@ -19,6 +30,7 @@ function StarWarsProvider({ children }) {
     setData,
     loading,
     setLoading,
+    planetKeys,
     getPlanets,
   };
 
