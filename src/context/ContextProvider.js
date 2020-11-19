@@ -15,7 +15,6 @@ function ContextProvider({ children }) {
       setPlanets(fetchPlanets.results);
       setIsFetching(false);
     })();
-
     (async () => {
       const fetchPlanets = await getPlanets(filterByName.name);
       setPlanets(fetchPlanets.results);
