@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import StarWarsContext from './StarWarsContext';
-import fetchPlanetsInfo from '../services/apiServices';
+import removeItemFromArray from '../helpers/removeItemFromArray';
+import { fetchPlanetsInfo, fetchTableHeaders } from '../services/apiServices';
 
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
+  const [tableHeaders, setTableHeaders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const getPlanetsInfo = async () => {
@@ -11,11 +13,18 @@ function StarWarsProvider({ children }) {
     setData(planetsInfo);
   };
 
+  const getTableHeaders = async () => {
+    const retrievedTableHeaders = await fetchTableHeaders();
+    const filteredTableHeaders = removeItemFromArray(retrievedTableHeaders, 'residents');
+    setTableHeaders(filteredTableHeaders);
+  };
+
   const contextValue = {
     data,
-    getPlanetsInfo,
     isLoading,
-    setIsLoading,
+    tableHeaders,
+    getPlanetsInfo,
+    getTableHeaders,
   };
 
   return (
