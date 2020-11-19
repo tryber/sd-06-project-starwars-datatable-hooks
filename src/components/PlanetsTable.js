@@ -3,10 +3,53 @@ import StarWarsContext from '../context/StarWarsContext';
 import filterPlanets from '../services';
 
 function PlanetsTable() {
-  const { planets,
+  const { planets, order,
     isLoading, filterByName, filterByNumericValues } = useContext(StarWarsContext);
 
+  // const { column, sort } = order;
   let filteredPlanets = planets;
+
+  // console.log(filteredPlanets);
+  // function compare(a, b) {
+  //   if ((a[order.column]) < b[order.column]) {
+  //     if (order.sort === 'ASC') {
+  //       return -1;
+  //     }
+  //     return 1;
+  //   }
+  //   if (a[order.column] > b[order.column]) {
+  //     if (order.sort === 'ASC') {
+  //       return 1;
+  //     }
+  //     return -1;
+  //   }
+  //   return 0;
+  // }
+  function compare(a, b) {
+    const MAGIC_NUMBER_ZERO = 0;
+    const MAGIC_NUMBER_MINUS_ONE = -1;
+    if (order.column === 'name') {
+      if (order.sort === 'ASC') {
+        return a[order.column].localeCompare(b[order.column]);
+      }
+      return b[order.column].localeCompare(a[order.column]);
+    }
+    if (parseInt(a[order.column], 10) < parseInt(b[order.column], 10)) {
+      if (order.sort === 'ASC') {
+        return MAGIC_NUMBER_MINUS_ONE;
+      }
+      return 1;
+    }
+    if (parseInt(a[order.column], 10) > parseInt(b[order.column], 10)) {
+      if (order.sort === 'ASC') {
+        return 1;
+      }
+      return MAGIC_NUMBER_MINUS_ONE;
+    }
+    return MAGIC_NUMBER_ZERO;
+  }
+
+  filteredPlanets.sort(compare);
   const INITIAL_POSITION = 0;
   for (let i = INITIAL_POSITION; i < filterByNumericValues.length; i += 1) {
     filteredPlanets = filterPlanets(filteredPlanets, filterByNumericValues[i]);
@@ -38,7 +81,7 @@ function PlanetsTable() {
               .toLowerCase().includes(filterByName.name))
               .map((planet) => (
                 <tr key={ planet.name }>
-                  <td>{planet.name}</td>
+                  <td data-testid="planet-name">{planet.name}</td>
                   <td>{planet.rotation_period}</td>
                   <td>{planet.orbital_period}</td>
                   <td>{planet.diameter}</td>
