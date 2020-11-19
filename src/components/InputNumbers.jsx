@@ -1,19 +1,37 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function InputNumber() {
   const {
     handleInputNumbers,
+    numInput
   } = useContext(StarWarsContext);
 
   const [optValue, setOpt] = useState('population');
   const [compareValue, setCompare] = useState('>');
   const [numberValue, setNumber] = useState('');
-
-  const options = ['population',
-    'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
+  const [filteredOptions, setOptions] = useState([]);
 
   const disable = true;
+  const handleOptions = () => {
+    const fOpt = numInput.filters.filterByNumber.option;
+    const options = ['population',
+      'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
+    if(fOpt !== '') {
+      const newOptions = options.filter((item) => {
+        if (item !== fOpt) {
+          return item;
+        };
+      });
+      setOptions(newOptions);
+    } else {
+      setOptions(options);
+    }
+  }
+
+  useEffect(() => {
+    handleOptions();
+  }, [numInput]);
 
   return (
     <div>
@@ -23,7 +41,8 @@ function InputNumber() {
           id="column-filter"
           onChange={ (e) => setOpt(e.target.value) }
         >
-          { options.map((opt) => <option key={ opt } value={ opt }>{ opt }</option>) }
+          <option />
+          { filteredOptions.map((opt) => <option key={ opt } value={ opt }>{ opt }</option>) }
         </select>
       </label>
       <label htmlFor="comparison-filter">
@@ -32,6 +51,7 @@ function InputNumber() {
           id="comparison-filter"
           onChange={ (e) => setCompare(e.target.value) }
         >
+          <option />
           <option value="maior que">maior que</option>
           <option value="igual a">igual a</option>
           <option value="menor que">menor que</option>

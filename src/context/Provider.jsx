@@ -10,8 +10,8 @@ function Provider({ children }) {
   const [numInput, setNumbers] = useState({
     filters: {
       filterByNumber: {
-        option: 'population',
-        compare: '>',
+        option: '',
+        compare: '',
         number: '',
       },
     },
@@ -38,6 +38,20 @@ function Provider({ children }) {
     });
   };
 
+  const resetFilters = () => {
+    setNumbers({
+      filters: {
+        filterByNumber: {
+          option: '',
+          compare: '',
+          number: '',
+        },
+      },
+    });
+
+    setName('');
+  }
+
   const value = {
     dataAPI,
     getData,
@@ -47,6 +61,7 @@ function Provider({ children }) {
     handleInputNumbers,
     btnStatus,
     setBtnStatus,
+    resetFilters,
   };
 
   return (

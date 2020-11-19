@@ -17,7 +17,6 @@ function Table() {
   ];
 
   const handleData = () => {
-    const mNumber = 0;
     const fName = nameInput.filters.filterByName.name;
     const fNum = parseInt(numInput.filters.filterByNumber.number, 10);
     const fComp = numInput.filters.filterByNumber.compare;
@@ -33,18 +32,17 @@ function Table() {
       setFilter(newData);
     }
 
-    if (fNum >= mNumber && fComp === 'maior que' && fOpt && fName === '') {
-      parseInt(fNum, 10);
+    if (fComp === 'maior que' && fName === '') {
       const newData = dataAPI.filter((obj) => parseInt(obj[fOpt], 10) > fNum);
       setFilter(newData);
     }
 
-    if (fNum >= mNumber && fComp === 'menor que' && fOpt && fName === '') {
+    if (fComp === 'menor que' && fName === '') {
       const newData = dataAPI.filter((obj) => parseInt(obj[fOpt], 10) < fNum);
       setFilter(newData);
     }
 
-    if (fNum >= mNumber && fComp === 'igual a' && fOpt && fName === '') {
+    if (fComp === 'igual a' && fName === '') {
       const newData = dataAPI.filter((obj) => parseInt(obj[fOpt], 10) === fNum);
       setFilter(newData);
     }
