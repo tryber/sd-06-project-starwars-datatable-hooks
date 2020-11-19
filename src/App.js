@@ -1,27 +1,64 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import requestApiStarWars from './service/api';
+import StarWarsContext from './context/StarWarsContext';
+import Table from './components/Table';
+import EntryText from './components/EntryText';
 
 function App() {
+  const filterIniti = {
+    filters: {
+      filterByName: {
+        name: '',
+      },
+    },
+  };
+  const [filtersName, setFilterName] = useState(filterIniti);
+  const [planetsList, setPlanetsList] = useState([]);
+  const [planetsData, setPlanetsData] = useState([]);
+  const [entryText, setEntryText] = useState('');
+
+  useEffect(() => {
+    async function fetchPlanets() {
+      const listPlanets = await requestApiStarWars();
+      setPlanetsList(listPlanets);
+      setPlanetsData(listPlanets);
+    }
+    fetchPlanets();
+  }, []);
+
+  function filterByText(text) {
+    const listOrigin = planetsList;
+    if (text) {
+      const filterName = planetsList.filter((planet) => planet.name.includes(text));
+      setPlanetsData(filterName);
+      console.log('filter');
+    } else {
+      setPlanetsData(listOrigin);
+      console.log('orign');
+    }
+  }
+
+  function handleOnchange({ target }) {
+    const inputValue = target.value;
+    setEntryText(inputValue);
+    filterByText(inputValue);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={ logo } className="App-logo" alt="logo" />
-        <p>
-          Edit
-          <code>src/App.js</code>
-          and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <StarWarsContext.Provider
+      value={
+        {
+          data: planetsData,
+          handle: handleOnchange,
+          text: entryText }
+      }
+    >
+      <div>
+        <EntryText />
+        <p />
+        <Table />
+      </div>
+    </StarWarsContext.Provider>
   );
 }
 
