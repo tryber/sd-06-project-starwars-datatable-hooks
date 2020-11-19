@@ -1,7 +1,7 @@
 import React from 'react';
-import './App.css';
+import './sass/App.css';
 import Table from './components/Table';
-import Filters from './components/Filters';
+import Header from './components/Header';
 import Provider from './context/Provider';
 import CurrentFilters from './components/CurrentFilters';
 
@@ -9,7 +9,7 @@ function App() {
   return (
     <Provider>
       <div className="App">
-        <Filters />
+        <Header />
         <CurrentFilters />
         <Table />
       </div>

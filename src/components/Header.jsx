@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import MyContext from '../context/MyContext';
 
-function Filters() {
+function Header() {
   const { filters, setFilter, columns, setColumn } = useContext(MyContext);
 
   const handleChange = ({ target: { value } }) => {
@@ -39,14 +39,14 @@ function Filters() {
   };
 
   return (
-    <div>
-      <label>
-        Planet Name
-        <input data-testid='name-filter' onChange={handleChange} />
-      </label>
+    <section className="Header">
+      <div>
+        <label htmlfor="name">Planet Name</label>
+        <input id="name" data-testid='name-filter' onChange={handleChange} />
+      </div>
       <section>
-        <label>
-          Filter By
+        <label htmlfor="column">Filter By</label>
+        <div>
           <select id="column" data-testid='column-filter'>
             {columns.map(column => (
               <option key={column} value={column}>{column}</option>
@@ -59,10 +59,10 @@ function Filters() {
           </select>
           <input id="number" type="number" data-testid='value-filter' placeholder="value" />
           <button type="button" data-testid='button-filter' onClick={handleClick}>Filter</button>
-        </label>
+        </div>
       </section>
-    </div>
+    </section>
   );
 };
 
-export default Filters;
+export default Header;

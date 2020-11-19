@@ -1,0 +1,19 @@
+$text-color: rgb(221, 221, 221);
+
+@mixin display-flex {
+  display: flex;
+  flex-direction: column;
+}
+
+.Header {
+  display: flex;
+  @include display-flex();
+  padding-top: 20px;
+  padding-bottom: 20px;
+
+  label {
+    color: $text-color;
+    font-weight: bold;
+    font-size: 20px;
+  }
+}

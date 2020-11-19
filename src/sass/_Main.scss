@@ -1,0 +1,18 @@
+$text-color: rgb(221, 221, 221);
+$filters-text-color: rgb(192, 17, 183);
+$remove-filter-button: rgb(214, 0, 0);
+$star-wars-image: "../images/star-wars.jpeg";
+@mixin display-flex {
+  display: flex;
+  flex-direction: column;
+}
+
+body{
+  background-image: url($star-wars-image);
+  margin: 20px;
+}
+
+.App {
+  color: $text-color;
+  @include display-flex();
+}

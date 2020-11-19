@@ -14,19 +14,22 @@ function CurrentFilters() {
       ]
     });
 
-    setColumn([ ...columns, column]);
+    setColumn([...columns, column]);
   };
 
-  return ( (!filterByNumericValues.length)
-  ? <div></div>
-  : (
-    <section>{filterByNumericValues.map(({ column, comparison,value }, index) => (
-      <div data-testid='filter' key={index}>
-        {`${column} ${comparison} ${value}`}
-        <button type="button" onClick={() => removeFilter(column, index)}>X</button>
-      </div>
-    ))}</section>
-  ));
+  return ((!filterByNumericValues.length)
+    ? <section className="filter-section"></section>
+    : (
+      <section className="filter-section">
+        {filterByNumericValues.map(({ column, comparison, value }, index) => (
+          <div className="filters" data-testid='filter' key={index}>
+            {`${column} ${comparison} ${value}`}
+            <button type="button" onClick={() => removeFilter(column, index)}>X</button>
+          </div>
+        ))}
+      </section>
+    )
+  );
 };
 
 export default CurrentFilters;
