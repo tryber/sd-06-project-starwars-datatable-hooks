@@ -83,11 +83,10 @@ export default function FilterBar() {
       </button>
       <ul>
         {filterByNumericValues.map((each, index) => (
-          <li key={ index }>
+          <li key={ index } data-testid="filter">
             {`${each.column} ${each.comparison} ${each.value} `}
             <button
               type="button"
-              data-testid="filter"
               onClick={ () => deleteFilter(index) }
             >
               x
