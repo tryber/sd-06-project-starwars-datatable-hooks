@@ -16,6 +16,10 @@ export default function Provider({ children }) {
     columns: [
       'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
     ],
+    order: {
+      column: 'name',
+      sort: 'ASC',
+    },
   };
   const [filters, setFilters] = useState({ ...INITIAL_FILTERS });
   const [changedFilter, setChangedFilters] = useState(true);

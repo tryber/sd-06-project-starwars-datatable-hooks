@@ -7,6 +7,7 @@ export default function Table() {
     filters: {
       filterByName: { name },
       filterByNumericValues,
+      order,
     },
   } = useContext(StarWarsContext);
 
@@ -28,6 +29,34 @@ export default function Table() {
       )));
   });
 
+  const columnNumbers = [
+    'rotation_period', 'orbital_period', 'diameter', 'surface_water', 'population'];
+  if (order.sort) {
+    if (columnNumbers.includes(order.column)) {
+      const listNumbersOrder = {
+        ASC: (a, b) => a - b,
+        DESC: (a, b) => b - a,
+      };
+      filteredPlanets = [...filteredPlanets]
+        .sort((a, b) => listNumbersOrder[order.sort](a[order.column], b[order.column]));
+    } else {
+      let ascOrder = 1;
+      if (order.sort === 'DESC') ascOrder = -ascOrder;
+      const descOrder = -ascOrder;
+
+      filteredPlanets = [...filteredPlanets].sort((a, b) => {
+        if (a[order.column] > b[order.column]) {
+          return ascOrder;
+        }
+        if (a[order.column] < b[order.column]) {
+          return descOrder;
+        }
+        const tie = 0;
+        return tie;
+      });
+    }
+  }
+
   useEffect(() => {
     fetchPlanets();
   }, []);
@@ -46,7 +75,14 @@ export default function Table() {
       <tbody>
         {filteredPlanets && filteredPlanets.map((planet) => (
           <tr key={ planet.name } role="row">
-            {Object.values(planet).map((item, index) => <td key={ index }>{item}</td>)}
+            {Object.values(planet).map((item, index) => {
+              if (item === planet.name) {
+                return (
+                  <td key={ 0 } data-testid="planet-name">{item}</td>
+                );
+              }
+              return <td key={ index }>{item}</td>;
+            })}
           </tr>
         ))}
       </tbody>

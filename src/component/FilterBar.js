@@ -6,8 +6,11 @@ export default function FilterBar() {
   const [comparison, setComparisonFilter] = useState('maior que');
   const INITIAL_VALUE = 0;
   const [value, setValueFilter] = useState(INITIAL_VALUE);
-  const { filters, setFilters, setChangedFilters } = useContext(StarWarsContext);
+  const { data, filters, setFilters, setChangedFilters } = useContext(StarWarsContext);
   const { filterByName: { name }, filterByNumericValues, availableFilters } = filters;
+
+  const [columnOrder, setColumnOrder] = useState('name');
+  const [sortOrder, setSortOrder] = useState('ASC');
 
   const handleNameFilter = ({ target }) => {
     setChangedFilters(true);
@@ -41,6 +44,17 @@ export default function FilterBar() {
     });
   };
 
+  const handleOrderFilter = () => {
+    setFilters({
+      ...filters,
+      order: {
+        column: columnOrder,
+        sort: sortOrder,
+      },
+    });
+  };
+
+  const isASC = (sortOrder === 'ASC');
   return (
     <form>
       <input
@@ -94,6 +108,51 @@ export default function FilterBar() {
           </li>
         ))}
       </ul>
+      <div>
+        <select
+          data-testid="column-sort"
+          value={ columnOrder }
+          onChange={ ({ target }) => setColumnOrder(target.value) }
+        >
+          {(data.length > INITIAL_VALUE) && Object.keys(data[0]).map((title) => (
+            <option key={ title } value={ title }>
+              {title}
+            </option>
+          ))}
+        </select>
+        <label htmlFor="ASC">
+          ASC
+          <input
+            type="radio"
+            id="ASC"
+            name="order"
+            value="ASC"
+            data-testid="column-sort-input-asc"
+            onChange={ () => setSortOrder('ASC') }
+            checked={ isASC }
+          />
+        </label>
+        <label htmlFor="order">
+          DESC
+          <input
+            type="radio"
+            id="DESC"
+            name="order"
+            value="DESC"
+            data-testid="column-sort-input-desc"
+            checked={ !isASC }
+            onChange={ () => setSortOrder('DESC') }
+          />
+        </label>
+        <button
+          type="button"
+          data-testid="column-sort-button"
+          onClick={ handleOrderFilter }
+        >
+          Sort
+
+        </button>
+      </div>
     </form>
   );
 }
