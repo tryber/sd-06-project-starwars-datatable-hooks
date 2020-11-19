@@ -6,7 +6,7 @@ export default function Table() {
   const { data, fetchPlanets, loading,
     filters: {
       filterByName: { name },
-      filterByNumericValues: { column, comparison, value },
+      filterByNumericValues,
     },
   } = useContext(StarWarsContext);
 
@@ -21,12 +21,12 @@ export default function Table() {
     'igual a': (a, b) => a === b,
   };
 
-  if (column || value) {
+  filterByNumericValues.forEach((filter) => {
     filteredPlanets = [...filteredPlanets]
-      .filter((planet) => (
-        operators[comparison](parseInt(planet[column], 10), parseInt(value, 10))
-      ));
-  }
+      .filter((planet) => (operators[filter.comparison](
+        parseInt(planet[filter.column], 10), parseInt(filter.value, 10),
+      )));
+  });
 
   useEffect(() => {
     fetchPlanets();

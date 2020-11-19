@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import StarWarsContext from './StarWarsContext';
 
@@ -12,8 +12,26 @@ export default function Provider({ children }) {
       name: '',
     },
     filterByNumericValues: [],
+    availableFilters: [],
+    columns: [
+      'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+    ],
   };
   const [filters, setFilters] = useState({ ...INITIAL_FILTERS });
+  const [changedFilter, setChangedFilters] = useState(true);
+
+  useEffect(() => {
+    if (changedFilter) {
+      const usedFilters = filters.filterByNumericValues.map((filter) => filter.column);
+      setChangedFilters(false);
+      setFilters({
+        ...filters,
+        availableFilters: filters.columns.filter((column) => (
+          !usedFilters.includes(column)
+        )),
+      });
+    }
+  }, [filters]);
 
   const fetchPlanets = async () => {
     setLoading(true);
@@ -27,7 +45,7 @@ export default function Provider({ children }) {
   };
 
   const context = {
-    data, fetchPlanets, loading, setLoading, filters, setFilters,
+    data, fetchPlanets, loading, setLoading, filters, setFilters, setChangedFilters,
   };
   return (
     <StarWarsContext.Provider value={ context }>

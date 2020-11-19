@@ -6,10 +6,11 @@ export default function FilterBar() {
   const [comparison, setComparisonFilter] = useState('maior que');
   const INITIAL_VALUE = 0;
   const [value, setValueFilter] = useState(INITIAL_VALUE);
-  const { filters, setFilters } = useContext(StarWarsContext);
-  const { filterByName: { name }, filterByNumericValues } = filters;
+  const { filters, setFilters, setChangedFilters } = useContext(StarWarsContext);
+  const { filterByName: { name }, filterByNumericValues, availableFilters } = filters;
 
   const handleNameFilter = ({ target }) => {
+    setChangedFilters(true);
     setFilters({
       ...filters,
       filterByName: { name: target.value },
@@ -17,6 +18,7 @@ export default function FilterBar() {
   };
 
   const handleNumericFilters = () => {
+    setChangedFilters(true);
     setFilters({
       ...filters,
       filterByNumericValues: [
@@ -31,6 +33,7 @@ export default function FilterBar() {
   };
 
   const deleteFilter = (filterIndex) => {
+    setChangedFilters(true);
     setFilters({
       ...filters,
       filterByNumericValues: filterByNumericValues
@@ -51,11 +54,9 @@ export default function FilterBar() {
         data-testid="column-filter"
         onChange={ ({ target }) => setColumnFilter(target.value) }
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {availableFilters.map((eachColumn) => (
+          <option key={ eachColumn } value={ eachColumn }>{eachColumn}</option>
+        ))}
       </select>
       <select
         value={ comparison }
@@ -84,7 +85,13 @@ export default function FilterBar() {
         {filterByNumericValues.map((each, index) => (
           <li key={ index }>
             {`${each.column} ${each.comparison} ${each.value} `}
-            <button type="button" onClick={ () => deleteFilter(index) }>exluir</button>
+            <button
+              type="button"
+              data-testid="filter"
+              onClick={ () => deleteFilter(index) }
+            >
+              x
+            </button>
           </li>
         ))}
       </ul>
