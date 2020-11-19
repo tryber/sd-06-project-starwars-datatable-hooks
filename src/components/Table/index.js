@@ -36,12 +36,18 @@ function Table() {
   }, [searchText]);
 
   return (
-    <div>
-      <table className="table">
-        <thead>
+    <div className="table-responsive">
+      <table className="table table-striped table-sm">
+        <thead className="thead-dark">
           <tr>
             {tableTitle.map((title) => (
-              <th scope="col" key={ title }>{title}</th>))}
+              <th
+                scope="col"
+                key={ title }
+                className="align-middle text-center"
+              >
+                {title}
+              </th>))}
           </tr>
         </thead>
         <tbody>
