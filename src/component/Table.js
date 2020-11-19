@@ -3,12 +3,29 @@ import StarWarsContext from '../context/StarWarsContext';
 
 export default function Table() {
   const INITIAL_PLANETS = 0;
-  const { planets, fetchPlanets, loading,
-    filters: { filterByName: { name } } } = useContext(StarWarsContext);
+  const { data, fetchPlanets, loading,
+    filters: {
+      filterByName: { name },
+      filterByNumericValues: { column, comparison, value },
+    },
+  } = useContext(StarWarsContext);
 
-  const filteredPlanets = name
-    ? planets.filter((planet) => planet.name.match(`${name}`) && planet)
-    : planets;
+  let filteredPlanets = data;
+  filteredPlanets = name
+    ? filteredPlanets.filter((planet) => planet.name.match(`${name}`) && planet)
+    : filteredPlanets;
+
+  const operators = {
+    'maior que': (a, b) => a > b,
+    'menor que': (a, b) => a < b,
+    'igual a': (a, b) => a === b,
+  };
+
+  if (column || value) {
+    filteredPlanets = [...filteredPlanets]
+      .filter((planet) => (
+        operators[comparison](parseInt(planet[column], 10), parseInt(value, 10))));
+  }
 
   useEffect(() => {
     fetchPlanets();
@@ -18,9 +35,9 @@ export default function Table() {
     <table>
       <thead>
         <tr role="row">
-          {(planets.length > INITIAL_PLANETS) && Object.keys(planets[0]).map((title) => (
+          {(data.length > INITIAL_PLANETS) && Object.keys(data[0]).map((title) => (
             <th key={ title } role="columnheader">
-              {title.replace('_', ' ').toUpperCase()}
+              {title}
             </th>
           ))}
         </tr>

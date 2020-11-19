@@ -5,12 +5,19 @@ import StarWarsContext from './StarWarsContext';
 const urlAPI = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
 export default function Provider({ children }) {
-  const [planets, setPlanets] = useState([]);
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const INITIAL_FILTERS = {
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [
+      {
+        column: 'population',
+        comparison: 'maior que',
+        value: 0,
+      },
+    ],
   };
   const [filters, setFilters] = useState({ ...INITIAL_FILTERS });
 
@@ -21,12 +28,12 @@ export default function Provider({ children }) {
     receivedData.results.forEach((planet) => {
       delete planet.residents;
     });
-    setPlanets(receivedData.results);
+    setData(receivedData.results);
     setLoading(false);
   };
 
   const context = {
-    planets, fetchPlanets, loading, setLoading, filters, setFilters,
+    data, fetchPlanets, loading, setLoading, filters, setFilters,
   };
   return (
     <StarWarsContext.Provider value={ context }>
