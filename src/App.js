@@ -1,14 +1,18 @@
 import React from 'react';
 import { Provider } from './context/StarWarsContext';
 import Table from './components/Table';
+import Filter from './components/Filter';
 import './App.css';
+import FilterNumeric from './components/FilterNumeric';
 
 function App() {
   return (
     <Provider>
-      <header className="App-header">
+      <section>
+        <Filter />
+        <FilterNumeric />
         <Table />
-      </header>
+      </section>
     </Provider>
   );
 }

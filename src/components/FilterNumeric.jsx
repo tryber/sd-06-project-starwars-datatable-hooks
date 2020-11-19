@@ -1,66 +1,76 @@
-import React, { useContext } from 'react';
-import { StarWarsContext } from '../context/StarWarsContext';
+import React, { useState, useContext } from 'react';
+import StarWarsContext from '../context/StarWarsContext';
 
-function FilterNumeric() {
+const dropdown = [
+  '',
+  'population',
+  'orbital_period',
+  'diameter',
+  'rotation_period',
+  'surface_water',
+];
+
+const tiposComparacao = ['', 'maior que', 'menor que', 'igual a'];
+
+const FilterNumeric = () => {
+  const [localFilter, setLocalFilter] = useState(
+    { column: '', comparison: '', value: '' },
+  );
+
   const {
-    planetsData,
-    filterProvider: { filterByNumericValues },
-    setColumn,
-    setValue,
-    setComparison,
-    segundoFiltro,
-  } = useContext(StarWarsContext);
+    returnAPI,
+    filterNumber,
+    setFilterNumber } = useContext(StarWarsContext);
 
-  function handleClick(event) {
-    event.preventDefault();
-    // referência: https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_select_value2
-    const column = document.getElementById('column-filter').value;
-    const comparison = document.getElementById('comparison-filter').value;
-    const value = document.getElementById('value-filter').value;
-    const setNumericFilter = () => {
-      setColumn(column);
-      setComparison(comparison);
-      setValue(value);
-    };
-    return setNumericFilter();
-  }
-  function handleColumnOptions() {
-    const columns = [
-      'population',
-      'orbital_period',
-      'diameter',
-      'rotation_period',
-      'surface_water'];
-    return columns.map((column) => (
-      <option value={ column } key={ column }>
-        {column}
-      </option>));
-  }
+  const dropFiltrado = filterNumber.map((filter) => filter.column);
+
+  const dropNaoUsados = dropdown
+    .filter((column) => !dropFiltrado.includes(column));
+
+  const zero = 0;
+
   return (
     <div>
-      <select data-testid="column-filter" id="column-filter">
-        {handleColumnOptions()}
-      </select>
-      <select data-testid="comparison-filter" id="comparison-filter">
-        <option value="comparison">comparação</option>
-        <option value="maior que">maior que</option>
-        <option value="menor que">menor que</option>
-        <option value="igual a">igual a</option>
-      </select>
-      <input type="number" data-testid="value-filter" id="value-filter" />
-      <button
-        type="button"
-        onClick={ (event) => {
-          console.log('Chamou');
-          handleClick(event);
-          segundoFiltro(planetsData, filterByNumericValues);
-        } }
-        data-testid="button-filter"
-      >
-        Filtrar
-      </button>
+      {returnAPI.length !== zero && (
+        <div>
+          <select
+            data-testid="column-filter"
+            onChange={ (event) => setLocalFilter(
+              { ...localFilter, column: event.target.value },
+            ) }
+          >
+            {dropNaoUsados.map((column) => (
+              <option key={ column } value={ column }>{column}</option>
+            ))}
+          </select>
+          <select
+            data-testid="comparison-filter"
+            onChange={ (event) => setLocalFilter(
+              { ...localFilter, comparison: event.target.value },
+            ) }
+          >
+            {tiposComparacao.map((comparacao, index) => (
+              <option key={ index } value={ comparacao }>{comparacao}</option>
+            ))}
+          </select>
+          <input
+            data-testid="value-filter"
+            type="number"
+            onChange={ (event) => setLocalFilter(
+              { ...localFilter, value: event.target.value },
+            ) }
+          />
+          <button
+            type="button"
+            data-testid="button-filter"
+            onClick={ () => setFilterNumber([...filterNumber, localFilter]) }
+          >
+            Filtrar
+          </button>
+        </div>
+      )}
     </div>
   );
-}
+};
 
 export default FilterNumeric;

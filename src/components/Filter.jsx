@@ -2,18 +2,23 @@ import React, { useContext } from 'react';
 import { StarWarsContext } from '../context/StarWarsContext';
 
 function Filter() {
-  const { setName } = useContext(StarWarsContext);
+  const { returnAPI, setFilterName } = useContext(StarWarsContext);
+  const zero = 0;
   return (
     <div>
-      <label htmlFor="name-filter">
-        <span>Filtro por planeta: </span>
-        <input
-          placeholder="Digite o planeta"
-          type="text"
-          data-testid="name-filter"
-          onChange={ (event) => setName(event.target.value) }
-        />
-      </label>
+      {returnAPI.length !== zero && (
+        <div>
+          <input
+            placeholder="Digite o nome do planeta"
+            data-testid="name-filter"
+            type="text"
+            name=""
+            onChange={ (event) => setFilterName(
+              { filterByName: { name: event.target.value } },
+            ) }
+          />
+        </div>
+      )}
     </div>
   );
 }

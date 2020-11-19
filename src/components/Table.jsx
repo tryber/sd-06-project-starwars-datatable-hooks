@@ -1,21 +1,44 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
+import StarWarsContext from '../context/StarWarsContext';
 import Header from './Header';
-import Filter from './FilterNumeric';
-import FilterNumeric from './Filter';
 import PlanetsTable from './PlanetsTable';
 
-class Table extends React.Component {
-  render() {
-    return (
-      <div>
+// Como só vou fazer a requisição aqui, fiz para facilitar a vida
+async function fetchPlanetsAPI() {
+  let data;
+  try {
+    const request = await fetch('https://swapi-trybe.herokuapp.com/api/planets');
+    const response = await request.json();
+    data = await response.results;
+  } catch (error) {
+    console.log(`Erro na API: ${error}`);
+  }
+  return data;
+}
+
+function Table() {
+  const { returnAPI, setReturnAPI } = useContext(StarWarsContext);
+
+  useEffect(() => {
+    async function getPlanets() {
+      const dados = await fetchPlanetsAPI();
+      setReturnAPI(dados);
+    }
+    getPlanets();
+  }, [setReturnAPI]);
+
+  const zero = 0;
+  return (
+    <div>
+      {returnAPI.length === zero && <h1>Loading...</h1>}
+      {returnAPI.length !== zero && (
         <table>
-          <Filter />
-          <FilterNumeric />
           <Header />
           <PlanetsTable />
         </table>
-      </div>
-    );
-  }
+      )}
+    </div>
+  );
 }
+
 export default Table;
