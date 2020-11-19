@@ -22,7 +22,9 @@ function Table() {
 
   let filteredPlanets = tableArray;
 
+  // Função forEach percorre todos meus filtros gerados dentro do array filterByNumericValues, iterando sobre cada uma para fazer um filtro por vez.
   filterByNumericValues.forEach((filter) => {
+    // Função filter percorre todas as comparações dentro deses filtros, iterando sobre cada um para realizar o filtro.
     filteredPlanets = filteredPlanets.filter((planet) => {
       const zero = 0;
       if (filterByNumericValues.length === zero) {
@@ -114,13 +116,12 @@ function Table() {
           </tr>
         </thead>
         <tbody>
+          {/* Meu array com os filtros numéricos já realizados */}
           {filteredPlanets
-          // Verifica se o elemento do array com a chave planet.name possui o
-          // valor que foi setado no "filterByName".
+          // Função filter que verifica se o elemento do array com a chave planet.name possui valor que foi setado no "filterByName".
             .filter((table) => table.name.toLowerCase()
               .includes(filterByName.toLowerCase()))
-          // E caso possuir faz um map desses elementos filtrados e
-          // retorna a renderização da table data.
+          // E caso possuir faz uma função map desses elementos filtrados e retorna a renderização da table data.
             .map((table, i) => (
               <tr key={ i }>
                 <td>{ table.name }</td>
