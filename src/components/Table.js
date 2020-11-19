@@ -24,19 +24,24 @@ function Table() {
 
   filterByNumericValues.forEach((filter) => {
     filteredPlanets = filteredPlanets.filter((planet) => {
-      if (filterByNumericValues.length === 0) {
+      const zero = 0;
+      if (filterByNumericValues.length === zero) {
         return true;
       }
       if (filter.comparison === 'maior que') {
-        return (planet[filter.column] > parseInt(filter.value, 10) ? true : false);
+        return (planet[filter.column] > parseInt(filter.value, 10));
       }
       if (filter.comparison === 'menor que') {
-        return (planet[filter.column] < parseInt(filter.value, 10) ? true : false);
+        return (planet[filter.column] < parseInt(filter.value, 10));
       }
-      if (filter.comparison == 'igual a') {
-        return (planet[filter.column] == parseInt(filter.value, 10) ? true : false);
+      if (filter.comparison === 'igual a') {
+        return (parseInt(planet[filter.column], 10) === parseInt(filter.value, 10));
       }
+      // arrow exigia algum retorno no final, logo retornei null.
+      return null;
     });
+    // arrow exigia algum retorno no final, logo retornei null.
+    return null;
   });
 
   return (
@@ -67,7 +72,7 @@ function Table() {
             data-testid="column-filter"
             onChange={ (e) => setColumn(e.target.value) }
           >
-            <option disabled selected> -- select an option -- </option>
+            {/* <option disabled selected> -- select an option -- </option> */}
             <option>population</option>
             <option>orbital_period</option>
             <option>diameter</option>
@@ -78,13 +83,13 @@ function Table() {
             data-testid="comparison-filter"
             onChange={ (e) => setComparison(e.target.value) }
           >
-            <option disabled selected> -- select an option -- </option>
+            {/* <option disabled selected> -- select an option -- </option> */}
             <option>maior que</option>
             <option>menor que</option>
             <option>igual a</option>
           </select>
           <input
-            data-testid="button-filter"
+            data-testid="value-filter"
             type="number"
             placeholder="valor"
             onChange={ (e) => setValue(e.target.value) }
