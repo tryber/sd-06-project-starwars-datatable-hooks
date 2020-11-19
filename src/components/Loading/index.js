@@ -3,7 +3,7 @@ import React from 'react';
 const Loading = () => (
   <tr>
     <th>
-      Loading...
+      Loading....
     </th>
   </tr>
 );
