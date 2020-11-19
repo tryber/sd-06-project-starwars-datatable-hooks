@@ -31,7 +31,7 @@ function Table() {
       </thead>
       <tbody>
         {data
-          // .filter((planet) => planet.name.includes(searchText))
+          .filter((planet) => planet.name.includes(searchText))
           .map((planet, index) => (
             <tr key={ index }>
               <td>{ planet.name }</td>

@@ -1,24 +1,43 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import starWarsContext from '../context/starWarsContext';
 
 function SearchForm() {
+  const { setFilters, filters, dynamicFilter } = useContext(starWarsContext);
+
   return (
     <div>
-      <select data-testid="column-filter">
-        <option selected>Selecione...</option>
-        <option value="1">population</option>
-        <option value="2">orbital_period</option>
-        <option value="3">diameter</option>
-        <option value="3">rotation_period</option>
-        <option value="3">surface_water</option>
+      <select
+        data-testid="column-filter"
+        onChange={ (event) => setFilters({ ...filters, column: event.target.value }) }
+      >
+        <option defaultValue>Selecione...</option>
+        <option value="population">population</option>
+        <option value="orbital_period">orbital_period</option>
+        <option value="diameter">diameter</option>
+        <option value="rotation_period">rotation_period</option>
+        <option value="surface_water">surface_water</option>
       </select>
-      <select data-testid="comparison-filter">
-        <option selected>Selecione...</option>
-        <option value="1">maior que</option>
-        <option value="2">menor que</option>
-        <option value="3">igual a</option>
+      <select
+        data-testid="comparison-filter"
+        onChange={ (event) => setFilters({ ...filters, compare: event.target.value }) }
+      >
+        <option defaultValue>Selecione...</option>
+        <option value="maior que">maior que</option>
+        <option value="menor que">menor que</option>
+        <option value="igual a">igual a</option>
       </select>
-      <input data-testid="value-filter" type="number" />
-      <button data-testid="button-filter" type="button">Adicionar filtro</button>
+      <input
+        data-testid="value-filter"
+        type="number"
+        onChange={ (event) => setFilters({ ...filters, number: event.target.value }) }
+      />
+      <button
+        data-testid="button-filter"
+        type="button"
+        onClick={ () => dynamicFilter() }
+      >
+        Adicionar filtro
+      </button>
     </div>
 
   );
