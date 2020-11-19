@@ -159,7 +159,7 @@ describe.skip('Filtre a tabela através de um texto, inserido num *campo de text
   });
 });
 // req3
-describe('Crie um filtro para valores numéricos', () => {
+describe.skip('Crie um filtro para valores numéricos', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
 
@@ -248,8 +248,8 @@ describe('Crie um filtro para valores numéricos', () => {
     expect(await screen.findAllByRole(ROW_ROLE_SELECTOR)).toHaveLength(2);
   });
 });
-// req 4
-describe.skip('Não utilize filtros repetidos', () => {
+// req4
+describe('Não utilize filtros repetidos', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
 

@@ -27,21 +27,6 @@ function FilterFields() {
 
   // salva os filtros usados a partir do que está sendo alterado em filterByNumericValues
   // quando um filtro for salvo, atualizo o filteredPlanets que vem do Provider
-  /* Baby passos:
-          - Pega o filter;
-          - Desconstroi o filterByNumericValues (column, comparasion, value);
-          - const updatePlanets = filteredPlanets.filter((planeta) => {
-              switch(comparasion) {
-              case('maior que'):
-                return planeta[column] > value;
-              case('menor que):
-                return planeta[column] < value;
-              default:
-                return planeta[column] === value;
-            }
-            setFilteredPlanets(updatePlanets)
-          })
-        */
   useEffect(() => {
     const filtersSaved = filters.filterByNumericValues.map((filter) => filter.column);
     setUsedFilters([...filtersSaved]);
