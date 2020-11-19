@@ -1,4 +1,4 @@
-label {
+label, .li-span, .btn {
   margin-left: 15px;
 }
 
@@ -6,6 +6,10 @@ label {
   margin-left: 0px;
 }  
 
-.btn {
-  margin-left: 15px;
+.list-group {
+  margin-top: 30px;
+}
+
+.list-group-item {
+  margin: auto;
 }

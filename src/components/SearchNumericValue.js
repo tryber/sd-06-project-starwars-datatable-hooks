@@ -119,36 +119,29 @@ function SearchNumericValue() {
       </form>
       {
         filters.filterByNumericValues.length !== defaultValue && (
-          <table className="table table-dark">
-            <thead>
-              <tr>
-                <th>Filtro</th>
-                <th>Comparação</th>
-                <th>Valor</th>
-                <th>Remover</th>
-              </tr>
-            </thead>
-            <tbody>
-              { filters.filterByNumericValues.map((filter) => (
-                <tr key={ filter.column }>
-                  <td>{ filter.column }</td>
-                  <td>{ filter.comparison }</td>
-                  <td>{ filter.value }</td>
-                  <td>
-                    <button
-                      type="button"
-                      className="btn btn-light"
-                      name={ filter.column }
-                      onClick={ removeFilterHandler }
-                      data-testid="filter"
-                    >
-                      X
-                    </button>
-                  </td>
-                </tr>
-              )) }
-            </tbody>
-          </table>
+          <ul className="list-group">
+            { filters.filterByNumericValues.map((filter) => (
+              <li
+                key={ filter.column }
+                data-testid="filter"
+                className="list-group-item"
+              >
+                <span className="li-span">{ filter.column }</span>
+                <span className="li-span">{ filter.comparison }</span>
+                <span className="li-span">{ filter.value }</span>
+                <span className="li-span">
+                  <button
+                    type="button"
+                    className="btn btn-light"
+                    name={ filter.column }
+                    onClick={ removeFilterHandler }
+                  >
+                    X
+                  </button>
+                </span>
+              </li>
+            )) }
+          </ul>
         )
       }
     </div>
