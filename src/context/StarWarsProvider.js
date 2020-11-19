@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import propTypes from 'prop-types';
 import StarWarsContext from './StarWarsContext';
 import fetchApi from '../services/fetchApi';
@@ -12,6 +12,10 @@ function StarWarsProvider({ children }) {
     setData(planetsApi.results);
     setIsFetching(true);
   };
+
+  useEffect(() => {
+    fetchPlanets();
+  }, []);
 
   const contextValue = {
     data,

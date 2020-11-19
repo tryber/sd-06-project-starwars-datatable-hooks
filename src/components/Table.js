@@ -3,17 +3,38 @@ import StarWarsContext from '../context/StarWarsContext';
 import FilterContext from '../context/FilterContext';
 
 function Table() {
-  const { data, fetchPlanets } = useContext(StarWarsContext);
-  const { filterName } = useContext(FilterContext);
+  const { data } = useContext(StarWarsContext);
+  const {
+    filterName,
+    filterNumbers: { filterByNumericValues } } = useContext(FilterContext);
+  const lastIndex = filterByNumericValues.length - 1;
+  const { column, comparison, value } = filterByNumericValues[lastIndex];
 
   useEffect(() => {
-    fetchPlanets();
-  }, []);
+  }, [data]);
 
-  const filterByName = () => {
-    const filteredData = data.filter((item) => item.name.toLowerCase()
-      .includes(filterName.toLowerCase()));
-    return filteredData;
+  const applyFilter = () => {
+    if (filterName !== '') {
+      const filteredData = data.filter((item) => item.name.toLowerCase()
+        .includes(filterName.toLowerCase()));
+      return filteredData;
+    }
+    if (column !== '') {
+      const filterInputNumbers = data.filter((planet) => {
+        if (comparison === 'maior que' && Number(planet[column]) > Number(value)) {
+          return planet;
+        }
+        if (comparison === 'menor que' && Number(planet[column]) < Number(value)) {
+          return planet;
+        }
+        if (comparison === 'igual a' && Number(planet[column]) === Number(value)) {
+          return planet;
+        }
+        return undefined;
+      });
+      return filterInputNumbers;
+    }
+    return data;
   };
 
   const headers = ['Name', 'Rotation period',
@@ -38,7 +59,7 @@ function Table() {
           </thead>
           <tbody>
             {
-              filterByName().map((element, index) => (
+              applyFilter().map((element, index) => (
                 <tr key={ index }>
                   <td>{element.name}</td>
                   <td>{element.rotation_period}</td>

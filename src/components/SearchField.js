@@ -11,7 +11,7 @@ function SearchField() {
     filterByNumber(column, comparison, value);
   };
 
-  const columns = ['population', 'orbital_period',
+  const columns = ['', 'population', 'orbital_period',
     'diameter', 'rotation_period',
     'surface_water',
   ];
@@ -53,9 +53,10 @@ function SearchField() {
         value={ comparison }
         onChange={ (event) => setComparison(event.target.value) }
       >
+        <option> </option>
         <option>maior que</option>
+        <option>igual a</option>
         <option>menor que</option>
-        <option>igual</option>
       </select>
       <input
         data-testid="value-filter"
