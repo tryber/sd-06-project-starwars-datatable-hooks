@@ -45,7 +45,7 @@ export default function Table() {
       <tbody>
         {filteredPlanets && filteredPlanets.map((planet) => (
           <tr key={ planet.name } role="row">
-            {Object.values(planet).map((value, index) => <td key={ index }>{value}</td>)}
+            {Object.values(planet).map((item, index) => <td key={ index }>{item}</td>)}
           </tr>
         ))}
       </tbody>
