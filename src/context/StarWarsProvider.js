@@ -5,6 +5,7 @@ import StarWarsContext from './StarWarsContext';
 export default function StarWarsProvider({ children }) {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [columns, setColumns] = useState();
   const initialColumnFilters = [
     'population',
     'orbital_period',
@@ -16,15 +17,19 @@ export default function StarWarsProvider({ children }) {
     setAvailableColumnFilters] = useState(initialColumnFilters);
   const [filters, setFilters] = useState({
     filterByName: { name: '' },
-    filterByNumericValues: [
-
-    ],
+    filterByNumericValues: [],
+    order: {
+      column: 'name',
+      sort: 'ASC',
+    },
   });
 
   async function fetchData() {
     const response = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
     const APIData = await response.json();
     setData(APIData);
+    setColumns(Object.keys(APIData.results[0])
+      .filter((column) => column !== 'residents'));
   }
 
   useEffect(() => {
@@ -44,6 +49,11 @@ export default function StarWarsProvider({ children }) {
         filters,
         numericFilters: filters.filterByNumericValues,
         name: filters.filterByName.name,
+        sort: filters.order.sort,
+        Ordercolumn: filters.order.column,
+        columns,
+        order: filters.order,
+        initialColumns: initialColumnFilters,
         availableColumnFilters,
         setAvailableColumnFilters,
         setFilters } }

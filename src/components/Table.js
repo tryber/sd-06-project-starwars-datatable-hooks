@@ -6,9 +6,13 @@ export default function Table() {
     isLoading,
     name,
     numericFilters,
+    sort,
+    Ordercolumn,
+    initialColumns,
   } = useContext(StarWarsContext);
 
   const zero = 0;
+  const negativeOne = -1;
 
   if (isLoading) {
     return <>loading </>;
@@ -39,23 +43,75 @@ export default function Table() {
         getComparison(planet, filter.column, filter.comparison, filter.value, filter)))),
   ));
 
+  const ascSortByColumn = (a, b) => (
+    parseInt(a[Ordercolumn], 10) - parseInt(b[Ordercolumn], 10)
+  );
+  const dscSortByColumn = (b, a) => (
+    parseInt(b[Ordercolumn], 10) - parseInt(a[Ordercolumn], 10));
+
+  const sortByNumericValue = (planets) => {
+    const sortTypes = {
+      ASC: planets.filter(() => true).sort((a, b) => ascSortByColumn(a, b)),
+      DSC: planets.filter(() => true).sort((a, b) => dscSortByColumn(b, a)),
+    };
+
+    return sortTypes[sort];
+  };
+
+  const ascSortByTextColumn = (a, b) => {
+    if (a[Ordercolumn] > b[Ordercolumn]) {
+      return 1;
+    }
+    if (a[Ordercolumn] < b[Ordercolumn]) {
+      return negativeOne;
+    }
+
+    return zero;
+  };
+
+  const descSortByTextColumn = (a, b) => {
+    if (a[Ordercolumn] > b[Ordercolumn]) {
+      return negativeOne;
+    }
+    if (a[Ordercolumn] < b[Ordercolumn]) {
+      return 1;
+    }
+
+    return zero;
+  };
+
+  const sortByText = (planets) => {
+    const sortTypes = {
+      ASC: planets.filter(() => true).sort((a, b) => ascSortByTextColumn(a, b)),
+      DSC: planets.filter(() => true).sort((a, b) => descSortByTextColumn(a, b)),
+    };
+    return sortTypes[sort];
+  };
+
+  const sortPlanets = (planets) => {
+    if (initialColumns.includes(Ordercolumn)) return sortByNumericValue(planets);
+    return sortByText(planets);
+  };
+
   const filterPlanets = (_planets) => {
     const filteredPlanetsByName = filterPlanetsByName(_planets);
     const filteredPlanetsByNumericValues = filterPlanetsByNumericValues(
       filteredPlanetsByName,
     );
+    const sortedPlanets = sortPlanets(filteredPlanetsByNumericValues);
 
-    return filteredPlanetsByNumericValues;
+    return sortedPlanets;
   };
 
-  const getTableHeaders = (planets) => (Object.keys(planets[0]))
+  const renderTableHeader = (planets) => (Object.keys(planets[0]))
     .filter((key) => key !== 'residents')
     .map((key) => <th key={ key }>{key}</th>);
 
-  const getTableFields = () => filterPlanets(data.results).map((planet, index) => (
+  const renderTableFields = () => filterPlanets(data.results).map((planet, index) => (
     <tr key={ `planet ${index}` }>
+      <td data-testid="planet-name">{planet.name}</td>
       {Object.keys(planet)
-        .filter((key) => key !== 'residents')
+        .filter((key) => key !== 'residents' && key !== 'name')
         .map((key) => <td key={ planet[key] }>{planet[key]}</td>)}
     </tr>
   ));
@@ -64,11 +120,11 @@ export default function Table() {
     <table>
       <thead>
         <tr>
-          {getTableHeaders(data.results)}
+          {renderTableHeader(data.results)}
         </tr>
       </thead>
       <tbody>
-        {getTableFields()}
+        {renderTableFields()}
 
       </tbody>
 
