@@ -5,6 +5,7 @@ import StarWarsContext from './StarWarsContext';
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
   const [isFetching, setIsFetching] = useState(true);
+  const [headerKeys, setHeaderKeys] = useState([]);
 
   const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
   const fetchAPI = async () => {
@@ -16,13 +17,14 @@ function StarWarsProvider({ children }) {
     });
     setData(dataPlanets);
     setIsFetching(false);
+    setHeaderKeys(Object.keys(dataPlanets[0]));
   };
 
   useEffect(() => {
     fetchAPI();
   }, []);
 
-  const allData = { data, isFetching };
+  const allData = { data, isFetching, headerKeys, setHeaderKeys };
   return (
     <StarWarsContext.Provider value={ allData }>
       { children }
