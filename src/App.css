@@ -9,7 +9,12 @@ h1{
   font-weight: 500;
 }
 
-.name-filter {
+select {
+  padding: 5px 10px;
+}
+
+.name-filter,
+.column-filter{
   padding: 15px;
   font-weight: 900;
   font-size: 18px;

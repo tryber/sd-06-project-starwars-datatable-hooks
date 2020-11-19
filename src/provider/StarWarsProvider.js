@@ -6,6 +6,7 @@ import StarWarsAPI from '../services/StarWarsAPI';
 function StarWarsProvider({ children }) {
   const [tableArray, setTableArray] = useState([]);
   const [filterByName, setFilterByName] = useState('');
+  const [filterByNumericValues, setFilterByNumericValues] = useState([]);
 
   useEffect(() => {
     async function fetchAPI() {
@@ -20,8 +21,10 @@ function StarWarsProvider({ children }) {
       value={ {
         tableArray,
         filterByName,
+        filterByNumericValues,
         setTableArray,
         setFilterByName,
+        setFilterByNumericValues,
       } }
     >
       {children}

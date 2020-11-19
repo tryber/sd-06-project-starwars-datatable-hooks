@@ -1,18 +1,43 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
+  const [column, setColumn] = useState('');
+  const [comparison, setComparison] = useState('');
+  const [value, setValue] = useState('');
+
   const {
     tableArray,
     filterByName,
     setFilterByName,
+    filterByNumericValues,
+    setFilterByNumericValues,
   } = useContext(StarWarsContext);
 
   const tableHeaders = ['Name', 'Rotation Period',
     'Orbital Period', 'Diameter', 'Climate', 'Gravity', 'Terrain',
     'Surface Water', 'Population', 'Films', 'Created', 'Edited', 'URL'];
+
+  let filteredPlanets = tableArray;
+
+  filterByNumericValues.forEach((filter) => {
+    filteredPlanets = filteredPlanets.filter((planet) => {
+      if (filterByNumericValues.length === 0) {
+        return true;
+      }
+      if (filter.comparison === 'maior que') {
+        return (planet[filter.column] > parseInt(filter.value, 10) ? true : false);
+      }
+      if (filter.comparison === 'menor que') {
+        return (planet[filter.column] < parseInt(filter.value, 10) ? true : false);
+      }
+      if (filter.comparison == 'igual a') {
+        return (planet[filter.column] == parseInt(filter.value, 10) ? true : false);
+      }
+    });
+  });
 
   return (
     <div>
@@ -32,6 +57,48 @@ function Table() {
             onChange={ (e) => setFilterByName(e.target.value) }
           />
         </label>
+        <label
+          htmlFor="filterByNumber"
+          className="column-filter"
+        >
+          Filtro por Elemento
+          {' '}
+          <select
+            data-testid="column-filter"
+            onChange={ (e) => setColumn(e.target.value) }
+          >
+            <option disabled selected> -- select an option -- </option>
+            <option>population</option>
+            <option>orbital_period</option>
+            <option>diameter</option>
+            <option>rotation_period</option>
+            <option>surface_water</option>
+          </select>
+          <select
+            data-testid="comparison-filter"
+            onChange={ (e) => setComparison(e.target.value) }
+          >
+            <option disabled selected> -- select an option -- </option>
+            <option>maior que</option>
+            <option>menor que</option>
+            <option>igual a</option>
+          </select>
+          <input
+            data-testid="button-filter"
+            type="number"
+            placeholder="valor"
+            onChange={ (e) => setValue(e.target.value) }
+          />
+          <button
+            data-testid="button-filter"
+            type="button"
+            onClick={ () => setFilterByNumericValues([...filterByNumericValues,
+              { column, comparison, value },
+            ]) }
+          >
+            Filtrar
+          </button>
+        </label>
       </form>
       <table className="table">
         <thead>
@@ -42,7 +109,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {tableArray
+          {filteredPlanets
           // Verifica se o elemento do array com a chave planet.name possui o
           // valor que foi setado no "filterByName".
             .filter((table) => table.name.toLowerCase()
