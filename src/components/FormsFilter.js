@@ -24,7 +24,13 @@ function FormsFilter() {
           <option value="rotation_period">rotation_period</option>
           <option value="surface_water">surface_water</option>
         </select>
-        <button type="button" className="btn btn-secondary">X</button>
+        <button
+          data-testid="filter"
+          type="button"
+          className="btn btn-secondary"
+        >
+          X
+        </button>
       </div>
       <div className="btn-group mr-2">
         <select
@@ -38,7 +44,13 @@ function FormsFilter() {
           <option value="menor que">menor que</option>
           <option value="igual a">igual a</option>
         </select>
-        <button type="button" className="btn btn-secondary">X</button>
+        <button
+          data-testid="filter"
+          type="button"
+          className="btn btn-secondary"
+        >
+          X
+        </button>
       </div>
       <div className="btn-group mr-2">
         <input
@@ -50,7 +62,13 @@ function FormsFilter() {
             { ...formsFilter, value: target.value },
           ) }
         />
-        <button type="button" className="btn btn-secondary">X</button>
+        <button
+          data-testid="filter"
+          type="button"
+          className="btn btn-secondary"
+        >
+          X
+        </button>
       </div>
       <div className="btn-group mr-2">
         <button
@@ -60,12 +78,19 @@ function FormsFilter() {
           data-testid="button-filter"
           onClick={ () => setFilters({
             ...filters,
-            filterByNumericValues: { ...formsFilter },
+            filterByNumericValues: [{ ...formsFilter }]
+              .concat(filters.filterByNumericValues),
           }) }
         >
           Filter
         </button>
-        <button type="button" className="btn btn-secondary">X</button>
+        <button
+          data-testid="filter"
+          type="button"
+          className="btn btn-secondary"
+        >
+          X
+        </button>
       </div>
     </form>
   );

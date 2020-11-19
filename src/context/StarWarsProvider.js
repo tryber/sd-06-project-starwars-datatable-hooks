@@ -19,16 +19,19 @@ function StarWarsProvider({ children }) {
 
   function filterForms() {
     const { filterByNumericValues } = filters;
-    const { column, comparison, value } = filterByNumericValues;
+    console.log(filterByNumericValues[0]);
     const dropFilter = data.filter((planet) => {
-      if (comparison === 'maior que') {
-        return planet[column] > parseInt(value, 10);
+      if (filterByNumericValues[0].comparison === 'maior que') {
+        return planet[filterByNumericValues[0].column]
+          > parseInt(filterByNumericValues[0].value, 10);
       }
-      if (comparison === 'menor que') {
-        return planet[column] < parseInt(value, 10);
+      if (filterByNumericValues[0].comparison === 'menor que') {
+        return planet[filterByNumericValues[0].column]
+          < parseInt(filterByNumericValues[0].value, 10);
       }
-      if (comparison === 'igual a') {
-        return planet[column] === value;
+      if (filterByNumericValues[0].comparison === 'igual a') {
+        return planet[filterByNumericValues[0].column]
+          === filterByNumericValues[0].value;
       }
       return data;
     });
