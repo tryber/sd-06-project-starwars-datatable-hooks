@@ -46,11 +46,20 @@ function Provider({ children }) {
       filterByNumericValues: [...filters.filterByNumericValues, filter] });
   };
 
+  const deleteFilter = (column) => {
+    const arrayFiltered = filters.filterByNumericValues
+      .filter((item) => item.column !== column);
+
+    setFilters({ ...filters,
+      filterByNumericValues: [...arrayFiltered] });
+  };
+
   const contextValue = {
     data,
     filters,
     handleChangeName,
     newFilter,
+    deleteFilter,
   };
 
   return (

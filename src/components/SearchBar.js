@@ -36,10 +36,10 @@ function SearchBar() {
     'surface_water',
   ];
 
+  // Filtra os campos "column" que não foram acrescentados no filtro
   const myColumnsFilter = filters.filterByNumericValues.map((item) => item.column);
   const arrayColumnsFiltered = arrayAllColumns
     .filter((item) => !myColumnsFilter.includes(item));
-  console.log(arrayColumnsFiltered);
 
   return (
     <div>
@@ -66,11 +66,6 @@ function SearchBar() {
         { arrayColumnsFiltered.map((item, index) => (
           <option key={ index } value={ item }>{ item }</option>
         ))}
-        {/* <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option> */}
       </select>
 
       {/* Dropdown para seleção do campo comparison */}
@@ -103,7 +98,7 @@ function SearchBar() {
         type="button"
         onClick={ () => addFilter() }
       >
-        Filtrar
+        Adicionar Filtro
       </button>
     </div>
   );
