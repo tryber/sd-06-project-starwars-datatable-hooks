@@ -46,7 +46,8 @@ function ComparisonInputs() {
       <button
         data-testid="button-filter"
         type="button"
-        onClick={ () => setFilterByNumber([...filteredByNumber, { column, comparison, value }]) }
+        onClick={ () => setFilterByNumber([...filteredByNumber,
+          { column, comparison, value }]) }
       >
         Filtrar
       </button>
