@@ -1,12 +1,14 @@
 import React from 'react';
-import Filters from './components/Filters';
+import DeleteFilters from './components/DeleteFilters';
+import InputFilters from './components/InputFilters';
 import Table from './components/Table';
 import ProviderContext from './context/ProviderContext';
 
 function App() {
   return (
     <ProviderContext>
-      <Filters />
+      <InputFilters />
+      <DeleteFilters />
       <Table />
     </ProviderContext>
   );

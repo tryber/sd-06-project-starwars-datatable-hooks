@@ -7,12 +7,7 @@ function Table() {
   const { dataTable: { copyDataResultsTable } } = useContext(StarWarsContext);
   const arrayVoid = 0;
   if (copyDataResultsTable.length > arrayVoid) {
-    // pegar a copia feita aqui em baixa mandar ela para o state golbal e fazer que ela seja chamada toda vez que o data for atualizado ou imput do name for madado
-    // console.log('copyDataResultsTable[0]', copyDataResultsTable)
     const arrayKeysResults = Object.keys(copyDataResultsTable[0]);
-    // console.log('arrayKeysResults', arrayKeysResults)
-    // console.log('copyResults', copyResults)
-    // console.log('results', data.results)
     return (
       <table>
         <thead>

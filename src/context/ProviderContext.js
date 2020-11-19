@@ -8,13 +8,20 @@ function ProviderContext({ children }) {
   const [name, setName] = useState('');
   const [filterByNumericValues, setFilterByNumericValues] = useState([]);
 
-  const [arrayOptionsColumn, setArrayOptionsColumn] = useState([
+  const constArrayOptionsColumn = [
     'population',
     'orbital_period',
     'diameter',
     'rotation_period',
     'surface_water',
-  ]);
+  ];
+  const [arrayOptionsColumn, setArrayOptionsColumn] = useState(constArrayOptionsColumn);
+
+  useEffect(() => {
+    setArrayOptionsColumn(constArrayOptionsColumn
+      .filter((optionColumn) => !filterByNumericValues
+        .some(({ column }) => column === optionColumn)));
+  }, [filterByNumericValues]);
 
   useEffect(() => {
     const objVoid = 0;
@@ -36,8 +43,8 @@ function ProviderContext({ children }) {
             const firstCall = 0;
             const filterByNumber2 = (index === firstCall ? copyDataResults : total)
               .filter((objPlanet) => {
-                setArrayOptionsColumn(arrayOptionsColumn
-                  .filter((optionColumn) => optionColumn !== column));
+                // setArrayOptionsColumn(arrayOptionsColumn
+                //   .filter((optionColumn) => optionColumn !== column));
                 let boolTest = false;
                 switch (comparison) {
                 case 'maior que':

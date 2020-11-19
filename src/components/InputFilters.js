@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
-function Filters() {
+function InputFilters() {
   const { filters: {
     filterByName: { name, setName },
     filterNumeric: {
@@ -11,8 +11,6 @@ function Filters() {
   },
   arrayOptionsColumn,
   } = useContext(StarWarsContext);
-  // console.log(useContext(StarWarsContext))
-  // console.log('name', name);
   const arrayOptionsComparison = [
     'maior que',
     'menor que',
@@ -24,7 +22,6 @@ function Filters() {
     setValueInputsComparison,
   ] = useState(arrayOptionsComparison[0]);
   const [valueInputsNumber, setValueInputsNumber] = useState('');
-  // console.log('valueInputsColumn', valueInputsNumber)
 
   function onClickFilter() {
     if (valueInputsColumn !== ''
@@ -90,4 +87,4 @@ function Filters() {
   );
 }
 
-export default Filters;
+export default InputFilters;
