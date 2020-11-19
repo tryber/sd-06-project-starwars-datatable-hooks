@@ -8,6 +8,25 @@ function Table() {
     _planets.filter((planet) => planet.name.includes(filters.filterByName.name))
   );
 
+  const biggerThen = (planerColumn, number) => (
+    parseInt(planerColumn, 10) > parseInt(number, 10)
+  );
+  const lessThen = (planerColumn, number) => (
+    parseInt(planerColumn, 10) < parseInt(number, 10)
+  );
+  const equalTo = (planerColumn, number) => (
+    parseInt(planerColumn, 10) === parseInt(number, 10)
+  );
+
+  const getComparisons = (planet, column, comparison, value) => {
+    const comparisons = {
+      'maior que': biggerThen(planet[column], value),
+      'menor que': lessThen(planet[column], value),
+      'igual a': equalTo(planet[column], value),
+    }
+    return comparisons[comparison];
+  };
+
   const filterPlanetsByNumericValues = (_planets) => {
     const { filterByNumericValues } = filters;
     const zero = 0;
@@ -15,24 +34,10 @@ function Table() {
     if (filterByNumericValues.length === zero) {
       return _planets;
     }
-    switch (filterByNumericValues[0].comparison) {
-    case 'maior que':
-      return _planets.filter((planet) => (
-        parseInt(planet[filterByNumericValues[0].column], 10)
-        > parseInt(filterByNumericValues[0].value, 10)
-      ));
-    case 'igual a':
-      return _planets.filter((planet) => (
-        parseInt(planet[filterByNumericValues[0].column], 10)
-        === parseInt(filterByNumericValues[0].value, 10)
-      ));
-    case 'menor que':
-      return _planets.filter((planet) => (
-        parseInt(planet[filterByNumericValues[0].column], 10)
-        < parseInt(filterByNumericValues[0].value, 10)
-      ));
-    default: return _planets;
-    }
+
+    return _planets.filter((planet) => (filterByNumericValues.every((filter) => (
+      getComparisons(planet, filter.column, filter.comparison, filter.value, filter)
+    ))))
   };
 
   const filterPlanets = () => {
@@ -42,9 +47,9 @@ function Table() {
     return planetsByNumericValue;
   };
 
-  const [column, setColumn] = useState('');
-  const [comparison, setComparison] = useState('');
-  const [value, setValue] = useState('');
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
+  const [value, setValue] = useState(0);
 
   const handleName = ({ target }) => {
     setFilters({ ...filters, filterByName: { name: target.value } });
@@ -88,6 +93,26 @@ function Table() {
     );
   };
 
+  const handleFiltered = (index) => {
+    const newAvailableColumns = [
+      'population',
+      'orbital_period',
+      'diameter',
+      'rotation_period',
+      'surface_water',
+    ];
+    const newFilterByNumericValues = [...filters.filterByNumericValues];
+    newFilterByNumericValues.splice(index, 1);
+    newAvailableColumns.splice(newAvailableColumns.indexOf(filters.filterByNumericValues.column), 1);
+
+    setFilters(
+      { ...filters,
+        filterByNumericValues: newFilterByNumericValues,
+        availableColumns: newAvailableColumns,
+      },
+    );
+  };
+
   return (
     <div>
       { loading ? (<p>Loading...</p>) : (
@@ -124,6 +149,7 @@ function Table() {
               data-testid="value-filter"
               name="value"
               type="number"
+              value={ value }
               onChange={ handleValue }
             />
             <button
@@ -133,6 +159,19 @@ function Table() {
             >
               Filter
             </button>
+          </div>
+          <div>
+            { filters.filterByNumericValues.map((filter, index) => (
+              <div key={ index } data-testid="filter">
+                { `${filter.column} ${filter.comparison} ${filter.value}` }
+                <button
+                  type="button"
+                  onClick={ () => handleFiltered(index) }
+                >
+                  X
+                </button>
+              </div>
+            )) }
           </div>
           <table>
             <thead>
@@ -154,8 +193,8 @@ function Table() {
             </thead>
             <tbody>
               { filterPlanets()
-                .map((planet) => (
-                  <tr key={ planet.name }>
+                .map((planet, index) => (
+                  <tr key={ index }>
                     <td>{ planet.climate }</td>
                     <td>{ planet.created }</td>
                     <td>{ planet.diameter }</td>
