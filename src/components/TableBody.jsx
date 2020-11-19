@@ -35,13 +35,10 @@ const DESC = (a, b) => {
 };
 
 function TableBody() {
-  const { setOrder } = useContext(StarWarsContext);
+  const { dataApi,
+    filterName, filterNumber, order, setOrder } = useContext(StarWarsContext);
 
-  useEffect(() => {
-    setOrder({ column: 'name', sort: 'ASC' });
-  }, [setOrder]);
-
-  const { dataApi, filterName, filterNumber, order } = useContext(StarWarsContext);
+  useEffect(() => { setOrder({ column: 'name', sort: 'ASC' }); }, [setOrder]);
 
   let allPlanets = dataApi;
 
