@@ -20,39 +20,23 @@ export default function Table() {
     const { filterByNumericValues } = filters;
 
     if (filterByNumericValues.length) {
-      let newPlanetsList = [];
+      let newPlanetsList = planets;
 
       filterByNumericValues.forEach((currentFilter) => {
-        const searchInto = (newPlanetsList.length ? newPlanetsList : planets);
-
-        searchInto.forEach((planet) => {
-          const isAlreadyThere = !newPlanetsList
-            .find((currentPlanet) => currentPlanet.name === planet.name);
+        newPlanetsList = newPlanetsList.filter((planet) => {
           switch (currentFilter.comparison) {
           case 'maior que':
-            if (planet[currentFilter.column] > parseFloat(currentFilter.value)
-              && planet[currentFilter.column] !== 'unknown') {
-              if (isAlreadyThere) {
-                newPlanetsList = [...newPlanetsList, planet];
-              }
-            }
-            break;
+            return parseFloat(planet[currentFilter.column])
+              > parseFloat(currentFilter.value)
+              && planet[currentFilter.column] !== 'unknown';
           case 'menor que':
-            if (planet[currentFilter.column] < parseFloat(currentFilter.value)
-              && planet[currentFilter.column] !== 'unknown') {
-              if (isAlreadyThere) {
-                newPlanetsList = [...newPlanetsList, planet];
-              }
-            }
-            break;
+            return parseFloat(planet[currentFilter.column])
+              < parseFloat(currentFilter.value)
+              && planet[currentFilter.column] !== 'unknown';
           case 'igual a':
-            if (planet[currentFilter.column] === parseFloat(currentFilter.value)
-              && planet[currentFilter.column] !== 'unknown') {
-              if (isAlreadyThere) {
-                newPlanetsList = [...newPlanetsList, planet];
-              }
-            }
-            break;
+            return parseFloat(planet[currentFilter.column])
+              === parseFloat(currentFilter.value)
+              && planet[currentFilter.column] !== 'unknown';
           default:
             return null;
           }
@@ -61,6 +45,7 @@ export default function Table() {
 
       return newPlanetsList;
     }
+
     return planets;
   };
 

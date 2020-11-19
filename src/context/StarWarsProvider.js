@@ -33,17 +33,19 @@ function StarWarsProvider({ children }) {
   };
 
   const currentNumericFilterHandler = (column, comparison, value) => {
-    setFilters({
-      ...filters,
-      filterByNumericValues: [
-        ...filters.filterByNumericValues,
-        {
-          column,
-          comparison,
-          value,
-        },
-      ],
-    });
+    if (column !== '-') {
+      setFilters({
+        ...filters,
+        filterByNumericValues: [
+          ...filters.filterByNumericValues,
+          {
+            column,
+            comparison,
+            value,
+          },
+        ],
+      });
+    }
   };
 
   const providerValue = {

@@ -11,11 +11,11 @@ function SearchNumericValue() {
   const [usedFilters, setUsedFilters] = useState([]);
 
   const columnFilterOptions = [
-    'Population',
-    'Orbital_Period',
-    'Diameter',
-    'Rotation_Period',
-    'Surface_Water',
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
   ];
   const comparisonFilterOptions = [
     'maior que',
@@ -43,11 +43,11 @@ function SearchNumericValue() {
             onChange={ ({ target: { value } }) => setFilteredColumn(value) }
           >
             { columnFilterOptions.map((columnOption) => {
-              if (!usedFilters.includes(columnOption.toLocaleLowerCase())) {
+              if (!usedFilters.includes(columnOption)) {
                 return (
                   <option
-                    key={ columnOption.toLowerCase() }
-                    value={ columnOption.toLowerCase() }
+                    key={ columnOption }
+                    value={ columnOption }
                   >
                     { columnOption }
                   </option>
@@ -98,6 +98,7 @@ function SearchNumericValue() {
           filteredComparison,
           filteredValue,
         ) }
+        data-testid="button-filter"
       >
         Filtrar
       </button>
