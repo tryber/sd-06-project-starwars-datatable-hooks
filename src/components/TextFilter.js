@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
-function TableFilters() {
+function TextFilter() {
   const { setNameFilter } = useContext(StarWarsContext);
   return (
     <div>
@@ -15,4 +15,4 @@ function TableFilters() {
   );
 }
 
-export default TableFilters;
+export default TextFilter;

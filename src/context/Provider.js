@@ -9,11 +9,21 @@ function Provider({ children }) {
   const [fetchedPlanets, setFetchedPlanets] = useState([]);
   const [nameFilter, setNameFilter] = useState('');
 
+  const [filters, setFilter] = useState({
+    filterByName: { name: '' },
+    filterByNumericValues: [{
+      column: '',
+      comparison: '',
+      value: 0,
+    }],
+  });
+
   useEffect(() => {
     const fetchAndSavePlanets = async () => {
       const data = await getPlanetList();
 
       setFetchedPlanets(data.results);
+
       setTableHeader(Object.keys(data.results[0])
         .filter((header) => header !== 'residents'));
     };
@@ -21,8 +31,8 @@ function Provider({ children }) {
   }, []);
 
   useEffect(() => {
-    const regex = new RegExp(nameFilter, 'i');
-    const filteredPlanets = fetchedPlanets.filter((planet) => regex.test(planet.name));
+    const input = new RegExp(nameFilter, 'i');
+    const filteredPlanets = fetchedPlanets.filter((planet) => input.test(planet.name));
     setCurrentPlanets(filteredPlanets);
   }, [fetchedPlanets, nameFilter]);
 
@@ -30,6 +40,9 @@ function Provider({ children }) {
     currentPlanets,
     tableHeaders,
     setNameFilter,
+    setFilter,
+    filters,
+    setCurrentPlanets,
   };
 
   return (
