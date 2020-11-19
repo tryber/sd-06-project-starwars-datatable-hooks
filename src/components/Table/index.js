@@ -18,7 +18,7 @@ const tableTitle = [
 ];
 
 function Table() {
-  const { prismPlanets, getPrismPlanet } = useContext(StarWarsContext);
+  const { data, getPrismPlanet } = useContext(StarWarsContext);
 
   useEffect(() => {
     getPrismPlanet();
@@ -34,7 +34,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {prismPlanets.map((planet) => (
+          {data.map((planet) => (
             <tr key={ planet.created }>
               <td>{ planet.name }</td>
               <td>{ planet.rotation_period }</td>
