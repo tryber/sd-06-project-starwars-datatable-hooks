@@ -2,12 +2,14 @@ import React from 'react';
 import './App.css';
 import Table from './components/Table';
 import WarsProvider from './context/WarsProvider';
-import Header from './components/header';
+import SearchByName from './components/SearchByName';
+import SelectedFilter from './components/SelectedFilter';
 
 function App() {
   return (
     <WarsProvider>
-      <Header />
+      <SearchByName />
+      <SelectedFilter />
       <Table />
     </WarsProvider>
   );

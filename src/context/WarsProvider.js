@@ -4,16 +4,34 @@ import StarWarsContext from './starWarsContext';
 import WarsApi from '../service/API';
 
 export default function WarsProvider({ children }) {
-  const [star, setstar] = useState([]);
+  const [data, setdata] = useState([]);
   const [searchName, setsearchName] = useState('');
+  //  const [filter, setfilter] = useState({
+  //  filterByName: { name: '' },
+  //  filterByNumericValues: [],
+  //  });
+
+  const [filterByNumericValues, setfilterByNumericValues] = useState([]);
 
   const getApi = async () => {
     const fetchApi = await WarsApi();
-    setstar(fetchApi);
+    setdata(fetchApi);
+  };
+  const addFilter = (param) => {
+    setfilterByNumericValues(filterByNumericValues.concat(param));
   };
 
   return (
-    <StarWarsContext.Provider value={ { star, getApi, searchName, setsearchName } }>
+    <StarWarsContext.Provider
+      value={ {
+        data,
+        getApi,
+        searchName,
+        setsearchName,
+        filterByNumericValues,
+        addFilter,
+      } }
+    >
       { children }
     </StarWarsContext.Provider>
   );

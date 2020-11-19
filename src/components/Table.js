@@ -2,12 +2,32 @@ import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/starWarsContext';
 
 function Table() {
-  const { star, getApi, searchName } = useContext(StarWarsContext);
+  const { data, getApi, searchName, filterByNumericValues } = useContext(StarWarsContext);
 
   useEffect(() => {
     getApi();
-  }, []);
+  }, [filterByNumericValues]);
 
+  const handleFilter = () => {
+    let check = data;
+    filterByNumericValues.forEach(({ column, comparison, value }) => {
+      if (comparison === 'maior que') {
+        check = data.filter((el) => el[column] > value);
+      }
+      if (comparison === 'menor que') {
+        check = data.filter((el) => el[column] < value);
+        console.log(check.length);
+      }
+      if (comparison === 'igual a') {
+        check = data.filter((el) => el[column] === value);
+      }
+    });
+    return check;
+  };
+
+  useEffect(() => {
+    handleFilter();
+  }, [filterByNumericValues]);
   return (
     <table>
       <thead>
@@ -28,7 +48,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {star
+        {handleFilter()
           .filter((el) => el.name.toLowerCase()
             .includes(searchName.toLowerCase()))
           .map((el, idx) => (

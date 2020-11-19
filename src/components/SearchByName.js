@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import StarWarsContext from '../context/starWarsContext';
 
-function Header() {
+function SearchByName() {
   const { searchName, setsearchName } = useContext(StarWarsContext);
   return (
     <div>
@@ -15,4 +15,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default SearchByName;
