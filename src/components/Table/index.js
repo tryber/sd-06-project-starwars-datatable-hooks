@@ -9,25 +9,32 @@ const Table = () => {
   const planetsStarWars = useContext(StarWarsContext);
   const { handleApiPlanets, stateStarWars } = planetsStarWars;
 
-  const header = ['name', 'rotation_period', 'orbital_period', 'diameter', 'climate',
-    'gravity', 'terrain', 'surface_water', 'population', 'films', 'created', 'edited',
-    'url'];
-
   useEffect(() => {
     handleApiPlanets();
   }, []);
 
+  const informationsPlanets = () => {
+    if (!stateStarWars.data) {
+      console.log('ainda nao existe');
+    } else {
+      const informationsHeader = Object.keys(stateStarWars.data.results[0])
+        .filter(((info) => info !== 'residents'));
+
+      return informationsHeader;
+    }
+  };
+
   return (
     <StyledTable>
-      <table>
-        <thead>
-          <tr>
-            { header.map((hea) => <th key={ hea }>{hea}</th>) }
-          </tr>
-        </thead>
-        <tbody>
-          { !stateStarWars.data ? <Loading />
-            : stateStarWars.data.results.map((planet) => (
+      { !stateStarWars.data ? <Loading /> : (
+        <table>
+          <thead>
+            <tr>
+              { informationsPlanets().map((info) => <th key={ info }>{info}</th>) }
+            </tr>
+          </thead>
+          <tbody>
+            { stateStarWars.data.results.map((planet) => (
               <tr key={ planet.name }>
                 <td>{ planet.name }</td>
                 <td>{ planet.rotation_period }</td>
@@ -43,8 +50,9 @@ const Table = () => {
                 <td>{ planet.edited }</td>
                 <td>{ planet.url }</td>
               </tr>))}
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      )}
     </StyledTable>
   );
 };

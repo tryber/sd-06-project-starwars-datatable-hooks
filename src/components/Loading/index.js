@@ -1,11 +1,9 @@
 import React from 'react';
 
 const Loading = () => (
-  <tr>
-    <th>
-      Loading....
-    </th>
-  </tr>
+  <div>
+    Loading...
+  </div>
 );
 
 export default Loading;
