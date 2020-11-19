@@ -7,7 +7,7 @@ import removeItemFromArray from '../helpers/removeItemFromArray';
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
   const [tableHeaders, setTableHeaders] = useState([]);
-  // const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getPlanetsInfo = async () => {
     const planetsInfo = await fetchPlanetsInfo();
@@ -26,6 +26,7 @@ function StarWarsProvider({ children }) {
     tableHeaders,
     getPlanetsInfo,
     getTableHeaders,
+    setIsLoading,
   };
 
   return (
