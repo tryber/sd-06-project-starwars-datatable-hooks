@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+
 import fetchPrismPlanet from '../services/planetServices';
 
 import StarWarsContext from './StarWarsContext';
@@ -19,5 +21,7 @@ function StarWarsProvider({ children }) {
     </StarWarsContext.Provider>
   );
 }
+
+StarWarsProvider.propTypes = { children: PropTypes.arrayOf().isRequired };
 
 export default StarWarsProvider;
