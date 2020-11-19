@@ -52,7 +52,6 @@ const TableBody = () => {
           <th>Films:</th>
           <th>Created:</th>
           <th>Edited:</th>
-          <th>URL:</th>
         </tr>
       </thead>
       <tbody>
@@ -72,7 +71,6 @@ const TableBody = () => {
               <td>{planet.films}</td>
               <td>{planet.created}</td>
               <td>{planet.edited}</td>
-              <td>{planet.url}</td>
             </tr>
           ))}
       </tbody>
