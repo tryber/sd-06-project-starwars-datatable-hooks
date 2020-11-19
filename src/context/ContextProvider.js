@@ -6,18 +6,28 @@ import getPlanets from '../services/api';
 function ContextProvider({ children }) {
   const [planets, setPlanets] = useState({});
   const [isFetching, setIsFetching] = useState(true);
+  const [filters, setFilters] = useState({filterByName: {name: ''}});
+  const { filterByName } = filters;
 
   useEffect(() => {
-    (async () => {
+    if (filterByName.name === '') (async () => {
       const fetchPlanets = await getPlanets();
       setPlanets(fetchPlanets.results);
       setIsFetching(false);
     })();
-  }, []);
+
+    (async () => {
+      const fetchPlanets = await getPlanets(filterByName.name);
+      setPlanets(fetchPlanets.results);
+      setIsFetching(false);
+    })();
+  }, [filters]);
 
   const contextValues = {
     planets,
     isFetching,
+    filters,
+    setFilters,
   };
 
   return (
