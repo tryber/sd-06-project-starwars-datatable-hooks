@@ -20,10 +20,10 @@ const TableBody = () => {
     setLoading(true);
     fetchStarWars().then((response) => {
       setPlanetsData(response.results);
+      console.log('response.results', response.results);
       setLoading(false);
     });
   }, [setPlanetsData, setLoading]);
-
   const filterPlanet = choicePlanet(planetsData);
 
   const filters = filterPlanetByName.name;
@@ -42,8 +42,8 @@ const TableBody = () => {
       <thead>
         <tr>
           <th>Name:</th>
-          <th>Rotation Period:</th>
-          <th>Orbital Period:</th>
+          <th>Rotation_Period:</th>
+          <th>Orbital_Period:</th>
           <th>Diameter:</th>
           <th>Gravity:</th>
           <th>Terrain:</th>
@@ -52,6 +52,8 @@ const TableBody = () => {
           <th>Films:</th>
           <th>Created:</th>
           <th>Edited:</th>
+          <th>Climate:</th>
+          <th>URL:</th>
         </tr>
       </thead>
       <tbody>
@@ -71,6 +73,7 @@ const TableBody = () => {
               <td>{planet.films}</td>
               <td>{planet.created}</td>
               <td>{planet.edited}</td>
+              <td>{planet.url}</td>
             </tr>
           ))}
       </tbody>
