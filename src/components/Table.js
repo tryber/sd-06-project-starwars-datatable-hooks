@@ -4,15 +4,67 @@ import StarWarsContext from '../context/StarWarsContext';
 export default function Table() {
   const {
     data,
+    filters,
     getPlanetsList,
+    isLoading,
+    setIsLoading,
     searchTermValue,
   } = useContext(StarWarsContext);
 
   useEffect(() => {
     getPlanetsList();
+    setIsLoading(false);
   }, []);
 
-  return (
+  const filterDataHandler = (planets) => {
+    const { filterByNumericValues } = filters;
+
+    if (filterByNumericValues.length) {
+      let newPlanetsList = [];
+
+      filterByNumericValues.forEach((currentFilter) => {
+        const searchInto = (newPlanetsList.length ? newPlanetsList : planets);
+
+        searchInto.forEach((planet) => {
+          const isAlreadyThere = !newPlanetsList
+            .find((currentPlanet) => currentPlanet.name === planet.name);
+          switch (currentFilter.comparison) {
+          case 'maior que':
+            if (planet[currentFilter.column] > parseFloat(currentFilter.value)
+              && planet[currentFilter.column] !== 'unknown') {
+              if (isAlreadyThere) {
+                newPlanetsList = [...newPlanetsList, planet];
+              }
+            }
+            break;
+          case 'menor que':
+            if (planet[currentFilter.column] < parseFloat(currentFilter.value)
+              && planet[currentFilter.column] !== 'unknown') {
+              if (isAlreadyThere) {
+                newPlanetsList = [...newPlanetsList, planet];
+              }
+            }
+            break;
+          case 'igual a':
+            if (planet[currentFilter.column] === parseFloat(currentFilter.value)
+              && planet[currentFilter.column] !== 'unknown') {
+              if (isAlreadyThere) {
+                newPlanetsList = [...newPlanetsList, planet];
+              }
+            }
+            break;
+          default:
+            return null;
+          }
+        });
+      });
+
+      return newPlanetsList;
+    }
+    return planets;
+  };
+
+  return isLoading ? <h1>Loading</h1> : (
     <table className="table table-dark">
       <thead>
         <tr>
@@ -32,7 +84,7 @@ export default function Table() {
         </tr>
       </thead>
       <tbody>
-        { data.filter((planet) => planet.name.toLowerCase()
+        { filterDataHandler(data).filter((planet) => planet.name.toLowerCase()
           .includes(searchTermValue.toLowerCase()))
           .map((planet) => (
             <tr key={ planet.name }>

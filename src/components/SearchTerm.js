@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 export default function SearchTerm() {
-  const { searchTermValue, setSearchTermValue } = useContext(StarWarsContext);
+  const { searchTermValue, currentTermFilterHandler } = useContext(StarWarsContext);
   return (
     <label htmlFor="search">
       Busca pelo nome:
@@ -12,7 +12,7 @@ export default function SearchTerm() {
         type="text"
         name="search"
         id="search"
-        onChange={ ({ target: { value } }) => setSearchTermValue(value) }
+        onChange={ ({ target: { value } }) => currentTermFilterHandler(value) }
         value={ searchTermValue }
       />
     </label>
