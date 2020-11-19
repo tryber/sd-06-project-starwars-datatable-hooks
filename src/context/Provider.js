@@ -11,13 +11,7 @@ export default function Provider({ children }) {
     filterByName: {
       name: '',
     },
-    filterByNumericValues: [
-      {
-        column: 'population',
-        comparison: 'maior que',
-        value: 0,
-      },
-    ],
+    filterByNumericValues: [],
   };
   const [filters, setFilters] = useState({ ...INITIAL_FILTERS });
 

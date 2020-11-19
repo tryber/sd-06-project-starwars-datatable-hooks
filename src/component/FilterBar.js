@@ -7,23 +7,37 @@ export default function FilterBar() {
   const INITIAL_VALUE = 0;
   const [value, setValueFilter] = useState(INITIAL_VALUE);
   const { filters, setFilters } = useContext(StarWarsContext);
-  const { filterByName: { name } } = filters;
+  const { filterByName: { name }, filterByNumericValues } = filters;
+
   const handleNameFilter = ({ target }) => {
     setFilters({
       ...filters,
       filterByName: { name: target.value },
     });
   };
+
   const handleNumericFilters = () => {
     setFilters({
       ...filters,
-      filterByNumericValues: {
-        column,
-        comparison,
-        value,
-      },
+      filterByNumericValues: [
+        ...filterByNumericValues,
+        {
+          column,
+          comparison,
+          value,
+        },
+      ],
     });
   };
+
+  const deleteFilter = (filterIndex) => {
+    setFilters({
+      ...filters,
+      filterByNumericValues: filterByNumericValues
+        .filter((_, index) => index !== filterIndex),
+    });
+  };
+
   return (
     <form>
       <input
@@ -66,6 +80,14 @@ export default function FilterBar() {
         Confirm
 
       </button>
+      <ul>
+        {filterByNumericValues.map((each, index) => (
+          <li key={ index }>
+            {`${each.column} ${each.comparison} ${each.value} `}
+            <button type="button" onClick={ () => deleteFilter(index) }>exluir</button>
+          </li>
+        ))}
+      </ul>
     </form>
   );
 }

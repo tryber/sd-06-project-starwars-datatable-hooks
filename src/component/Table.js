@@ -24,7 +24,8 @@ export default function Table() {
   if (column || value) {
     filteredPlanets = [...filteredPlanets]
       .filter((planet) => (
-        operators[comparison](parseInt(planet[column], 10), parseInt(value, 10))));
+        operators[comparison](parseInt(planet[column], 10), parseInt(value, 10))
+      ));
   }
 
   useEffect(() => {
