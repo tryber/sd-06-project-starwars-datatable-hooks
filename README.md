@@ -121,6 +121,11 @@ Você vai desenvolver uma lista com filtros de planetas do universo de StarWars 
 
 Você deverá cumprir os requisitos do projeto utilizando a **Context API** e **componentes funcionais com Hooks**.
 
+#### Observação técnica
+Para que avaliador consiga acessar o seu contexto de forma correta, coloque o Provider dentro do `App.js`.
+
+Isso é necessário porque o testes renderizam diretamente o `App` sem passar pelo arquivo `index.js`. Se você colocar o Provider no index, isso fará com que os testes não funcionem.
+
 ---
 
 ## DATA DE ENTREGA
