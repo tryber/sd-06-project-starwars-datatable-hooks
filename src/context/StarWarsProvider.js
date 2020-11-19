@@ -1,22 +1,20 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import fetchPrismPlanet from '../services/planetServices';
+import fetchPlanet from '../services/planetServices';
 
 import StarWarsContext from './StarWarsContext';
 
 function StarWarsProvider({ children }) {
-  // armazenando os dados: lista de planetas. Cria-se uma variável no estado em um
-  // componente funcional através do useState();
-  const [data, setPrismPlanets] = useState([]);
+  const [data, setData] = useState([]);
 
-  const getPrismPlanet = async () => {
-    const allPrismPlanets = await fetchPrismPlanet();
-    setPrismPlanets(allPrismPlanets);
+  const getPlanets = async () => {
+    const allPlanets = await fetchPlanet();
+    setData(allPlanets);
   };
 
   return (
-    <StarWarsContext.Provider value={ { data, getPrismPlanet } }>
+    <StarWarsContext.Provider value={ { data, getPlanets } }>
       {children}
     </StarWarsContext.Provider>
   );

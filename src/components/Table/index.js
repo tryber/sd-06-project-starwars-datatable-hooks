@@ -18,10 +18,10 @@ const tableTitle = [
 ];
 
 function Table() {
-  const { data, getPrismPlanet } = useContext(StarWarsContext);
+  const { data, getPlanets } = useContext(StarWarsContext);
 
   useEffect(() => {
-    getPrismPlanet();
+    getPlanets();
   }, []);
 
   return (
