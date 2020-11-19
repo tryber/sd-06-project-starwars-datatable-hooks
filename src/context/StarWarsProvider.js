@@ -21,13 +21,32 @@ function StarWarsProvider({ children }) {
     });
   };
 
+  const getFilterByNumericValues = ({ column, comparison, value }) => {
+    setFilters({
+      ...filters,
+      filterByNumericValues: [
+        {
+          column,
+          comparison,
+          value,
+        },
+      ],
+    });
+  };
+
+  const handleClick = (filtered) => {
+    getFilterByNumericValues(filtered);
+  };
+
   return (
     <StarWarsContext.Provider
       value={
         { data,
           getPlanetsData,
           filters,
-          getFilterByName }
+          getFilterByName,
+          getFilterByNumericValues,
+          handleClick }
       }
     >
       { children }
