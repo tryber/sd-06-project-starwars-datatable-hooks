@@ -38,7 +38,7 @@ function TableBody() {
         .sort(order.sort === 'ASC' ? ASC : DESC)
         .map((planet) => (
           <tr key={ planet.name }>
-            <td key={ planet.name }>{planet.name}</td>
+            <td data-testid="planet-name" key={ planet.name }>{planet.name}</td>
             <td key={ planet.rotation_period }>{planet.rotation_period}</td>
             <td key={ planet.orbital_period }>{planet.orbital_period}</td>
             <td key={ planet.diameter }>{planet.diameter}</td>

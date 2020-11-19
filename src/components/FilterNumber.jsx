@@ -104,7 +104,7 @@ const FilterNumber = () => {
                 <input
                   value="ASC"
                   type="radio"
-                  datatestid="column-sort-input-asc"
+                  data-testid="column-sort-input-asc"
                   name="radio"
                   id="ASC"
                 />
@@ -114,7 +114,7 @@ const FilterNumber = () => {
                 <input
                   value="DESC"
                   type="radio"
-                  datatestid="column-sort-input-desc"
+                  data-testid="column-sort-input-desc"
                   name="radio"
                   id="DESC"
                 />
