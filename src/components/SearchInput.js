@@ -2,14 +2,14 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function SearchInput() {
-  const { searchTerm, setSearchTerm } = useContext(StarWarsContext);
+  const { filters: { filterByName: { name } }, setFilterByName } = useContext(StarWarsContext);
 
   return (
     <input
       type="text"
       name="search"
-      onChange={ (event) => setSearchTerm(event.target.value) }
-      value={ searchTerm }
+      onChange={ (event) => setFilterByName(event.target.value) }
+      value={ name }
       data-testid="name-filter"
     />
   );

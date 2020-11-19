@@ -1,15 +1,32 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { data, getData, searchTerm } = useContext(StarWarsContext);
-
+  const { data, getData, filters } = useContext(StarWarsContext);
+  const { filterByName } = filters;
+  const { name } = filterByName;
+  const { filterByNumericValues } = filters;
+  const { column, comparison, value } = filterByNumericValues;
+  
   useEffect(() => {
     async function fetchData() {
-      await getData();
+      // await getData();
     }
     fetchData();
   }, []);
+
+  const filterNumericInputs = (planet) => {
+    switch(comparison) {
+      case 'maior que':
+        return Number(planet[column]) > Number(value);
+      case 'menor que':
+        return Number(planet[column]) < Number(value);
+      case 'igual a':
+        return Number(planet[column]) === Number(value);
+      default:
+        return true;
+    }
+  }
 
   return (
     <table className="table">
@@ -35,7 +52,7 @@ function Table() {
           data && data
             .filter((planet) => planet.name
               .toLowerCase()
-              .includes(searchTerm.toLowerCase()))
+              .includes(name.toLowerCase()))
             .map((planet) => (
               <tr key={ planet.name }>
                 <td>{planet.name}</td>
