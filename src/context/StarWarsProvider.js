@@ -22,15 +22,12 @@ function StarWarsProvider({ children }) {
   };
 
   const getFilterByNumericValues = ({ column, comparison, value }) => {
+    const { filterByNumericValues: oldFiltersApplied } = filters;
+    const newFilter = { column, comparison, value };
+
     setFilters({
       ...filters,
-      filterByNumericValues: [
-        {
-          column,
-          comparison,
-          value,
-        },
-      ],
+      filterByNumericValues: [...oldFiltersApplied, newFilter],
     });
   };
 
