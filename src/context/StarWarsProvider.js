@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { fetchPlanetsInfo, fetchTableHeaders } from '../services/apiServices';
 import StarWarsContext from './StarWarsContext';
 import removeItemFromArray from '../helpers/removeItemFromArray';
-import { fetchPlanetsInfo, fetchTableHeaders } from '../services/apiServices';
 
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
   const [tableHeaders, setTableHeaders] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
 
   const getPlanetsInfo = async () => {
     const planetsInfo = await fetchPlanetsInfo();
@@ -33,5 +34,9 @@ function StarWarsProvider({ children }) {
     </StarWarsContext.Provider>
   );
 }
+
+StarWarsProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export default StarWarsProvider;

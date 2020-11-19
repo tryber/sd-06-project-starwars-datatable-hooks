@@ -25,7 +25,7 @@ function Table() {
       </thead>
       <tbody>
         {data.map((planet) => (
-          <tr key={ planet.name }scope="row">
+          <tr key={ planet.name }>
             {Object.values(planet).map((planetValue, index) => (
               <td key={ index }>{ planetValue }</td>
             ))}
