@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
-import { columnOptions } from './FilterNumber';
+import { numericColumnsOptions } from './FilterNumber';
 
 const filterByNumber = (planets, filter) => {
   if (filter.comparison === 'maior que') {
@@ -19,7 +19,7 @@ const filterByNumber = (planets, filter) => {
 const ASC = (a, b) => {
   const minusOne = -1;
   const { order } = useContext(StarWarsContext);
-  if (columnOptions.includes(order.column)) {
+  if (numericColumnsOptions.includes(order.column)) {
     return a[order.column] - b[order.column];
   }
   return a[order.column] > b[order.column] ? 1 : minusOne;
@@ -28,7 +28,7 @@ const ASC = (a, b) => {
 const DESC = (a, b) => {
   const minusOne = -1;
   const { order } = useContext(StarWarsContext);
-  if (columnOptions.includes(order.column)) {
+  if (numericColumnsOptions.includes(order.column)) {
     return b[order.column] - a[order.column];
   }
   return b[order.column] > a[order.column] ? minusOne : 1;

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
-export const columnOptions = [
+export const numericColumnsOptions = [
   '',
   'population',
   'orbital_period',
@@ -53,7 +53,7 @@ const FilterNumber = () => {
 
   const columnFilter = filterNumber.map((filter) => filter.column);
 
-  const remainingColumns = columnOptions
+  const remainingColumns = numericColumnsOptions
     .filter((column) => !columnFilter.includes(column));
 
   const zero = 0;
