@@ -1,9 +1,10 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Context from '../context/StarWarsContext';
+import FilterFields from './FilterFields';
 import TableRow from './TableRow';
 
 function Table() {
-  const { loading, data, planetKeys, getPlanets } = useContext(Context);
+  const { loading, planetKeys, getPlanets, filters, input, filteredPlanets } = useContext(Context);
 
   useEffect(() => {
     getPlanets();
@@ -13,6 +14,7 @@ function Table() {
 
   return (
     <div>
+      <FilterFields />
       <table>
         <thead>
           <tr>
@@ -22,7 +24,8 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {data.map((planet) => <TableRow key={ planet.name } planetValues={ planet } />)}
+          {filteredPlanets.filter((planet) => planet.name.toLowerCase().includes(input))
+            .map((planet) => <TableRow key={ planet.name } planetValues={ planet } />)}
         </tbody>
       </table>
     </div>

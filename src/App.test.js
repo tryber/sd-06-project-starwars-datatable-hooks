@@ -27,8 +27,8 @@ const mockFetch = () => {
       json: () => Promise.resolve(testData)
     }));
 }
-
-describe('Faça uma requisição para o endpoint `/planets` da API de Star Wars e preencha uma tabela com os dados retornados, com exceção dos da coluna `residents`', () => {
+// req1
+describe.skip('Faça uma requisição para o endpoint `/planets` da API de Star Wars e preencha uma tabela com os dados retornados, com exceção dos da coluna `residents`', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
 
@@ -83,8 +83,8 @@ describe('Faça uma requisição para o endpoint `/planets` da API de Star Wars 
     expect(await screen.findAllByRole(ROW_ROLE_SELECTOR)).toHaveLength(11);
   });
 });
-
-describe('Filtre a tabela através de um texto, inserido num *campo de texto*, exibindo somente os planetas cujos nomes incluam o texto digitado', () => {
+// req2
+describe.skip('Filtre a tabela através de um texto, inserido num *campo de texto*, exibindo somente os planetas cujos nomes incluam o texto digitado', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
 
@@ -158,8 +158,8 @@ describe('Filtre a tabela através de um texto, inserido num *campo de texto*, e
     }
   });
 });
-
-describe.skip('Crie um filtro para valores numéricos', () => {
+// req3
+describe('Crie um filtro para valores numéricos', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
 
@@ -248,7 +248,7 @@ describe.skip('Crie um filtro para valores numéricos', () => {
     expect(await screen.findAllByRole(ROW_ROLE_SELECTOR)).toHaveLength(2);
   });
 });
-
+// req 4
 describe.skip('Não utilize filtros repetidos', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
@@ -284,7 +284,7 @@ describe.skip('Não utilize filtros repetidos', () => {
     expect(foundColumnFilter).toEqual(expect.arrayContaining(['orbital_period', 'diameter', 'rotation_period', 'surface_water']));
   });
 });
-
+// req5
 describe.skip('Apague o filtro de valores numéricos e desfaça as filtragens dos dados da tabela ao clicar no ícone de `X` de um dos filtro', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
@@ -336,7 +336,7 @@ describe.skip('Apague o filtro de valores numéricos e desfaça as filtragens do
     expect(await screen.findAllByRole(ROW_ROLE_SELECTOR)).toHaveLength(11);
   });
 });
-
+// req6
 describe.skip('Ordene as colunas de forma ascendente ou descendente', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
