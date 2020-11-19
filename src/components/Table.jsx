@@ -2,8 +2,17 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 export default function Table() {
-  const { data, isFetching, headerKeys, filterByName } = useContext(StarWarsContext);
-
+  const { data, isFetching,
+    headerKeys, filters } = useContext(StarWarsContext);
+  const { filterByName, filterByNumericValues } = filters;
+  const { name } = filterByName;
+  const { column, comparison, value } = filterByNumericValues[0];
+  function filtersPlanet(planets) {
+    if (comparison === '') return true;
+    if (comparison === 'maior que') return Number(planets[column]) > Number(value);
+    if (comparison === 'menor que') return Number(planets[column]) < Number(value);
+    if (comparison === 'igual a') return Number(planets[column]) === Number(value);
+  }
   return (
     <table border="1">
       <tr>
@@ -14,8 +23,8 @@ export default function Table() {
       </tr>
       <tbody>
         {!isFetching
-          ? data.filter((planetas) => (
-            planetas.name.includes(filterByName)))
+          ? data.filter((planetas) => filtersPlanet(planetas))
+            .filter((planets) => planets.name.includes(name))
             .map((planet) => (
               <tr key={ planet.name }>
                 <td data-testid="planet-name">{planet.name}</td>
