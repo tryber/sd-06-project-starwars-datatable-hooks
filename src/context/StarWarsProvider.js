@@ -59,6 +59,7 @@ function StarWarsProvider({ children }) {
     currentTermFilterHandler,
     currentNumericFilterHandler,
     getPlanetsList,
+    setFilters,
     setFilterColumSelected,
     setFilterComparisonSelected,
     setFilterValueSelected,
