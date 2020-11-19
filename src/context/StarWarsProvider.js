@@ -14,6 +14,7 @@ const StarWarsProvider = ({ children }) => {
   const [data, setData] = useState([]);
   const [filters, setFilters] = useState(initialObj);
   const [willFilter, setWillFilter] = useState(false);
+  const [firstCall, setFirstCall] = useState(false);
 
   const fetchAPI = async () => {
     getPlanetList().then((json) => {
@@ -30,19 +31,31 @@ const StarWarsProvider = ({ children }) => {
       ...filters,
       filterByName: { name: value },
     });
-    setWillFilter(false);
   };
 
   const setFilterByNumericValues = (column, comparison, value) => {
-    setFilters({
-      ...filters,
-      filterByNumericValues: { // filters.filterByNumericValues.concat({
-        column,
-        comparison,
-        value,
-      }, // ),
-    });
-    handleToggleFilter();
+    if (firstCall === false) {
+      setFilters({
+        ...filters,
+        filterByNumericValues: [{
+          column,
+          comparison,
+          value,
+        }],
+      });
+      handleToggleFilter();
+      setFirstCall(true);
+    } else {
+      setFilters({
+        ...filters,
+        filterByNumericValues: filters.filterByNumericValues.concat({
+          column,
+          comparison,
+          value,
+        }),
+      });
+      handleToggleFilter();
+    }
   };
 
   const context = {
@@ -54,9 +67,9 @@ const StarWarsProvider = ({ children }) => {
     setFilters,
     setFilterByName,
     setFilterByNumericValues,
-    column: filters.filterByNumericValues.column,
-    comparison: filters.filterByNumericValues.comparison,
-    value: filters.filterByNumericValues.value,
+    column: filters.filterByNumericValues.map((e) => e.column),
+    comparison: filters.filterByNumericValues.map((e) => e.comparison),
+    value: filters.filterByNumericValues.map((e) => e.value),
     willFilter,
   };
 

@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import TableHeader from './TableHeader';
 import SearchInput from './SearchInput';
 import FilterByName from './FilterByName';
+import FiltersButton from './FiltersButton';
 import FilterHelper from '../services/FilterHelper';
 import StarWarsContext from '../context/StarWarsContext';
 
@@ -15,6 +16,7 @@ function Table() {
   return (
     <div>
       <SearchInput />
+      {willFilter && <FiltersButton /> }
       <table>
         <TableHeader />
         <tbody>
