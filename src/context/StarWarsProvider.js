@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
+import fetchPrismPlanet from '../services/planetServices';
 
-// o Provider irá prover os dados para os componentes abaixo dele ({ children})
-// na árvore de componentes;
 import StarWarsContext from './StarWarsContext';
 
 function StarWarsProvider({ children }) {
@@ -40,6 +39,12 @@ function StarWarsProvider({ children }) {
     edited: '2014-12-20T20:58:18.430000Z',
     url: 'https://swapi-trybe.herokuapp.com/api/planets/8/',
   }]);
+
+  const getPrismPlanet = async () => {
+    const allPrismPlanets = await fetchPrismPlanet();
+    setPrismPlanets(allPrismPlanets);
+  };
+
   return (
     <StarWarsContext.Provider value={ { prismPlanets } }>
       {children}
