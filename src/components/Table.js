@@ -32,7 +32,7 @@ function Table() {
         const list = (columnValues.map((val) => val < numberValue));
         setCurrentPlanets(currentPlanets.filter((_, i) => list[i]));
       } else if (comparison === 'igual a') {
-        const list = (columnValues.map((val) => val == numberValue));
+        const list = (columnValues.map((val) => val === vaalue));
         setCurrentPlanets(currentPlanets.filter((_, i) => list[i]));
       } else {
         const list = (currentPlanets);
