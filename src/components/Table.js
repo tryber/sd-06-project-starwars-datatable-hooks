@@ -2,24 +2,30 @@ import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/starWarsContext';
 
 function Table() {
-  const { data, getApi, searchName, filterByNumericValues } = useContext(StarWarsContext);
+  const {
+    data,
+    getApi,
+    searchName,
+    filterByNumericValues,
+    filterByFilter,
+  } = useContext(StarWarsContext);
 
   useEffect(() => {
     getApi();
-  }, [filterByNumericValues]);
+  }, []);
 
   const handleFilter = () => {
     let check = data;
     filterByNumericValues.forEach(({ column, comparison, value }) => {
       if (comparison === 'maior que') {
-        check = data.filter((el) => el[column] > value);
+        check = data.filter((el) => parseInt(el[column], 10) > parseInt(value, 10));
       }
       if (comparison === 'menor que') {
-        check = data.filter((el) => el[column] < value);
+        check = data.filter((el) => parseInt(el[column], 10) < parseInt(value, 10));
         console.log(check.length);
       }
       if (comparison === 'igual a') {
-        check = data.filter((el) => el[column] === value);
+        check = data.filter((el) => parseInt(el[column], 10) === parseInt(value, 10));
       }
     });
     return check;
@@ -28,6 +34,10 @@ function Table() {
   useEffect(() => {
     handleFilter();
   }, [filterByNumericValues]);
+
+  useEffect(() => {
+    filterByFilter();
+  }, []);
   return (
     <table>
       <thead>

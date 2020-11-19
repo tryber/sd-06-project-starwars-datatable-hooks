@@ -60,7 +60,13 @@ function SelectedFilter() {
           onChange={ ({ target }) => setValue(target.value) }
         />
       </lable>
-      <button type="button" data-testid="button-filter" onClick={ () => addFilter(param) }>Filtrar</button>
+      <button
+        type="button"
+        data-testid="button-filter"
+        onClick={ () => addFilter(param) }
+      >
+        Filtrar
+      </button>
     </div>
   );
 }
