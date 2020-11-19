@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import StarWarsContext from '../../context/StarWarsContext';
 
 function Table() {
+  const { prismPlanets } = useContext(StarWarsContext);
+
+  // essas informações abaixo foram simuladas apenas para testar a tabela
   const mockPlanetForTable = [{
     name: 'Naboo',
     rotation_period: '26',
