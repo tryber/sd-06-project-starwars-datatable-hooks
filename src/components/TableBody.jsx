@@ -26,11 +26,12 @@ const ASC = (a, b) => {
 };
 
 const DESC = (a, b) => {
+  const minusOne = -1;
   const { order } = useContext(StarWarsContext);
   if (columnOptions.includes(order.column)) {
     return b[order.column] - a[order.column];
   }
-  return b[order.column] > a[order.column];
+  return b[order.column] > a[order.column] ? minusOne : 1;
 };
 
 function TableBody() {
