@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import StarWarsContext from '../../context/StarWarsContext';
 import CustomFilters from './CustomFilters';
+import logo from '../../logo.svg';
 
 const Filters = () => {
   const {
@@ -49,41 +50,46 @@ const Filters = () => {
   };
 
   return (
-    <div>
-      <div className="filter-name">
-        Name:
-        <input
-          value={ name }
-          onChange={ handleName }
-          type="text"
-          placeholder="Type the planet name"
-          data-testid="name-filter"
-        />
+    <div className="App">
+      <img src={ logo } width="170" alt="logo app" className="logo" />
+      <div className="inputs">
+        <div className="brother">
+          <div className="filter-name">
+            <input
+              value={ name }
+              onChange={ handleName }
+              type="text"
+              placeholder="SEARCH A PLANET"
+              data-testid="name-filter"
+            />
+            <div className="hexagon"> </div>
+          </div>
+          <div className="filter-comparison">
+            <select data-testid="column-filter" onChange={ handleColumn }>
+              {colums.map((element) => <option key={ element }>{ element }</option>)}
+            </select>
+            <select data-testid="comparison-filter" onChange={ handleComparison }>
+              <option>maior que</option>
+              <option>menor que</option>
+              <option>igual a</option>
+            </select>
+            <input
+              defaultValue="0"
+              type="number"
+              data-testid="value-filter"
+              onChange={ handleNumber }
+            />
+            <button
+              type="button"
+              data-testid="button-filter"
+              onClick={ handleButton }
+            >
+              Filtrar
+            </button>
+          </div>
+        </div>
+        <CustomFilters />
       </div>
-      <div className="filter-comparison">
-        <select data-testid="column-filter" onChange={ handleColumn }>
-          {colums.map((element) => <option key={ element }>{ element }</option>)}
-        </select>
-        <select data-testid="comparison-filter" onChange={ handleComparison }>
-          <option>maior que</option>
-          <option>menor que</option>
-          <option>igual a</option>
-        </select>
-        <input
-          defaultValue="0"
-          type="number"
-          data-testid="value-filter"
-          onChange={ handleNumber }
-        />
-        <button
-          type="button"
-          data-testid="button-filter"
-          onClick={ handleButton }
-        >
-          Filtrar
-        </button>
-      </div>
-      <CustomFilters />
     </div>
   );
 };
