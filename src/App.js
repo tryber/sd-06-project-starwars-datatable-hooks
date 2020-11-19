@@ -5,14 +5,6 @@ import Table from './components/Table';
 import EntryText from './components/EntryText';
 
 function App() {
-  const filterIniti = {
-    filters: {
-      filterByName: {
-        name: '',
-      },
-    },
-  };
-  const [filtersName, setFilterName] = useState(filterIniti);
   const [planetsList, setPlanetsList] = useState([]);
   const [planetsData, setPlanetsData] = useState([]);
   const [entryText, setEntryText] = useState('');
