@@ -3,7 +3,7 @@ import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
   const { planets, loading, filters, setFilters } = useContext(StarWarsContext);
-
+  const zero = 0;
   const filterPlanetsByName = (_planets) => (
     _planets.filter((planet) => planet.name.includes(filters.filterByName.name))
   );
@@ -23,13 +23,12 @@ function Table() {
       'maior que': biggerThen(planet[column], value),
       'menor que': lessThen(planet[column], value),
       'igual a': equalTo(planet[column], value),
-    }
+    };
     return comparisons[comparison];
   };
 
   const filterPlanetsByNumericValues = (_planets) => {
     const { filterByNumericValues } = filters;
-    const zero = 0;
 
     if (filterByNumericValues.length === zero) {
       return _planets;
@@ -37,7 +36,7 @@ function Table() {
 
     return _planets.filter((planet) => (filterByNumericValues.every((filter) => (
       getComparisons(planet, filter.column, filter.comparison, filter.value, filter)
-    ))))
+    ))));
   };
 
   const filterPlanets = () => {
@@ -49,7 +48,7 @@ function Table() {
 
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(zero);
 
   const handleName = ({ target }) => {
     setFilters({ ...filters, filterByName: { name: target.value } });
@@ -68,7 +67,6 @@ function Table() {
   };
 
   useEffect(() => {
-    const zero = 0;
     if (filters.availableColumns.length > zero) {
       setColumn(filters.availableColumns[zero]);
     }
@@ -103,7 +101,8 @@ function Table() {
     ];
     const newFilterByNumericValues = [...filters.filterByNumericValues];
     newFilterByNumericValues.splice(index, 1);
-    newAvailableColumns.splice(newAvailableColumns.indexOf(filters.filterByNumericValues.column), 1);
+    newAvailableColumns.splice(newAvailableColumns
+      .indexOf(filters.filterByNumericValues.column), 1);
 
     setFilters(
       { ...filters,
