@@ -10,7 +10,7 @@ const [prismPlanets, setPrismPlanets] = useState([]);
 
 function StarWarsProvider({ children }) {
   return (
-    <StarWarsContext.Provider value={ {} }>
+    <StarWarsContext.Provider value={ { prismPlanets } }>
       {children}
     </StarWarsContext.Provider>
   );
