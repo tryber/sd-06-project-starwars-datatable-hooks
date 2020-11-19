@@ -20,6 +20,7 @@ function StarWarsProvider({ children }) {
   );
 }
 
+// como visto no PR da colega Isabela Rosa <3:
 StarWarsProvider.propTypes = { children: PropTypes.arrayOf().isRequired };
 
 export default StarWarsProvider;
