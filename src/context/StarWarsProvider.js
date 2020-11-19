@@ -7,6 +7,7 @@ function StarWarsProvider({ children }) {
   const [headers, setHeaders] = useState([]);
   const [planets, setPlanets] = useState([]);
   const [filterPlanet, setFilterPlanet] = useState('');
+  const [filterColumn, setFilterColumn] = useState([]);
 
   const getPlanetsApi = async () => {
     const planetsFromApi = await StarWarsServeApi();
@@ -18,7 +19,13 @@ function StarWarsProvider({ children }) {
   return (
     <StarWarsContext.Provider
       value={
-        { headers, planets, getPlanetsApi, filterPlanet, setFilterPlanet }
+        { headers,
+          planets,
+          getPlanetsApi,
+          filterPlanet,
+          setFilterPlanet,
+          filterColumn,
+          setFilterColumn }
       }
     >
       { children }

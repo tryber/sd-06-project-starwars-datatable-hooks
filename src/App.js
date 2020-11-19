@@ -3,13 +3,13 @@ import './App.css';
 import PlanetNameFilter from './components/PlanetNameFilter';
 import Table from './components/Table';
 import StarWarsProvider from './context/StarWarsProvider';
-import NumericValuesFilterlter from './components/NumericValuesFilter';
+import NumericValuesFilter from './components/NumericValuesFilter';
 
 function App() {
   return (
     <StarWarsProvider>
       <PlanetNameFilter />
-      <NumericValuesFilterlter />
+      <NumericValuesFilter />
       <Table />
     </StarWarsProvider>
   );
