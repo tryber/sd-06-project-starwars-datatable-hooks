@@ -1,8 +1,14 @@
 import React from 'react';
 
-function StarWarsProvider() {
-  return(
-    // o provider é o componente que agrupa a lógica do contexto.
+// o Provider irá prover os dados para os componentes abaixo dele ({ children})
+// na árvore de componentes;
+import StarWarsContext from './StarWarsContext';
+
+function StarWarsProvider({ children }) {
+  return (
+    <StarWarsContext.Provider value={ {} }>
+      {children}
+    </StarWarsContext.Provider>
   );
 }
 
