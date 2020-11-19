@@ -1,27 +1,21 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import StarWarsProvider from './context/StarWarsProvider';
+import Table from './components/Table';
+import NameFilterInput from './components/filters/NameFiltersInputs';
+import NumericFiltersInputs from './components/filters/NumericFilters';
+import ActiveFilter from './components/ActiveFilter';
+import SortInputs from './components/filters/SortInputs';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={ logo } className="App-logo" alt="logo" />
-        <p>
-          Edit
-          <code>src/App.js</code>
-          and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <StarWarsProvider>
+      <NameFilterInput />
+      <NumericFiltersInputs />
+      <SortInputs />
+      <ActiveFilter />
+      <Table />
+    </StarWarsProvider>
   );
 }
 
