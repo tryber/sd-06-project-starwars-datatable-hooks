@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Context from '../context/StarWarsContext';
 import FilterFields from './FilterFields';
 import TableRow from './TableRow';
 
 function Table() {
-  const { loading, planetKeys, getPlanets, filters, input, filteredPlanets } = useContext(Context);
+  const { loading, planetKeys, getPlanets, input, filteredPlanets } = useContext(Context);
 
   useEffect(() => {
     getPlanets();
