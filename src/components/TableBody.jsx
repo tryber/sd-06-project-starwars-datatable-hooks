@@ -1,7 +1,8 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
+import { columnOptions } from './FilterNumber';
 
-function filterByNumber(planets, filter) {
+const filterByNumber = (planets, filter) => {
   if (filter.comparison === 'maior que') {
     return planets
       .filter((planet) => Number(planet[filter.column]) > Number(filter.value));
@@ -13,29 +14,45 @@ function filterByNumber(planets, filter) {
       .filter((planet) => Number(planet[filter.column]) === Number(filter.value));
   }
   return planets;
-}
+};
 
 const ASC = (a, b) => {
+  const minusOne = -1;
   const { order } = useContext(StarWarsContext);
-  return a[order.column] - b[order.column];
+  if (columnOptions.includes(order.column)) {
+    return a[order.column] - b[order.column];
+  }
+  return a[order.column] > b[order.column] ? 1 : minusOne;
 };
 
 const DESC = (a, b) => {
   const { order } = useContext(StarWarsContext);
-  return b[order.column] - a[order.column];
+  if (columnOptions.includes(order.column)) {
+    return b[order.column] - a[order.column];
+  }
+  return b[order.column] > a[order.column];
 };
 
 function TableBody() {
+  const { setOrder } = useContext(StarWarsContext);
+
+  useEffect(() => {
+    setOrder({ column: 'name', sort: 'ASC' });
+  }, [setOrder]);
+
   const { dataApi, filterName, filterNumber, order } = useContext(StarWarsContext);
+
   let allPlanets = dataApi;
+
   filterNumber.forEach((filter) => {
     allPlanets = filterByNumber(allPlanets, filter);
   });
+
   return (
     <tbody className="planets-table">
       {allPlanets
         .filter((planet) => planet.name.includes(filterName.name))
-        .sort(order.sort === 'ASC' ? ASC : DESC)
+        .sort(order.sort === 'ASC' || order.sort === '' ? ASC : DESC)
         .map((planet) => (
           <tr key={ planet.name }>
             <td data-testid="planet-name" key={ planet.name }>{planet.name}</td>

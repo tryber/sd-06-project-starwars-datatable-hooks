@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
-const columnOptions = [
+export const columnOptions = [
   '',
   'population',
   'orbital_period',
@@ -11,7 +11,7 @@ const columnOptions = [
 ];
 
 const orderOptions = [
-  'Name',
+  'name',
   'population',
   'orbital_period',
   'diameter',
@@ -30,7 +30,7 @@ const FilterNumber = () => {
   );
 
   const [orderBy, setOrderby] = useState(
-    { column: 'Name', sort: '' },
+    { column: 'name', sort: '' },
   );
 
   const handleOrder = (event) => {
