@@ -2,7 +2,11 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context';
 
 function Table() {
-  const { data } = useContext(StarWarsContext);
+  const { planets, selectedPlanet } = useContext(StarWarsContext);
+
+  const planetsToRender = planets.filter(
+    (planet) => planet.name.toUpperCase().match(selectedPlanet.toUpperCase()),
+  );
 
   return (
     <div>
@@ -25,7 +29,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          { data.map((planet) => {
+          { planetsToRender.map((planet) => {
             const { name, rotation_period: rotationPeriod, orbital_period: orbitalPeriod,
               diameter, climate, gravity, terrain, surface_water: surfaceWater,
               population, residents, films, created, edited } = planet;
