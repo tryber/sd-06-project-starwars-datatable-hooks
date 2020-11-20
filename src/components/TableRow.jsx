@@ -19,5 +19,7 @@ function TableRow({ planetValues }) {
 export default TableRow;
 
 TableRow.propTypes = {
-  planetValues: PropTypes.objectOf().isRequired,
+  planetValues: PropTypes.shape({
+    residents: PropTypes.arrayOf(PropTypes.string),
+  }).isRequired,
 };
