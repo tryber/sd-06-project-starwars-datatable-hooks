@@ -5,21 +5,49 @@ import StarWarsContext from './StarWarsContext';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
-  const [filterByName, setFilterByName] = useState('');
-  const [filterByNumericValues, setFilterByNumericValues] = useState('');
+  const [filters, setFilter] = useState({
+    filters:
+      {
+        filterByName: {
+          name: '',
+        },
+        filterByNumericValues: [
+          {
+            column: '',
+            comparison: '',
+            value: '1',
+          },
+        ],
+      },
+  });
+
   const getData = async () => {
     const getFetch = await getAPI();
     setData(getFetch);
+  };
+
+  const nameFilter = (value) => {
+    setFilter({
+      ...filters,
+      filterByName: { name: value },
+    });
+  };
+
+  const numericValuesFilter = (values) => {
+    setFilter({
+      ...filters,
+      filterByNumericValues: [...filters.numericValuesFilter, values],
+    });
   };
 
   const contextValue = {
     data,
     setData,
     getData,
-    filterByName,
-    setFilterByName,
-    filterByNumericValues,
-    setFilterByNumericValues,
+    filters,
+    setFilter,
+    nameFilter,
+    numericValuesFilter,
   };
 
   return (

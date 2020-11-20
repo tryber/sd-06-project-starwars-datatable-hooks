@@ -2,15 +2,13 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function FilterSelect() {
-  const { filterByNumericValues, setFilterByNumericValues } = useContext(StarWarsContext);
+  const { numericValuesFilter } = useContext(StarWarsContext);
 
   return (
     <main>
       <select
         data-testid="column-filter"
-        onChange={ ({ target }) => setFilterByNumericValues(
-          [target.value, ...filterByNumericValues],
-        ) }
+        onChange={ ({ target }) => numericValuesFilter(target.value) }
       >
         <option>population</option>
         <option>orbital_period</option>
@@ -18,7 +16,10 @@ function FilterSelect() {
         <option>rotation_period</option>
         <option>surface_water</option>
       </select>
-      <select data-testid="comparison-filter">
+      <select
+        data-testid="comparison-filter"
+        onChange={ ({ target }) => numericValuesFilter(target.value) }
+      >
         <option>maior que</option>
         <option>igual a</option>
         <option>menor que</option>

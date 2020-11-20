@@ -4,16 +4,18 @@ import StarWarsContext from '../context/StarWarsContext';
 function Table() {
   const { data,
     getData,
-    filterByName,
-    filterByNumericValues } = useContext(StarWarsContext);
+    filters } = useContext(StarWarsContext);
+  const { filterByName: { name } } = filters;
+
   useEffect(() => {
     getData();
   }, []);
+
   return (
     <table>
       <thead>
         <tr>
-          {console.log(filterByNumericValues)}
+          {console.log(filters)}
           <th>Name</th>
           <th>Rotation Period</th>
           <th>Orbital Period</th>
@@ -30,7 +32,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {data.filter((mundo) => mundo.name.includes(filterByName))
+        {data.filter((mundo) => mundo.name.includes(name))
           .map((planet) => (
             <tr key={ planet.name }>
               <td>{ planet.name }</td>
