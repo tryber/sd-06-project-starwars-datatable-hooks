@@ -1,20 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
+import StarWarsContext from '../context/StarWarsContext';
 import fetchApiplanets from '../Services/fetchApiPlanets';
 
 function Table() {
-  const [tablePalnets, setTablePlanets] = useState([]);
+  const {
+    nameInput,
+    tablePalnets,
+    setTablePlanets,
+  } = useContext(StarWarsContext);
 
   useEffect(() => {
-    const fetchApi = async () => {
+    async function fetchApi() {
       const data = await fetchApiplanets();
       setTablePlanets(data.results);
-      console.log(data.results);
-    };
+    }
     fetchApi();
   }, []);
 
   const tableHeaders = [
-
     'Nome',
     'Clima',
     'Criado',
@@ -38,23 +41,26 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {tablePalnets.map((planet, index) => (
-          <tr key={ index }>
-            <td>{planet.name}</td>
-            <td>{planet.climate}</td>
-            <td>{planet.created}</td>
-            <td>{planet.diameter}</td>
-            <td>{planet.edited}</td>
-            <td>{planet.films}</td>
-            <td>{planet.gravity}</td>
-            <td>{planet.orbital_period}</td>
-            <td>{planet.population}</td>
-            <td>{planet.rotation_period}</td>
-            <td>{planet.surface_water}</td>
-            <td>{planet.terrain}</td>
-            <td>{planet.url}</td>
-          </tr>
-        ))}
+        {tablePalnets
+          .filter((planet) => planet.name.toLowerCase()
+            .includes(nameInput.toLowerCase()))
+          .map((planetName, index) => (
+            <tr key={ index }>
+              <td>{planetName.name}</td>
+              <td>{planetName.climate}</td>
+              <td>{planetName.created}</td>
+              <td>{planetName.diameter}</td>
+              <td>{planetName.edited}</td>
+              <td>{planetName.films}</td>
+              <td>{planetName.gravity}</td>
+              <td>{planetName.orbital_period}</td>
+              <td>{planetName.population}</td>
+              <td>{planetName.rotation_period}</td>
+              <td>{planetName.surface_water}</td>
+              <td>{planetName.terrain}</td>
+              <td>{planetName.url}</td>
+            </tr>
+          ))}
       </tbody>
     </table>
   );
