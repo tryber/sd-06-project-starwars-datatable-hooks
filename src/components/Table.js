@@ -2,50 +2,83 @@ import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 const Table = () => {
-  const { planets, getStarWarsPlanet, search } = useContext(StarWarsContext);
+  const {
+    planets,
+    getStarWarsPlanet,
+    filterByName,
+    filterByNumericValue,
+  } = useContext(StarWarsContext);
+
+  const tableHeade = [
+    'Name',
+    'Rotation Period',
+    'Orbital Period',
+    'Diameter',
+    'Climate',
+    'Gravity',
+    'Terrain',
+    'Surface Water',
+    'Population',
+    'Films',
+    'Created',
+    'Edited',
+    'Url',
+  ];
 
   useEffect(() => {
     getStarWarsPlanet();
   }, []);
 
+  // Explicação Zambelli para aluno
+  let planetsFilter = planets;
+
+  filterByNumericValue.forEach((filter) => {
+    planetsFilter = planetsFilter.filter((planet) => {
+      const zero = 0;
+      if (filterByNumericValue.length === zero) {
+        return true;
+      }
+      if (filter.comparison === 'maior que') {
+        return planet[filter.column] > Number(filter.value);
+      }
+      if (filter.comparison === 'menor que') {
+        return planet[filter.column] < Number(filter.value);
+      }
+      if (filter.comparison === 'igua a') {
+        return planet[filter.column] === Number(filter.value);
+      }
+      return planetsFilter;
+    });
+  });
+
   return (
     <table className="table">
       <thead>
         <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Rotation Period</th>
-          <th scope="col">Orbital Period</th>
-          <th scope="col">Diameter</th>
-          <th scope="col">Climate</th>
-          <th scope="col">Gravity</th>
-          <th scope="col">Terrain</th>
-          <th scope="col">Surface Water</th>
-          <th scope="col">Population</th>
-          <th scope="col">Films</th>
-          <th scope="col">Created</th>
-          <th scope="col">Edited</th>
-          <th scope="col">Url</th>
+          {tableHeade.map((column, index) => (
+            <th scope="col" key={ index }>{ column }</th>
+          ))}
         </tr>
       </thead>
       <tbody>
-        {planets
+        {planetsFilter
           .filter((planet) => planet.name.toLowerCase()
-            .includes(search.toLowerCase()))
+            .includes(filterByName.toLowerCase()))
           .map((planet, index) => (
             <tr key={ index }>
-              <th scope="row">{ planet.name }</th>
-              <th scope="row">{ planet.rotation_period }</th>
-              <th scope="row">{ planet.orbital_period }</th>
-              <th scope="row">{ planet.diameter }</th>
-              <th scope="row">{ planet.climate }</th>
-              <th scope="row">{ planet.gravity }</th>
-              <th scope="row">{ planet.terrain }</th>
-              <th scope="row">{ planet.surface_water }</th>
-              <th scope="row">{ planet.population }</th>
-              <th scope="row">{ planet.films }</th>
-              <th scope="row">{ planet.created }</th>
-              <th scope="row">{ planet.edited }</th>
-              <th scope="row">{ planet.url }</th>
+              <td>{ planet.name }</td>
+              <td>{ planet.rotation_period }</td>
+              <td>{ planet.orbital_period }</td>
+              <td>{ planet.diameter }</td>
+              <td>{ planet.climate }</td>
+              <td>{ planet.gravity }</td>
+              <td>{ planet.terrain }</td>
+              <td>{ planet.surface_water }</td>
+              <td>{ planet.population }</td>
+              <td>{ planet.films }</td>
+              <td>{ planet.created }</td>
+              <td>{ planet.edited }</td>
+              <td>{ planet.url }</td>
             </tr>
           ))}
       </tbody>

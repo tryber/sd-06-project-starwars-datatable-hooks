@@ -2,14 +2,14 @@ import React from 'react';
 import StarWarsProvider from './context/StarWarsProvider';
 import Table from './components/Table';
 import SearchInput from './components/SearchInput';
+import Filters from './components/Filters';
 
 function App() {
   return (
     <StarWarsProvider>
-      <main>
-        <SearchInput />
-        <Table />
-      </main>
+      <SearchInput />
+      <Filters />
+      <Table />
     </StarWarsProvider>
   );
 }
