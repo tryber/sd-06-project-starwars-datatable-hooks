@@ -2,8 +2,16 @@ import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { planets, getPlanets, searchPlanet } = useContext(StarWarsContext);
-  // const [filteredPlanets, setFilteredPlanets] = useState([]);
+  const {
+    planets,
+    getPlanets,
+    filters,
+    selectColumn,
+    selectComparison,
+    inputValue,
+    setPlanets,
+  } = useContext(StarWarsContext);
+
   const tableHeaders = [
     'Name',
     'Rotation Period',
@@ -20,25 +28,33 @@ function Table() {
     'Url',
   ];
 
+  function LukeSkyWalker() {
+    const filterColumn = selectColumn;
+    const filterComparison = selectComparison;
+    const filterValue = inputValue;
+    const reySkyWalker = planets.filter((planet) => {
+      switch (filterComparison) {
+      case 'maior que':
+        return parseInt(planet[filterColumn], 10) > filterValue;
+      case 'igual a':
+        return parseInt(planet[filterColumn], 10) === parseInt(filterValue, 10);
+      case 'menor que':
+        return parseInt(planet[filterColumn], 10) < parseInt(filterValue, 10);
+      default:
+        break;
+      }
+      return true;
+    });
+    return setPlanets(reySkyWalker);
+  }
+
   useEffect(() => {
     getPlanets();
-    console.log(planets);
   }, []);
 
   useEffect(() => {
-    console.log('use effect', searchPlanet);
-  }, [searchPlanet]);
-
-  // useEffect(() => {
-  //   const filtered = planets.filter((planet) => planet.name.includes(searchPlanet));
-  //   setFilteredPlanets(filtered);
-  // }, [searchPlanet]);
-
-  // useEffect(() => {
-  //   if (planets.length > 0) {
-  //     setFilteredPlanets(planets);
-  //   }
-  // }, [planets]);
+    LukeSkyWalker();
+  }, [filters.filterByNumericValues]);
 
   return (
     <table className="table">
@@ -52,7 +68,7 @@ function Table() {
       <tbody>
         {planets
           .filter((planet) => planet.name.toLowerCase()
-            .includes(searchPlanet.toLowerCase())).map(
+            .includes(filters.filterByName.name.toLowerCase())).map(
             (
               {
                 name,
@@ -88,31 +104,9 @@ function Table() {
               </tr>
             ),
           )}
-        {/* <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-        </tr> */}
       </tbody>
     </table>
   );
 }
 
 export default Table;
-
-// {planets.filter((planet) => planet.name.includes(searchPlanet)).map((planet) => (
-//   <tr>{planet.name}</tr>
-// ))}
