@@ -3,16 +3,18 @@ import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { data, getPlanetList, filters } = useContext(StarWarsContext);
+  const {
+    data,
+    getPlanetList,
+    filters: { filterByName: { name: inputText } },
+  } = useContext(StarWarsContext).context;
+
+  // sem parametros => didUpdate;
+  // retornar callback => willUnmount
 
   useEffect(() => {
     getPlanetList();
-  }, []);
-
-  // sem parametros => didUpdate
-  // [] => didmount
-  // [variavel] => didUpdate condicional (shouldComponentUpdate)
-  // retornar callback => willUnmount
+  }, []); // [] array vazia = didmount
 
   return (
     <table className="table">
@@ -36,7 +38,7 @@ function Table() {
       <tbody>
         {data
           .filter((planet) => planet.name.toLowerCase()
-            .includes(filters.toLowerCase()))
+            .includes(inputText.toLowerCase()))
           .map((planet) => (
             <tr key={ planet.name }>
               <td>{planet.name}</td>

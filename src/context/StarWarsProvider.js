@@ -5,48 +5,34 @@ import fetchPlanetsAPI from '../services/StarWarsService';
 import StarWarsContext from './StarWarsContext';
 
 function StarWarsProvider({ children }) {
-  // const myFilters = {
-  //   filters:
-  //     {
-  //       filterByName: {
-  //         name: '',
-  //       },
-  //       filterByNumericValues: [
-  //         {
-  //           column: 'population',
-  //           comparison: 'maior que',
-  //           value: '100000',
-  //         },
-  //       ],
-  //     },
-  // };
+  const FILTER_OBJECT = {
+    filterByName: { name: '' },
+  };
 
   const [data, setData] = useState([]);
-  const [filters, setFilters] = useState('');
-  // const [selectColumn, setSelectColumn] = useState('');
-  // const [selectComparison, setSelectComparison] = useState('');
-  // const [valueForFilter, setValueForFilter] = useState('');
+  const [filters, setFilters] = useState(FILTER_OBJECT);
 
   const getPlanetList = async () => {
     const planetsAvailable = await fetchPlanetsAPI();
     setData(planetsAvailable);
   };
 
+  const setFilterByName = (inputText) => {
+    setFilters({
+      ...filters,
+      filterByName: { name: inputText },
+    });
+  };
+
+  const context = {
+    data,
+    getPlanetList,
+    filters,
+    setFilterByName,
+  };
+
   return (
-    <StarWarsContext.Provider
-      value={ {
-        data,
-        getPlanetList,
-        filters,
-        setFilters,
-        // selectColumn,
-        // setSelectColumn,
-        // selectComparison,
-        // setSelectComparison,
-        // valueForFilter,
-        // setValueForFilter,
-      } }
-    >
+    <StarWarsContext.Provider value={ { context } }>
       {children}
     </StarWarsContext.Provider>
   );
