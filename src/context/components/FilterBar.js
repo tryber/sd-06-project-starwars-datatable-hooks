@@ -8,7 +8,36 @@ function FilterBar() {
     value: '',
   };
   const [numericFilter, setNumericFilter] = useState(INITIAL_STATE);
-  const { handleFilterByName, handleFilterByNumericValues } = useContext(StarWarsContext);
+  const {
+    filters, handleFilterByName, addFilterByNumericValues, removeFilterByNumericValues,
+  } = useContext(StarWarsContext);
+  const activeFilters = filters.filterByNumericValues;
+  const filterColumns = [
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
+
+  const showActiveFilters = () => (
+    activeFilters.map(({ column, comparison, value }) => (
+      <div key={ column } data-testid="filter">
+        {`${column} ${comparison} ${value} `}
+        <button
+          type="button"
+          onClick={ () => removeFilterByNumericValues(column) }
+        >
+          X
+        </button>
+      </div>
+    ))
+  );
+
+  const handleColumnDropdown = () => (
+    filterColumns.filter((column) => {
+      if (activeFilters[0]) {
+        const columnsToRemove = activeFilters.map((filter) => filter.column);
+        return (!columnsToRemove.includes(column));
+      }
+      return true;
+    }).map((column) => <option key={ column } value={ column }>{column}</option>)
+  );
   return (
     <div>
       <h1>Filtros</h1>
@@ -25,11 +54,7 @@ function FilterBar() {
         data-testid="column-filter"
         onChange={ (e) => setNumericFilter({ ...numericFilter, column: e.target.value }) }
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {handleColumnDropdown()}
       </select>
       <select
         data-testid="comparison-filter"
@@ -49,10 +74,14 @@ function FilterBar() {
       <button
         data-testid="button-filter"
         type="button"
-        onClick={ () => handleFilterByNumericValues(numericFilter) }
+        onClick={ () => addFilterByNumericValues(numericFilter) }
       >
         Filtrar
       </button>
+      <div>
+        <h3>Filtros ativos:</h3>
+        {activeFilters && showActiveFilters()}
+      </div>
     </div>
   );
 }

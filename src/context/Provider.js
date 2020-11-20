@@ -25,14 +25,28 @@ function Provider({ children }) {
     });
   };
 
-  const handleFilterByNumericValues = (value) => {
+  const addFilterByNumericValues = (value) => {
     setFilters({
       ...filters,
       filterByNumericValues: filters.filterByNumericValues.concat(value),
     });
   };
 
-  const contextValue = { data, filters, handleFilterByName, handleFilterByNumericValues };
+  const removeFilterByNumericValues = (value) => {
+    setFilters({
+      ...filters,
+      filterByNumericValues: filters.filterByNumericValues
+        .filter((filter) => filter.column !== value),
+    });
+  };
+
+  const contextValue = {
+    data,
+    filters,
+    handleFilterByName,
+    addFilterByNumericValues,
+    removeFilterByNumericValues,
+  };
 
   return (
     <StarWarsContext.Provider value={ contextValue }>
