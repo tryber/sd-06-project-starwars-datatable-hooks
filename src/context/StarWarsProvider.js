@@ -20,6 +20,7 @@ function StarWarsProvider({ children }) {
     let planets = await fetchPlanets();
 
     planets = planets.map((planet) => {
+      // operador delete p/ remover a chave 'residents', já que ela não será utilizada
       delete planet.residents;
       return planet;
     });
