@@ -40,6 +40,17 @@ function Table() {
           {tableHeaders.map((header, index) => (<th key={ index }>{header}</th>))}
         </tr>
       </thead>
+      {/* filterByNumericValues.forEach(element => {
+          if (element.comparison ==='maior que'){
+           return element.column > parseInt(element.value, 10)
+          }
+          if (element.comparison ==='menor que'){
+            return element.column < eparseInt(element.value, 10)
+          }
+          if (element.comparison ==='igual a'){
+            return element.column === parseInt(element.value, 10)
+          }
+        }); */}
       <tbody>
         {tablePalnets
           .filter((planet) => planet.name.toLowerCase()
