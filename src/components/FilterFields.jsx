@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect } from 'react';
-// import PropTypes from 'prop-types';
 import Context from '../context/StarWarsContext';
 
 function FilterFields() {
@@ -8,13 +7,13 @@ function FilterFields() {
     setFilters,
     input,
     setInput,
-    filteredPlanets,
-    setFilteredPlanets,
+    usedFilters,
+    addFilter,
+    updateFilteredPlanets,
   } = useContext(Context);
   const [column, setColumn] = useState('');
   const [comparasion, setComparasion] = useState('');
   const [value, setValue] = useState('');
-  const [usedFilters, setUsedFilters] = useState([]);
   const numericFilters = [
     '',
     'population',
@@ -26,28 +25,10 @@ function FilterFields() {
   const noMatch = -1;
 
   // salva os filtros usados a partir do que está sendo alterado em filterByNumericValues
-  // quando um filtro for salvo, atualizo o filteredPlanets que vem do Provider
+  // quando um filtro for salvo, atualiza o filteredPlanets que vem do Provider
   useEffect(() => {
-    const filtersSaved = filters.filterByNumericValues.map((filter) => filter.column);
-    setUsedFilters([...filtersSaved]);
-
-    filters.filterByNumericValues.forEach((filter) => {
-      const updatePlanets = filteredPlanets.filter((planet) => {
-        switch (filter.comparasion) {
-        case ('maior que'): {
-          return parseInt(planet[filter.column], 10) > parseInt(filter.value, 10);
-        }
-
-        case ('menor que'): {
-          return parseInt(planet[filter.column], 10) < parseInt(filter.value, 10);
-        }
-        default: {
-          return parseInt(planet[filter.column], 10) === parseInt(filter.value, 10);
-        }
-        }
-      });
-      setFilteredPlanets(updatePlanets);
-    });
+    addFilter();
+    updateFilteredPlanets();
   }, [filters.filterByNumericValues]);
 
   // salva o que está sendo digitado no input no filterByName
@@ -62,6 +43,7 @@ function FilterFields() {
     });
   };
 
+  // envia os dados do novo filtro para filterByNumericValues
   const submitFilter = (e) => {
     e.preventDefault();
 

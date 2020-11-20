@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function TableRow({ planetValues }) {
+  // operador delete, que remove a chave 'residents', já que ela não será utilizada
   delete planetValues.residents;
 
   return (
