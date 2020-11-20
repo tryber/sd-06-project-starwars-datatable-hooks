@@ -60,12 +60,8 @@ function StarWarsProvider({ children }) {
           case ('menor que'):
             return parseInt(planet[filter.column], 10) < parseInt(filter.value, 10);
 
-          case ('igual a'):
-            return parseInt(planet[filter.column], 10) === parseInt(filter.value, 10);
-
           default:
-            console.log('case default');
-            return true;
+            return parseInt(planet[filter.column], 10) === parseInt(filter.value, 10);
           }
         });
         setFilteredPlanets(updatePlanets);
