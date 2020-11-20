@@ -4,16 +4,26 @@ import StarWarsContext from '../context/StarWarsContext';
 
 function SearchInput() {
   const { filters, setFilters } = useContext(StarWarsContext);
+  // const { filterByName } = filters;
+
+  const handleFilters = ({ target: { name, value } }) => {
+    setFilters({
+      [name]: value,
+    });
+  };
 
   return (
-    <input
-      data-testid="name-filter"
-      type="text"
-      name="search"
-      id="search"
-      onChange={ (ev) => setFilters(ev.target.value) }
-      value={ filters }
-    />
+    <label htmlFor="filterByName">
+      Digite texto:
+      <input
+        data-testid="name-filter"
+        type="text"
+        name="filterByName"
+        id="filterByName"
+        onChange={ (e) => handleFilters(e) }
+        value={ filters }
+      />
+    </label>
   );
 }
 
