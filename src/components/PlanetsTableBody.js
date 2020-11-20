@@ -5,13 +5,15 @@ function PlanetsTableBody({ planets, tableHeaders }) {
     planets.map((planet) => (
       <tr key={ planet.name }>
         {tableHeaders.map((column) => (
-          column === 'name'
-            ? <td key={ planet.name + column } data-testid="planet-name">
+          column === 'name' ? (
+            <td key={ planet.name + column } data-testid="planet-name">
               {planet[column]}
-              </td>
-            : <td key={ planet.name + column }>
+            </td>
+          ) : (
+            <td key={ planet.name + column }>
               {planet[column]}
-              </td>
+            </td>
+          )
         ))}
       </tr>
     ))
