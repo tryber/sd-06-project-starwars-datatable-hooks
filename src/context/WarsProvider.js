@@ -23,6 +23,7 @@ export default function WarsProvider({ children }) {
       'rotation_period',
       'surface_water',
     ];
+
     filterByNumericValues.forEach(({ column }) => {
       setFilteredColumn(filterOne.filter((el) => el !== column));
       console.log(filterByNumericValues);
