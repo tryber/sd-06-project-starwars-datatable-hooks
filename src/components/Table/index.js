@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import StarWarsContext from '../../context/StarWarsContext';
+import filteringAll from '../../comparador';
 
 const tableTitle = [
   'name',
@@ -18,7 +19,7 @@ const tableTitle = [
 ];
 
 function Table() {
-  const { data, getPlanets, searchText } = useContext(StarWarsContext);
+  const { data, getPlanets, searchText, filterByNumbers } = useContext(StarWarsContext);
   const [filteredPlanets, setFilteredPlanets] = useState([]);
 
   useEffect(() => {
@@ -34,6 +35,11 @@ function Table() {
       .includes(searchText));
     setFilteredPlanets(toFilter);
   }, [searchText]);
+
+  useEffect(() => {
+    const filteredByComparison = filteringAll(data, filterByNumbers);
+    setFilteredPlanets(filteredByComparison);
+  }, [filterByNumbers]);
 
   return (
     <div className="table-responsive">
