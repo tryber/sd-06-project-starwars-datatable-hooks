@@ -7,7 +7,14 @@ function StarWarsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [filterPlanet, setFilterPlanet] = useState('');
   const [filterNumericValues, setFilterNumericValues] = useState([]);
-
+  const [filters, setFilters] = useState({
+    filterByName: {},
+    filterByNumericValues: [
+      { column: '',
+        comparison: '',
+        value: '' },
+    ],
+  });
   const getPlanets = async () => {
     const data = await fetchPlanetsAPI();
     setPlanets(data);
@@ -17,18 +24,18 @@ function StarWarsProvider({ children }) {
   useEffect(() => {
     getPlanets();
   }, []);
+  const contextValue = {
+    planets,
+    filterPlanet,
+    setFilterPlanet,
+    filterNumericValues,
+    setFilterNumericValues,
+    filters,
+    setFilters,
+  };
 
   return (
-    <StarWarsContext.Provider
-      value={
-        {
-          planets,
-          filterPlanet,
-          setFilterPlanet,
-          filterNumericValues,
-          setFilterNumericValues }
-      }
-    >
+    <StarWarsContext.Provider value={ contextValue }>
       {children}
     </StarWarsContext.Provider>
   );

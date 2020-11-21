@@ -2,26 +2,31 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { planets, filterPlanet, filterNumericValues } = useContext(StarWarsContext);
+  const {
+    planets,
+    filterPlanet,
+    filterNumericValues,
+  } = useContext(StarWarsContext);
 
   const NumericValues = () => {
     let filteredPlanets = planets;
     filterNumericValues.forEach(({ column, comparison, value }) => {
       if (comparison === 'maior que') {
-        filteredPlanets = planets.filter((planet) => planet[column] > value);
-        console.log(filteredPlanets);
+        filteredPlanets = planets.filter((planet) => (
+          planet[column] > parseInt(value, 10)));
       }
       if (comparison === 'menor que') {
-        filteredPlanets = planets.filter((planet) => planet[column] < value);
-        console.log(filteredPlanets);
+        filteredPlanets = planets.filter((planet) => (
+          planet[column] < parseInt(value, 10)));
       }
-      if (comparison === 'menor que') {
-        filteredPlanets = planets.filter((planet) => planet[column] === value);
-        console.log(filteredPlanets);
+      if (comparison === 'igual a') {
+        filteredPlanets = planets.filter((planet) => (
+          planet[column] === value));
       }
     });
     return filteredPlanets;
   };
+
   return (
     <div>
       <table className="table">
