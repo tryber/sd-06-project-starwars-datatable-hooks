@@ -3,7 +3,10 @@ import StarWarsContext from '../context/StarWarsContext';
 
 function InputFilters() {
   const { contexts } = useContext(StarWarsContext);
-  const { filters: { filterName: { name } } } = contexts;
+  const {
+    filters: { filterName: { name } },
+    filteringName,
+  } = contexts;
 
   const columns = [
     'population',
@@ -22,6 +25,7 @@ function InputFilters() {
         data-testid="name-filter"
         value={ name }
         placeholder="Digite o nome do Planeta"
+        onChange={ (event) => filteringName(event.target.value) }
       />
       <select
         data-testid="column-filter"
