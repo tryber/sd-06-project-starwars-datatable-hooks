@@ -9,6 +9,7 @@ function StarWarsProvider({ children }) {
   const [filterPlanet, setFilterPlanet] = useState('');
   const [filterColumn, setFilterColumn] = useState([]);
 
+  // Requisição API de Star Wars para o endpoint /planets com exceção da coluna residents
   const getPlanetsApi = async () => {
     const planetsFromApi = await StarWarsServeApi();
     setPlanets(planetsFromApi.results);

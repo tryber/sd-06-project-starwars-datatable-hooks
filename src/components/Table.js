@@ -14,6 +14,7 @@ function Table() {
     getPlanetsApi();
   }, []);
 
+  // Função de Filtro para valores numéricos
   function filterPlanetByColumns(planet) {
     let result = true;
 

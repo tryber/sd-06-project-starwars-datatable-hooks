@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
+// Filtro da tabela por nome através de texto
 function PlanetNameFilter() {
   const { filterPlanet, setFilterPlanet } = useContext(StarWarsContext);
 
