@@ -2,7 +2,9 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function SearchInput() {
-  const { filters: { filterByName: { name } }, setFilterByName } = useContext(StarWarsContext);
+  const { filters, setFilterByName } = useContext(StarWarsContext);
+  const { filterByName } = filters;
+  const { name } = filterByName;
 
   return (
     <input

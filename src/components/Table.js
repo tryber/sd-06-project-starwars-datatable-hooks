@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
@@ -6,7 +6,7 @@ function Table() {
   const { filterByName } = filters;
   const { name } = filterByName;
   const { filterByNumericValues } = filters;
-  
+
   useEffect(() => {
     async function fetchData() {
       await getData();
@@ -15,30 +15,31 @@ function Table() {
   }, []);
 
   const filterNumericInputs = (planet) => {
-    if (filterByNumericValues.length === 0) return true;
+    const empty = 0;
     let filterCondition;
 
-    filterByNumericValues.forEach(filter => {
+    if (filterByNumericValues.length === empty) return true;
+
+    filterByNumericValues.forEach((filter) => {
       const { column, comparison, value } = filter;
 
-      switch(comparison) {
-        case 'maior que':
-          filterCondition = 1 * planet[column] > Number(value); 
-          break;
-        case 'menor que':
-          filterCondition = 1 * planet[column] < Number(value);
-          break;
-        case 'igual a':
-          filterCondition = 1 * planet[column] === Number(value);
-          break;
-        default:
-          filterCondition = true;
+      switch (comparison) {
+      case 'maior que':
+        filterCondition = 1 * planet[column] > Number(value);
+        break;
+      case 'menor que':
+        filterCondition = 1 * planet[column] < Number(value);
+        break;
+      case 'igual a':
+        filterCondition = 1 * planet[column] === Number(value);
+        break;
+      default:
+        filterCondition = true;
       }
-    }
-    )
+    });
 
     return filterCondition;
-  }
+  };
 
   return (
     <table className="table">
@@ -61,8 +62,8 @@ function Table() {
       </thead>
       <tbody>
         {
-          data &&
-          data.filter(filterNumericInputs)
+          data
+          && data.filter(filterNumericInputs)
             .filter((planet) => planet.name
               .toLowerCase()
               .includes(name.toLowerCase()))
