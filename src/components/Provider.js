@@ -6,9 +6,16 @@ function Provider({ children }) {
   const [state, setState] = useState({
     isFetching: false,
     data: undefined,
+    filteredData: undefined,
+    planets: [],
     filters: {
       filterByName: {
         name: '',
+      },
+      filterByNumericValues: {
+        column: 'rotation_period',
+        comparison: 'maior que',
+        value: 0,
       },
     },
   });

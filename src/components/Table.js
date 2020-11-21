@@ -3,26 +3,42 @@ import StarWarsContext from '../context/StarWarsContext';
 import API from '../services/api';
 
 function Table() {
-  const { state } = useContext(StarWarsContext);
+  const { state, setState } = useContext(StarWarsContext);
 
-  let table;
-  if (state.isFetching || !state.data) {
-    table = <p>Loading...</p>;
-  } else {
-    state.data.results.map((result) => delete result.residents);
+  function renderTable() {
+    // let table;
+    if (state.isFetching || !state.data) {
+      return <p>Loading...</p>;
+    }
+    let { planets } = state;
 
-    table = (
+    if (state.filteredData) {
+      console.log(state.planets);
+      setState({
+        ...state,
+        planets: state.filteredData,
+      });
+    } else {
+      planets = state.data.results;
+    }
+    // console.log(state.filteredData);
+
+    planets.map((result) => delete result.residents);
+
+    // console.log(planets);
+
+    return (
       <table>
         <thead>
           <tr>
             {
-              Object.keys(state.data.results[0])
+              Object.keys(planets[0])
                 .map((result, index) => <th key={ index }>{result}</th>)
             }
           </tr>
         </thead>
         {
-          state.data.results.map((result, index) => {
+          planets.map((result, index) => {
             if (result.name.toLowerCase()
               .includes(state.filters.filterByName.name.toLowerCase())) {
               return (
@@ -43,7 +59,7 @@ function Table() {
   return (
     <div>
       <API />
-      {table}
+      {renderTable()}
     </div>
   );
 }
