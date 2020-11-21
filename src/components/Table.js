@@ -4,58 +4,50 @@ import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
   const {
-    data,
-    getPlanetList,
-    filters: { filterByName: { name: inputText } },
-  } = useContext(StarWarsContext).context;
+    filteredData,
+    currentDataByName,
+    currentDataByNumeric,
+    filters,
+  } = useContext(StarWarsContext);
 
-  // sem parametros => didUpdate;
-  // retornar callback => willUnmount
-
+  const ZERO = 0;
+  // shouldComponentUpdate que invoca as funções que filtram
+  // os planetas | currentDataByName e currentDataByNumeric
   useEffect(() => {
-    getPlanetList();
-  }, []); // [] array vazia = didmount
+    currentDataByName();
+    if (filters.filterByNumericValues) {
+      currentDataByNumeric();
+    }
+  }, [filters]);
 
-  return (
+  // Object.entries: retorna array de chaves e valores de
+  // um objeto [key, value]
+  const renderRegisters = (planet) => Object.entries(planet).map(([key, value]) => {
+    if (key !== 'residents') {
+      return <td key={ key }>{value}</td>;
+    }
+    return null;
+  });
+  // Object.keys: método retorna array de chaves de um objeto [key]
+  const renderHeader = (planet) => {
+    const columnsName = Object.keys(planet).filter((item) => item !== 'residents');
+    return (
+      <tr>
+        { columnsName.map((item, index) => <th key={ index }>{item}</th>)}
+      </tr>
+    );
+  };
+
+  // classeName "table": para uso com BootStrap
+  return filteredData.length !== ZERO && (
     <table className="table">
       <thead>
-        <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Rotation_period</th>
-          <th scope="col">Orbital_period</th>
-          <th scope="col">Diameter</th>
-          <th scope="col">Climate</th>
-          <th scope="col">Gravity</th>
-          <th scope="col">Terrain</th>
-          <th scope="col">Surface_water</th>
-          <th scope="col">Population</th>
-          <th scope="col">Films</th>
-          <th scope="col">Created</th>
-          <th scope="col">Edited</th>
-          <th scope="col">URL</th>
-        </tr>
+        {renderHeader(filteredData[0])}
       </thead>
       <tbody>
-        {data
-          .filter((planet) => planet.name.toLowerCase()
-            .includes(inputText.toLowerCase()))
-          .map((planet) => (
-            <tr key={ planet.name }>
-              <td>{planet.name}</td>
-              <td>{planet.rotation_period}</td>
-              <td>{planet.orbital_period}</td>
-              <td>{planet.diameter}</td>
-              <td>{planet.climate}</td>
-              <td>{planet.gravity}</td>
-              <td>{planet.terrain}</td>
-              <td>{planet.surface_water}</td>
-              <td>{planet.population}</td>
-              <td>{planet.films}</td>
-              <td>{planet.created}</td>
-              <td>{planet.edited}</td>
-              <td>{planet.url}</td>
-            </tr>
-          ))}
+        {filteredData.map((planet) => (
+          <tr key={ planet.name }>{renderRegisters(planet)}</tr>
+        ))}
       </tbody>
     </table>
   );
