@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import MyContext from '../context/MyContext';
+import starWarsLogo from '../images/star-wars-logo.jpg';
 
 function Header() {
   const { filters, setFilter, columns, setColumn } = useContext(MyContext);
@@ -39,28 +40,33 @@ function Header() {
   };
 
   return (
-    <section className="Header">
-      <div>
-        <label htmlfor="name">Planet Name</label>
-        <input id="name" data-testid='name-filter' onChange={handleChange} />
-      </div>
-      <section>
-        <label htmlfor="column">Filter By</label>
-        <div>
-          <select id="column" data-testid='column-filter'>
-            {columns.map(column => (
-              <option key={column} value={column}>{column}</option>
-            ))}
-          </select>
-          <select id="comparison" data-testid='comparison-filter'>
-            <option value='maior que'>maior que</option>
-            <option value='menor que'>menor que</option>
-            <option value='igual a'>igual a</option>
-          </select>
-          <input id="number" type="number" data-testid='value-filter' placeholder="value" />
-          <button type="button" data-testid='button-filter' onClick={handleClick}>Filter</button>
+    <section className="header">
+      <section className="header-size">
+        <div className="planet-name">
+          <label htmlfor="name">Planet Name</label>
+          <input id="name" data-testid='name-filter' onChange={handleChange} />
         </div>
+        <section>
+          <label htmlfor="column">Filter By</label>
+          <div className="filters-input">
+            <select id="column" data-testid='column-filter'>
+              {columns.map(column => (
+                <option key={column} value={column}>{column}</option>
+              ))}
+            </select>
+            <select id="comparison" data-testid='comparison-filter'>
+              <option value='maior que'>maior que</option>
+              <option value='menor que'>menor que</option>
+              <option value='igual a'>igual a</option>
+            </select>
+            <input id="number" type="number" data-testid='value-filter' placeholder="value" />
+            <button type="button" data-testid='button-filter' onClick={handleClick}>Filter</button>
+          </div>
+        </section>
       </section>
+      <div className="img">
+        <img src={starWarsLogo} alt="" width="200px" />
+      </div>
     </section>
   );
 };

@@ -1,19 +1,68 @@
-$text-color: rgb(221, 221, 221);
-
-@mixin display-flex {
-  display: flex;
-  flex-direction: column;
-}
-
-.Header {
-  display: flex;
-  @include display-flex();
+.header {
+  @include header-content();
+  @include outside-box();
   padding-top: 20px;
   padding-bottom: 20px;
 
-  label {
-    color: $text-color;
-    font-weight: bold;
-    font-size: 20px;
+  .img {
+    width: 30%;
+  }
+
+  .header-size {
+    @include header-content();
+    width: 50%;
+
+    label {
+      color: $text-color;
+      font-weight: bold;
+      font-size: 20px;
+    }
+  
+    .planet-name {
+      @include display-flex();
+  
+      input {
+        @include inputs-border();
+        outline: none;
+        width: 50%;
+      }
+    }
+  
+    .filters-input {
+      @include display-flex();
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      width: 50%;
+  
+      select {
+        background-color: white;
+        @include inputs-border();
+        outline: none;
+        width: 30%;
+      }
+  
+      input {
+        @include inputs-border();
+        outline: none;
+        width: 20%;
+      }
+  
+      button {
+        background: none;
+        color: $text-color;
+        @include inputs-border();
+        font-weight: bold;
+        outline: none;
+        padding-left: 10px;
+        padding-right: 10px;
+  
+        &:hover {
+          background: $filters-text-color;
+          outline: none;
+          transition: 0.05s;
+        }
+      }
+    }
   }
 }

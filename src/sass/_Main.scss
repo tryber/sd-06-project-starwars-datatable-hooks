@@ -2,17 +2,34 @@ $text-color: rgb(221, 221, 221);
 $filters-text-color: rgb(192, 17, 183);
 $remove-filter-button: rgb(214, 0, 0);
 $star-wars-image: "../images/star-wars.jpeg";
-@mixin display-flex {
+@mixin display-flex() {
   display: flex;
   flex-direction: column;
 }
 
-body{
+@mixin inputs-border() {
+  border: 2px solid $filters-text-color;
+  border-radius: 5px;
+}
+
+@mixin header-content() {
+  height: 120px;
+  @include display-flex();
+  justify-content: space-between;
+}
+
+@mixin outside-box() {
+  background-color:rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+body {
   background-image: url($star-wars-image);
   margin: 20px;
 }
 
 .App {
   color: $text-color;
-  @include display-flex();
 }
