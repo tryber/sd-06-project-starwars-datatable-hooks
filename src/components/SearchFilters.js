@@ -8,9 +8,9 @@ function SearchFilters() {
 
   const { handleClick } = useContext(StarWarsContext);
 
-  const [column, setColumn] = useState([]);
-  const [comparison, setComparasion] = useState([]);
-  const [value, setValue] = useState([]);
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparasion] = useState('maior que');
+  const [value, setValue] = useState('0');
   const filtered = { column, comparison, value };
 
   return (

@@ -8,35 +8,38 @@ function Table() {
     'url'];
   const {
     filters: { filterByName: { name },
-    filterByNumericValues },
+      filterByNumericValues },
     getPlanetsData,
-    data } = useContext(StarWarsContext);
+    data,
+  } = useContext(StarWarsContext);
 
   useEffect(() => {
     getPlanetsData();
   }, []);
 
-  // faria uma função para ver as comparações e botar meus IFś e aí chamaria essa função dentro do meu handleClick?
-  // mas se eu fizer função no table, como vou passar isso para meu click (filho para pai)
-  // e como incluiria isso no meu render do table?
-  // por estar armazenado um array eu teria que fazer um map ou forEach pra percorrer o array.
-  // consigo fazer um forEach ou map em cima do meu 'filterByNumericValues' 
+  const getFilterNumber = (planets) => {
+    let result = planets;
+    const numberZero = 0;
 
-  //dicas ícaro: 
-  // cada caso 1 filtro
-  // minha função tem que ter uma variável para guardar o resultado dos filtros
-  // lembrara q é um array e preciso percorrer ele
+    if (filterByNumericValues.length === numberZero) {
+      return result;
+    }
 
-  //criar função separada com filtro - usando forEach ou map.
-
-  //param faz uma alusão ao meu dats
-  const getFilterNumber = (param) => {
-    const { column, comparison, value } = filterByNumericValues;
-    console.log(column)
-    console.log(comparison)
-    console.log(value)
-    return param
-  }
+    filterByNumericValues.forEach((filterNumeric) => {
+      if (filterNumeric.comparison === 'maior que') {
+        result = result
+          .filter((planet) => planet[filterNumeric.column] > Number(filterNumeric.value));
+      } else if (filterNumeric.comparison === 'menor que') {
+        result = result
+          .filter((planet) => planet[filterNumeric.column] < Number(filterNumeric.value));
+      } else if (filterNumeric.comparison === 'igual a') {
+        result = result
+          .filter((planet) => Number(planet[filterNumeric.column])
+            === Number(filterNumeric.value));
+      }
+    });
+    return result;
+  };
 
   return (
     <table className="table table-striped table-hover">
@@ -46,23 +49,23 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        { getFilterNumber(data).filter((dataPlanets) => (
-          dataPlanets.name.toLowerCase().includes(name.toString().toLowerCase())
-        )).map((dataPlanets) => (
-          <tr key={ dataPlanets.name }>
-            <td>{ dataPlanets.name }</td>
-            <td>{ dataPlanets.rotation_period }</td>
-            <td>{ dataPlanets.orbital_period }</td>
-            <td>{ dataPlanets.diameter }</td>
-            <td>{ dataPlanets.climate }</td>
-            <td>{ dataPlanets.gravity }</td>
-            <td>{ dataPlanets.terrain }</td>
-            <td>{ dataPlanets.surface_water }</td>
-            <td>{ dataPlanets.population }</td>
-            <td>{ dataPlanets.films }</td>
-            <td>{ dataPlanets.created }</td>
-            <td>{ dataPlanets.edited }</td>
-            <td>{ dataPlanets.url }</td>
+        { getFilterNumber(data).filter((dataPlanet) => (
+          dataPlanet.name.toLowerCase().includes(name.toString().toLowerCase())
+        )).map((dataPlanet) => (
+          <tr key={ dataPlanet.name }>
+            <td>{ dataPlanet.name }</td>
+            <td>{ dataPlanet.rotation_period }</td>
+            <td>{ dataPlanet.orbital_period }</td>
+            <td>{ dataPlanet.diameter }</td>
+            <td>{ dataPlanet.climate }</td>
+            <td>{ dataPlanet.gravity }</td>
+            <td>{ dataPlanet.terrain }</td>
+            <td>{ dataPlanet.surface_water }</td>
+            <td>{ dataPlanet.population }</td>
+            <td>{ dataPlanet.films }</td>
+            <td>{ dataPlanet.created }</td>
+            <td>{ dataPlanet.edited }</td>
+            <td>{ dataPlanet.url }</td>
           </tr>
         ))}
       </tbody>
