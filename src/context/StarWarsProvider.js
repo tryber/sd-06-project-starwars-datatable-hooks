@@ -1,32 +1,34 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { fetchPlanetsInfo, fetchTableHeaders } from '../services/apiServices';
+import fetchPlanetsInfo from '../services/apiServices';
+import removeKeyFromObject from '../helpers/removeKeyFromObject';
 import StarWarsContext from './StarWarsContext';
-import removeItemFromArray from '../helpers/removeItemFromArray';
 
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
   const [tableHeaders, setTableHeaders] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
+  const [isFetching, setIsFetching] = useState(true);
   const getPlanetsInfo = async () => {
     const planetsInfo = await fetchPlanetsInfo();
-    setData(planetsInfo);
+    const planetsWithoutResidentsKey = planetsInfo.map((planet) => (
+      removeKeyFromObject(planet, 'residents')
+    ));
+    return planetsWithoutResidentsKey;
   };
 
-  const getTableHeaders = async () => {
-    const retrievedTableHeaders = await fetchTableHeaders();
-    const filteredTableHeaders = removeItemFromArray(retrievedTableHeaders, 'residents');
-    setTableHeaders(filteredTableHeaders);
+  const makeInitialSetup = async () => {
+    const planetsInfo = await getPlanetsInfo();
+    setData(planetsInfo);
+    setTableHeaders(Object.keys(planetsInfo[0]));
+    setIsFetching(false);
   };
 
   const contextValue = {
     data,
-    isLoading,
+    isFetching,
     tableHeaders,
-    getPlanetsInfo,
-    getTableHeaders,
-    setIsLoading,
+    makeInitialSetup,
+    setIsFetching,
   };
 
   return (

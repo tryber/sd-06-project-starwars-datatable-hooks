@@ -7,7 +7,6 @@ import './App.css';
 function App() {
   return (
     <StarWarsProvider>
-      <div>App</div>
       <Table />
     </StarWarsProvider>
   );

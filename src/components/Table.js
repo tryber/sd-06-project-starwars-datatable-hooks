@@ -1,20 +1,20 @@
 import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
+import Loading from './Loading';
 
 function Table() {
   const {
     data,
     tableHeaders,
-    getPlanetsInfo,
-    getTableHeaders,
+    isFetching,
+    makeInitialSetup,
   } = useContext(StarWarsContext);
 
   useEffect(() => {
-    getPlanetsInfo();
-    getTableHeaders();
+    makeInitialSetup();
   }, []);
 
-  return (
+  const renderTable = () => (
     <table className="table">
       <thead>
         <tr>
@@ -33,6 +33,12 @@ function Table() {
         ))}
       </tbody>
     </table>
+  );
+
+  return (
+    <div>
+      { isFetching ? <Loading /> : renderTable()}
+    </div>
   );
 }
 
