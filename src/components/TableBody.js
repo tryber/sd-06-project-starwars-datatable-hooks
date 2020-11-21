@@ -30,11 +30,7 @@ const TableBody = () => {
 
   if (loading) {
     return (
-      <tbody>
-        <tr>
-          <td>Loading...</td>
-        </tr>
-      </tbody>
+      <div>Loading...</div>
     );
   }
   return (
@@ -58,7 +54,8 @@ const TableBody = () => {
       </thead>
       <tbody>
         {filterPlanet
-          .filter((planet) => planet.name.includes(filters))
+          .filter((planet) => planet.name
+            .includes(filters))
           .map((planet) => (
             <tr key={ planet.name }>
               <td data-testid="planet-name">{planet.name}</td>

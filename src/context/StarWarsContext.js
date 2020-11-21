@@ -7,14 +7,38 @@ export const Provider = ({ children }) => {
   const [filterPlanetByName, setFilterPlanetByName] = useState({ name: '' });
   const [planetsData, setPlanetsData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [filterByNumber, setFilterByNumber] = useState([]);
+  const [valueNumber, setValueNumber] = useState({ column: 'empty',
+    comparison: 'empty',
+    value: '',
+  });
+  const [valueNum, setValueNum] = useState([]);
+  const [column, setColumn] = useState('');
+  const [comparison, setComparison] = useState('empty');
+  const [value, setValue] = useState('');
+  const [compare, setCompare] = useState('');
 
   const data = {
     setFilterPlanetByName,
     filterPlanetByName,
+    setPlanetsData,
+    planetsData,
     setLoading,
     loading,
-    planetsData,
-    setPlanetsData,
+    setFilterByNumber,
+    filterByNumber,
+    setValueNumber,
+    valueNumber,
+    setValueNum,
+    valueNum,
+    setColumn,
+    column,
+    setCompare,
+    compare,
+    setValue,
+    value,
+    setComparison,
+    comparison,
   };
 
   return (
