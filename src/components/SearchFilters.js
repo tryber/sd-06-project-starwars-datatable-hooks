@@ -60,7 +60,7 @@ function SearchFilters() {
       <br />
       <button
         type="button"
-        data-tedid="button-filter"
+        data-testid="button-filter"
         onClick={ () => handleClick(filtered) }
       >
         Filtrar
