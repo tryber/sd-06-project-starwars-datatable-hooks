@@ -9,6 +9,7 @@ const TableBody = () => {
     setPlanetsData,
     setLoading,
     loading,
+    filterByNumber,
   } = useContext(StarWarsContext);
 
   const choicePlanet = () => {
@@ -27,6 +28,38 @@ const TableBody = () => {
   const filterPlanet = choicePlanet(planetsData);
 
   const filters = filterPlanetByName.name;
+
+  const isBigger = (filterValue, planetValue) => (
+    parseInt(filterValue, 10) > parseInt(planetValue, 10));
+  const isSmaller = (filterValue, planetValue) => (
+    parseInt(filterValue, 10) < parseInt(planetValue, 10));
+  const isEqual = (filterValue, planetValue) => (
+    parseInt(filterValue, 10) === parseInt(planetValue, 10));
+
+  const handleCompare = (planetsDataA, columnType, comparisonType, valueNum) => {
+    const comparisonTypes = {
+      'maior que': isBigger(planetsDataA[columnType], valueNum),
+      'menor que': isSmaller(planetsDataA[columnType], valueNum),
+      'igual a': isEqual(planetsDataA[columnType], valueNum),
+    };
+    return comparisonTypes[comparisonType];
+  };
+
+  const FilterByNumber = (myFilterByText) => {
+    console.log('filterByNumber', filterByNumber);
+    console.log('myfilterByText', myFilterByText);
+    return myFilterByText
+      .filter((planet) => (filterByNumber.every((filter) => handleCompare(planet,
+        filter.column, filter.comparison, filter.value, filter))));
+  };
+  const hadleRenderFilter = () => {
+    const myFilterByText = filterPlanet
+      .filter((planet) => planet.name
+        .includes(filters));
+
+    const myFilterByNumber = FilterByNumber(myFilterByText);
+    return myFilterByNumber;
+  };
 
   if (loading) {
     return (
@@ -53,9 +86,7 @@ const TableBody = () => {
         </tr>
       </thead>
       <tbody>
-        {filterPlanet
-          .filter((planet) => planet.name
-            .includes(filters))
+        {hadleRenderFilter()
           .map((planet) => (
             <tr key={ planet.name }>
               <td data-testid="planet-name">{planet.name}</td>

@@ -7,7 +7,9 @@ export const Provider = ({ children }) => {
   const [filterPlanetByName, setFilterPlanetByName] = useState({ name: '' });
   const [planetsData, setPlanetsData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [filterByNumber, setFilterByNumber] = useState([]);
+  const [filterByNumber, setFilterByNumber] = useState([{ column: 'rotation_period',
+    comparison: 'maior que',
+    value: '23' }]);
   const [valueNumber, setValueNumber] = useState({ column: 'empty',
     comparison: 'empty',
     value: '',

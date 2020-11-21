@@ -1,18 +1,18 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { StarWarsContext } from '../context/StarWarsContext';
 
 const PlanetFilterByNumber = () => {
   const {
     setFilterByNumber,
-    setValueNumber,
     column,
-    compare,
-    setCompare,
+    comparison,
     setValue,
     value,
-    valueNumber,
+    setColumn,
+    setComparison,
   } = useContext(StarWarsContext);
 
+  /*
   const [columnFilterNum] = useState([
     'rotation_period',
     'orbital_period',
@@ -20,31 +20,25 @@ const PlanetFilterByNumber = () => {
     'surface_water',
     'population',
   ]);
+  */
 
   const CompareFilter = (event) => {
-    console.log(event.target.value);
+    setComparison(event.target.value);
   };
 
   const choiceOption = (event) => {
-    console.log(event.target.value);
+    setColumn(event.target.value);
   };
 
   const textInput = (event) => {
-    console.log(event.target.value);
+    setValue(event.target.value);
   };
 
   const handleClickNum = () => {
-    const response = setValueNumber({
-      ...valueNumber,
-      column: choiceOption(),
-      comparison: CompareFilter(),
-      value: textInput(),
-    });
-    console.log(response);
-    return response;
+    setFilterByNumber([{ column, comparison, value }]);
   };
 
-  const columns = [...columnFilterNum];
+  // const columns = [...columnFilterNum];
 
   return (
     <div>
