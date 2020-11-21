@@ -6,26 +6,38 @@ function Table() {
   const { filterByName } = filters;
   const { name } = filterByName;
   const { filterByNumericValues } = filters;
-  const { column, comparison, value } = filterByNumericValues;
   
   useEffect(() => {
     async function fetchData() {
-      // await getData();
+      await getData();
     }
     fetchData();
   }, []);
 
   const filterNumericInputs = (planet) => {
-    switch(comparison) {
-      case 'maior que':
-        return Number(planet[column]) > Number(value);
-      case 'menor que':
-        return Number(planet[column]) < Number(value);
-      case 'igual a':
-        return Number(planet[column]) === Number(value);
-      default:
-        return true;
+    if (filterByNumericValues.length === 0) return true;
+    let filterCondition;
+
+    filterByNumericValues.forEach(filter => {
+      const { column, comparison, value } = filter;
+
+      switch(comparison) {
+        case 'maior que':
+          filterCondition = 1 * planet[column] > Number(value); 
+          break;
+        case 'menor que':
+          filterCondition = 1 * planet[column] < Number(value);
+          break;
+        case 'igual a':
+          filterCondition = 1 * planet[column] === Number(value);
+          break;
+        default:
+          filterCondition = true;
+      }
     }
+    )
+
+    return filterCondition;
   }
 
   return (
@@ -49,7 +61,8 @@ function Table() {
       </thead>
       <tbody>
         {
-          data && data
+          data &&
+          data.filter(filterNumericInputs)
             .filter((planet) => planet.name
               .toLowerCase()
               .includes(name.toLowerCase()))
