@@ -7,8 +7,6 @@ function PlanetsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [filters, setFilters] = useState({
     filterName: { name: '' },
-    // filterByNumericValues: [],
-    // order: { column: 'Name', sort: 'ASC' },
   });
 
   useEffect(() => {
