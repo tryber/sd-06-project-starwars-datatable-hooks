@@ -13,13 +13,17 @@ const columnFilters = [
 const comparisonTypes = ['', 'maior que', 'igual a', 'menor que'];
 
 function InputFilterByNumeric() {
-  const { setFilterByNumbers } = useContext(StarWarsContext);
+  const { filterByNumbers, setFilterByNumbers } = useContext(StarWarsContext);
   const [local3Filters, setLocal3Filters] = useState({
     column: '',
     comparison: '',
     value: '' }); // aqui vão ser guarados os 3 filtros selecionados na página
     // para depois, através do onclick/filtrar serem salvos no estado global para
     // comparação e gerar o resultado esperado
+
+  const nonSelected = columnFilters
+    .filter((filter) => filter !== filterByNumbers.column);
+  // todos o que forem diferentes do selecionado devem se manter na coluna
   return (
     <>
       <select
@@ -31,7 +35,7 @@ function InputFilterByNumeric() {
           column: evento.target.value,
         }) }
       >
-        {columnFilters.map((filter) => (
+        {nonSelected.map((filter) => (
           <option
             key={ filter }
             value={ filter }
