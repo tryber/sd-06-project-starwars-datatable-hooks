@@ -1,31 +1,23 @@
-// https://swapi.dev/api/planets/
-
 import { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function API() {
-  const { setState } = useContext(StarWarsContext);
+  const { setIsFetching, setData } = useContext(StarWarsContext);
 
   useEffect(() => {
-    setState((state) => ({
-      ...state,
-      isFetching: true,
-    }));
+    setIsFetching(true);
+
     async function fetchData() {
       await fetch('https://swapi-trybe.herokuapp.com/api/planets/')
         .then((result) => result.json())
         .then((json) => {
-          setState((state) => ({
-            ...state,
-            isFetching: false,
-            data: json,
-          }));
+          setIsFetching(false);
+          setData(json);
         });
     }
     fetchData();
-  }, [setState]);
-
-  return null;
+  }, [setData, setIsFetching]);
+  // return null;
 }
 
 export default API;

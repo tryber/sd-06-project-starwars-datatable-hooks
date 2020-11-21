@@ -1,66 +1,76 @@
 import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 import API from '../services/api';
+import '../index.css';
 
 function Table() {
-  const { state, setState } = useContext(StarWarsContext);
+  const { data } = useContext(StarWarsContext);
+  API();
 
-  function renderTable() {
-    // let table;
-    if (state.isFetching || !state.data) {
-      return <p>Loading...</p>;
-    }
-    let { planets } = state;
+  // Tirar o residents
+  if (data) {
+    data.results.map((result) => delete result.residents);
 
-    if (state.filteredData) {
-      console.log(state.planets);
-      setState({
-        ...state,
-        planets: state.filteredData,
-      });
-    } else {
-      planets = state.data.results;
-    }
-    // console.log(state.filteredData);
+    const fields = data.results.map((result) => (
+      <tr key={ result.url }>
+        <td>{result.name}</td>
+        <td>{result.rotation_period}</td>
+        <td>{result.orbital_period}</td>
+        <td>{result.diameter}</td>
+        <td>{result.climate}</td>
+        <td>{result.created}</td>
+        <td>{result.edited}</td>
+        <td>{result.gravity}</td>
+        <td>{result.population}</td>
+        <td>{result.surface_water}</td>
+        <td>{result.terrain}</td>
+        <td>{result.films}</td>
+        <td>{result.url}</td>
+      </tr>
 
-    planets.map((result) => delete result.residents);
+    ));
 
-    // console.log(planets);
+    // 'temperate';
+    // '2014-12-10T12:45:06.577000Z';
+    // '19720';
+    // '2014-12-20T20:58:18.434000Z';
+    // ['https://swapi-trybe.herokuapp.com/api/films/5/'];
+    // '1 standard';
+    // 'Kamino';
+    // '463';
+    // '1000000000';
+    // '27';
+    // '100';
+    // 'ocean';
+    // url;
 
     return (
       <table>
         <thead>
           <tr>
-            {
-              Object.keys(planets[0])
-                .map((result, index) => <th key={ index }>{result}</th>)
-            }
+            <th>Name</th>
+            <th>Rotation Period</th>
+            <th>Orbital Period</th>
+            <th>Diameter</th>
+            <th>Climate</th>
+            <th>Created</th>
+            <th>Edited</th>
+            <th>Gravity</th>
+            <th>Population</th>
+            <th>Surface Water</th>
+            <th>Terrain</th>
+            <th>Films</th>
+            <th>URL</th>
           </tr>
         </thead>
-        {
-          planets.map((result, index) => {
-            if (result.name.toLowerCase()
-              .includes(state.filters.filterByName.name.toLowerCase())) {
-              return (
-                <tbody key={ index }>
-                  <tr>
-                    {Object.values(result).map((each, i) => (<td key={ i }>{each}</td>))}
-                  </tr>
-                </tbody>
-              );
-            }
-            return undefined;
-          })
-        }
+        <tbody>
+          {fields}
+        </tbody>
       </table>
     );
   }
-
   return (
-    <div>
-      <API />
-      {renderTable()}
-    </div>
+    <p>Loading...</p>
   );
 }
 
