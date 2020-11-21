@@ -1,27 +1,21 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+
+import StarWarsProvider from './context/StarWarsProvider';
+
+import Header from './components/Header';
+import InputFilterBar from './components/InputFilterBar';
+import Table from './components/Table';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={ logo } className="App-logo" alt="logo" />
-        <p>
-          Edit
-          <code>src/App.js</code>
-          and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    // como exemplificado na thread (17/11/2020):
+    // [https://trybecourse.slack.com/archives/C016CCMKN9E/p1605647441012100]
+    <StarWarsProvider>
+      <Header />
+      <InputFilterBar />
+      <Table />
+    </StarWarsProvider>
   );
 }
 
