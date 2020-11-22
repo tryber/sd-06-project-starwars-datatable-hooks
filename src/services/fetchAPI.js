@@ -1,7 +1,12 @@
-// Faço minha requisição e retorno a resposta
+const STARWARS_BASE_URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
-export default async function fetchAPI() {
-  const endpoint = 'https://swapi-trybe.herokuapp.com/api/planets/';
-  const response = await fetch(endpoint);
-  return response.json();
-}
+export const fetchPlanets = () => (
+  fetch(`${STARWARS_BASE_URL}`)
+    .then((response) => (
+      response
+        .json()
+        .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json)))
+    ))
+);
+
+export default fetchPlanets;

@@ -1,18 +1,13 @@
 import React from 'react';
-
-// Componentes
-import Table from './components/Table';
-import Inputs from './components/Inputs';
-// Providers
 import Provider from './providers/Provider';
+import Home from './pages/Home';
 
-function App() { // o App é minha home
+import './App.css';
+
+function App() {
   return (
     <Provider>
-      <main>
-        <Inputs />
-        <Table />
-      </main>
+      <Home />
     </Provider>
   );
 }

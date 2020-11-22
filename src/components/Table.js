@@ -1,51 +1,54 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
-export default function Table() {
-  const { data, filters } = useContext(StarWarsContext);
-  const { filterByName } = filters;
-  const { name } = filterByName;
+function Table() {
+  const {
+    filteredData,
+    filters,
+    filterByName,
+    filterByNumericValues,
+  } = useContext(StarWarsContext);
+
+  useEffect(() => {
+    filterByName();
+    if (filters.filterByNumericValues) {
+      filterByNumericValues();
+    }
+  }, [filters]);
+
+  const renderPlanet = (planet) => Object.entries(planet).map(([key, value]) => {
+    if (key !== 'residents') {
+      return <td key={ key }>{value}</td>;
+    }
+    return null;
+  });
 
   return (
-    <table className="table">
+    <table>
       <thead>
         <tr>
-          <th scope="col">ID</th>
-          <th scope="col">NAME</th>
-          <th scope="col">DIAMETER</th>
-          <th scope="col">CLIMATE</th>
-          <th scope="col">GRAVITY</th>
-          <th scope="col">TERRAIN</th>
-          <th scope="col">SURFACE WATER</th>
-          <th scope="col">POPULATION</th>
-          <th scope="col">FILMS</th>
-          <th scope="col">CREATED</th>
-          <th scope="col">EDITED</th>
-          <th scope="col">URL</th>
-          <th scope="col">RESIDENTS</th>
+          <th>name</th>
+          <th>rotation_period</th>
+          <th>orbital_period</th>
+          <th>diameter</th>
+          <th>climate</th>
+          <th>gravity</th>
+          <th>terrain</th>
+          <th>surface_water</th>
+          <th>population</th>
+          <th>films</th>
+          <th>created</th>
+          <th>edited</th>
+          <th>url</th>
         </tr>
       </thead>
       <tbody>
-        {data.filter((planets) => planets.name.includes(name))
-          .map((planet) => (
-            <tr key={ planet.name }>
-              <td data-testid="planet-name">{planet.name}</td>
-              <td>{planet.rotation_period}</td>
-              <td>{planet.orbital_period}</td>
-              <td>{planet.diameter}</td>
-              <td>{planet.climate}</td>
-              <td>{planet.gravity}</td>
-              <td>{planet.terrain}</td>
-              <td>{planet.surface_water}</td>
-              <td>{planet.population}</td>
-              <td>{planet.films}</td>
-              <td>{planet.created}</td>
-              <td>{planet.edited}</td>
-              <td>{planet.url}</td>
-              <td />
-            </tr>
-          ))}
+        {filteredData.map((planet) => (
+          <tr key={ planet.name }>{renderPlanet(planet)}</tr>
+        ))}
       </tbody>
     </table>
   );
 }
+
+export default Table;

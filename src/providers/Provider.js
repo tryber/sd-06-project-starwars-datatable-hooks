@@ -1,44 +1,79 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import StarWarsContext from '../context/StarWarsContext';
+import { fetchPlanets } from '../services/fetchAPI';
 
-export default function StarWarsProvider({ children }) {
+function Provider({ children }) {
   const [data, setData] = useState([]);
-  const [nameFilter, setNameFilter] = useState('');
+  const [isFetching, setIsFetching] = useState(false);
+  const [error, setError] = useState(null);
+  const [filters, setFilters] = useState({ filterByName: '' });
+  const [filteredData, setFilteredData] = useState([]);
 
-  const getPlanetsFromAPI = async () => {
-    const response = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
-    const responseJson = await response.json();
-    const filteredPlanets = await responseJson.results
-      .map((item) => (item));
-    setData(filteredPlanets);
+  const getPlanets = async () => {
+    setIsFetching(true);
+    fetchPlanets()
+      .then((response) => setData(response.results))
+      .catch((response) => setError(response.message))
+      .then(() => setIsFetching(false));
   };
 
-  useEffect(() => {
-    getPlanetsFromAPI();
-  }, []);
-
-  const infos = {
-    data,
-    setNameFilter,
-    filters: {
-      filterByName: {
-        name: nameFilter,
-      },
-    },
+  const filterByName = () => {
+    setFilteredData(
+      data.filter((planet) => {
+        if (
+          filters.filterByName
+          && filters.filterByName.name
+          && filters.filterByName.name !== ''
+        ) {
+          return planet.name.toLowerCase().includes(filters.filterByName.name);
+        }
+        return true;
+      }),
+    );
   };
 
-  useEffect(() => {
-    console.log(infos);
-  }, [infos]);
+  const buildComparisonExp = (column, comparison, value) => {
+    if (comparison === 'maior que') {
+      return column > value;
+    }
+    if (comparison === 'menor que') {
+      return column < value;
+    }
+    return column === value;
+  };
+
+  const filterByNumericValues = () => {
+    const { column, comparison, value } = filters.filterByNumericValues[0];
+    setFilteredData(
+      data.filter(
+        (planet) => buildComparisonExp(Number(planet[column]), comparison, Number(value)),
+      ),
+    );
+  };
 
   return (
-    <StarWarsContext.Provider value={ infos }>
+    <StarWarsContext.Provider
+      value={ {
+        data,
+        error,
+        isFetching,
+        fetchPlanets: getPlanets,
+        setIsFetching,
+        filters,
+        setFilters,
+        filterByName,
+        filteredData,
+        filterByNumericValues,
+      } }
+    >
       {children}
     </StarWarsContext.Provider>
   );
 }
 
-StarWarsProvider.propTypes = {
-  children: PropTypes.node.isRequired,
+export default Provider;
+
+Provider.propTypes = {
+  children: PropTypes.shape({}).isRequired,
 };
