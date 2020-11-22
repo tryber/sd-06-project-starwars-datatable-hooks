@@ -5,11 +5,14 @@ import StarWarsContext from './StarWarsContext';
 function Provider({ children }) {
   const [data, setData] = useState([]);
   const [header, setHeader] = useState([]);
+  const [filterPlanet, setFilterPlanet] = useState({ name: '' });
   const contextValue = {
     data,
     setData,
     header,
     setHeader,
+    filterPlanet,
+    setFilterPlanet,
   };
 
   return (
