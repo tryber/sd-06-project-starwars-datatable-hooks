@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import fetchAPI from '../services';
 import StarWarsContext from './StarWarsContext';
 
+const DEFAULT_FILTER = {
+  filterByName: { name: '' }
+};
+
 function StarWarsProvider({ children }) {
   const [isLoading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [dataIsEmpty, setDataIsEmpty] = useState(true);
+  const [filters, setFilters] = useState(DEFAULT_FILTER);
 
   const fetchPlanets = async () => {
     setLoading(true);
@@ -17,10 +22,10 @@ function StarWarsProvider({ children }) {
     setDataIsEmpty(false);
   };
 
-  //! Está na página Main;
-  // useEffect(() => {
-  //   fetchPlanets();
-  // }, []);
+  useEffect(() => {
+    console.log('API REQUEST')
+    fetchPlanets();
+  }, []);
 
   const contextValue = {
     fetchPlanets,
@@ -29,6 +34,8 @@ function StarWarsProvider({ children }) {
     data,
     setData,
     dataIsEmpty,
+    filters,
+    setFilters,
   };
 
   return (
