@@ -5,7 +5,7 @@ import fetchAPI from '../services';
 import StarWarsContext from './StarWarsContext';
 
 const DEFAULT_FILTER = {
-  filterByName: { name: '' }
+  filterByName: { name: '' },
 };
 
 function StarWarsProvider({ children }) {
@@ -23,7 +23,6 @@ function StarWarsProvider({ children }) {
   };
 
   useEffect(() => {
-    console.log('API REQUEST')
     fetchPlanets();
   }, []);
 

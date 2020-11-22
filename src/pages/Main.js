@@ -5,14 +5,13 @@ import Table from '../components/Table';
 import Search from '../components/Search';
 
 function Main() {
-  console.log('--------------MAIN')
   const { data, dataIsEmpty, filters } = useContext(StarWarsContext);
   const [planetsData, setplanetsData] = useState([]);
 
   useEffect(() => {
-    setplanetsData(data)
-  }, [data])
-  
+    setplanetsData(data);
+  }, [data]);
+
   const handleDataFilters = () => {
     const { filterByName: { name } } = filters;
 
@@ -24,13 +23,13 @@ function Main() {
     }
 
     if (!name) {
-      setplanetsData(data)
+      setplanetsData(data);
     }
   };
 
   useEffect(() => {
     handleDataFilters();
-  }, [filters])
+  }, [filters]);
 
   return (
     <div>
