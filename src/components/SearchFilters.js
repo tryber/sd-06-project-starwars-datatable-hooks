@@ -6,7 +6,7 @@ function SearchFilters() {
     'surface_water'];
   const comparisons = ['maior que', 'menor que', 'igual a'];
 
-  const { handleClick } = useContext(StarWarsContext);
+  const { handleClick, removeClick } = useContext(StarWarsContext);
 
   const [column, setColumn] = useState('population');
   const [comparison, setComparasion] = useState('maior que');
@@ -14,60 +14,67 @@ function SearchFilters() {
   const filtered = { column, comparison, value };
 
   return (
-    <section>
-      <label
-        htmlFor="columnFilter"
-      >
-        Colunas
-        <select
-          data-testid="column-filter"
-          id="columnFilter"
-          value={ column }
-          onChange={ (e) => setColumn(e.target.value) }
+    <form>
+      <div className="form-group custom-control-inline">
+        <label
+          htmlFor="columnFilter"
         >
-          { columns.map((col) => (
-            <option key={ col } value={ col }>{ col }</option>)) }
-        </select>
-      </label>
-      <br />
-      <label
-        htmlFor="comparisonFilter"
-      >
-        Comparação
-        <select
-          data-testid="comparison-filter"
-          id="comparisonFilter"
-          value={ comparison }
-          onChange={ (e) => setComparasion(e.target.value) }
+          Filtro por Colunas
+          <select
+            data-testid="column-filter"
+            id="columnFilter"
+            value={ column }
+            onChange={ (e) => setColumn(e.target.value) }
+            className="form-control"
+          >
+            { columns.map((col) => (
+              <option key={ col } value={ col }>{ col }</option>)) }
+          </select>
+        </label>
+      </div>
+      <div className="form-group custom-control-inline">
+        <label
+          htmlFor="comparisonFilter"
         >
-          { comparisons.map((compar) => (
-            <option key={ compar } value={ compar }>{ compar }</option>)) }
-        </select>
-      </label>
-      <br />
-      <label
-        htmlFor="valueFilter"
-      >
-        Diâmetro
-        <input
-          type="number"
-          id="valueFilter"
-          data-testid="value-filter"
-          value={ value }
-          onChange={ (e) => setValue(e.target.value) }
-        />
-      </label>
-      <br />
-      <button
-        type="button"
-        data-testid="button-filter"
-        onClick={ () => handleClick(filtered) }
-      >
-        Filtrar
-      </button>
-      <br />
-      <br />
-    </section>
+          Filtro por Comparação
+          <select
+            data-testid="comparison-filter"
+            id="comparisonFilter"
+            value={ comparison }
+            onChange={ (e) => setComparasion(e.target.value) }
+            className="form-control"
+          >
+            { comparisons.map((compar) => (
+              <option key={ compar } value={ compar }>{ compar }</option>)) }
+          </select>
+        </label>
+      </div>
+      <div className="form-group custom-control-inline">
+        <label
+          htmlFor="valueFilter"
+        >
+          Diâmetro
+          <input
+            type="number"
+            id="valueFilter"
+            data-testid="value-filter"
+            value={ value }
+            onChange={ (e) => setValue(e.target.value) }
+            className="form-control"
+          />
+        </label>
+      </div>
+      <div className="form-group">
+        <button
+          type="button"
+          data-testid="button-filter"
+          onClick={ () => handleClick(filtered) }
+          className="btn btn-primary"
+        >
+          Filtrar
+        </button>
+      </div>
+    </form>
   );
 }
 
