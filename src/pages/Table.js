@@ -2,11 +2,29 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context';
 
 function Table() {
-  const { planets, selectedPlanet } = useContext(StarWarsContext);
+  const { planets, selectedPlanet, range,
+    rangeNumber, column } = useContext(StarWarsContext);
 
-  const planetsToRender = planets.filter(
-    (planet) => planet.name.toUpperCase().match(selectedPlanet.toUpperCase()),
-  );
+  let planetsToRender = planets;
+
+  if (selectedPlanet !== '') {
+    planetsToRender = planets.filter(
+      (planet) => planet.name.toUpperCase().match(selectedPlanet.toUpperCase()),
+    );
+  }
+
+  if (column !== '' && range !== '' && rangeNumber !== '') {
+    planetsToRender = planetsToRender.filter((planet) => {
+      let condition;
+      condition = (range === 'menor que')
+        ? parseInt(planet[column], 10) < parseInt(rangeNumber, 10) : condition;
+      condition = (range === 'maior que')
+        ? parseInt(planet[column], 10) > parseInt(rangeNumber, 10) : condition;
+      condition = (range === 'igual a')
+        ? parseInt(planet[column], 10) === parseInt(rangeNumber, 10) : condition;
+      return condition;
+    });
+  }
 
   return (
     <div>
