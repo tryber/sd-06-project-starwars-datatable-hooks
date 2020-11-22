@@ -35,13 +35,6 @@ function StarWarsProvider({ children }) {
     getFilterByNumericValues(filtered);
   };
 
-  const removeClick = () => {
-    setFilters({
-      filterByName: { name: '' },
-      filterByNumericValues: [],
-    });
-  }
-
   return (
     <StarWarsContext.Provider
       value={
@@ -50,8 +43,7 @@ function StarWarsProvider({ children }) {
           filters,
           getFilterByName,
           getFilterByNumericValues,
-          handleClick,
-          removeClick, }
+          handleClick }
       }
     >
       { children }

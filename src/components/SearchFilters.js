@@ -6,7 +6,7 @@ function SearchFilters() {
     'surface_water'];
   const comparisons = ['maior que', 'menor que', 'igual a'];
 
-  const { handleClick, removeClick } = useContext(StarWarsContext);
+  const { handleClick } = useContext(StarWarsContext);
 
   const [column, setColumn] = useState('population');
   const [comparison, setComparasion] = useState('maior que');
