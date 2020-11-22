@@ -1,8 +1,7 @@
 import React from 'react';
-import fetchApi from '../services/SWPApi';
 
 const Table = () => {
-  const data = fetchApi();
+  
   return (
     <div>
       Dados
