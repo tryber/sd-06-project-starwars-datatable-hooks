@@ -1,12 +1,24 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
+import fetchApi from '../ApiData/fetchApi';
 
 function Table() {
   const number = 0;
   const {
     data,
+    setData,
     filters: { filters: { filterByName: { name } } },
   } = useContext(StarWarsContext);
+
+  const getResponse = async () => {
+    const objData = await fetchApi();
+    setData(objData);
+  };
+
+  useEffect(() => {
+    getResponse();
+  }, []);
+
   if (data.length > number) {
     return (
       <table className="table">
