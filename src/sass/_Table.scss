@@ -1,28 +1,33 @@
 .table {
   @include outside-box();
-  overflow: auto;
   font-size: 18px;
 
   table {
     border-collapse: collapse;
   }
 
-  th {
+  .th {
     background-color: lighten(black, 10);
-    border: 2px solid black;
+    border: 5px solid black;
     font-weight: bold;
     padding: 10px;
     word-wrap: break-word;
   }
 
   tbody {
+
+    td {
+      height: 50px;
+      padding: 10px;
+    }
+
     tr:nth-child(odd) {
-      background-color: lighten(rgb(68, 67, 67), 10);
+      background-color: lighten(rgb(0, 0, 0), 50);
       text-align: center;
     }
 
     tr:nth-child(even) {
-      background-color: lighten(rgb(68, 67, 67), 50);
+      background-color: lighten(rgb(0, 0, 0), 80);
       color: black;
       text-align: center;
     }

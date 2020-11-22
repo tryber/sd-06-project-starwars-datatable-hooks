@@ -22,7 +22,7 @@ function CurrentFilters() {
     : (
       <section className="filter-section">
         {filterByNumericValues.map(({ column, comparison, value }, index) => (
-          <div className="filters" data-testid='filter' key={index}>
+          <div className={`filters-${column}`} data-testid='filter' key={index}>
             {`${column} ${comparison} ${value}`}
             <button type="button" onClick={() => removeFilter(column, index)}>X</button>
           </div>

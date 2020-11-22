@@ -2,6 +2,7 @@ import React from 'react';
 import { useContext } from 'react';
 import MyContext from '../context/MyContext';
 import usePlanets from '../hooks/usePlanets';
+import Loadind from './Loading';
 
 function Table() {
   const {
@@ -47,14 +48,14 @@ function Table() {
   };
 
   return ((isFetching)
-    ? <div>loading...</div>
+    ? <Loadind />
     : (
       <section className="table">
         <table>
           <thead>
             <tr>
               {keys.map((key, index) => (
-                <th key={index}>
+                <th key={index} className="th">
                   {key}
                 </th>
               ))}

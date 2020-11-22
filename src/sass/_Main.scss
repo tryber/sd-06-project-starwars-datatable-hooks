@@ -2,6 +2,8 @@ $text-color: rgb(221, 221, 221);
 $filters-text-color: rgb(192, 17, 183);
 $remove-filter-button: rgb(214, 0, 0);
 $star-wars-image: "../images/star-wars.jpeg";
+$colors: (population: $filters-text-color, rotation_period: blue, orbital_period: orange, diameter: green, surface_water: rgb(0, 180, 156));
+
 @mixin display-flex() {
   display: flex;
   flex-direction: column;
