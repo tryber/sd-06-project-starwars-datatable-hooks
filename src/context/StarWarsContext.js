@@ -9,10 +9,10 @@ export const Provider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [filterByNumber, setFilterByNumber] = useState([{ column: 'rotation_period',
     comparison: 'maior que',
-    value: '23' }]);
-  const [valueNumber, setValueNumber] = useState({ column: 'empty',
-    comparison: 'empty',
-    value: '',
+    value: 1 }]);
+  const [valueNumber, setValueNumber] = useState({ column: 'rotation_period',
+    comparison: 'maior que',
+    value: 1,
   });
   const [valueNum, setValueNum] = useState([]);
   const [column, setColumn] = useState('');

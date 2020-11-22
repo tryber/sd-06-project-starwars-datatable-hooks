@@ -16,7 +16,6 @@ const TableBody = () => {
     const planetsFiltered = [...planetsData];
     return planetsFiltered;
   };
-
   useEffect(() => {
     setLoading(true);
     fetchStarWars().then((response) => {
@@ -45,13 +44,9 @@ const TableBody = () => {
     return comparisonTypes[comparisonType];
   };
 
-  const FilterByNumber = (myFilterByText) => {
-    console.log('filterByNumber', filterByNumber);
-    console.log('myfilterByText', myFilterByText);
-    return myFilterByText
-      .filter((planet) => (filterByNumber.every((filter) => handleCompare(planet,
-        filter.column, filter.comparison, filter.value, filter))));
-  };
+  const FilterByNumber = (myFilterByText) => myFilterByText
+    .filter((planet) => (filterByNumber.every((filter) => handleCompare(planet,
+      filter.column, filter.comparison, filter.value, filter))));
   const hadleRenderFilter = () => {
     const myFilterByText = filterPlanet
       .filter((planet) => planet.name
@@ -67,7 +62,7 @@ const TableBody = () => {
     );
   }
   return (
-    <div>
+    <>
       <thead>
         <tr>
           <th>Name:</th>
@@ -105,7 +100,7 @@ const TableBody = () => {
             </tr>
           ))}
       </tbody>
-    </div>
+    </>
   );
 };
 
