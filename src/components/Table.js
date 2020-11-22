@@ -1,14 +1,14 @@
-import React from 'react';
-import fetchPlanets from '../services/fetchApi';
+import React, { useContext } from 'react';
+import starWarsContext from '../context/starWarsContext';
 
-const Table = () => {
-  const data = fetchPlanets();
-  console.log(data);
+function Table() {
+  const { planets } = useContext(starWarsContext);
+  console.log(planets);
   return (
     <div>
       Data list:
     </div>
   );
-};
+}
 
 export default Table;
