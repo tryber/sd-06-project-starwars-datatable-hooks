@@ -1,8 +1,28 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import starWarsContext from '../context/starWarsContext';
 import './Table.css';
 
 function Table() {
+  const [filter, setFilter] = useState({
+    filters: {
+      filterByname: {
+        name: '',
+      },
+    },
+  });
+
+  function handleFilterByName(event) {
+    const { target } = event;
+    const { value } = target;
+    setFilter({
+      filters: {
+        filterByname: {
+          name: value,
+        },
+      },
+    });
+  }
+
   const { planets } = useContext(starWarsContext);
   return (
     <div>
@@ -12,6 +32,8 @@ function Table() {
         <input
           data-testid="name-filter"
           type="text"
+          name="search-bar"
+          onChange={(event) => handleFilterByName(event)}
         />
       </div>
       <table>
@@ -36,7 +58,7 @@ function Table() {
       <tbody>
         {planets
           .map((planet, index) => (
-            <tr key={ index }>
+            <tr key={index}>
               <td>{planet.climate}</td>
               <td>{planet.created}</td>
               <td>{planet.diameter}</td>
