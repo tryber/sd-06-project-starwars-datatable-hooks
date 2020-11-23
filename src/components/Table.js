@@ -20,6 +20,7 @@ function Table() {
     'Orbital Period', 'Diameter', 'Climate', 'Gravity', 'Terrain',
     'Surface Water', 'Population', 'Films', 'Created', 'Edited', 'URL'];
 
+  // criando uma variável auxiliar para não sobrescrever o array original.
   let filteredPlanets = tableArray;
 
   // Função forEach percorre todos meus filtros gerados dentro do array filterByNumericValues, iterando sobre cada uma para fazer um filtro por vez.
