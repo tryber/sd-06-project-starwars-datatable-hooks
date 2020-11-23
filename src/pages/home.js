@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 import Table from '../components/Table';
+import Find from '../components/Find';
+
 
 function Home() {
   const { data, dataIsEmpty, filters } = useContext(StarWarsContext);
@@ -53,6 +55,7 @@ function Home() {
     <div>
       <h1>Planets Database</h1>
       { !dataIsEmpty && <Table data={ planetsData } /> }
+      { !dataIsEmpty && <Find /> }
       { dataIsEmpty && 'Loading...' }
     </div>
   );
