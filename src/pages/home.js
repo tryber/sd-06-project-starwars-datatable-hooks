@@ -3,7 +3,6 @@ import StarWarsContext from '../context/StarWarsContext';
 import Table from '../components/Table';
 import Find from '../components/Find';
 
-
 function Home() {
   const { data, dataIsEmpty, filters } = useContext(StarWarsContext);
   const [planetsData, setplanetsData] = useState([]);
