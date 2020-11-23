@@ -4,8 +4,11 @@ import StarWarsContext from '../context/StarWarsContext';
 function InputFilters() {
   const { contexts } = useContext(StarWarsContext);
   const {
-    filters: { filterName: { name } },
+    filters: { filterByName: { name } },
     filteringName,
+    comparison,
+    setComparison,
+    setFilterByNumericValues,
   } = contexts;
 
   const columns = [
@@ -20,7 +23,6 @@ function InputFilters() {
     <header>
       <input
         type="text"
-        id="search"
         name="search"
         data-testid="name-filter"
         value={ name }
@@ -36,6 +38,7 @@ function InputFilters() {
       </select>
       <select
         data-testid="comparison-filter"
+        onChange={ (target) => setComparison(target.value) }
       >
         <option value="menor que">menor que</option>
         <option value="igual a">igual a</option>
@@ -47,6 +50,13 @@ function InputFilters() {
         name="inputNumber"
         placeholder="Digite um número"
       />
+      <button
+        type="button"
+        data-testid="button-filter"
+        onClick={ () => setFilterByNumericValues(comparison) }
+      >
+        Filtrar
+      </button>
     </header>
   );
 }

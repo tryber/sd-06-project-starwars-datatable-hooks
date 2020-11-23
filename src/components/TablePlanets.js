@@ -33,7 +33,7 @@ function TablePlanets() {
         <tbody>
           {planets
             .filter((planet) => planet.name.toLowerCase()
-              .includes(filters.filterName.name.toLowerCase())).map(
+              .includes(filters.filterByName.name.toLowerCase())).map(
               (
                 {
                   name,
