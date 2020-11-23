@@ -322,13 +322,13 @@ describe.only('5 - Apague o filtro de valores numéricos e desfaça as filtragen
     fireEvent.click(await screen.findByTestId(BUTTON_FILTER_SELECTOR));
     expect(await screen.findAllByRole(ROW_ROLE_SELECTOR)).toHaveLength(8);
 
+    await removeFilter();
+
     fireEvent.change(await screen.findByTestId(COLUMN_FILTER_SELECTOR), { target: { value: 'population' }});
     fireEvent.change(await screen.findByTestId(COMPARISON_FILTER_SELECTOR), { target: { value: 'menor que' }});
     fireEvent.change(await screen.findByTestId(VALUE_FILTER_SELECTOR), { target: { value: '1000000' }});
     fireEvent.click(await screen.findByTestId(BUTTON_FILTER_SELECTOR));
     expect(await screen.findAllByRole(ROW_ROLE_SELECTOR)).toHaveLength(3);
-
-    await removeFilter();
 
     await removeFilter();
 

@@ -6,12 +6,12 @@ function Filters() {
 
   const excludeFilter = (filter) => {
     const index = filterByNumericValues.indexOf(filter);
-    console.log(index);
+    const magicNumberZero = 0;
     setFilters((prevState) => ({
       ...prevState,
       filterByNumericValues: [
-        ...prevState.filterByNumericValues.splice(0, index),
-        ...prevState.filterByNumericValues.splice(index + 1),
+        ...prevState.filterByNumericValues.slice(magicNumberZero, index),
+        ...prevState.filterByNumericValues.slice(index + 1),
       ],
     }));
   };
@@ -20,13 +20,13 @@ function Filters() {
       { filterByNumericValues.map((filter, index) => {
         const { column, range, rangeNumber, color } = filter;
         return (
-          <div key={ index } style={ { backgroundColor: color } }>
+          <div data-testid="filter" key={ index } style={ { backgroundColor: color } }>
             <p>{ `${column} ${range} ${rangeNumber}` }</p>
             <button
               type="button"
-              onClick = { () => excludeFilter(filter) }
+              onClick={ () => excludeFilter(filter) }
             >
-              Excluir
+              X
             </button>
           </div>
         );
