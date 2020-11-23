@@ -5,20 +5,18 @@ function Table() {
   const { planets, text, numFilter } = useContext(StarWarsContext);
 
   const filterNumbers = () => {
-    numFilter.forEach(numFilter[i]) {
     if (planets !== undefined) {
-      return planets.filter((p) => p[numFilter[i].column] === numFilter[i].column);
+      return planets.filter((p) => p[numFilter[i].column] === numFilter.column);
     }
     if (numFilter.comparison === 'maior que') {
-      return planets.filter((p) => p[numFilter[i].column] > numFilter[i].number);
+      return planets.filter((p) => p[numFilter[i].column] > numFilter.number);
     }
     if (numFilter.comparison === 'menor que') {
-      return planets.filter((p) => p[numFilter[i].column] < numFilter[i].number);
+      return planets.filter((p) => p[numFilter[i].column] < numFilter.number);
     }
     if (numFilter.comparison === 'igual a') {
-      return planets.filter((p) => p[numFilter[i].column] === numFilter[i].number);
+      return planets.filter((p) => p[numFilter[i].column] === numFilter.number);
     }
-    };
   };
 
   return (
