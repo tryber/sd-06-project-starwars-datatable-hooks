@@ -4,7 +4,7 @@ import StarWarsContext from '../context/StarWarsContext';
 const PlanetTable = () => {
   const [planets, setPlanets] = useState(['']);
   const [headers, setHeaders] = useState(['']);
-  const { name } = useContext(StarWarsContext);
+  const { filters } = useContext(StarWarsContext);
 
   useEffect(() => {
     const fetchPlanets = async () => {
@@ -27,13 +27,43 @@ const PlanetTable = () => {
   }, []);
 
   const nameFilter = () => {
-    const text = name.filters.filterByName.name;
+    const text = filters.filterByName.name;
 
     return text !== '' ? planets
       .filter((planet) => String(planet.name).includes(text) !== false) : planets;
   };
 
+  const valueObj = filters.filterByNumericValues[0];
+  const { value } = valueObj;
+
+  const numericValueFilter = (planetList) => {
+    const columnObj = filters.filterByNumericValues;
+    const { column } = columnObj[0];
+    const comparisonObj = filters.filterByNumericValues;
+    const { comparison } = comparisonObj[0];
+
+    if (value === undefined) {
+      return planets;
+    }
+
+    switch (comparison) {
+    case 'maior que':
+      return planetList.filter((planet) => planet[column] > Number(value));
+
+    case 'igual a':
+      return planetList.filter((planet) => planet[column] === String(value));
+
+    case 'menor que':
+      return planetList.filter((planet) => planet[column] < Number(value));
+
+    default:
+      return planetList;
+    }
+  };
+
   const planetList = nameFilter();
+
+  const newList = numericValueFilter(planetList);
 
   return (
     <table>
@@ -43,14 +73,15 @@ const PlanetTable = () => {
         </tr>
       </thead>
       <tbody>
-        { planetList.map((planet, index) => (
-          <tr key={ `${index}${planet}` }>
-            { headers.map((header) => (
-              <td key={ `${planet}${header}` }>
-                { planet[header] }
-              </td>
-            )) }
-          </tr>)) }
+        { (value ? newList : planetList)
+          .map((planet, index) => (
+            <tr key={ `${index}${planet}` }>
+              { headers.map((header) => (
+                <td key={ `${planet}${header}` }>
+                  { planet[header] }
+                </td>
+              )) }
+            </tr>)) }
       </tbody>
     </table>
   );
