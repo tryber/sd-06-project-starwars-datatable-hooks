@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SWContext from './SWContext';
 
 const SWProvider = () => {
+
+  const [jobs, setJobs] = useState([]);
+
   return (
-    <SWContext.Provider value={}>
+    <SWContext.Provider value={ { jobs } }>
       {children}
     </SWContext.Provider>
   );
