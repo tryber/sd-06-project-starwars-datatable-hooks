@@ -5,7 +5,8 @@ function Order() {
   const [orderName, setOrderName] = useState('name');
   const [orderSort, setOrderSort] = useState('ASC');
   const { planets, filters, setFilters } = useContext(StarWarsContext);
-  const columns = planets.length > 0 && Object.keys(planets[0]);
+  const zero = 0;
+  const columns = planets.length > zero && Object.keys(planets[zero]);
 
   const handleName = ({ target }) => {
     setOrderName(target.value);
@@ -31,15 +32,15 @@ function Order() {
   return (
     <div>
       <select data-testid="column-sort" onChange={ handleName }>
-        { columns.length > 0 && (
+        { columns.length > zero && (
           columns.map((column, index) => (
             column !== 'residents' && (
-            <option
-              key={ index }
-              value={ column }
-            >
-              { column }
-            </option>
+              <option
+                key={ index }
+                value={ column }
+              >
+                { column }
+              </option>
             )
           ))
         ) }

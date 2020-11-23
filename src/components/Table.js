@@ -5,6 +5,9 @@ import Order from './Order';
 function Table() {
   const { planets, loading, filters, setFilters } = useContext(StarWarsContext);
   const zero = 0;
+  const one = 1;
+  const negOne = -1;
+
   const filterPlanetsByName = (_planets) => (
     _planets.filter((planet) => planet.name.includes(filters.filterByName.name))
   );
@@ -41,27 +44,27 @@ function Table() {
   };
 
   const sortPlanets = (_planets) => {
-    const arrayColumns = ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water']
+    const arrayColumns = [
+      'population',
+      'orbital_period',
+      'diameter',
+      'rotation_period',
+      'surface_water',
+    ];
     if (arrayColumns.includes(filters.order.column)) {
       _planets.sort((b, a) => {
-        const one = 1;
-        const negOne = -1;
-        const zero = 0;
-  
-        if (parseInt(a[filters.order.column], 10) < parseInt(b[filters.order.column], 10)) {
+        if (parseInt(a[filters.order.column], 10)
+          < parseInt(b[filters.order.column], 10)) {
           return filters.order.sort === 'ASC' ? one : negOne;
         }
-        if (parseInt(a[filters.order.column], 10) > parseInt(b[filters.order.column], 10)) {
+        if (parseInt(a[filters.order.column], 10)
+          > parseInt(b[filters.order.column], 10)) {
           return filters.order.sort === 'ASC' ? negOne : one;
         }
         return zero;
       });
     } else {
       _planets.sort((b, a) => {
-        const one = 1;
-        const negOne = -1;
-        const zero = 0;
-
         if (a[filters.order.column] < b[filters.order.column]) {
           return filters.order.sort === 'ASC' ? one : negOne;
         }
@@ -72,7 +75,7 @@ function Table() {
       });
     }
     return _planets;
-  }
+  };
 
   const filterPlanets = () => {
     const planetsByName = filterPlanetsByName(planets);
