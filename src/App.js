@@ -1,27 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
+import StarWarsContext from './context';
+import fetchStarWarsAPI from './servicesAPI';
 import './App.css';
+import Table from './pages/Table';
+import SearchBar from './pages/SearchBar';
+import NumericFilter from './pages/NumericFilter';
+import Filters from './pages/Filters';
+import OrderFilter from './pages/OrderFilter';
 
 function App() {
+  const [planets, setPlanets] = useState([]);
+  const [filters, setFilters] = useState({
+    filterByName: '',
+    filterByNumericValues: [],
+    orderFilter: {
+      orderColumn: '',
+      order: '',
+    },
+  });
+
+  useEffect(() => {
+    const requestAPI = async () => {
+      await fetchStarWarsAPI().then((r) => setPlanets(r));
+    };
+    requestAPI();
+  }, []);
+
+  const contextValue = {
+    filters,
+    setFilters,
+    planets,
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={ logo } className="App-logo" alt="logo" />
-        <p>
-          Edit
-          <code>src/App.js</code>
-          and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <StarWarsContext.Provider value={ contextValue }>
+      <div className="App">
+        <Filters />
+        <SearchBar />
+        <NumericFilter />
+        <OrderFilter />
+        <Table />
+      </div>
+    </StarWarsContext.Provider>
   );
 }
 
