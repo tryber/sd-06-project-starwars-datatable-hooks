@@ -6,14 +6,10 @@ import StarWarsAPI from '../services/StarsWarsAPI';
 function Provider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [filters, setFilters] = useState({
-    filterByName: { name: ''},
+    filterByName: { name: '' },
     filterByNumericValues: [],
-    order: { column: 'Name', sort: 'ASC' }, 
-  })
-
-  useEffect(() => {
-    fetchPlanets();
-  }, []);
+    order: { column: 'Name', sort: 'ASC' },
+  });
 
   const fetchPlanets = async () => {
     const response = await StarWarsAPI();
@@ -21,12 +17,16 @@ function Provider({ children }) {
     setPlanets(planetsObject);
   };
 
+  useEffect(() => { fetchPlanets(); }, []);
+
+  useEffect(() => { }, [filters]);
+
   const setFilterByName = (searchTerm) => {
     setFilters({
       ...filters,
       filterByName: { name: searchTerm },
-    })
-  }
+    });
+  };
 
   const setFilterNumericOptions = (column, comparison, value) => {
     setFilters({
@@ -36,28 +36,36 @@ function Provider({ children }) {
         comparison,
         value,
       }),
-    })
-  }
+    });
+  };
+
+  const setOrder = (column, sort) => {
+    setFilters({
+      ...filters,
+      order: { column, sort },
+    });
+  };
 
   const deleteNumericFilter = (deleteFilter) => {
-    const filtered = filters.filterByNumericValues.filter((filter) => filter !== deleteFilter);
+    const filtered = filters.filterByNumericValues
+      .filter((filter) => filter !== deleteFilter);
     setFilters({
       ...filters,
       filterByNumericValues: filtered,
-    })
-  }
-
-  const context = {
-    fetchPlanets,
-    data: { planets },
-    filters,
-    setFilterByName,
-    setFilterNumericOptions,
-    deleteNumericFilter,
+    });
   };
 
   return (
-    <StarWarsContext.Provider value={ { context } }>
+    <StarWarsContext.Provider
+      value={ {
+        data: { planets },
+        filters,
+        setFilterByName,
+        setFilterNumericOptions,
+        deleteNumericFilter,
+        setOrder,
+      } }
+    >
       {children}
     </StarWarsContext.Provider>
   );

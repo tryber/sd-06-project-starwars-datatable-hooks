@@ -5,13 +5,19 @@ function Filters() {
   const {
     filters: { filterByNumericValues },
     deleteNumericFilter,
-  } = useContext(StarWarsContext).context;
+  } = useContext(StarWarsContext);
   return (
     <section>
       {filterByNumericValues.map((filter, index) => (
-        <div data-testid="filter" key={index}>
-        <p>{filter.column}{' '}{filter.comparison}{' '}{filter.value}</p>
-        <button type="button" onClick={() => deleteNumericFilter(filter)}>X</button>
+        <div data-testid="filter" key={ index }>
+          <span>
+            {filter.column}
+            {' '}
+            {filter.comparison}
+            {' '}
+            {filter.value}
+          </span>
+          <button type="button" onClick={ () => deleteNumericFilter(filter) }>X</button>
         </div>
       ))}
     </section>

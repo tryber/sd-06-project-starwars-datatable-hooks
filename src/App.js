@@ -1,14 +1,15 @@
 import React from 'react';
-import Table from './components/Table';
-import Footer from './components/Footer';
-import SearchInput from './components/SearchInput';
-import Filters from './components/Filters';
 import Provider from './context/Provider';
+import {
+  FilterByName, FilterByNumbers, OrderOptions, Filters, Table, Footer,
+} from './components';
 
 function App() {
   return (
     <Provider>
-      <SearchInput />
+      <FilterByName />
+      <FilterByNumbers />
+      <OrderOptions />
       <Filters />
       <Table />
       <Footer />
