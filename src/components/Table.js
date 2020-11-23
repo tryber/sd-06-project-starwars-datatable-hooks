@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import AppContext from '../context/AppContext';
+import React, { useState, useEffect } from 'react';
 import sWAPI from '../services/sWAPI';
+import { Filter } from '.';
 
 function Table() {
   const HEAD = [
@@ -13,44 +13,56 @@ function Table() {
     'gravity',
     'orbital_period',
     'population',
-    'residents',
     'rotation_period',
     'surface_water',
     'terrain',
+    'url',
   ];
-  const headElement = () => {
-    return HEAD.map((e) => (
-      <th key={ e }>
-        { e }
-      </th>));
-  };
-  const rowElement = (planet) => {
-    return (
-      <tr>
-        { HEAD.map((key, index) => (
-          <td key={ `${key}-${index}` }>
-            { planet[key] }
-          </td>
-        ))}
-      </tr>);
-  };
+  const headElement = () => HEAD.map((e, index) => (
+    <th key={ `${e}-${index}` }>{ e }</th>));
+
+  const rowElement = (planet) => (
+    <tr>
+      { HEAD.map((key, index) => (
+        <td key={ `${key}-${index}-${planet}` }>
+          { planet[key] }
+        </td>
+      ))}
+    </tr>);
 
   const [planets, setPlanets] = useState([]);
+  const [filteredPlanets, setFilter] = useState([]);
 
   const PLANETS_FROM_API = async () => {
     const RESULT = await sWAPI();
     return setPlanets(RESULT.results);
   };
 
-  PLANETS_FROM_API();
+  useEffect(() => {
+    PLANETS_FROM_API();
+  }, []);
 
+  const ZERO = 0;
   return (
-    <table>
-      <tr>
-        { headElement() }
-      </tr>
-      {planets.map((planet) => rowElement(planet))}
-    </table>
+    <div>
+      <Filter
+        filteredPlanets={ filteredPlanets }
+        setFilter={ setFilter }
+        planets={ planets }
+      />
+      <table>
+        <thead>
+          <tr>
+            { headElement() }
+          </tr>
+        </thead>
+        <tbody>
+          {filteredPlanets.length !== ZERO
+            ? filteredPlanets.map((planet) => rowElement(planet))
+            : planets.map((planet) => rowElement(planet))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 
