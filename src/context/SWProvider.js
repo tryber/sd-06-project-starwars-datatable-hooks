@@ -1,8 +1,11 @@
 import React from 'react';
+import SWContext from './SWContext';
 
 const SWProvider = () => {
   return (
-    <span>Corno</span>
+    <SWContext.Provider value={}>
+      {children}
+    </SWContext.Provider>
   );
 }
 
