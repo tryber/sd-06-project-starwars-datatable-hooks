@@ -28,7 +28,8 @@ function Table() {
   function filterPlanets() {
     const { name } = filter.filters.FilterByName;
     if (name === '') return planets;
-    const filtered = planets.filter((planet) => planet.name.includes(name));
+    const capName = name.replace(/^\w/, (c) => c.toUpperCase());
+    const filtered = planets.filter((planet) => planet.name.includes(capName));
     return filtered;
   }
 
@@ -41,11 +42,11 @@ function Table() {
           data-testid="name-filter"
           type="text"
           name="search-bar"
-          onChange={(event) => handleFilterByName(event)}
+          onChange={ (event) => handleFilterByName(event) }
         />
         <button
           type="button"
-          onClick={ (event) => filterPlanets() }
+          onClick={ (event) => filterPlanets(event) }
         >
           Test filter
         </button>
@@ -72,7 +73,7 @@ function Table() {
       <tbody>
         {filterPlanets()
           .map((planet, index) => (
-            <tr key={index}>
+            <tr key={ index }>
               <td>{planet.climate}</td>
               <td>{planet.created}</td>
               <td>{planet.diameter}</td>
