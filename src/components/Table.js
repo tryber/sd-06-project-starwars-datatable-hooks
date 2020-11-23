@@ -1,11 +1,19 @@
 import React, { useContext } from 'react';
 import starWarsContext from '../context/starWarsContext';
+import './Table.css';
 
 function Table() {
   const { planets } = useContext(starWarsContext);
   return (
     <div>
       Data list:
+      <div>
+        Search planet: 
+        <input
+          data-testid="name-filter"
+          type="text"
+        />
+      </div>
       <table>
         <thead>
           <tr>
