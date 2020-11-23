@@ -35,9 +35,7 @@ const Table = () => {
   filterByNumericValue.forEach((filter) => {
     planetsFilter = planetsFilter.filter((planet) => {
       const zero = 0;
-      if (filterByNumericValue.length === zero) {
-        return true;
-      }
+      if (filterByNumericValue.length === zero) return true;
       if (filter.comparison === 'maior que') {
         return planet[filter.column] > Number(filter.value);
       }
