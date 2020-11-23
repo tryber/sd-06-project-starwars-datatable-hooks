@@ -26,10 +26,6 @@ function Table() {
   filterByNumericValues.forEach((filter) => {
     // Função filter percorre todas as comparações dentro deses filtros, iterando sobre cada um para realizar o filtro.
     filteredPlanets = filteredPlanets.filter((planet) => {
-      const zero = 0;
-      if (filterByNumericValues.length === zero) {
-        return true;
-      }
       if (filter.comparison === 'maior que') {
         return (planet[filter.column] > parseInt(filter.value, 10));
       }
