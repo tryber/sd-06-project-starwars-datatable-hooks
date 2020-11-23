@@ -28,28 +28,26 @@ function NumberInput() {
         number,
       },
     ]);
+    setColumn('');
   };
 
-  /* const markSearch = () => {
-    numFilter.filter({
-      if (column) {
-        return setColumn(numFilter.column !== column)
-      }
-      else if (comparison) {
-        return setComparison(numFilter.comparison !== comparison)
-      }
-    })
-  }; */
+  const col = [
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+  ];
 
   return (
     <div>
-      <select data-testid="column-filter" name={ column } onChange={ handleColumn }>
+      <select
+        data-testid="column-filter"
+        name={ column }
+        onChange={ handleColumn }
+        value={ column }
+      >
         <option>Escolha</option>
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {col.filter((colum) => !numFilter.map((filter) => filter.column).includes(colum))
+          .map((coluna) => (
+            <option value={ coluna } key={ coluna }>{coluna}</option>
+          ))}
       </select>
       <select
         name={ comparison }
