@@ -22,7 +22,7 @@ function PlanetsProvider({ children }) {
   const filteringName = (name) => {
     setFilters({
       ...filters,
-      filterName: { name },
+      filterByName: { name },
     });
   };
 
