@@ -1,35 +1,30 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import SWContext from '../context/SWContext';
 
 const Table = () => {
+  const { jobs } = useContext(SWContext);
+
+  // const mockSW = [{}]
+
   return (
     <table class="table">
       <thead>
         <tr>
-          <th scope="col">#</th>
-          <th scope="col">Primeiro</th>
-          <th scope="col">Último</th>
-          <th scope="col">Nickname</th>
+          <th scope="col">Titulo</th>
+          <th scope="col">Tipo</th>
+          <th scope="col">Localização</th>
+          <th scope="col">Empresa</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-        </tr>
+        {jobs.map((job) => (
+          <tr key={job.title}>
+            <td>job.title</td>
+            <td>job.type</td>
+            <td>job.location</td>
+            <td>job.company</td>
+          </tr>
+        ))}
       </tbody>
     </table>
   );
