@@ -27,6 +27,7 @@ function Table() {
 
   function filterPlanets() {
     const { name } = filter.filters.FilterByName;
+    if (name === '') return planets;
     const filtered = planets.filter((planet) => planet.name.includes(name));
     return filtered;
   }
@@ -69,7 +70,7 @@ function Table() {
         </thead>
       </table>
       <tbody>
-        {planets
+        {filterPlanets()
           .map((planet, index) => (
             <tr key={index}>
               <td>{planet.climate}</td>
