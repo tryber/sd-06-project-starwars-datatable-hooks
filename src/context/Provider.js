@@ -17,6 +17,10 @@ function Provider({ children }) {
       'rotation_period',
       'surface_water',
     ],
+    order: {
+      column: 'name',
+      sort: 'ASC',
+    },
   });
 
   useEffect(() => {

@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
+import Order from './Order';
 
 function Table() {
   const { planets, loading, filters, setFilters } = useContext(StarWarsContext);
@@ -39,11 +40,46 @@ function Table() {
     ))));
   };
 
+  const sortPlanets = (_planets) => {
+    const arrayColumns = ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water']
+    if (arrayColumns.includes(filters.order.column)) {
+      _planets.sort((b, a) => {
+        const one = 1;
+        const negOne = -1;
+        const zero = 0;
+  
+        if (parseInt(a[filters.order.column], 10) < parseInt(b[filters.order.column], 10)) {
+          return filters.order.sort === 'ASC' ? one : negOne;
+        }
+        if (parseInt(a[filters.order.column], 10) > parseInt(b[filters.order.column], 10)) {
+          return filters.order.sort === 'ASC' ? negOne : one;
+        }
+        return zero;
+      });
+    } else {
+      _planets.sort((b, a) => {
+        const one = 1;
+        const negOne = -1;
+        const zero = 0;
+
+        if (a[filters.order.column] < b[filters.order.column]) {
+          return filters.order.sort === 'ASC' ? one : negOne;
+        }
+        if (a[filters.order.column] > b[filters.order.column]) {
+          return filters.order.sort === 'ASC' ? negOne : one;
+        }
+        return zero;
+      });
+    }
+    return _planets;
+  }
+
   const filterPlanets = () => {
     const planetsByName = filterPlanetsByName(planets);
     const planetsByNumericValue = filterPlanetsByNumericValues(planetsByName);
+    const sortedPlanets = sortPlanets(planetsByNumericValue);
 
-    return planetsByNumericValue;
+    return sortedPlanets;
   };
 
   const [column, setColumn] = useState('population');
@@ -172,6 +208,7 @@ function Table() {
               </div>
             )) }
           </div>
+          <Order />
           <table>
             <thead>
               <tr>
@@ -200,7 +237,7 @@ function Table() {
                     <td>{ planet.edited }</td>
                     <td>{ planet.films }</td>
                     <td>{ planet.gravity }</td>
-                    <td>{ planet.name }</td>
+                    <td data-testid="planet-name">{ planet.name }</td>
                     <td>{ planet.orbital_period }</td>
                     <td>{ planet.population }</td>
                     <td>{ planet.rotation_period }</td>
