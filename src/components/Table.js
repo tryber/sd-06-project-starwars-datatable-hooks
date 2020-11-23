@@ -42,8 +42,9 @@ const Table = () => {
       if (filter.comparison === 'menor que') {
         return planet[filter.column] < Number(filter.value);
       }
-      if (filter.comparison === 'igua a') {
-        return planet[filter.column] === Number(filter.value);
+      if (filter.comparison === 'igual a') {
+
+        return planet[filter.column] === filter.value;
       }
       return planetsFilter;
     });

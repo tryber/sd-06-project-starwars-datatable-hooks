@@ -15,6 +15,7 @@ const SearchInput = () => {
   } = useContext(StarWarsContext);
 
   const optionsColumn = [
+    'Select',
     'population',
     'orbital_period',
     'diameter',
@@ -23,6 +24,7 @@ const SearchInput = () => {
   ];
 
   const optionsComparison = [
+    'Select',
     'maior que',
     'menor que',
     'igual a',
