@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import sWAPI from '../services/sWAPI';
-import { Filter } from '.';
+import Filter from './Filter';
 
 function Table() {
   const HEAD = [
