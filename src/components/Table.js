@@ -28,8 +28,8 @@ function Table() {
   function filterPlanets() {
     const { name } = filter.filters.FilterByName;
     if (name === '') return planets;
-    const capName = name.replace(/^\w/, (c) => c.toUpperCase());
-    const filtered = planets.filter((planet) => planet.name.includes(capName));
+    // const capName = name.replace(/^\w/, (c) => c.toUpperCase());
+    const filtered = planets.filter((planet) => planet.name.includes(name));
     return filtered;
   }
 
