@@ -2,28 +2,35 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context';
 
 function Table() {
-  const { planets, selectedPlanet, range,
-    rangeNumber, column } = useContext(StarWarsContext);
+  const { planets: allPlanets,
+    filters: { filterByName, filterByNumericValues } } = useContext(StarWarsContext);
 
-  let planetsToRender = planets;
+  let planetsToRender = allPlanets;
 
-  if (selectedPlanet !== '') {
-    planetsToRender = planets.filter(
-      (planet) => planet.name.toUpperCase().match(selectedPlanet.toUpperCase()),
+  if (filterByName !== '') {
+    planetsToRender = allPlanets.filter(
+      (planet) => planet.name.toUpperCase().match(filterByName.toUpperCase()),
     );
   }
 
-  if (column !== '' && range !== '' && rangeNumber !== '') {
-    planetsToRender = planetsToRender.filter((planet) => {
-      let condition;
-      condition = (range === 'menor que')
-        ? parseInt(planet[column], 10) < parseInt(rangeNumber, 10) : condition;
-      condition = (range === 'maior que')
-        ? parseInt(planet[column], 10) > parseInt(rangeNumber, 10) : condition;
-      condition = (range === 'igual a')
-        ? parseInt(planet[column], 10) === parseInt(rangeNumber, 10) : condition;
-      return condition;
+  const magicNumberZero = 0;
+  if (filterByNumericValues.length > magicNumberZero) {
+    planetsToRender = filterByNumericValues.map((numericFilter) => {
+      const { range, rangeNumber, column, color } = numericFilter;
+      const planets = planetsToRender.filter((planet) => {
+        let condition;
+        condition = (range === 'menor que')
+          ? parseInt(planet[column], 10) < parseInt(rangeNumber, 10) : condition;
+        condition = (range === 'maior que')
+          ? parseInt(planet[column], 10) > parseInt(rangeNumber, 10) : condition;
+        condition = (range === 'igual a')
+          ? parseInt(planet[column], 10) === parseInt(rangeNumber, 10) : condition;
+        return condition;
+      });
+      return ({ planets, color });
     });
+  } else {
+    planetsToRender = [{ planets: planetsToRender, color: 'none' }];
   }
 
   return (
@@ -47,27 +54,31 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          { planetsToRender.map((planet) => {
-            const { name, rotation_period: rotationPeriod, orbital_period: orbitalPeriod,
-              diameter, climate, gravity, terrain, surface_water: surfaceWater,
-              population, residents, films, created, edited } = planet;
-            return (
-              <tr key={ name }>
-                <td>{ name }</td>
-                <td>{ rotationPeriod }</td>
-                <td>{ orbitalPeriod }</td>
-                <td>{ diameter }</td>
-                <td>{ climate }</td>
-                <td>{ gravity }</td>
-                <td>{ terrain }</td>
-                <td>{ surfaceWater }</td>
-                <td>{ population }</td>
-                <td>{ residents }</td>
-                <td>{ films }</td>
-                <td>{ created }</td>
-                <td>{ edited }</td>
-              </tr>
-            );
+          { planetsToRender.map((planetsObj) => {
+            const { planets, color } = planetsObj;
+            return planets.map((planet) => {
+              const { name, rotation_period: rotationPeriod,
+                orbital_period: orbitalPeriod, diameter, climate,
+                gravity, terrain, surface_water: surfaceWater,
+                population, residents, films, created, edited } = planet;
+              return (
+                <tr key={ name } style={ { backgroundColor: color } }>
+                  <td>{ name }</td>
+                  <td>{ rotationPeriod }</td>
+                  <td>{ orbitalPeriod }</td>
+                  <td>{ diameter }</td>
+                  <td>{ climate }</td>
+                  <td>{ gravity }</td>
+                  <td>{ terrain }</td>
+                  <td>{ surfaceWater }</td>
+                  <td>{ population }</td>
+                  <td>{ residents }</td>
+                  <td>{ films }</td>
+                  <td>{ created }</td>
+                  <td>{ edited }</td>
+                </tr>
+              );
+            });
           })}
         </tbody>
       </table>

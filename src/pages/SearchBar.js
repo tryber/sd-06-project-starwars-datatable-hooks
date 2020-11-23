@@ -3,7 +3,7 @@ import StarWarsContext from '../context';
 
 function SearchBar() {
   // const { planets } = useContext(StarWarsContext);
-  const { setSelectedPlanet } = useContext(StarWarsContext);
+  const { setFilters } = useContext(StarWarsContext);
 
   return (
     <div>
@@ -15,7 +15,9 @@ function SearchBar() {
           list="list-planets"
           placeholder="Digite o nome de um planeta"
           id="search-bar"
-          onChange={ ({ target }) => setSelectedPlanet(target.value) }
+          onChange={ ({ target }) => setFilters(
+            (prevState) => ({ ...prevState, filterByName: target.value }),
+          ) }
         />
       </label>
       {/* <datalist id="list-planets">

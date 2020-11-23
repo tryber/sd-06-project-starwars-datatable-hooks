@@ -2,17 +2,29 @@ import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context';
 
 function NumericFilter() {
-  const { setRangeNumber, setRange,
-    setColumn } = useContext(StarWarsContext);
+  const { setFilters } = useContext(StarWarsContext);
 
   const [columnLocal, setColumnLocal] = useState('');
   const [rangeLocal, setRangeLocal] = useState('');
   const [rangeNumberLocal, setRangeNumberLocal] = useState('');
 
   const executeFilter = () => {
-    setColumn(columnLocal);
-    setRange(rangeLocal);
-    setRangeNumber(rangeNumberLocal);
+    const rgbLimit = 255;
+    const color = `rgb(${Math.random() * rgbLimit},
+      ${Math.random() * rgbLimit}, ${Math.random() * rgbLimit})`;
+
+    setFilters((prevState) => ({
+      ...prevState,
+      filterByNumericValues: [
+        ...prevState.filterByNumericValues,
+        {
+          column: columnLocal,
+          range: rangeLocal,
+          rangeNumber: rangeNumberLocal,
+          color,
+        },
+      ],
+    }));
   };
 
   return (
@@ -45,7 +57,7 @@ function NumericFilter() {
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ () => executeFilter(true) }
+        onClick={ () => executeFilter() }
       >
         Filtrar
       </button>
