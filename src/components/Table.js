@@ -4,7 +4,7 @@ import Planet from './Planet';
 
 function Table() {
   const { data, isFetching, filters } = useContext(StarWarsContext);
-  const { filterByName, filterByNumericValues } = filters;
+  const { filterByName, filterByNumericValues, order } = filters;
   const headers = ['Name', 'Rotation Period', 'Oribital Period',
     'Diameter', 'Climate', 'Gravity', 'Terrain', 'Surface Water',
     'Population', 'Films', 'Created', 'Edited', 'Url'];
@@ -23,6 +23,34 @@ function Table() {
     return true;
   }
 
+  function sortOptions(planetA, planetB) {
+    const UM = 1;
+    const ZERO = 0;
+    if (order.column === 'name') {
+      if (order.sort === 'ASC') {
+        if (planetA.name > planetB.name) {
+          return UM;
+        }
+        if (planetA.name < planetB.name) {
+          return -UM;
+        }
+      } else {
+        if (planetA.name < planetB.name) {
+          return UM;
+        }
+        if (planetA.name > planetB.name) {
+          return -UM;
+        }
+      }
+      return ZERO;
+    }
+
+    if (order.sort === 'ASC') {
+      return planetA[order.column] - planetB[order.column];
+    }
+    return planetB[order.column] - planetA[order.column];
+  }
+
   return (
     <div>
       <table border="1">
@@ -35,6 +63,7 @@ function Table() {
           { (isFetching) ? <tr><td>Loading...</td></tr>
             : data.filter((planet) => planet.name.includes(filterByName.name))
               .filter((planet) => filtersOptions(planet))
+              .sort((planetA, planetB) => sortOptions(planetA, planetB))
               .map((planet) => (
                 <Planet key={ planet.name } planet={ planet } />
               )) }

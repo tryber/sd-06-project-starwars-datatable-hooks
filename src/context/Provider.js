@@ -25,8 +25,8 @@ function Provider({ children }) {
     },
     filterByNumericValues: [],
     order: {
-      column: '',
-      sort: '',
+      column: 'name',
+      sort: 'ASC',
     },
   });
 
