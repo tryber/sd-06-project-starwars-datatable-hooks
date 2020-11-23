@@ -6,17 +6,18 @@ import Table from './pages/Table';
 import SearchBar from './pages/SearchBar';
 import NumericFilter from './pages/NumericFilter';
 import Filters from './pages/Filters';
+import OrderFilter from './pages/OrderFilter';
 
 function App() {
   const [planets, setPlanets] = useState([]);
   const [filters, setFilters] = useState({
     filterByName: '',
     filterByNumericValues: [],
+    orderFilter: {
+      orderColumn: '',
+      order: '',
+    },
   });
-
-  const [rangeNumber, setRangeNumber] = useState('');
-  const [range, setRange] = useState('');
-  const [column, setColumn] = useState('');
 
   useEffect(() => {
     const requestAPI = async () => {
@@ -29,12 +30,6 @@ function App() {
     filters,
     setFilters,
     planets,
-    range,
-    setRange,
-    rangeNumber,
-    setRangeNumber,
-    column,
-    setColumn,
   };
 
   return (
@@ -43,6 +38,7 @@ function App() {
         <Filters />
         <SearchBar />
         <NumericFilter />
+        <OrderFilter />
         <Table />
       </div>
     </StarWarsContext.Provider>

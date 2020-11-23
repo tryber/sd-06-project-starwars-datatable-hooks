@@ -2,13 +2,22 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context';
 
 function Table() {
-  const { planets: allPlanets,
-    filters: { filterByName, filterByNumericValues } } = useContext(StarWarsContext);
+  const { planets: allPlanets, filters: { filterByName, filterByNumericValues,
+    orderFilter: { orderColumn, order } } } = useContext(StarWarsContext);
 
-  let planetsToRender = allPlanets;
+  const planetsName = allPlanets.map((planet) => planet.name).sort();
+  const planetsAscByName = planetsName.map((planetName) => allPlanets
+    .find((planet) => planet.name === planetName));
+  let planetsToRender = planetsAscByName;
+
+  if (orderColumn !== '') {
+    planetsToRender = (order === 'DESC')
+      ? planetsToRender.sort((a, b) => b[orderColumn] - a[orderColumn])
+      : planetsToRender.sort((a, b) => a[orderColumn] - b[orderColumn]);
+  }
 
   if (filterByName !== '') {
-    planetsToRender = allPlanets.filter(
+    planetsToRender = planetsToRender.filter(
       (planet) => planet.name.toUpperCase().match(filterByName.toUpperCase()),
     );
   }
@@ -63,7 +72,7 @@ function Table() {
                 population, residents, films, created, edited } = planet;
               return (
                 <tr key={ name } style={ { backgroundColor: color } }>
-                  <td>{ name }</td>
+                  <td data-testid="planet-name">{ name }</td>
                   <td>{ rotationPeriod }</td>
                   <td>{ orbitalPeriod }</td>
                   <td>{ diameter }</td>
