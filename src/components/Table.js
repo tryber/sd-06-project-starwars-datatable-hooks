@@ -5,7 +5,7 @@ import './Table.css';
 function Table() {
   const [filter, setFilter] = useState({
     filters: {
-      filterByname: {
+      FilterByName: {
         name: '',
       },
     },
@@ -16,7 +16,7 @@ function Table() {
     const { value } = target;
     setFilter({
       filters: {
-        filterByname: {
+        FilterByName: {
           name: value,
         },
       },
@@ -24,17 +24,30 @@ function Table() {
   }
 
   const { planets } = useContext(starWarsContext);
+
+  function filterPlanets() {
+    const { name } = filter.filters.FilterByName;
+    const filtered = planets.filter((planet) => planet.name.includes(name));
+    return filtered;
+  }
+
   return (
     <div>
       Data list:
       <div>
-        Search planet:
+        Find a planet:
         <input
           data-testid="name-filter"
           type="text"
           name="search-bar"
           onChange={(event) => handleFilterByName(event)}
         />
+        <button
+          type="button"
+          onClick={ (event) => filterPlanets() }
+        >
+          Test filter
+        </button>
       </div>
       <table>
         <thead>
