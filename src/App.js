@@ -1,32 +1,50 @@
 import React, { useState } from 'react';
-import PlanetsContext from './context/PlanetsContext';
 import Table from './component/Table';
+import StarWarsContext from './context/StarWarsContext';
+import fetchApi from './services/fetchApi';
 
 function App() {
-  const [planets, setPlanets] = useState('');
+  const [planets, setPlanets] = useState([]);
   const [name, setName] = useState('');
-  // 4 - criar o state que sera armazenado
-  // no value do Provider
+  const [column, setColumn] = useState('');
+  const [comparison, setComparison] = useState('');
+  const magicValue = 0;
+  const [value, setValue] = useState(magicValue);
+
+  const getData = async () => {
+    const api = await fetchApi();
+    setPlanets(api);
+  };
+
   const state = {
     planets,
     setPlanets,
-    // incluir o state do filtro do input
+    getData,
     filters: {
       filterByName: {
         name,
         setName,
       },
+      filterByNumericValues: [
+        {
+          column,
+          setColumn,
+          comparison,
+          setComparison,
+          value,
+          setValue,
+        },
+      ],
     },
   };
-
   return (
-    <main>
+    <div>
       {/* 3- criar Provider: Componentes acessa dados. Value state padroniza
        os dados que deverao ser lidos pelos componentes. */}
-      <PlanetsContext.Provider value={ state }>
+      <StarWarsContext.Provider value={ state }>
         <Table />
-      </PlanetsContext.Provider>
-    </main>
+      </StarWarsContext.Provider>
+    </div>
   );
 }
 

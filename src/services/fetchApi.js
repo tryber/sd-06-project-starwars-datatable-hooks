@@ -1,9 +1,8 @@
-async function fetchApi(setPlanets) {
+async function fetchApi() {
   const endpoint = 'https://swapi-trybe.herokuapp.com/api/planets';
-  const api = await fetch(endpoint)
-    .then((res) => res.json())
-    .then((data) => data.results);
-  setPlanets(api);
+  const api = await fetch(endpoint);
+  const response = await api.json();
+  return response.results;
 }
 
 export default fetchApi;
