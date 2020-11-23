@@ -5,18 +5,19 @@ function Table() {
   const { planets, text, numFilter } = useContext(StarWarsContext);
 
   const filterNumbers = () => {
-    if (planets !== undefined) {
-      return planets.filter((p) => p[numFilter[i].column] === numFilter.column);
-    }
-    if (numFilter.comparison === 'maior que') {
-      return planets.filter((p) => p[numFilter[i].column] > numFilter.number);
-    }
-    if (numFilter.comparison === 'menor que') {
-      return planets.filter((p) => p[numFilter[i].column] < numFilter.number);
-    }
-    if (numFilter.comparison === 'igual a') {
-      return planets.filter((p) => p[numFilter[i].column] === numFilter.number);
-    }
+    let array = planets;
+    numFilter.forEach((filter) => {
+      if (filter.comparison === 'maior que') {
+        (array = array.filter((p) => p[filter.column] > 1 * filter.number));
+      }
+      if (filter.comparison === 'menor que') {
+        (array = array.filter((p) => p[filter.column] < 1 * filter.number));
+      }
+      if (filter.comparison === 'igual a') {
+        (array = array.filter((p) => p[filter.column] === filter.number));
+      }
+    });
+    return array;
   };
 
   return (
@@ -39,23 +40,25 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {filterNumbers(planets).filter((p) => p.name.includes(text)).map((planet) => (
-          <tr key={ planet.name }>
-            <td>{ planet.name }</td>
-            <td>{ planet.rotation_period }</td>
-            <td>{ planet.orbital_period }</td>
-            <td>{ planet.diameter }</td>
-            <td>{ planet.climate }</td>
-            <td>{ planet.gravity }</td>
-            <td>{ planet.terrain }</td>
-            <td>{ planet.surface_water }</td>
-            <td>{ planet.population }</td>
-            <td>{ planet.films }</td>
-            <td>{ planet.created }</td>
-            <td>{ planet.edited }</td>
-            <td>{ planet.url }</td>
-          </tr>
-        ))}
+        {filterNumbers(planets)
+          .filter((p) => p.name.toLowerCase().includes(text.toLowerCase()))
+          .map((planet) => (
+            <tr key={ planet.name }>
+              <td>{planet.name}</td>
+              <td>{planet.rotation_period}</td>
+              <td>{planet.orbital_period}</td>
+              <td>{planet.diameter}</td>
+              <td>{planet.climate}</td>
+              <td>{planet.gravity}</td>
+              <td>{planet.terrain}</td>
+              <td>{planet.surface_water}</td>
+              <td>{planet.population}</td>
+              <td>{planet.films}</td>
+              <td>{planet.created}</td>
+              <td>{planet.edited}</td>
+              <td>{planet.url}</td>
+            </tr>
+          ))}
       </tbody>
     </table>
   );

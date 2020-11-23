@@ -30,15 +30,26 @@ function NumberInput() {
     ]);
   };
 
+  /* const markSearch = () => {
+    numFilter.filter({
+      if (column) {
+        return setColumn(numFilter.column !== column)
+      }
+      else if (comparison) {
+        return setComparison(numFilter.comparison !== comparison)
+      }
+    })
+  }; */
+
   return (
     <div>
       <select data-testid="column-filter" name={ column } onChange={ handleColumn }>
         <option>Escolha</option>
         <option value="population">population</option>
-        <option value="orbital">orbital_period</option>
+        <option value="orbital_period">orbital_period</option>
         <option value="diameter">diameter</option>
-        <option value="rotation">rotation_period</option>
-        <option value="surface">surface_water</option>
+        <option value="rotation_period">rotation_period</option>
+        <option value="surface_water">surface_water</option>
       </select>
       <select
         name={ comparison }
@@ -46,9 +57,9 @@ function NumberInput() {
         onChange={ handleComparison }
       >
         <option>Escolha</option>
-        <option value=">">maior que</option>
-        <option value="<">menor que</option>
-        <option value="===">igual a</option>
+        <option value="maior que">maior que</option>
+        <option value="menor que">menor que</option>
+        <option value="igual a">igual a</option>
       </select>
       <input
         type="number"
