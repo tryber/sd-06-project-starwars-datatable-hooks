@@ -43,7 +43,6 @@ const Table = () => {
         return planet[filter.column] < Number(filter.value);
       }
       if (filter.comparison === 'igual a') {
-
         return planet[filter.column] === filter.value;
       }
       return planetsFilter;

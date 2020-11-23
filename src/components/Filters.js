@@ -19,8 +19,9 @@ const Filters = () => {
           <span>
             { filter.value }
           </span>
-          <button 
-            data-testid='filter'
+          <button
+            type="button"
+            data-testid="filter"
           >
             X
           </button>
