@@ -30,6 +30,7 @@ function FiltersInput() {
   };
 
   const [numericValues, setNumericValues] = useState(LOCAL_OBJECTS);
+  const [columnValues, setColumnValues] = useState(columnFilter);
 
   // função para lidar com as mudanças dos itens de forms
   // e atualizar estado global filterByName e estado local dos
@@ -51,9 +52,14 @@ function FiltersInput() {
     }
   };
 
-  // função para lidar com o clique do botão e atualizar
-  // os filtros numéricosno estado global
+  // função para lidar com o clique do botão
+  // - remover colunas do array de nomes de coluna
+  // - atualizar os filtros numéricos no estado global
   const handleClick = () => {
+    const runningColumn = numericValues.column;
+    const newColumnsValues = columnValues.filter((item) => item !== runningColumn);
+    setColumnValues(newColumnsValues);
+
     if (!filters.filterByNumericValues) {
       setFilters({
         ...filters,
@@ -88,7 +94,7 @@ function FiltersInput() {
           name="column"
           onChange={ (e) => handleChange(e) }
         >
-          {columnFilter
+          {columnValues
             .map((selection) => (
               <option value={ selection } key={ selection }>
                 { selection }

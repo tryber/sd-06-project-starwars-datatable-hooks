@@ -5,7 +5,7 @@ import Table from '../components/Table';
 import FiltersInput from '../components/FiltersInput';
 import './Home.css';
 
-function App() {
+function Home() {
   const { isFetching, getPlanetList } = useContext(StarWarsContext);
 
   // hook para invocar a função que atualiza os planetas.
@@ -26,4 +26,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home;
