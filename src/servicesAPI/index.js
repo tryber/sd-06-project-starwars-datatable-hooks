@@ -1,3 +1,3 @@
-import fetchStarWarsAPI from './starWarsAPIMock';
+import fetchStarWarsAPI from './starWarsAPI';
 
 export default fetchStarWarsAPI;
