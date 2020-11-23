@@ -8,7 +8,7 @@ function Table() {
     <div>
       Data list:
       <div>
-        Search planet: 
+        Search planet:
         <input
           data-testid="name-filter"
           type="text"
