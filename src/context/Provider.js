@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import StarWarsContext from './StarWarsContext';
 
 function Provider({ children }) {
-  const [planets, setPlanets] = useState([]);
+  const [name, setFilterName] = useState({ filters: { filterByName: { name: '' } } });
 
   const contextPlanets = {
-    planets,
-    setPlanets,
+    name,
+    setFilterName,
   };
 
   return (

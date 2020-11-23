@@ -1,37 +1,51 @@
-import React, { useEffect, useState } from 'react';
-import fetchAPI from '../services/fetchAPI';
+import React, { useEffect, useState, useContext } from 'react';
+import StarWarsContext from '../context/StarWarsContext';
 
-function PlanetTable() {
-  const [tableHeaders, setTableHeaders] = useState([]);
-  const [listPlanets, setListPlanets] = useState([]);
+const PlanetTable = () => {
+  const [planets, setPlanets] = useState(['']);
+  const [headers, setHeaders] = useState(['']);
+  const { name } = useContext(StarWarsContext);
 
   useEffect(() => {
     const fetchPlanets = async () => {
-      const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
+      // const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
+      const URL = 'http://swapi.dev/api/planets/';
 
-      setListPlanets(await fetchAPI(URL));
+      const planetsResponse = await fetch(URL);
+      const planetsObj = await planetsResponse.json();
 
-      const headers = Object.keys(
-        (await fetchAPI(URL))[0],
-      ).filter((key) => key !== 'residents');
+      setPlanets(planetsObj.results);
 
-      setTableHeaders(headers);
+      const planetList = planetsObj.results;
+      const headersList = Object.keys(planetList[0])
+        .filter((key) => key !== 'residents');
+
+      setHeaders(headersList);
     };
 
     fetchPlanets();
   }, []);
 
+  const nameFilter = () => {
+    const text = name.filters.filterByName.name;
+
+    return text !== '' ? planets
+      .filter((planet) => String(planet.name).includes(text) !== false) : planets;
+  };
+
+  const planetList = nameFilter();
+
   return (
     <table>
       <thead>
         <tr>
-          { tableHeaders.map((header) => <th key={ `${header}` }>{ header }</th>) }
+          { headers.map((header) => <th key={ `${header}` }>{ header }</th>) }
         </tr>
       </thead>
       <tbody>
-        { listPlanets.map((planet, index) => (
+        { planetList.map((planet, index) => (
           <tr key={ `${index}${planet}` }>
-            { tableHeaders.map((header) => (
+            { headers.map((header) => (
               <td key={ `${planet}${header}` }>
                 { planet[header] }
               </td>
@@ -40,6 +54,6 @@ function PlanetTable() {
       </tbody>
     </table>
   );
-}
+};
 
 export default PlanetTable;
