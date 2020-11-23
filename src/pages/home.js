@@ -52,7 +52,6 @@ function Home() {
   return (
     <div>
       <h1>Planets Database</h1>
-      { !dataIsEmpty && <Search /> }
       { !dataIsEmpty && <Table data={ planetsData } /> }
       { dataIsEmpty && 'Loading...' }
     </div>
