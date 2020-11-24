@@ -6,17 +6,18 @@ import fetchPlanets from '../services/fetchApi';
 function StarWarsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [filter, setFilter] = useState({
-    filters: {
-      filterByName: {
-        name: '',
-      },
-      filterByNumericValues: [
-        {
-          column: 'population',
-          comparison: 'bigger',
-          value: '100000',
-        },
-      ],
+    filterByName: { name: '' },
+    filterByNumericValues: [],
+    availableColumns: [
+      'population',
+      'orbital_period',
+      'diameter',
+      'rotation_period',
+      'surface_water',
+    ],
+    order: {
+      column: 'name',
+      sort: 'ASC',
     },
   });
 
