@@ -9,8 +9,6 @@ function Table() {
 
   // Tirar o residents
   if (data) {
-    data.results.map((result) => delete result.residents);
-
     const fields = data.results.map((result) => (
       <tr key={ result.url }>
         <td>{result.name}</td>
@@ -29,20 +27,6 @@ function Table() {
       </tr>
 
     ));
-
-    // 'temperate';
-    // '2014-12-10T12:45:06.577000Z';
-    // '19720';
-    // '2014-12-20T20:58:18.434000Z';
-    // ['https://swapi-trybe.herokuapp.com/api/films/5/'];
-    // '1 standard';
-    // 'Kamino';
-    // '463';
-    // '1000000000';
-    // '27';
-    // '100';
-    // 'ocean';
-    // url;
 
     return (
       <table>

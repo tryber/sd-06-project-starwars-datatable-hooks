@@ -84,79 +84,79 @@ describe('Faça uma requisição para o endpoint `/planets` da API de Star Wars 
   });
 });
 
-// describe('Filtre a tabela através de um texto, inserido num *campo de texto*, exibindo somente os planetas cujos nomes incluam o texto digitado', () => {
-//   beforeAll(mockFetch);
-//   beforeEach(cleanup);
+describe('Filtre a tabela através de um texto, inserido num *campo de texto*, exibindo somente os planetas cujos nomes incluam o texto digitado', () => {
+  beforeAll(mockFetch);
+  beforeEach(cleanup);
 
-//   it('Renderiza campo de texto para filtro de nomes', async () => {
-//     await act(async () => {
-//       render(<App />);
-//     });
-//     expect(await screen.findByTestId(INPUT_FILTER_NAME_SELECTOR)).toBeInTheDocument();
-//   });
+  it('Renderiza campo de texto para filtro de nomes', async () => {
+    await act(async () => {
+      render(<App />);
+    });
+    expect(await screen.findByTestId(INPUT_FILTER_NAME_SELECTOR)).toBeInTheDocument();
+  });
 
-//   it('Filtra planetas que possuem a letra "o" no nome', async () => {
-//     await act(async () => {
-//       render(<App />);
-//       const input = await screen.findByTestId(INPUT_FILTER_NAME_SELECTOR);
-//       fireEvent.change(input, { target: { value: 'o' } });
-//     });
+  it('Filtra planetas que possuem a letra "o" no nome', async () => {
+    await act(async () => {
+      render(<App />);
+      const input = await screen.findByTestId(INPUT_FILTER_NAME_SELECTOR);
+      fireEvent.change(input, { target: { value: 'o' } });
+    });
 
-//     expect(await screen.findAllByRole(ROW_ROLE_SELECTOR)).toHaveLength(8);
-//     const planetNames = ['Coruscant', 'Dagobah', 'Endor', 'Hoth', 'Kamino', 'Naboo', 'Tatooine'];
-//     for (let planetName of planetNames) {
-//       expect(await screen.findByText(planetName)).toBeInTheDocument();
-//     }
-//   });
+    expect(await screen.findAllByRole(ROW_ROLE_SELECTOR)).toHaveLength(8);
+    const planetNames = ['Coruscant', 'Dagobah', 'Endor', 'Hoth', 'Kamino', 'Naboo', 'Tatooine'];
+    for (let planetName of planetNames) {
+      expect(await screen.findByText(planetName)).toBeInTheDocument();
+    }
+  });
 
-//   it('Filtra planetas que possuem a letra "oo" no nome', async () => {
-//     await act(async () => {
-//       render(<App />);
-//       const input = await screen.findByTestId(INPUT_FILTER_NAME_SELECTOR);
-//       fireEvent.change(input, { target: { value: 'oo' } });
-//     });
+  it('Filtra planetas que possuem a letra "oo" no nome', async () => {
+    await act(async () => {
+      render(<App />);
+      const input = await screen.findByTestId(INPUT_FILTER_NAME_SELECTOR);
+      fireEvent.change(input, { target: { value: 'oo' } });
+    });
 
-//     expect(await screen.findAllByRole(ROW_ROLE_SELECTOR)).toHaveLength(3);
-//     const planetNames = ['Naboo', 'Tatooine'];
-//     for (let planetName of planetNames) {
-//       expect(await screen.findByText(planetName)).toBeInTheDocument();
-//     }
-//   });
+    expect(await screen.findAllByRole(ROW_ROLE_SELECTOR)).toHaveLength(3);
+    const planetNames = ['Naboo', 'Tatooine'];
+    for (let planetName of planetNames) {
+      expect(await screen.findByText(planetName)).toBeInTheDocument();
+    }
+  });
 
-//   it('Realiza vários filtros em sequência', async () => {
-//     await act(async () => {
-//       render(<App />);
-//       const input = await screen.findByTestId(INPUT_FILTER_NAME_SELECTOR);
-//       fireEvent.change(input, { target: { value: 'o' } });
-//     });
-//     let planetNames = [];
-//     expect(await screen.findAllByRole(ROW_ROLE_SELECTOR)).toHaveLength(8);
-//     planetNames = ['Coruscant', 'Dagobah', 'Endor', 'Hoth', 'Kamino', 'Naboo', 'Tatooine'];
-//     for (let planetName of planetNames) {
-//       expect(await screen.findByText(planetName)).toBeInTheDocument();
-//     }
+  it('Realiza vários filtros em sequência', async () => {
+    await act(async () => {
+      render(<App />);
+      const input = await screen.findByTestId(INPUT_FILTER_NAME_SELECTOR);
+      fireEvent.change(input, { target: { value: 'o' } });
+    });
+    let planetNames = [];
+    expect(await screen.findAllByRole(ROW_ROLE_SELECTOR)).toHaveLength(8);
+    planetNames = ['Coruscant', 'Dagobah', 'Endor', 'Hoth', 'Kamino', 'Naboo', 'Tatooine'];
+    for (let planetName of planetNames) {
+      expect(await screen.findByText(planetName)).toBeInTheDocument();
+    }
 
-//     await act(async () => {
-//       const input = await screen.findByTestId(INPUT_FILTER_NAME_SELECTOR);
-//       fireEvent.change(input, { target: { value: 'oo' } });
-//     });
-//     expect(await screen.findAllByRole(ROW_ROLE_SELECTOR)).toHaveLength(3);
-//     planetNames = ['Naboo', 'Tatooine'];
-//     for (let planetName of planetNames) {
-//       expect(await screen.findByText(planetName)).toBeInTheDocument();
-//     }
+    await act(async () => {
+      const input = await screen.findByTestId(INPUT_FILTER_NAME_SELECTOR);
+      fireEvent.change(input, { target: { value: 'oo' } });
+    });
+    expect(await screen.findAllByRole(ROW_ROLE_SELECTOR)).toHaveLength(3);
+    planetNames = ['Naboo', 'Tatooine'];
+    for (let planetName of planetNames) {
+      expect(await screen.findByText(planetName)).toBeInTheDocument();
+    }
 
-//     await act(async () => {
-//       const input = await screen.findByTestId(INPUT_FILTER_NAME_SELECTOR);
-//       fireEvent.change(input, { target: { value: '' } });
-//     });
-//     expect(await screen.findAllByRole(ROW_ROLE_SELECTOR)).toHaveLength(11);
-//     planetNames = ['Alderaan', 'Bespin', 'Coruscant', 'Dagobah', 'Endor', 'Hoth', 'Kamino', 'Naboo', 'Tatooine', 'Yavin IV'];
-//     for (let planetName of planetNames) {
-//       expect(await screen.findByText(planetName)).toBeInTheDocument();
-//     }
-//   });
-// });
+    await act(async () => {
+      const input = await screen.findByTestId(INPUT_FILTER_NAME_SELECTOR);
+      fireEvent.change(input, { target: { value: '' } });
+    });
+    expect(await screen.findAllByRole(ROW_ROLE_SELECTOR)).toHaveLength(11);
+    planetNames = ['Alderaan', 'Bespin', 'Coruscant', 'Dagobah', 'Endor', 'Hoth', 'Kamino', 'Naboo', 'Tatooine', 'Yavin IV'];
+    for (let planetName of planetNames) {
+      expect(await screen.findByText(planetName)).toBeInTheDocument();
+    }
+  });
+});
 
 // describe('Crie um filtro para valores numéricos', () => {
 //   beforeAll(mockFetch);

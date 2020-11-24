@@ -2,7 +2,7 @@ import { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function API() {
-  const { setIsFetching, setData } = useContext(StarWarsContext);
+  const { setIsFetching, setData, setBackupData } = useContext(StarWarsContext);
 
   useEffect(() => {
     setIsFetching(true);
@@ -12,11 +12,13 @@ function API() {
         .then((result) => result.json())
         .then((json) => {
           setIsFetching(false);
+          // json.results.map((result) => delete result.name);
           setData(json);
+          setBackupData(json);
         });
     }
     fetchData();
-  }, [setData, setIsFetching]);
+  }, [setBackupData, setData, setIsFetching]);
   // return null;
 }
 

@@ -5,12 +5,15 @@ import StarWarsContext from './StarWarsContext';
 function Provider({ children }) {
   const [isFetching, setIsFetching] = useState(false);
   const [data, setData] = useState();
+  const [backupData, setBackupData] = useState();
 
   const contextValue = {
     isFetching,
     setIsFetching,
     data,
     setData,
+    backupData,
+    setBackupData,
   };
 
   return (
