@@ -1,6 +1,13 @@
-td {
+td, th {
   border: solid 1px black;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-th {
-  border: solid 1px black;
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid black;
+  text-align: center;
+  table-layout: fixed;
 }

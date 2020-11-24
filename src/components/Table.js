@@ -35,21 +35,40 @@ function Table() {
 
   return (
     <div>
-      Data list:
-      <div>
-        Find a planet:
-        <input
-          data-testid="name-filter"
-          type="text"
-          name="search-bar"
-          onChange={ (event) => handleFilterByName(event) }
-        />
-        <button
-          type="button"
-          onClick={ (event) => filterPlanets(event) }
-        >
-          Test filter
-        </button>
+      <div className="filter-nav">
+        <div className="search-bar">
+          Find a planet:
+          <input
+            data-testid="name-filter"
+            type="text"
+            name="search-bar"
+            onChange={ (event) => handleFilterByName(event) }
+          />
+        </div>
+        <div className="filters">
+          <select data-testid="column-filter">
+            <option value="population">population</option>
+            <option value="orbital_period">orbital_period</option>
+            <option value="diameter">diameter</option>
+            <option value="rotation_period">rotation_period</option>
+            <option value="surface_water">surface_water</option>
+          </select>
+          <select data-testid="comparison-filter">
+            <option value="bigger">bigger</option>
+            <option value="smaller">smaller</option>
+            <option value="equal">equal</option>
+          </select>
+          <input
+            type="number"
+            data-testid="value-filter"
+          />
+          <button
+            type="button"
+            data-testid="button-filter"
+          >
+            filter
+          </button>
+        </div>
       </div>
       <table>
         <thead>
