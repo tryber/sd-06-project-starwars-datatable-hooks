@@ -4,7 +4,13 @@ import StarWarsContext from '../context/StarWarsContext';
 function ShowFilter() {
   const {
     filterByNumericValues,
+    setFilterByNumericValues,
   } = useContext(StarWarsContext);
+
+  const removeFilter = ((actualFilter) => {
+    const remove = filterByNumericValues.filter((filter) => filter !== actualFilter);
+    setFilterByNumericValues(remove);
+  });
 
   return (
     <>
@@ -17,7 +23,7 @@ function ShowFilter() {
             <button
               type="button"
               className="remove-button"
-              // onClick={ removeFilter(filter) }
+              onClick={ () => removeFilter(filter) }
             >
               X
             </button>
