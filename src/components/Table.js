@@ -6,49 +6,68 @@ const headersTitle = ['Name', 'Rotation Period', 'Orbital Period', 'Diameter', '
   'Edited'];
 
 function Table() {
-  const { data, loading, searchName } = useContext(StarWarsContext);
-  const [names, setNames] = useState([]);
+  const { data, loading, filterByName,
+    filterNumbers: { filterByNumericValues } } = useContext(StarWarsContext);
+  // const [namesFiltered, setNamesFiltered] = useState([]);
+  // const [numberFiltered, setNumberFiltered] = useState([]);
+  const [filter, setFilter] = useState(data);
+  const lastFilterValue = filterByNumericValues.length - 1;
+  const { column, comparison, value } = filterByNumericValues[lastFilterValue];
 
   useEffect(() => {
-    let filteredNames = data;
-    const zero = 0;
-    if (names.length > zero) {
-      setNames(filteredNames);
-    }
-    filteredNames = data.filter((planet) => (
-      planet.name.toLowerCase().includes(searchName.toLowerCase())
-    ));
-    setNames(filteredNames);
-  }, [data, searchName]);
+    const filteredNames = data
+      .filter((planet) => planet.name.toLowerCase()
+        .includes(filterByName.toLowerCase()));
+    setFilter(filteredNames);
+  }, [data, filterByName]);
+
+  useEffect(() => {
+    const filteredNumbers = data
+      .filter((planet) => {
+        if (comparison === 'maior que') {
+          return Number(planet[column]) > Number(value);
+        }
+        if (comparison === 'menor que') {
+          return Number(planet[column]) < Number(value);
+        }
+        if (comparison === 'igual a') {
+          return Number(planet[column]) === Number(value);
+        }
+        return true;
+      });
+    setFilter(filteredNumbers);
+  }, [filterByNumericValues]);
 
   return loading ? <div>LOADING...</div> : (
     <table>
       <thead>
         <tr>
-          {headersTitle.map((header, index) => <th key={ index }>{header}</th>)}
+          { headersTitle
+            .map((header, index) => <th key={ index }>{header}</th>) }
         </tr>
       </thead>
       <tbody>
-        {names.map(({ name, rotation_period: rotationPeriod,
-          orbital_period: orbitalPeriod, diameter, climate, gravity, terrain,
-          surface_water: surfaceWater, population, created, edited, films, url,
-        }, index) => (
-          <tr key={ index }>
-            <td>{name}</td>
-            <td>{rotationPeriod}</td>
-            <td>{orbitalPeriod}</td>
-            <td>{diameter}</td>
-            <td>{climate}</td>
-            <td>{gravity}</td>
-            <td>{terrain}</td>
-            <td>{surfaceWater}</td>
-            <td>{population}</td>
-            <td>{films.length}</td>
-            <td>{url}</td>
-            <td>{created}</td>
-            <td>{edited}</td>
-          </tr>
-        ))}
+        { filter
+          .map(({ name, rotation_period: rotationPeriod, orbital_period: orbitalPeriod,
+            diameter, climate, gravity, terrain, surface_water: surfaceWater, population,
+            created, edited, films, url },
+          index) => (
+            <tr key={ index }>
+              <td>{ name }</td>
+              <td>{ rotationPeriod }</td>
+              <td>{ orbitalPeriod }</td>
+              <td>{ diameter }</td>
+              <td>{ climate }</td>
+              <td>{ gravity }</td>
+              <td>{ terrain }</td>
+              <td>{ surfaceWater }</td>
+              <td>{ population }</td>
+              <td>{ films.length }</td>
+              <td>{ url }</td>
+              <td>{ created }</td>
+              <td>{ edited }</td>
+            </tr>
+          ))}
       </tbody>
     </table>
   );
