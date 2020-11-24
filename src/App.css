@@ -1,7 +1,14 @@
 body {
+  background: url("../src/images/background.gif");
+  background-size: 100%;
   margin: 15px;
   padding: 0;
   border: 0;
+  color: white;
+}
+
+body image {
+  opacity: 0.5;
 }
 
 h1{
@@ -18,4 +25,9 @@ select {
   padding: 15px;
   font-weight: 900;
   font-size: 18px;
+}
+
+.table {
+  color: white;
+  font-size: 1.1em;
 }

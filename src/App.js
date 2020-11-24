@@ -1,12 +1,15 @@
 import React from 'react';
 import Table from './components/Table';
+import SearchFilter from './components/SearchFilter';
+import Header from './components/Header';
 import './App.css';
 import Provider from './provider/StarWarsProvider';
 
 function App() {
   return (
     <Provider>
-      <h1>Star Wars Datatable Hooks</h1>
+      <Header />
+      <SearchFilter />
       <Table />
     </Provider>
   );
