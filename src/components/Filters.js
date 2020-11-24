@@ -8,7 +8,9 @@ function Filters() {
     if (data) {
       let filtered;
       if (e.target.value !== '') {
-        filtered = data.results.filter((result) => result.name.toLowerCase().includes(e.target.value.toLowerCase()));
+        filtered = data.results
+          .filter((result) => result.name.toLowerCase()
+            .includes(e.target.value.toLowerCase()));
       } else {
         filtered = backupData.results;
       }

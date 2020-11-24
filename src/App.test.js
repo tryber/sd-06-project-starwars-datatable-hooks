@@ -109,19 +109,19 @@ describe('Filtre a tabela através de um texto, inserido num *campo de texto*, e
     }
   });
 
-  // it('Filtra planetas que possuem a letra "oo" no nome', async () => {
-  //   await act(async () => {
-  //     render(<App />);
-  //     const input = await screen.findByTestId(INPUT_FILTER_NAME_SELECTOR);
-  //     fireEvent.change(input, { target: { value: 'oo' } });
-  //   });
+  it('Filtra planetas que possuem a letra "oo" no nome', async () => {
+    await act(async () => {
+      render(<App />);
+      const input = await screen.findByTestId(INPUT_FILTER_NAME_SELECTOR);
+      fireEvent.change(input, { target: { value: 'oo' } });
+    });
 
-  //   expect(await screen.findAllByRole(ROW_ROLE_SELECTOR)).toHaveLength(3);
-  //   const planetNames = ['Naboo', 'Tatooine'];
-  //   for (let planetName of planetNames) {
-  //     expect(await screen.findByText(planetName)).toBeInTheDocument();
-  //   }
-  // });
+    expect(await screen.findAllByRole(ROW_ROLE_SELECTOR)).toHaveLength(3);
+    const planetNames = ['Naboo', 'Tatooine'];
+    for (let planetName of planetNames) {
+      expect(await screen.findByText(planetName)).toBeInTheDocument();
+    }
+  });
 
   // it('Realiza vários filtros em sequência', async () => {
   //   await act(async () => {
