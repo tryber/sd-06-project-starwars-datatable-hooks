@@ -14,20 +14,21 @@ function SearchFilter() {
     setFilterByNumericValues,
   } = useContext(StarWarsContext);
 
+  // função responsável por exibir o filtro após o clique para que seja mostrado cada filtro criado.
+
   return (
     <div>
-      <form>
+      <form className="form-inline">
         <label
           htmlFor="filterByName"
           className="name-filter"
         >
-          Filtro por Nome
-          {' '}
           <input
             name="filterByName"
             type="text"
             data-testid="name-filter"
             placeholder="Digite o nome"
+            className="form-control"
             // Captura o valor digitado e seta no estado local "filterByName".
             onChange={ (e) => setFilterByName(e.target.value) }
           />
@@ -36,13 +37,12 @@ function SearchFilter() {
           htmlFor="filterByNumber"
           className="column-filter"
         >
-          Filtro por Elemento
-          {' '}
           <select
+            className="custom-select"
             data-testid="column-filter"
             onChange={ (e) => setColumn(e.target.value) }
           >
-            {/* <option disabled selected> -- select an option -- </option> */}
+            <option disabled selected> -- select -- </option>
             <option>population</option>
             <option>orbital_period</option>
             <option>diameter</option>
@@ -50,10 +50,11 @@ function SearchFilter() {
             <option>surface_water</option>
           </select>
           <select
+            className="custom-select"
             data-testid="comparison-filter"
             onChange={ (e) => setComparison(e.target.value) }
           >
-            {/* <option disabled selected> -- select an option -- </option> */}
+            <option disabled selected> -- select -- </option>
             <option>maior que</option>
             <option>menor que</option>
             <option>igual a</option>
@@ -62,9 +63,11 @@ function SearchFilter() {
             data-testid="value-filter"
             type="number"
             placeholder="valor"
+            className="form-control"
             onChange={ (e) => setValue(e.target.value) }
           />
           <button
+            className="btn btn-outline-secondary"
             data-testid="button-filter"
             type="button"
             onClick={ () => setFilterByNumericValues([...filterByNumericValues,

@@ -10,9 +10,9 @@ function Table() {
     filterByNumericValues,
   } = useContext(StarWarsContext);
 
-  const tableHeaders = ['Name', 'Rotation Period',
-    'Orbital Period', 'Diameter', 'Climate', 'Gravity', 'Terrain',
-    'Surface Water', 'Population', 'Films', 'Created', 'Edited', 'URL'];
+  const tableHeaders = ['Nome', 'Rotação',
+    'Órbita', 'Diâmetro', 'Clima', 'Gravidade', 'Terreno',
+    'Água', 'População', 'Filmes', 'Criado', 'Editado', 'URL'];
 
   // criando uma variável auxiliar para não sobrescrever o array original.
   let filteredPlanets = tableArray;
