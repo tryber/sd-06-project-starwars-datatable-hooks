@@ -5,6 +5,20 @@ import fetchPlanets from '../services/fetchApi';
 
 function StarWarsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
+  const [filter, setFilter] = useState({
+    filters: {
+      filterByName: {
+        name: '',
+      },
+      filterByNumericValues: [
+        {
+          column: 'population',
+          comparison: 'bigger',
+          value: '100000',
+        },
+      ],
+    },
+  });
 
   useEffect(() => {
     fetchPlanets().then((res) => {
@@ -12,7 +26,7 @@ function StarWarsProvider({ children }) {
     });
   }, []);
 
-  const data = { planets };
+  const data = { planets, filter, setFilter };
 
   return (
     <starWarsContext.Provider

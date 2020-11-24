@@ -3,30 +3,37 @@ import starWarsContext from '../context/starWarsContext';
 import './Table.css';
 
 function Table() {
-  const [filter, setFilter] = useState({
-    filters: {
-      FilterByName: {
-        name: '',
-      },
-    },
-  });
+  const { planets, filter, setFilter } = useContext(starWarsContext);
 
   function handleFilterByName(event) {
     const { target } = event;
     const { value } = target;
     setFilter({
       filters: {
-        FilterByName: {
+        filterByName: {
           name: value,
         },
       },
     });
   }
 
-  const { planets } = useContext(starWarsContext);
+  function filterBySelect(event) {
+    const { target } = event;
+    const { name, value } = target;
+    setFilter({
+      filters: {
+        filterByNumericValues: [
+          {
+            [name]: [value],
+          },
+        ],
+      },
+    });
+  }
 
   function filterPlanets() {
-    const { name } = filter.filters.FilterByName;
+    const { name } = filter.filters.filterByName;
+
     if (name === '') return planets;
     // const capName = name.replace(/^\w/, (c) => c.toUpperCase());
     const filtered = planets.filter((planet) => planet.name.includes(name));
@@ -42,25 +49,35 @@ function Table() {
             data-testid="name-filter"
             type="text"
             name="search-bar"
-            onChange={ (event) => handleFilterByName(event) }
+            onChange={(event) => handleFilterByName(event)}
           />
         </div>
         <div className="filters">
-          <select data-testid="column-filter">
+          <select
+            data-testid="column-filter"
+            name="colum"
+            onChange={(event) => filterBySelect(event)}
+          >
             <option value="population">population</option>
             <option value="orbital_period">orbital_period</option>
             <option value="diameter">diameter</option>
             <option value="rotation_period">rotation_period</option>
             <option value="surface_water">surface_water</option>
           </select>
-          <select data-testid="comparison-filter">
+          <select
+            data-testid="comparison-filter"
+            name="comparison"
+            onChange={(event) => filterBySelect(event)}
+          >
             <option value="bigger">bigger</option>
             <option value="smaller">smaller</option>
             <option value="equal">equal</option>
           </select>
           <input
+            name="value"
             type="number"
             data-testid="value-filter"
+            onChange={(event) => filterBySelect(event)}
           />
           <button
             type="button"
@@ -88,27 +105,27 @@ function Table() {
             <th>URL</th>
           </tr>
         </thead>
+        <tbody>
+          {filterPlanets()
+            .map((planet, index) => (
+              <tr key={index}>
+                <td>{planet.climate}</td>
+                <td>{planet.created}</td>
+                <td>{planet.diameter}</td>
+                <td>{planet.edited}</td>
+                <td>{planet.films}</td>
+                <td>{planet.gravity}</td>
+                <td data-testid="planet-name">{planet.name}</td>
+                <td>{planet.orbital_period}</td>
+                <td>{planet.population}</td>
+                <td>{planet.rotation_period}</td>
+                <td>{planet.surface_water}</td>
+                <td>{planet.terrain}</td>
+                <td>{planet.url}</td>
+              </tr>
+            ))}
+        </tbody>
       </table>
-      <tbody>
-        {filterPlanets()
-          .map((planet, index) => (
-            <tr key={ index }>
-              <td>{planet.climate}</td>
-              <td>{planet.created}</td>
-              <td>{planet.diameter}</td>
-              <td>{planet.edited}</td>
-              <td>{planet.films}</td>
-              <td>{planet.gravity}</td>
-              <td data-testid="planet-name">{planet.name}</td>
-              <td>{planet.orbital_period}</td>
-              <td>{planet.population}</td>
-              <td>{planet.rotation_period}</td>
-              <td>{planet.surface_water}</td>
-              <td>{planet.terrain}</td>
-              <td>{planet.url}</td>
-            </tr>
-          ))}
-      </tbody>
     </div>
   );
 }
