@@ -6,21 +6,22 @@ import getPlanets from '../services/api';
 function ContextProvider({ children }) {
   const [planets, setPlanets] = useState({});
   const [isFetching, setIsFetching] = useState(true);
-  const [filters, setFilters] = useState({filterByName: {name: ''}});
-  const { filterByName } = filters;
+  const [filters, setFilters] = useState({
+    filterByName: { name: '' },
+    filterByNumericValues: { column: '', comparison: '', value: '' },
+  });
 
   useEffect(() => {
-    if (filterByName.name === '') (async () => {
-      const fetchPlanets = await getPlanets();
-      setPlanets(fetchPlanets.results);
-      setIsFetching(false);
-    })();
     (async () => {
-      const fetchPlanets = await getPlanets(filterByName.name);
-      setPlanets(fetchPlanets.results);
+      const fetchPlanets = await getPlanets();
+      const planetResults = fetchPlanets.results.map((planet) => {
+        delete planet.residents;
+        return planet;
+      });
+      setPlanets(planetResults);
       setIsFetching(false);
     })();
-  }, [filters]);
+  }, []);
 
   const contextValues = {
     planets,
