@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import propTypes from 'prop-types';
 import fetchPlanets from '../services/Api';
 import DataContext from './DataContext';
-import propTypes from 'prop-types';
 
 function DataProvider({ children }) {
   const [data, setData] = useState([]);
@@ -51,7 +51,7 @@ function DataProvider({ children }) {
 }
 
 DataProvider.propTypes = {
-  children: propTypes.arrayOf(propTypes.object),
+  children: propTypes.arrayOf(propTypes.object).isRequired,
 };
 
 export default DataProvider;
