@@ -23,7 +23,7 @@ function Provider({ children }) {
     });
   }, []);
 
-  const data = { thePlanets, filters, setFilters }
+  const data = { thePlanets, filters, setFilters };
 
   return (
     <StarWarsContext.Provider value={ data }>
@@ -36,4 +36,4 @@ Provider.propTypes = {
   children: PropTypes.shape().isRequired,
 };
 
-export default Provider
+export default Provider;

@@ -8,15 +8,15 @@ function Table() {
     allPlanets.filter((planetName) => planetName.name.includes(filters.filterByName.name))
   );
 
-    const biggerPlanet = (tableColum, number) => (
-      parseInt(tableColum, 10) > parseInt(number, 10)
-    );
-    const smallerPlanet = (tableColum, number) => (
-      parseInt(tableColum, 10) < parseInt(number, 10)
-    );
-    const sameSizePlanet = (tableColum, number) => (
-      parseInt(tableColum, 10) === parseInt(number, 10)
-    );
+  const biggerPlanet = (tableColum, number) => (
+    parseInt(tableColum, 10) > parseInt(number, 10)
+  );
+  const smallerPlanet = (tableColum, number) => (
+    parseInt(tableColum, 10) < parseInt(number, 10)
+  );
+  const sameSizePlanet = (tableColum, number) => (
+    parseInt(tableColum, 10) === parseInt(number, 10)
+  );
 
   const planetsCompare = (planetName, column, comparison, value) => {
     const comparing = {
@@ -107,7 +107,7 @@ function Table() {
     setFilters(
       { ...filters,
         filterByNumericValues: newFilterByNumericValues,
-        columnToGrab: columnsGrabbed
+        columnToGrab: columnsGrabbed,
       },
     );
   };
@@ -216,4 +216,4 @@ function Table() {
   );
 }
 
-export default Table
+export default Table;
