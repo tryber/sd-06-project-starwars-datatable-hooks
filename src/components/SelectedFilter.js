@@ -2,16 +2,11 @@ import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context/starWarsContext';
 
 function SelectedFilter() {
-  const filterOne = [
-    '',
-    'population',
-    'orbital_period',
-    'diameter',
-    'rotation_period',
-    'surface_water',
-  ];
+  const { addFilter, saveFilter, filterdColumn } = useContext(StarWarsContext);
 
-  const filterTwo = [
+  console.log(saveFilter);
+
+  const condicao = [
     '',
     'maior que',
     'menor que',
@@ -26,9 +21,52 @@ function SelectedFilter() {
     comparison,
     value,
   };
-
-  const { addFilter } = useContext(StarWarsContext);
-
+  if (saveFilter) {
+    return (
+      <div>
+        <label htmlFor="column">
+          selecione uma coluna
+          <select
+            id="column"
+            data-testid="column-filter"
+            onChange={ ({ target }) => setColumn(target.value) }
+          >
+            {filterdColumn.map((el, idx) => <option key={ idx }>{el}</option>)}
+          </select>
+        </label>
+        <lable htmlFor="comparison">
+          Selecione uma condição
+          <select
+            id="comparison"
+            data-testid="comparison-filter"
+            onChange={ ({ target }) => setComparison(target.value) }
+          >
+            {condicao.map((el, idx) => <option key={ idx }>{ el }</option>)}
+          </select>
+        </lable>
+        <lable htmlFor="value">
+          Digite um numero
+          <input
+            id="value"
+            data-testid="value-filter"
+            type="number"
+            onChange={ ({ target }) => setValue(target.value) }
+          />
+        </lable>
+        <button
+          type="button"
+          data-testid="button-filter"
+          onClick={ () => addFilter(param) }
+        >
+          Filtrar
+        </button>
+        {saveFilter.map((el, idx) => (
+          <p key={ idx }>
+            {`Coluna: ${el.coluna} - Condição: ${el.comparar} - Valor: ${el.valor}`}
+          </p>))}
+      </div>
+    );
+  }
   return (
     <div>
       <label htmlFor="column">
@@ -38,7 +76,7 @@ function SelectedFilter() {
           data-testid="column-filter"
           onChange={ ({ target }) => setColumn(target.value) }
         >
-          {filterOne.map((el, idx) => <option key={ idx }>{el}</option>)}
+          {filterdColumn.map((el, idx) => <option key={ idx }>{el}</option>)}
         </select>
       </label>
       <lable htmlFor="comparison">
@@ -48,7 +86,7 @@ function SelectedFilter() {
           data-testid="comparison-filter"
           onChange={ ({ target }) => setComparison(target.value) }
         >
-          {filterTwo.map((el, idx) => <option key={ idx }>{ el }</option>)}
+          {condicao.map((el, idx) => <option key={ idx }>{ el }</option>)}
         </select>
       </lable>
       <lable htmlFor="value">

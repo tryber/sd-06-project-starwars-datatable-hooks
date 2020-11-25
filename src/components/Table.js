@@ -28,16 +28,15 @@ function Table() {
         check = data.filter((el) => parseInt(el[column], 10) === parseInt(value, 10));
       }
     });
+
     return check;
   };
 
   useEffect(() => {
     handleFilter();
+    filterByFilter();
   }, [filterByNumericValues]);
 
-  useEffect(() => {
-    filterByFilter();
-  }, []);
   return (
     <table>
       <thead>
