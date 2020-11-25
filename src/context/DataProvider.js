@@ -18,9 +18,9 @@ function DataProvider({ children }) {
 
   const handleChange = (e) => {
     const inputInfo = e.target.value;
-    const dataFilter =  data
-      .filter(element => element.name.toUpperCase()
-      .includes(inputInfo.toUpperCase()));
+    const dataFilter = data
+      .filter((element) => element.name.toUpperCase()
+        .includes(inputInfo.toUpperCase()));
     setResult(dataFilter);
     setInputText(inputInfo);
   };
@@ -43,14 +43,10 @@ function DataProvider({ children }) {
   };
 
   return (
-    <DataContext.Provider value={ { contextValue } } >
+    <DataContext.Provider value={ { contextValue } }>
       { children }
     </DataContext.Provider>
   );
 }
-
-DataProvider.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
-};
 
 export default DataProvider;
