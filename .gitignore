@@ -24,3 +24,4 @@ yarn-error.log*
 
 # VSCode repo settings
 .vscode
+src/zzzteste.js
