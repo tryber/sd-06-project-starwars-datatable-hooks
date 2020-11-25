@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
+import './Table.css';
 
 function Table() {
   const { data, loading, filters, setFilters } = useContext(StarWarsContext);
@@ -112,7 +113,7 @@ function Table() {
     );
   };
   return (
-    <div>
+    <div className="space">
       { loading ? (<p>Loading...</p>) : (
         <div>
           <div>
@@ -120,6 +121,7 @@ function Table() {
               data-testid="name-filter"
               type="text"
               onChange={ handleName }
+              placeholder="insert the name"
             />
           </div>
           <div>
@@ -172,7 +174,7 @@ function Table() {
             )) }
           </div>
           <table className="table table-dark">
-            <thead>
+            <thead className="thead-dark">
               <tr>
                 <th scope="col">Climate</th>
                 <th scope="col">Created</th>
