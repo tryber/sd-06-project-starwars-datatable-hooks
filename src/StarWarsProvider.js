@@ -5,27 +5,24 @@ import PlanetsAPI from './services/RequestPlanetsAPI';
 
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
-  const [name, setName] = useState('');
+  const [filters, setFilters] = useState({
+    filterByName: {
+      name: '',
+    },
+    filterByNumericValues: [],
+  });
 
   const requestPlanets = async () => {
     const planetsReturneds = await PlanetsAPI();
     setData(planetsReturneds);
   };
 
-  const filtersProvider = {
-    filters: {
-      filterByName: {
-        name,
-      },
-    },
-  };
-
   const contextValue = {
     data,
     setData,
     requestPlanets,
-    filtersProvider,
-    setName,
+    filters,
+    setFilters,
   };
 
   return (
@@ -35,6 +32,6 @@ function StarWarsProvider({ children }) {
   );
 }
 
-StarWarsProvider.propTypes = { children: PropTypes.arrayOf().isRequired };
+StarWarsProvider.propTypes = { children: PropTypes.node.isRequired };
 
 export default StarWarsProvider;

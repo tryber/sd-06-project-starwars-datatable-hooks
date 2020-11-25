@@ -1,25 +1,48 @@
 import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
+import InputFilters from './InputFilters';
 import InputName from './InputName';
 
 function Table() {
   const {
     data,
     requestPlanets,
-    filtersProvider:
-      { filters:
-        { filterByName:
-          { name },
-        },
-      } } = useContext(StarWarsContext);
+    filters,
+  } = useContext(StarWarsContext);
 
   useEffect(() => {
     requestPlanets();
   }, []);
 
+  const filterPlanets = () => {
+    let planets = data;
+    filters.filterByNumericValues.forEach((filter) => {
+      const { column } = filter;
+      const { comparison } = filter;
+      const { value } = filter;
+      if (comparison === 'maior que') {
+        planets = planets.filter(
+          (planet) => Number(planet[column]) > Number(value),
+        );
+      } else if (comparison === 'menor que') {
+        planets = planets.filter(
+          (planet) => Number(planet[column]) < Number(value),
+        );
+      } else if (comparison === 'igual a') {
+        planets = planets.filter(
+          (planet) => Number(planet[column]) === Number(value),
+        );
+      }
+    });
+    return planets;
+  };
+
+  const planetas = filterPlanets();
+
   return (
     <div>
       <InputName />
+      <InputFilters />
       <h1>Tabela</h1>
       <table className="table">
         <thead className="thead-dark">
@@ -40,9 +63,9 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {data
+          {planetas
             .filter((planet) => planet.name.toLowerCase()
-              .includes(name.toLowerCase()))
+              .includes(filters.filterByName.name.toLowerCase()))
             .map((planet, index) => (
               <tr key={ index }>
                 <td>{ planet.name }</td>
