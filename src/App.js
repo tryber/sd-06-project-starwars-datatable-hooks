@@ -47,3 +47,6 @@ function App() {
 }
 
 export default App;
+
+// referencias
+// este projeto foi desenvolvido com a ajuda de Matheus Coutinho, José Carlos da Costa e Paulo Lins
