@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import fetchPlanets from '../services/Api';
 import DataContext from './DataContext';
 
@@ -8,7 +8,7 @@ function DataProvider({ children }) {
   const [columnFilter, setColumnFilter] = useState([]);
   const [comparisonFilter, setComparisonFilter] = useState([]);
   const [valueFilter, setValueFilter] = useState([]);
-  const [result, setResult] =useState([]);
+  const [result, setResult] = useState([]);
 
   const getInfoPlanets = async () => {
     const infoPlanets = await fetchPlanets();
@@ -18,21 +18,29 @@ function DataProvider({ children }) {
 
   const handleChange = (e) => {
     const inputInfo = e.target.value;
-    const dataFilter =  data.filter(element => element.name.toUpperCase().includes(inputInfo.toUpperCase()));
+    const dataFilter =  data
+      .filter(element => element.name.toUpperCase()
+      .includes(inputInfo.toUpperCase()));
     setResult(dataFilter);
     setInputText(inputInfo);
-  }
+  };
 
   const contextValue = {
-    data, setData,
-    inputText, setInputText,
+    data,
+    setData,
+    inputText,
+    setInputText,
     getInfoPlanets,
     handleChange,
-    columnFilter, setColumnFilter,
-    comparisonFilter, setComparisonFilter,
-    valueFilter, setValueFilter,
-    result, setResult,
-  }
+    columnFilter,
+    setColumnFilter,
+    comparisonFilter,
+    setComparisonFilter,
+    valueFilter,
+    setValueFilter,
+    result,
+    setResult,
+  };
 
   return (
     <DataContext.Provider value={ { contextValue } } >
@@ -40,5 +48,9 @@ function DataProvider({ children }) {
     </DataContext.Provider>
   );
 }
+
+DataProvider.propTypes = {
+  children: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+};
 
 export default DataProvider;

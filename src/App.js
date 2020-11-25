@@ -7,13 +7,13 @@ import DataProvider from './context/DataProvider';
 function App() {
   return (
     <DataProvider>
-        <div>
-          <InputFilters />
-          <table>
-            <Header />
-            <Table />
-          </table>
-        </div>
+      <div>
+        <InputFilters />
+        <table>
+          <Header />
+          <Table />
+        </table>
+      </div>
     </DataProvider>
   );
 }
