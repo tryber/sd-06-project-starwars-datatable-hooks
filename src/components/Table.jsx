@@ -2,15 +2,35 @@ import React, { useEffect, useContext } from 'react';
 import DataContext from '../context/DataContext';
 
 function Table() {
-  const { contextValue: { getInfoPlanets, result } } = useContext(DataContext);
+  const { contextValue: { getInfoPlanets, data, inputText,
+    columnFilter, 
+    comparisonFilter, 
+    valueFilter, 
+     } } = useContext(DataContext);
 
   useEffect(() => {
     getInfoPlanets();
   }, []);
 
+  const dinamicFilter = (data) => {
+    let resultFilter = data;
+    comparisonFilter.forEach((comparison, index) => {
+      if (comparison === 'maior') {
+        resultFilter = resultFilter.filter(element => parseInt(element[columnFilter[index]], 10) > parseInt(valueFilter[index], 10))
+      } else if (comparison === 'menor que') {
+        resultFilter = resultFilter.filter(element => parseInt(element[columnFilter[index]], 10) < parseInt(valueFilter[index], 10))
+      } else if (comparison === 'igual a') {
+        resultFilter = resultFilter.filter(element => parseInt(element[columnFilter[index]], 10) === parseInt(valueFilter[index], 10))
+      }
+    })
+    return resultFilter;
+  }
+
   return (
     <tbody>
-      {result.map((line) => {
+      {dinamicFilter(data)
+      .filter(element => element.name.toUpperCase().includes(inputText.toUpperCase()))
+      .map((line) => {
         return (
           <tr key={line.name} >
             <td>{line.name}</td>

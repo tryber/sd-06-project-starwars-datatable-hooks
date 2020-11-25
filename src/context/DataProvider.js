@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import fetchPlanets from '../services/Api';
 import DataContext from './DataContext';
 
 function DataProvider({ children }) {
   const [data, setData] = useState([]);
   const [inputText, setInputText] = useState('');
-  const [columnFilter, setColumnFilter] = useState('population');
-  const [comparisonFilter, setComparisonFilter] = useState('maior');
-  const [valueFilter, setValueFilter] = useState('');
+  const [columnFilter, setColumnFilter] = useState([]);
+  const [comparisonFilter, setComparisonFilter] = useState([]);
+  const [valueFilter, setValueFilter] = useState([]);
   const [result, setResult] =useState([]);
 
   const getInfoPlanets = async () => {
@@ -18,9 +18,9 @@ function DataProvider({ children }) {
 
   const handleChange = (e) => {
     const inputInfo = e.target.value;
-    setInputText(inputInfo);
     const dataFilter =  data.filter(element => element.name.toUpperCase().includes(inputInfo.toUpperCase()));
     setResult(dataFilter);
+    setInputText(inputInfo);
   }
 
   const contextValue = {

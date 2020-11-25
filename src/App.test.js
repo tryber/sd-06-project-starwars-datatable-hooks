@@ -101,7 +101,6 @@ describe('Filtre a tabela através de um texto, inserido num *campo de texto*, e
       const input = await screen.findByTestId(INPUT_FILTER_NAME_SELECTOR);
       fireEvent.change(input, { target: { value: 'o' } });
     });
-
     expect(await screen.findAllByRole(ROW_ROLE_SELECTOR)).toHaveLength(8);
     const planetNames = ['Coruscant', 'Dagobah', 'Endor', 'Hoth', 'Kamino', 'Naboo', 'Tatooine'];
     for (let planetName of planetNames) {
@@ -158,7 +157,7 @@ describe('Filtre a tabela através de um texto, inserido num *campo de texto*, e
   });
 });
 
-describe.only('Crie um filtro para valores numéricos', () => {
+describe('Crie um filtro para valores numéricos', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
 
@@ -248,7 +247,7 @@ describe.only('Crie um filtro para valores numéricos', () => {
   });
 });
 
-describe.skip('Não utilize filtros repetidos', () => {
+describe('Não utilize filtros repetidos', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
 
@@ -284,7 +283,7 @@ describe.skip('Não utilize filtros repetidos', () => {
   });
 });
 
-describe.skip('Apague o filtro de valores numéricos e desfaça as filtragens dos dados da tabela ao clicar no ícone de `X` de um dos filtro', () => {
+describe.only('Apague o filtro de valores numéricos e desfaça as filtragens dos dados da tabela ao clicar no ícone de `X` de um dos filtro', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
 
@@ -336,7 +335,7 @@ describe.skip('Apague o filtro de valores numéricos e desfaça as filtragens do
   });
 });
 
-describe.skip('Ordene as colunas de forma ascendente ou descendente', () => {
+describe('Ordene as colunas de forma ascendente ou descendente', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
 
