@@ -5,11 +5,13 @@ import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
   const {
+    // Recupera do contexto as seguintes funções e arrays:
     tableArray,
     filterByName,
     filterByNumericValues,
   } = useContext(StarWarsContext);
 
+  // Array dos ths que serão exibidos.
   const tableHeaders = ['Nome', 'Rotação',
     'Órbita', 'Diâmetro', 'Clima', 'Gravidade', 'Terreno',
     'Água', 'População', 'Filmes', 'Criado', 'Editado', 'URL'];
@@ -42,6 +44,7 @@ function Table() {
       <table className="table">
         <thead>
           <tr>
+            {/* Exibe os ths daquele array acima. */}
             {tableHeaders.map((table, i) => (
               <th key={ i }>{ table }</th>
             ))}

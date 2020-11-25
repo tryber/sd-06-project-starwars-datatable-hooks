@@ -4,17 +4,17 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import StarWarsContext from '../context/StarWarsContext';
 
 function SearchFilter() {
+  // Estados locais criados para usar no onChange.
   const [column, setColumn] = useState('');
   const [comparison, setComparison] = useState('');
   const [value, setValue] = useState('');
 
   const {
+    // Recupera do contexto as seguintes funções e arrays:
     setFilterByName,
     filterByNumericValues,
     setFilterByNumericValues,
   } = useContext(StarWarsContext);
-
-  // função responsável por exibir o filtro após o clique para que seja mostrado cada filtro criado.
 
   return (
     <div>
@@ -29,7 +29,7 @@ function SearchFilter() {
             data-testid="name-filter"
             placeholder="Digite o nome"
             className="form-control"
-            // Captura o valor digitado e seta no estado local "filterByName".
+            // Captura o valor digitado onChange e seta no contexto dentro do array "filterByName", verificando os nomes dos planetas.
             onChange={ (e) => setFilterByName(e.target.value) }
           />
         </label>
@@ -40,6 +40,7 @@ function SearchFilter() {
           <select
             className="custom-select"
             data-testid="column-filter"
+            // Estado local atualizado onChange
             onChange={ (e) => setColumn(e.target.value) }
           >
             <option disabled selected> -- select -- </option>
@@ -52,6 +53,7 @@ function SearchFilter() {
           <select
             className="custom-select"
             data-testid="comparison-filter"
+            // Estado local atualizado onChange
             onChange={ (e) => setComparison(e.target.value) }
           >
             <option disabled selected> -- select -- </option>
@@ -64,12 +66,14 @@ function SearchFilter() {
             type="number"
             placeholder="valor"
             className="form-control"
+            // Estado local atualizado onChange
             onChange={ (e) => setValue(e.target.value) }
           />
           <button
             className="btn btn-outline-secondary"
             data-testid="button-filter"
             type="button"
+            // Captura os estados locais atualizados onChange e seta eles no contexto a partir do click.
             onClick={ () => setFilterByNumericValues([...filterByNumericValues,
               { column, comparison, value },
             ]) }
