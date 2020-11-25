@@ -23,7 +23,14 @@ function Filters() {
   return (
     <div>
       {columnFilter.map((element, index) => {
-        return <button data-testid='filter' key={index} id={index} onClick={(e) => removeFilter(e)}>{`${columnFilter[index]} ${comparisonFilter[index]} que ${valueFilter[index]} x`}</button>
+        return (
+        <span key={index} data-testid='filter'>
+          {`${columnFilter[index]} ${comparisonFilter[index]} que ${valueFilter[index]}`}
+          <button  key={index} id={index} onClick={(e) => removeFilter(e)}>
+            X
+          </button>
+        </span>
+        );
       })}
     </div>
   )
