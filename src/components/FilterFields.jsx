@@ -16,7 +16,7 @@ function FilterFields() {
   const [comparasion, setComparasion] = useState('');
   const [value, setValue] = useState('');
   const [sortColumn, setSortcolumn] = useState('');
-  const [sortOrder, setSortOrder] = useState('ASC');
+  const [sortOrder, setSortOrder] = useState('');
   const numericFilters = [
     'rotation_period',
     'orbital_period',
@@ -101,19 +101,12 @@ function FilterFields() {
             value={ column }
             onChange={ (e) => setColumn(e.target.value) }
           >
+            <option key="disabledNumFilter" disabled value="">--</option>
             {/* Compare two Javascript Arrays and remove Duplicates: https://stackoverflow.com/a/14930567 */}
             {numericFilters.filter((filter) => usedFilters.indexOf(filter) === noMatch)
-              .map((filter, index) => {
-                if (!index) {
-                  return (
-                    <>
-                      <option key="disabledNumFilter" disabled value="">--</option>
-                      <option key={ filter } value={ filter }>{filter}</option>
-                    </>
-                  );
-                }
-                return <option key={ filter } value={ filter }>{filter}</option>;
-              })}
+              .map((filter) => (
+                <option key={ filter } value={ filter }>{filter}</option>
+              ))}
           </select>
         </span>
         <span>
@@ -147,17 +140,10 @@ function FilterFields() {
           data-testid="column-sort"
           onChange={ (e) => setSortcolumn(e.target.value) }
         >
-          {planetKeys.map((planetKey, index) => {
-            if (!index) {
-              return (
-                <>
-                  <option key="disabledPlanetKeys" disabled value="">--</option>
-                  <option key={ planetKey } value={ planetKey }>{planetKey}</option>
-                </>
-              );
-            }
-            return <option key={ planetKey } value={ planetKey }>{planetKey}</option>;
-          })}
+          <option key="disabledPlanetKeys" disabled value="">--</option>
+          {planetKeys.map((planetKey) => (
+            <option key={ planetKey } value={ planetKey }>{planetKey}</option>
+          ))}
         </select>
         <label htmlFor="radio-asc">
           <input
