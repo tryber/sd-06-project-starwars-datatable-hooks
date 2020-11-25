@@ -49,4 +49,8 @@ function DataProvider({ children }) {
   );
 }
 
+Provider.propTypes = {
+  children: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+};
+
 export default DataProvider;
