@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Filter() {
-  const { setFilterByName, setFilterByNumber } = useContext(StarWarsContext);
+  const { setFilterByName, setFilterByNumber, filters } = useContext(StarWarsContext);
+
   const handleChange = ({ target }) => {
     setFilterByName(target.value);
   };
@@ -16,8 +17,17 @@ function Filter() {
     };
     setFilterByNumber(filterCreation);
   };
-  const colunmOptions = ['population', 'orbital_period', 'diameter',
+  const setOptions = () => {
+    let colunmOptions = ['population', 'orbital_period', 'diameter',
     'rotation_period', 'surface_water'];
+    //Lógica das linhas 24 a 27 com a ajuda da Ana Capdeville
+    const filteredOptions = filters.filterByNumericValues
+      .map((filter) => Object.values(filter)[0]);
+
+    colunmOptions = colunmOptions.filter((columnOption) => !filteredOptions.includes(columnOption));
+
+    return colunmOptions;
+  };
 
   return (
     <div>
@@ -25,7 +35,7 @@ function Filter() {
       <div data-testid="filter">
         <select data-testid="column-filter" id="column">
           <option hidden value="">Selecione</option>
-          {colunmOptions
+          {setOptions()
             .map((option) => <option value={ option } key={ option }>{option}</option>)}
         </select>
         <select data-testid="comparison-filter" id="comparison">
@@ -44,6 +54,14 @@ function Filter() {
       >
         Filtrar
       </button>
+      { filters.filterByNumericValues.map((filter, index) => (
+        <div>
+          <span key={ index }>
+          { filter.column } { filter.comparison } { filter.value }
+          </span>
+          <br />
+        </div>
+      ))}
     </div>
 
   );
