@@ -1,9 +1,8 @@
 import React, { createContext, useState } from 'react';
 import PropTypes from 'prop-types';
 
-export const StarWarsContext = createContext();
+const StarWarsContext = createContext();
 export const Provider = ({ children }) => {
-
   const [returnAPI, setReturnAPI] = useState([]);
   const [filterName, setFilterName] = useState({ filterByName: { name: '' } });
   const [filterNumber, setFilterNumber] = useState([]);
@@ -24,8 +23,8 @@ export const Provider = ({ children }) => {
   );
 };
 
-export default StarWarsContext;
-
 Provider.propTypes = {
   children: PropTypes.arrayOf(PropTypes.element).isRequired,
 };
+
+export default StarWarsContext;
