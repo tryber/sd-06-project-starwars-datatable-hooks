@@ -1,27 +1,22 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import PlanetsData from './components/PlanetsData';
+import FilterInput from './components/FilterInput';
+import FilterOptions from './components/FilterOptions';
+import ContextProvider from './context/ContextProvider';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={ logo } className="App-logo" alt="logo" />
-        <p>
-          Edit
-          <code>src/App.js</code>
-          and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main>
+      <ContextProvider>
+        <header>
+          <h1 className="app-title">Star Wars Planet Search!</h1>
+        </header>
+        <FilterInput />
+        <FilterOptions />
+        <PlanetsData />
+      </ContextProvider>
+    </main>
   );
 }
 
