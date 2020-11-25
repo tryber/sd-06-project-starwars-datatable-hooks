@@ -7,6 +7,7 @@ function Table() {
     nameInput,
     tablePalnets,
     setTablePlanets,
+    filterByNumericValues,
   } = useContext(StarWarsContext);
 
   useEffect(() => {
@@ -33,6 +34,24 @@ function Table() {
     'URL',
   ];
 
+  let filteredPlanets = tablePalnets;
+
+  filterByNumericValues.forEach((filter) => {
+    filteredPlanets = filteredPlanets.filter((planet) => {
+      if (filter.comparison === 'maior que') {
+        return (planet[filter.column] > parseInt(filter.value, 10));
+      }
+      if (filter.comparison === 'menor que') {
+        return (planet[filter.column] < parseInt(filter.value, 10));
+      }
+      if (filter.comparison === 'igual a') {
+        return (parseInt(planet[filter.column], 10) === parseInt(filter.value, 10));
+      }
+      return null;
+    });
+    return null;
+  });
+
   return (
     <table>
       <thead>
@@ -40,20 +59,9 @@ function Table() {
           {tableHeaders.map((header, index) => (<th key={ index }>{header}</th>))}
         </tr>
       </thead>
-      {/* filterByNumericValues.forEach(element => {
-          if (element.comparison ==='maior que'){
-           return element.column > parseInt(element.value, 10)
-          }
-          if (element.comparison ==='menor que'){
-            return element.column < eparseInt(element.value, 10)
-          }
-          if (element.comparison ==='igual a'){
-            return element.column === parseInt(element.value, 10)
-          }
-        }); */}
       <tbody>
-        {tablePalnets
-          .filter((planet) => planet.name.toLowerCase()
+        {filteredPlanets
+          .filter((table) => table.name.toLowerCase()
             .includes(nameInput.toLowerCase()))
           .map((planetName, index) => (
             <tr key={ index }>
