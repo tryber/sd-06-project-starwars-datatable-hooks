@@ -1,13 +1,16 @@
 import React from 'react';
+import Provider from './context/Provider';
 import './App.css';
+import Table from './components/Table';
 
 function App() {
   return (
-    <StarWarsProvider>
+    <Provider>
       <div className="App">
-        Star Wars Planet List
+        Star Wars Planets
+        <Table />
       </div>
-    </StarWarsProvider>
+    </Provider>
   );
 }
 
