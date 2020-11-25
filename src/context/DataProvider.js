@@ -49,7 +49,7 @@ function DataProvider({ children }) {
   );
 }
 
-Provider.propTypes = {
+DataProvider.propTypes = {
   children: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
 };
 
