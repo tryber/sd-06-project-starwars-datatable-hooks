@@ -2,7 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function TabStarWar() {
-  const { filterNumber, setFilterNumber, returnAPI, setReturnAPI, filterName, setFilterName } = useContext(StarWarsContext);
+  const { filterNumber, setFilterNumber,
+    returnAPI, setReturnAPI, filterName, setFilterName } = useContext(StarWarsContext);
 
   const endPoint = 'https://swapi-trybe.herokuapp.com/api/planets';
 
