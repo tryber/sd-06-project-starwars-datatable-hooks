@@ -1,12 +1,12 @@
 import React from 'react';
-import Planets from './components/Planets';
+import Table from './components/Table';
 import Provider from './context/Provider';
 
 function App() {
   return (
     <Provider>
       <div className="App">
-        <Planets />
+        <Table />
       </div>
     </Provider>
   );
