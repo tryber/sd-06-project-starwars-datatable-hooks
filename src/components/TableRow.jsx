@@ -4,11 +4,20 @@ import PropTypes from 'prop-types';
 function TableRow({ planetValues }) {
   return (
     <tr>
-      {Object.values(planetValues).map((planetValue, index) => (
-        <td key={ index }>
-          { planetValue }
-        </td>
-      ))}
+      {Object.values(planetValues).map((planetValue, index) => {
+        if (!index) {
+          return (
+            <td data-testid="planet-name" key={ index }>
+              { planetValue }
+            </td>
+          );
+        }
+        return (
+          <td key={ index }>
+            { planetValue }
+          </td>
+        );
+      })}
     </tr>
   );
 }

@@ -10,6 +10,11 @@ function StarWarsProvider({ children }) {
   const [filters, setFilters] = useState({
     filterByName: { name: '' },
     filterByNumericValues: [],
+    order: {
+      column: 'name',
+      sort: 'ASC',
+      type: 'string',
+    },
   });
   const [input, setInput] = useState(''); /* salva as alterações digitadas na busca por nome do planeta */
   const [filteredPlanets, setFilteredPlanets] = useState([]); /* array com os planetas após os filtros de busca por nome e os filtros numéricos */
@@ -22,6 +27,10 @@ function StarWarsProvider({ children }) {
     planets = planets.map((planet) => {
       // operador delete p/ remover a chave 'residents', já que ela não será utilizada
       delete planet.residents;
+      planet.films = planet.films
+        .map((link, index) => (<a key={ index } href={ link }>{'filme '}</a>));
+
+      planet.url = (<a href={ planet.url }>link</a>);
       return planet;
     });
 
@@ -70,11 +79,22 @@ function StarWarsProvider({ children }) {
     } else setFilteredPlanets(data);
   };
 
+  const sortPlanets = (a, b) => {
+    const { column, sort, type } = filters.order;
+    const aAfterB = 1;
+    const bAfterA = -1;
+
+    if (!a) return 1;
+    if (type === 'numeric') {
+      if (sort === 'ASC') return ((a[column]) - b[column]);
+      return (b[column] - a[column]);
+    }
+    if (sort === 'ASC') return a[column] > b[column] ? aAfterB : bAfterA;
+    return a[column] < b[column] ? aAfterB : bAfterA;
+  };
+
   const contextValue = {
-    data,
-    setData,
     loading,
-    setLoading,
     filters,
     setFilters,
     input,
@@ -88,6 +108,7 @@ function StarWarsProvider({ children }) {
     planetKeys,
     getPlanets,
     removeFilter,
+    sortPlanets,
   };
 
   return (

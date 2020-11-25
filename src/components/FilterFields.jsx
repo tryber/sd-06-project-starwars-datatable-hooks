@@ -10,17 +10,19 @@ function FilterFields() {
     usedFilters,
     addFilter,
     updateFilteredPlanets,
+    planetKeys,
   } = useContext(Context);
   const [column, setColumn] = useState('');
   const [comparasion, setComparasion] = useState('');
   const [value, setValue] = useState('');
+  const [sortColumn, setSortcolumn] = useState('');
+  const [sortOrder, setSortOrder] = useState('ASC');
   const numericFilters = [
-    '',
-    'population',
+    'rotation_period',
     'orbital_period',
     'diameter',
-    'rotation_period',
     'surface_water',
+    'population',
   ];
   const noMatch = -1;
 
@@ -29,10 +31,9 @@ function FilterFields() {
   useEffect(() => {
     addFilter();
     updateFilteredPlanets();
-  }, [filters.filterByNumericValues]);
+  }, [filters]);
 
   // salva o que está sendo digitado no input no filterByName
-  // transformar em um useEffect a partir do que muda no input?
   const onChangeInput = (e) => {
     setInput(e.target.value);
     setFilters({
@@ -62,6 +63,24 @@ function FilterFields() {
     setValue('');
   };
 
+  // atualiza as opções para fazer a ordenação
+  const updateSortOptions = (e) => {
+    e.preventDefault();
+
+    const columnType = numericFilters.some((numFilter) => numFilter === sortColumn)
+      ? 'numeric'
+      : 'string';
+
+    setFilters({
+      ...filters,
+      order: {
+        column: sortColumn,
+        sort: sortOrder,
+        type: columnType,
+      },
+    });
+  };
+
   return (
     <div>
       <span>
@@ -85,10 +104,15 @@ function FilterFields() {
             {/* Compare two Javascript Arrays and remove Duplicates: https://stackoverflow.com/a/14930567 */}
             {numericFilters.filter((filter) => usedFilters.indexOf(filter) === noMatch)
               .map((filter, index) => {
-                if (!filter) {
-                  return <option key={ index } disabled value={ filter }>--</option>;
+                if (!index) {
+                  return (
+                    <>
+                      <option key="disabledNumFilter" disabled value="">--</option>
+                      <option key={ filter } value={ filter }>{filter}</option>
+                    </>
+                  );
                 }
-                return <option key={ index } value={ filter }>{filter}</option>;
+                return <option key={ filter } value={ filter }>{filter}</option>;
               })}
           </select>
         </span>
@@ -98,7 +122,7 @@ function FilterFields() {
             value={ comparasion }
             onChange={ (e) => setComparasion(e.target.value) }
           >
-            <option value="">--</option>
+            <option value="" disabled>--</option>
             <option value="maior que">maior que</option>
             <option value="menor que">menor que</option>
             <option value="igual a">igual a</option>
@@ -117,9 +141,55 @@ function FilterFields() {
         >
           Filtrar
         </button>
-        <br />
-        <br />
       </form>
+      <form onSubmit={ (e) => updateSortOptions(e) }>
+        <select
+          data-testid="column-sort"
+          onChange={ (e) => setSortcolumn(e.target.value) }
+        >
+          {planetKeys.map((planetKey, index) => {
+            if (!index) {
+              return (
+                <>
+                  <option key="disabledPlanetKeys" disabled value="">--</option>
+                  <option key={ planetKey } value={ planetKey }>{planetKey}</option>
+                </>
+              );
+            }
+            return <option key={ planetKey } value={ planetKey }>{planetKey}</option>;
+          })}
+        </select>
+        <label htmlFor="radio-asc">
+          <input
+            id="radio-asc"
+            data-testid="column-sort-input-asc"
+            type="radio"
+            name="sort"
+            value="ASC"
+            onChange={ () => setSortOrder('ASC') }
+          />
+          Crescente
+        </label>
+        <label htmlFor="radio-desc">
+          <input
+            id="radio-desc"
+            data-testid="column-sort-input-desc"
+            type="radio"
+            name="sort"
+            value="DESC"
+            onChange={ () => setSortOrder('DESC') }
+          />
+          Descrescente
+        </label>
+        <button
+          type="submit"
+          data-testid="column-sort-button"
+        >
+          Ordenar
+        </button>
+      </form>
+      <br />
+      <br />
     </div>
   );
 }

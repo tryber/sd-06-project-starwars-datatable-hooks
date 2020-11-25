@@ -12,6 +12,7 @@ function Table() {
     input,
     filters,
     filteredPlanets,
+    sortPlanets,
   } = useContext(Context);
 
   useEffect(() => {
@@ -35,7 +36,8 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {filteredPlanets.filter((planet) => planet.name.toLowerCase().includes(input))
+          {filteredPlanets.sort(sortPlanets)
+            .filter((planet) => planet.name.toLowerCase().includes(input))
             .map((planet) => <TableRow key={ planet.name } planetValues={ planet } />)}
         </tbody>
       </table>
