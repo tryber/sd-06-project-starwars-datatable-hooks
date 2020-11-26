@@ -10,6 +10,8 @@ function PlanetsProvider({ children }) {
     filterByNumericValues: [],
   });
   const [comparison, setComparison] = useState();
+  const [filterNumber, setFilterNumber] = useState();
+  const [wichColumn, setWichColumn] = useState();
 
   useEffect(() => {
     async function requestPlanets() {
@@ -26,23 +28,30 @@ function PlanetsProvider({ children }) {
     });
   };
 
-  const setFilterByNumericValues = (data) => {
+  const numericValuesFilter = (column, comparisons, number) => {
     setFilters({
       ...filters,
-      filterByNumericValues: ({
-        data,
-      }),
+      filterByNumericValues: ([...filters.filterByNumericValues, {
+        column,
+        comparisons,
+        number,
+      }]),
     });
   };
 
   const contexts = {
     planets,
+    setPlanets,
     filters,
     setFilters,
-    filteringName,
     comparison,
     setComparison,
-    setFilterByNumericValues,
+    wichColumn,
+    setWichColumn,
+    filterNumber,
+    setFilterNumber,
+    numericValuesFilter,
+    filteringName,
   };
 
   return (

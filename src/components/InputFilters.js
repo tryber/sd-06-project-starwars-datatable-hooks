@@ -5,10 +5,14 @@ function InputFilters() {
   const { contexts } = useContext(StarWarsContext);
   const {
     filters: { filterByName: { name } },
-    filteringName,
     comparison,
     setComparison,
-    setFilterByNumericValues,
+    wichColumn,
+    setWichColumn,
+    filterNumber,
+    setFilterNumber,
+    filteringName,
+    numericValuesFilter,
   } = contexts;
 
   const columns = [
@@ -31,6 +35,7 @@ function InputFilters() {
       />
       <select
         data-testid="column-filter"
+        onChange={ ({ target }) => setWichColumn(target.value) }
       >
         {columns.map((column, index) => (
           <option key={ index } value={ column }>{column}</option>
@@ -38,22 +43,26 @@ function InputFilters() {
       </select>
       <select
         data-testid="comparison-filter"
-        onChange={ (target) => setComparison(target.value) }
+        onChange={ ({ target }) => setComparison(target.value) }
       >
-        <option value="menor que">menor que</option>
-        <option value="igual a">igual a</option>
         <option value="maior que">maior que</option>
+        <option value="igual a">igual a</option>
+        <option value="menor que">menor que</option>
       </select>
       <input
         type="number"
         data-testid="value-filter"
         name="inputNumber"
         placeholder="Digite um número"
+        value={ filterNumber }
+        onChange={ ({ target }) => setFilterNumber(target.value) }
       />
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ () => setFilterByNumericValues(comparison) }
+        onClick={ () => numericValuesFilter(
+          wichColumn, comparison, filterNumber,
+        ) }
       >
         Filtrar
       </button>

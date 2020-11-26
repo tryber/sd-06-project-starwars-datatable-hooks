@@ -1,9 +1,16 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function TablePlanets() {
   const { contexts } = useContext(StarWarsContext);
-  const { planets, filters } = contexts;
+  const {
+    planets,
+    setPlanets,
+    filters,
+    comparison,
+    wichColumn,
+    filterNumber,
+  } = contexts;
 
   const headersTable = [
     'Name',
@@ -20,6 +27,28 @@ function TablePlanets() {
     'Edited',
     'Url',
   ];
+
+  const numericFilterComparsion = () => {
+    const filterPlanets = planets.filter((any) => {
+      const convertNumber = any[wichColumn];
+      switch (comparison) {
+      case 'menor que':
+        return Number(convertNumber) < Number(filterNumber);
+      case 'igual a':
+        return Number(convertNumber) === Number(filterNumber);
+      case 'maior que':
+        return Number(convertNumber) > Number(filterNumber);
+      default:
+        break;
+      }
+      return true;
+    });
+    return setPlanets(filterPlanets);
+  };
+
+  useEffect(() => {
+    numericFilterComparsion();
+  }, [filters.filterByNumericValues]);
 
   return (
     <div>
