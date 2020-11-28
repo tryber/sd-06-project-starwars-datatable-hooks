@@ -6,6 +6,12 @@ function Provider({ children }) {
   const [isFetching, setIsFetching] = useState(false);
   const [data, setData] = useState();
   const [backupData, setBackupData] = useState();
+  const [changedData, setChangedData] = useState(false);
+  const [filters, setFilters] = useState({
+    column: 'population',
+    comparison: 'maior que',
+    value: 0,
+  });
 
   const contextValue = {
     isFetching,
@@ -14,6 +20,10 @@ function Provider({ children }) {
     setData,
     backupData,
     setBackupData,
+    filters,
+    setFilters,
+    changedData,
+    setChangedData,
   };
 
   return (

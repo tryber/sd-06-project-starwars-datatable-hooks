@@ -2,7 +2,22 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Filters() {
-  const { data, setData, backupData } = useContext(StarWarsContext);
+  const { data,
+    setData,
+    backupData,
+    filters,
+    setFilters,
+    changedData,
+    setChangedData,
+  } = useContext(StarWarsContext);
+
+  function changeField(e, field) {
+    const { value } = e.target;
+    setFilters({
+      ...filters,
+      [field]: value,
+    });
+  }
 
   function handleChange(e) {
     if (data) {
@@ -21,6 +36,43 @@ function Filters() {
     }
   }
 
+  function handleClick() {
+    // console.log(filters.column);
+    if (filters.comparison === 'maior que') {
+      console.log(filters.column);
+      // console.log(data.results[0][filters.column]);
+      console.log(data.results);
+      const filtered = data.results
+        .filter((result) => Number(result[filters.column]) > Number(filters.value));
+        // .filter((result) => result[filters.column] === filters.value);
+      setData({
+        ...data,
+        results: filtered,
+      });
+    // setChangedData(true);
+    } else if (filters.comparison === 'menor que') {
+      console.log(filters.column, filters.comparison, filters.value);
+      const filtered = data.results
+        .filter((result) => Number(result[filters.column]) < Number(filters.value));
+        // .filter((result) => result[filters.column] === filters.value);
+      setData({
+        ...data,
+        results: filtered,
+      });
+    // setChangedData(true);
+    } else if (filters.comparison === 'igual a') {
+      console.log(filters.column, filters.comparison, filters.value);
+      const filtered = data.results
+        .filter((result) => Number(result[filters.column]) === Number(filters.value));
+        // .filter((result) => result[filters.column] === filters.value);
+      setData({
+        ...data,
+        results: filtered,
+      });
+      // setChangedData(true);
+    }
+  }
+
   return (
     <div>
       <input
@@ -29,6 +81,41 @@ function Filters() {
         placeholder="Search by name"
         data-testid="name-filter"
       />
+      <br />
+      <select
+        name="column"
+        data-testid="column-filter"
+        onChange={ (e) => changeField(e, 'column') }
+      >
+        <option value="population">Population</option>
+        <option value="orbital_period">Orbital Period</option>
+        <option value="diameter">Diameter</option>
+        <option value="rotation_period">Rotation Period</option>
+        <option value="surface_water">Surface Water</option>
+      </select>
+      <select
+        name="comparison"
+        data-testid="comparison-filter"
+        onChange={ (e) => changeField(e, 'comparison') }
+      >
+        <option value="maior que">Maior que</option>
+        <option value="menor que">Menor que</option>
+        <option value="igual a">Igual a</option>
+      </select>
+      <input
+        type="number"
+        name="value"
+        data-testid="value-filter"
+        placeholder={ 0 }
+        onChange={ (e) => changeField(e, 'value') }
+      />
+      <button
+        type="button"
+        data-testid="button-filter"
+        onClick={ handleClick }
+      >
+        Adicionar filtro
+      </button>
     </div>
   );
 }
