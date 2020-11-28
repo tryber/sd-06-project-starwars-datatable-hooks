@@ -54,18 +54,23 @@ function Table() {
   return (
     <div>
       <Filter />
-      <table>
-        <thead>
-          <tr>
-            { headElement() }
-          </tr>
-        </thead>
-        <tbody>
-          {planets
-            ? tableFilterStructure()
-            : <h1>Loading...</h1>}
-        </tbody>
-      </table>
+      {planets
+        ? (
+          <table>
+            <thead>
+              <tr>
+                { headElement() }
+              </tr>
+            </thead>
+            <tbody>
+              {planets.map((planet) => rowElement(planet))}
+              {// tableFilterStructure()
+              }
+            </tbody>
+          </table>
+        )
+        : <h1>Loading</h1>
+      }
     </div>
   );
 }
