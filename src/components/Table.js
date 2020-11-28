@@ -63,9 +63,7 @@ function Table() {
               </tr>
             </thead>
             <tbody>
-              {planets.map((planet) => rowElement(planet))}
-              {// tableFilterStructure()
-              }
+              {tableFilterStructure()}
             </tbody>
           </table>
         )

@@ -46,15 +46,15 @@ function Filter() {
   };
 
   const filterField = ({ target }) => {
-    setChosenField(target.form[1].value);
+    setChosenField(target.value);
   };
 
   const filterComparison = ({ target }) => {
-    setChosenComparison(target.form[2].value);
+    setChosenComparison(target.value);
   };
 
   const filterValue = ({ target }) => {
-    setChosenValue(target.form[3].value);
+    setChosenValue(target.value);
   };
 
   const dropdownOption = (type) => (
