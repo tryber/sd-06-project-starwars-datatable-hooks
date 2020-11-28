@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 import API from '../services/api';
+import Filters from './Filters';
 import '../index.css';
 
 function Table() {
@@ -62,6 +63,7 @@ function Table() {
 
     return (
       <div>
+        <Filters />
         {/* <input type="text" onChange={ (e) => handleFilters(e) } /> */}
         <table>
           <thead>

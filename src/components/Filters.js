@@ -7,8 +7,8 @@ function Filters() {
     backupData,
     filters,
     setFilters,
-    changedData,
-    setChangedData,
+    // changedData,
+    // setChangedData,
   } = useContext(StarWarsContext);
 
   function changeField(e, field) {
