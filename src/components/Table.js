@@ -54,7 +54,7 @@ function Table() {
   return (
     <div>
       <Filter />
-      {planets
+      {planets.length !== ZERO
         ? (
           <table>
             <thead>
@@ -69,8 +69,7 @@ function Table() {
             </tbody>
           </table>
         )
-        : <h1>Loading</h1>
-      }
+        : <h1>Loading</h1>}
     </div>
   );
 }
