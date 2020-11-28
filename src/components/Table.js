@@ -19,6 +19,8 @@ function Table() {
     'terrain',
     'url',
   ];
+  const ZERO = 0;
+
   const headElement = () => HEAD.map((e, index) => (
     <th key={ `${e}-${index}` }>{ e }</th>));
 
@@ -31,18 +33,24 @@ function Table() {
       ))}
     </tr>);
 
-  const { planets, setPlanets, name, setName, filteredPlanets } = useContext(AppContext);
+  const { planets, setPlanets, name, filteredPlanets } = useContext(AppContext);
 
   const PLANETS_FROM_API = async () => {
     const RESULT = await sWAPI();
     return setPlanets(RESULT.results);
   };
 
+  const tableFilterStructure = () => (
+    filteredPlanets.length > ZERO
+      ? filteredPlanets.map((planet) => rowElement(planet))
+      : planets.filter((planet) => planet.name.includes(name))
+        .map((planet) => rowElement(planet))
+  );
+
   useEffect(() => {
     PLANETS_FROM_API();
   }, []);
 
-  const ZERO = 0;
   return (
     <div>
       <Filter />
@@ -54,10 +62,7 @@ function Table() {
         </thead>
         <tbody>
           {planets
-            ? filteredPlanets.length > 0
-              ? filteredPlanets.map((planet) => rowElement(planet))
-              : planets.filter((planet) => planet.name.includes(name))
-                .map((planet) => rowElement(planet))
+            ? tableFilterStructure()
             : <h1>Loading...</h1>}
         </tbody>
       </table>
