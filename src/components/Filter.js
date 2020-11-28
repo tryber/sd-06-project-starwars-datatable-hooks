@@ -1,132 +1,116 @@
-import React, { Component } from 'react';
+import React, { useContext, useState } from 'react';
+import AppContext from '../context/AppContext';
 
-import PropTypes from 'prop-types';
+function Filter() {
+  const { setName, setFilteredPlanets, planets } = useContext(AppContext);
 
-export default class Filter extends Component {
-  constructor(props) {
-    super(props);
+  const FILTER_FIELDS = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
+  const COMPARISON_TYPE = ['maior que', 'menor que', 'igual a'];
+  const ZERO = 0;
+  const [chosenComparison, setChosenComparison] = useState('');
+  const [chosenField, setChosenField] = useState('');
+  const [chosenValue, setChosenValue] = useState(ZERO);
 
-    this.state = {
-      name: '',
-      diameter: '',
-      climate: '',
-      created: '',
-      edited: '',
-      films: '',
-      gravity: '',
-      orbital_period: '',
-      population: '',
-      url: '',
-      rotation_period: '',
-      surface_water: '',
-      terrain: '',
-      filteredPlanets: props,
-    };
+  const handleChange = (event) => {
+    const { value, name } = event.target;
+    if (name === 'name') {
+      setName(value);
+    }
+  };
 
-    this.handleChange = this.handleChange.bind(this);
-    this.input = this.input.bind(this);
-  }
+  const manageFilter = () => {
+    if (chosenValue !== ZERO) {
+      switch (chosenComparison) {
+      case 'maior que':
+        setFilteredPlanets(planets.filter((planet) => (
+          planet[chosenField] > chosenValue && planet[chosenField] !== 'unknow')));
+        break;
+      case 'menor que':
+        setFilteredPlanets(planets.filter((planet) => (
+          planet[chosenField] < chosenValue && planet[chosenField] !== 'unknow')));
+        break;
+      default:
+        setFilteredPlanets(planets.filter((planet) => (
+          planet[chosenField] === chosenValue && planet[chosenField] !== 'unknow')));
+      }
+    }
+  };
 
-  handleChange(event) {
-    const { setFilter, planets } = this.props;
-    const { name, value } = event.target;
-    console.log(planets);
-    this.setState({ [name]: value }, () => {
-      setFilter(planets.filter((planet) => planet.name.includes(value)));
-    });
-  }
+  const filterField = ({ target }) => {
+    setChosenField(target.form[1].value);
+  };
 
-  filterField(fieldType, fieldValue, index) {
-    return (
-      <option
-        id={ fieldType }
-        name={ fieldType }
-        value={ fieldValue }
-        onChange={ this.handleChange }
-        key={ `${fieldType}-${fieldValue}-${index}` }
-      >
-        { fieldType }
-      </option>
-    );
-  }
+  const filterComparison = ({ target }) => {
+    setChosenComparison(target.form[2].value);
+  };
 
-  comparisonType(type, index) {
-    return (
-      <option
-        id={ type }
-        name={ type }
-        value={ type }
-        onChange={ this.handleChange }
-        key={ `${type}-shouldBeRandom-${index}` }
-      >
-        { type }
-      </option>
-    );
-  }
+  const filterValue = ({ target }) => {
+    setChosenValue(target.form[3].value);
+  };
 
-  input(fieldType, fieldValue, index) {
-    return (
-      <label htmlFor={ fieldType }>
-        { fieldType }
+  const dropdownOption = (type) => (
+    <option
+      id={ type }
+      name={ type }
+      value={ type }
+      key={ `${type}` }
+    >
+      { type }
+    </option>
+  );
+
+  return (
+    <form>
+      <label htmlFor="name">
+        Name
         <input
-          data-testid={ `${fieldType}-filter` }
-          id={ fieldType }
-          name={ fieldType }
-          value={ fieldValue }
-          onChange={ this.handleChange }
-          key={ `${fieldType}-${fieldValue}-${index}` }
+          data-testid="name-filter"
+          id="name"
+          name="name"
+          type="text"
+          onChange={ (e) => handleChange(e) }
         />
       </label>
-    );
-  }
-
-  render() {
-    const STATES = [{ ...this.state }];
-    const FIELDS = ['name'];
-    const FILTER_NUMBERS = [
-      'population',
-      'orbital_period',
-      'diameter',
-      'rotation_period',
-      'surface_water',
-    ];
-    const COMPARISON_TYPE = ['maior que', 'menor que', 'igual a'];
-
-    return (
-      <form>
-        { FIELDS.map((field, index) => this.input(field, STATES[0][field], index))}
-        <select data-testid="column-filter">
-          { FILTER_NUMBERS.map((field, index) => (
-            this.filterField(field, STATES[0][field], index))) }
-        </select>
-        <select data-testid="comparison-filter">
-          {COMPARISON_TYPE.map((type, index) => this.comparisonType(type, index))}
-        </select>
-      </form>
-    );
-  }
+      <select
+        data-testid="column-filter"
+        value={ chosenField }
+        onChange={ (e) => filterField(e) }
+      >
+        { FILTER_FIELDS.map((field, index) => (
+          dropdownOption(field, index))) }
+      </select>
+      <select
+        data-testid="comparison-filter"
+        value={ chosenComparison }
+        onChange={ (e) => filterComparison(e) }
+      >
+        {COMPARISON_TYPE.map((type, index) => dropdownOption(type, index))}
+      </select>
+      <label htmlFor="value">
+        Value
+        <input
+          data-testid="value-filter"
+          id="value"
+          name="value"
+          type="number"
+          onChange={ (e) => filterValue(e) }
+        />
+      </label>
+      <button
+        type="button"
+        onClick={ (e) => manageFilter(e) }
+        data-testid="button-filter"
+      >
+        Filtrar
+      </button>
+    </form>
+  );
 }
 
-Filter.propTypes = {
-  setFilter: PropTypes.func.isRequired,
-  planets: PropTypes.arrayOf(
-    PropTypes.object.isRequired,
-  ).isRequired,
-};
-
-// const {
-//   name,
-//   diameter,
-//   climate,
-//   created,
-//   edited,
-//   films,
-//   gravity,
-//   orbital_period,
-//   population,
-//   url,
-//   rotation_period,
-//   surface_water,
-//   terrain,
-//   filteredPlanets,
-// } = this.state;
+export default Filter;

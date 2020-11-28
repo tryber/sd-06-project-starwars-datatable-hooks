@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
+import AppContext from '../context/AppContext';
 import sWAPI from '../services/sWAPI';
 import Filter from './Filter';
 
@@ -30,8 +31,7 @@ function Table() {
       ))}
     </tr>);
 
-  const [planets, setPlanets] = useState([]);
-  const [filteredPlanets, setFilter] = useState([]);
+  const { planets, setPlanets, name, setName, filteredPlanets } = useContext(AppContext);
 
   const PLANETS_FROM_API = async () => {
     const RESULT = await sWAPI();
@@ -45,11 +45,7 @@ function Table() {
   const ZERO = 0;
   return (
     <div>
-      <Filter
-        filteredPlanets={ filteredPlanets }
-        setFilter={ setFilter }
-        planets={ planets }
-      />
+      <Filter />
       <table>
         <thead>
           <tr>
@@ -57,9 +53,12 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {filteredPlanets.length !== ZERO
-            ? filteredPlanets.map((planet) => rowElement(planet))
-            : planets.map((planet) => rowElement(planet))}
+          {planets
+            ? filteredPlanets.length > 0
+              ? filteredPlanets.map((planet) => rowElement(planet))
+              : planets.filter((planet) => planet.name.includes(name))
+                .map((planet) => rowElement(planet))
+            : <h1>Loading...</h1>}
         </tbody>
       </table>
     </div>
