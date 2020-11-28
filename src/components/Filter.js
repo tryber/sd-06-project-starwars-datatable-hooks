@@ -13,8 +13,8 @@ function Filter() {
   ];
   const COMPARISON_TYPE = ['maior que', 'menor que', 'igual a'];
   const ZERO = 0;
-  const [chosenComparison, setChosenComparison] = useState('');
-  const [chosenField, setChosenField] = useState('');
+  const [chosenComparison, setChosenComparison] = useState('maior que');
+  const [chosenField, setChosenField] = useState('population');
   const [chosenValue, setChosenValue] = useState(ZERO);
 
   const handleChange = (event) => {
@@ -29,15 +29,18 @@ function Filter() {
       switch (chosenComparison) {
       case 'maior que':
         setFilteredPlanets(planets.filter((planet) => (
-          planet[chosenField] > chosenValue && planet[chosenField] !== 'unknow')));
+          Number(planet[chosenField]) > Number(chosenValue)
+          && planet[chosenField] !== 'unknown')));
         break;
       case 'menor que':
         setFilteredPlanets(planets.filter((planet) => (
-          planet[chosenField] < chosenValue && planet[chosenField] !== 'unknow')));
+          Number(planet[chosenField]) < Number(chosenValue)
+          && planet[chosenField] !== 'unknown')));
         break;
       default:
         setFilteredPlanets(planets.filter((planet) => (
-          planet[chosenField] === chosenValue && planet[chosenField] !== 'unknow')));
+          Number(planet[chosenField]) === Number(chosenValue)
+          && planet[chosenField] !== 'unknown')));
       }
     }
   };
