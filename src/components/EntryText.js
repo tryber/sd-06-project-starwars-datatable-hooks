@@ -1,23 +1,25 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function EntryText() {
+  const listLength = 0;
   const initFiters = {
-    filterByNumericValues:
-      {
-        column: '',
-        comparison: '',
-        value: '',
-      },
+    filterByNumericValues: [
+
+    ],
   };
   const { handle, entryText, filtersFunc } = useContext(StarWarsContext);
   const [filters, setFilters] = useState(initFiters);
+  const [column, setColumn] = useState('');
+  const [comparison, setComparison] = useState('');
+  const [value, setValue] = useState('');
 
   function handleChange(event, input) {
     const filter = event.target.value;
-    setFilters((prevState) => (
-      { filterByNumericValues: { ...prevState.filterByNumericValues, [input]: filter },
-      }));
+    if (input === 'column') setColumn(filter);
+    if (input === 'comparison') setComparison(filter);
+    if (input === 'value') setValue(filter);
+
     // this.setState({
     //   form: { ...form, [input]: event.target.value },
     // });
@@ -30,10 +32,30 @@ function EntryText() {
     // }
   }
 
+  function selectVerifyFilters() {
+    if (filters.filterByNumericValues.length > listLength) {
+      // console.log(filters.filterByNumericValues[0].column);
+      if (filters.filterByNumericValues[0].column.includes('population')) {
+        const optionSelect = document.querySelector('#population');
+        optionSelect.style.visibility = 'hidden';
+      }
+    }
+  }
+
+  useEffect(() => {
+    selectVerifyFilters();
+  });
+
   function handleClick() {
-    const { value, column, comparison } = filters.filterByNumericValues;
+    // const { value, column, comparison } = this.state;
+    if (column.length > listLength && comparison.length
+      > listLength && value.length > listLength) {
+      setFilters((prevState) => (
+        { filterByNumericValues:
+          [...prevState.filterByNumericValues, { value, comparison, column }],
+        }));
+    }
     filtersFunc(column, comparison, value);
-    console.log(comparison + column + value);
   }
 
   return (
@@ -55,7 +77,10 @@ function EntryText() {
           id="col-filter"
           onChange={ (event) => handleChange(event, 'column') }
         >
-          <option value="population">
+          <option value="">
+            Selecione
+          </option>
+          <option id="population" value="population">
             population
           </option>
           <option value="orbital_period">
