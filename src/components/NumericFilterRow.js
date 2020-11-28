@@ -62,7 +62,6 @@ function NumericFilterRow({ currentFilters, saveFilter }) {
         data-testid="comparison-filter"
         name="comparison-filter"
         defaultValue={ comparison }
-
       >
         <option>-- Comparison filter --</option>
         {comparisonFilters.map((statement) => (
