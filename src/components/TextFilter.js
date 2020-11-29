@@ -7,7 +7,7 @@ function TextFilter() {
     setTextSearch,
   } = useContext(StarWarsContext);
 
-  return(
+  return (
     <label htmlFor="text-input">
       Planet name:
       <input

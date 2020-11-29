@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
-import { Loading } from '../components';
+import Loading from './Loading';
 
 function Table() {
   const {
@@ -8,23 +8,23 @@ function Table() {
     tableHeaders,
     isFetching,
     textSearch,
-    //makeInitialSetup,
+    // makeInitialSetup,
     mockedInitialSetup,
   } = useContext(StarWarsContext);
 
   useEffect(() => {
     mockedInitialSetup();
-    //makeInitialSetup();
+    // makeInitialSetup();
   }, []);
 
   useEffect(() => {
   }, [textSearch]);
 
-  const getFilteredPlanetsByUser = (planets, searchTerm) => {
-    return planets.filter((planet) => (
+  const getFilteredPlanetsByUser = (planets, searchTerm) => (
+    planets.filter((planet) => (
       planet.name.toLowerCase().includes(searchTerm.toLowerCase())
-    ));
-  };
+    ))
+  );
 
   const renderTable = () => (
     <table className="table">

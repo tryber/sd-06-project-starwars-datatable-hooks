@@ -22,14 +22,13 @@ function StarWarsProvider({ children }) {
 
   // Remova depois que a API retornar
   const mockedInitialSetup = async () => {
-    console.log("Retrieving API info")
+    console.log('Retrieving API info');
     const planetsInfo = await getMockedPlanetsInfo();
     console.log('Request response:', planetsInfo);
     setData(planetsInfo);
     setTableHeaders(Object.keys(planetsInfo[0]));
     setIsFetching(false);
   };
-
 
   /*
   HABILITE NOVAMENTE DEPOIS QUE A API RETORNAR
