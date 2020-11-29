@@ -30,6 +30,7 @@ function StarWarsProvider({ children }) {
     setIsFetching(false);
   };
 
+
   /*
   HABILITE NOVAMENTE DEPOIS QUE A API RETORNAR
 
