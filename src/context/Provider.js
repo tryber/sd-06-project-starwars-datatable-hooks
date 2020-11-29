@@ -15,10 +15,10 @@ export default function Provider({ children }) {
     setIsLoading(false);
   }, []);
 
-  const providerData = { planets, isLoading };
+  const data = { planets, isLoading };
 
   return (
-    <StarWarsContext.Provider value={ providerData }>
+    <StarWarsContext.Provider value={ data }>
       { children }
     </StarWarsContext.Provider>
   );
