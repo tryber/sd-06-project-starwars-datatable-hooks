@@ -8,12 +8,14 @@ function Table() {
     tableHeaders,
     isFetching,
     textSearch,
-    makeInitialSetup,
+    //makeInitialSetup,
+    mockedInitialSetup,
   } = useContext(StarWarsContext);
 
   useEffect(() => {
-    makeInitialSetup();
-  }, [makeInitialSetup]);
+    mockedInitialSetup();
+    //makeInitialSetup();
+  }, []);
 
   useEffect(() => {
   }, [textSearch]);
