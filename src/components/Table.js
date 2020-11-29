@@ -7,12 +7,22 @@ function Table() {
     data,
     tableHeaders,
     isFetching,
+    textSearch,
     makeInitialSetup,
   } = useContext(StarWarsContext);
 
   useEffect(() => {
     makeInitialSetup();
-  }, []);
+  }, [makeInitialSetup]);
+
+  useEffect(() => {
+  }, [textSearch]);
+
+  const getFilteredPlanetsByUser = (planets, searchTerm) => {
+    return planets.filter((planet) => (
+      planet.name.toLowerCase().includes(searchTerm.toLowerCase())
+    ));
+  };
 
   const renderTable = () => (
     <table className="table">
@@ -24,7 +34,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {data.map((planet) => (
+        {getFilteredPlanetsByUser(data, textSearch).map((planet) => (
           <tr key={ planet.name }>
             {Object.values(planet).map((planetValue, index) => (
               <td key={ index }>{ planetValue }</td>
