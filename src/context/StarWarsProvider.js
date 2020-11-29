@@ -8,6 +8,7 @@ function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
   const [tableHeaders, setTableHeaders] = useState([]);
   const [isFetching, setIsFetching] = useState(true);
+  const [textSearch, setTextSearch] = useState('');
   const getPlanetsInfo = async () => {
     const planetsInfo = await fetchPlanetsInfo();
     const planetsWithoutResidentsKey = planetsInfo.map((planet) => (
@@ -27,6 +28,8 @@ function StarWarsProvider({ children }) {
     data,
     isFetching,
     tableHeaders,
+    textSearch,
+    setTextSearch,
     makeInitialSetup,
     setIsFetching,
   };
