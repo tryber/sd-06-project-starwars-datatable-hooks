@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
-import Loading from './Loading';
+import { Loading } from '../components';
 
 function Table() {
   const {
