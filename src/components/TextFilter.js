@@ -13,6 +13,7 @@ function TextFilter() {
       <input
         type="text"
         id="text-input"
+        data-testid="name-filter"
         placeholder="Type planet name"
         onChange={ (event) => setTextSearch(event.target.value) }
         value={ textSearch }

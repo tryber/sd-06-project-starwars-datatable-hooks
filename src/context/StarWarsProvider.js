@@ -8,7 +8,7 @@ function StarWarsProvider({ children }) {
   const [tableHeaders, setTableHeaders] = useState([]);
   const [isFetching, setIsFetching] = useState(true);
   const [textSearch, setTextSearch] = useState('');
-  const [numericSearch, setNumericSearch] = useState([]);
+  // const [numericSearch, setNumericSearch] = useState([]);
 
   /*
   IN CASE OF API FAILURE
@@ -51,7 +51,6 @@ function StarWarsProvider({ children }) {
     setIsFetching(false);
   };
   */
-  
   const contextValue = {
     data,
     isFetching,

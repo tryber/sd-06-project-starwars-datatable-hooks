@@ -26,9 +26,9 @@ function Table() {
       return planetsWithoutResidentsKey;
     };
     const makeInitialSetup = async () => {
-      console.log("Retrieving API info")
+      // console.log('Retrieving API info');
       const planetsInfo = await getPlanetsInfo();
-      console.log('Request response:', planetsInfo);
+      // console.log('Request response:', planetsInfo);
       setData(planetsInfo);
       setTableHeaders(Object.keys(planetsInfo[0]));
       setIsFetching(false);
