@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-// import fetchPlanetsInfo from '../services/apiServices';
-import mockFetchPlanetsInfo from '../services/mockApiServices';
-import removeKeyFromObject from '../helpers/removeKeyFromObject';
+// import mockFetchPlanetsInfo from '../services/mockApiServices';
 import StarWarsContext from './StarWarsContext';
 
 function StarWarsProvider({ children }) {
@@ -12,6 +10,8 @@ function StarWarsProvider({ children }) {
   const [textSearch, setTextSearch] = useState('');
   const [numericSearch, setNumericSearch] = useState([]);
 
+  /*
+  IN CASE OF API FAILURE
   // Remova depois que a API retornar
   const getMockedPlanetsInfo = async () => {
     const planetsInfo = mockFetchPlanetsInfo();
@@ -30,10 +30,10 @@ function StarWarsProvider({ children }) {
     setTableHeaders(Object.keys(planetsInfo[0]));
     setIsFetching(false);
   };
+  */
 
   /*
-  HABILITE NOVAMENTE DEPOIS QUE A API RETORNAR
-
+  OLD API REQUEST
   const getPlanetsInfo = async () => {
     const planetsInfo = await fetchPlanetsInfo();
     const planetsWithoutResidentsKey = planetsInfo.map((planet) => (
@@ -51,16 +51,17 @@ function StarWarsProvider({ children }) {
     setIsFetching(false);
   };
   */
-
+  
   const contextValue = {
     data,
     isFetching,
     tableHeaders,
     textSearch,
     setTextSearch,
-    // makeInitialSetup,
-    mockedInitialSetup,
+    setData,
+    setTableHeaders,
     setIsFetching,
+    // mockedInitialSetup,
   };
 
   return (

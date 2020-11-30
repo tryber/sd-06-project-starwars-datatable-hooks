@@ -1,5 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
+import fetchPlanetsInfo from '../services/apiServices';
+import removeKeyFromObject from '../helpers/removeKeyFromObject';
 import Loading from './Loading';
 
 function Table() {
@@ -8,13 +10,31 @@ function Table() {
     tableHeaders,
     isFetching,
     textSearch,
+    setData,
+    setTableHeaders,
+    setIsFetching,
     // makeInitialSetup,
-    mockedInitialSetup,
+    // mockedInitialSetup,
   } = useContext(StarWarsContext);
 
   useEffect(() => {
-    mockedInitialSetup();
-    // makeInitialSetup();
+    const getPlanetsInfo = async () => {
+      const planetsInfo = await fetchPlanetsInfo();
+      const planetsWithoutResidentsKey = planetsInfo.map((planet) => (
+        removeKeyFromObject(planet, 'residents')
+      ));
+      return planetsWithoutResidentsKey;
+    };
+    const makeInitialSetup = async () => {
+      console.log("Retrieving API info")
+      const planetsInfo = await getPlanetsInfo();
+      console.log('Request response:', planetsInfo);
+      setData(planetsInfo);
+      setTableHeaders(Object.keys(planetsInfo[0]));
+      setIsFetching(false);
+    };
+    makeInitialSetup();
+    // mockedInitialSetup();
   }, []);
 
   useEffect(() => {
