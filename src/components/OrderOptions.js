@@ -2,11 +2,7 @@ import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function OrderOptions() {
-  const { setOrder } = useContext(StarWarsContext);
-
-  const options = ['name', 'rotation_period', 'orbital_period', 'diameter',
-    'climate', 'gravity', 'terrain', 'surface_water', 'population', 'residents',
-    'films', 'created', 'edited'];
+  const { setOrder, options } = useContext(StarWarsContext);
 
   const [columnOrder, setColumnOrder] = useState('name');
   const [order, setOrderState] = useState('ASC');

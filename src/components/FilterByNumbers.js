@@ -4,11 +4,10 @@ import StarWarsContext from '../context/StarWarsContext';
 function FilterByNumbers() {
   const {
     setFilterNumericOptions,
+    numericOptions,
   } = useContext(StarWarsContext);
 
   const zero = 0;
-  const numericOptions = ['population', 'orbital_period', 'diameter',
-    'rotation_period', 'surface_water'];
 
   const [columnFilter, setColumnFilter] = useState('population');
   const [comparisonFilter, setComparisionFilter] = useState('maior que');

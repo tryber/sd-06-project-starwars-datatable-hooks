@@ -8,8 +8,14 @@ function Provider({ children }) {
   const [filters, setFilters] = useState({
     filterByName: { name: '' },
     filterByNumericValues: [],
-    order: { column: 'Name', sort: 'ASC' },
+    order: { column: 'name', sort: 'ASC' },
   });
+  const options = ['name', 'rotation_period', 'orbital_period', 'diameter',
+    'climate', 'gravity', 'terrain', 'surface_water', 'population', 'residents',
+    'films', 'created', 'edited'];
+
+  const numericOptions = ['population', 'orbital_period', 'diameter',
+  'rotation_period', 'surface_water'];
 
   const fetchPlanets = async () => {
     const response = await StarWarsAPI();
@@ -64,6 +70,8 @@ function Provider({ children }) {
         setFilterNumericOptions,
         deleteNumericFilter,
         setOrder,
+        options,
+        numericOptions,
       } }
     >
       {children}

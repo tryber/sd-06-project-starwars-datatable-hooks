@@ -4,18 +4,35 @@ import StarWarsContext from '../context/StarWarsContext';
 function Table() {
   const {
     data: { planets },
-    filters: { filterByName: { name: nameFilter }, filterByNumericValues },
+    filters: { filterByName: { name: nameFilter },
+      filterByNumericValues, order: { column, sort } },
+    numericOptions,
   } = useContext(StarWarsContext);
-  const zero = 0;
+  const ZERO = 0;
+  const ONE = 1;
 
   const renderTableHeader = (planet) => {
     const headers = Object.keys(planet).filter((key) => key !== 'url');
     return headers.map((item, index) => <th key={ index }>{item}</th>);
   };
 
+  const ASCENDENT = (a, b) => {
+    if (numericOptions.includes(column)) {
+      return a[column] - b[column];
+    }
+    return a[column] > b[column] ? ONE : -ONE;
+  };
+
+  const DESCENDENT = (a, b) => {
+    if (numericOptions.includes(column)) {
+      return b[column] - a[column];
+    }
+    return b[column] > a[column] ? -ONE : ONE;
+  };
+
   const filterByNumbersParameters = (filtersByNumericValues) => {
     const lastIndex = filtersByNumericValues.length - 1;
-    const { column, comparison, value } = filtersByNumericValues[lastIndex];
+    const { column: parameter, comparison, value } = filtersByNumericValues[lastIndex];
 
     const operator = {
       'maior que': (a, b) => Number(a) > Number(b),
@@ -24,8 +41,8 @@ function Table() {
     };
 
     return planets.filter((planet) => {
-      const columnExists = planet[column] !== 'unknown';
-      if (operator[comparison](planet[column], value) && columnExists) {
+      const columnExists = planet[parameter] !== 'unknown';
+      if (operator[comparison](planet[parameter], value) && columnExists) {
         return planet;
       }
       return undefined;
@@ -38,7 +55,7 @@ function Table() {
         .includes(nameFilter.toLowerCase()));
     }
 
-    if (filterByNumericValues.length !== zero) {
+    if (filterByNumericValues.length !== ZERO) {
       return filterByNumbersParameters(filterByNumericValues);
     }
 
@@ -66,7 +83,7 @@ function Table() {
     );
   };
 
-  return planets.length !== zero && (
+  return planets.length !== ZERO && (
     <table className="table">
       <thead>
         <tr>
@@ -74,7 +91,9 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {handleFilter(planets).map((planet, index) => renderTableRow(planet, index))}
+        {handleFilter(planets)
+          .sort(sort === 'ASC' ? ASCENDENT : DESCENDENT)
+          .map((planet, index) => renderTableRow(planet, index))}
       </tbody>
     </table>
   );
