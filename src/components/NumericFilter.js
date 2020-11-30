@@ -28,7 +28,7 @@ function NumericFilter() {
         Value:
         <input type="number" id="value-filter" data-testid="value-filter" />
       </label>
-      <button type="button" data-testid="button-filter">Apply FIlter</button>
+      <button type="submit" data-testid="button-filter">Apply Filter</button>
     </div>
   );
 }
