@@ -5,14 +5,29 @@ import AppContext from './AppContext';
 function Provider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [filteredPlanets, setFilteredPlanets] = useState([]);
+  const [usedFilters, setUsedFilters] = useState([]);
   const [name, setName] = useState('');
+  const [filters, setFilters] = useState({ });
+  const [filterFields, setFilterFields] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
   const contextValue = {
     planets,
     setPlanets,
     filteredPlanets,
     setFilteredPlanets,
+    usedFilters,
+    setUsedFilters,
     name,
     setName,
+    filters,
+    setFilters,
+    filterFields,
+    setFilterFields,
   };
 
   return (

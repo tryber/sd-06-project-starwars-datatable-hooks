@@ -2,15 +2,16 @@ import React, { useContext, useState } from 'react';
 import AppContext from '../context/AppContext';
 
 function Filter() {
-  const { setName, setFilteredPlanets, planets } = useContext(AppContext);
+  const {
+    setName,
+    setFilteredPlanets,
+    planets,
+    usedFilters,
+    setUsedFilters,
+    filterFields,
+    setFilterFields,
+  } = useContext(AppContext);
 
-  const FILTER_FIELDS = [
-    'population',
-    'orbital_period',
-    'diameter',
-    'rotation_period',
-    'surface_water',
-  ];
   const COMPARISON_TYPE = ['maior que', 'menor que', 'igual a'];
   const ZERO = 0;
   const [chosenComparison, setChosenComparison] = useState('maior que');
@@ -42,11 +43,13 @@ function Filter() {
           Number(planet[chosenField]) === Number(chosenValue)
           && planet[chosenField] !== 'unknown')));
       }
+      setFilterFields(filterFields.filter((field) => !usedFilters.includes(field)));
     }
   };
 
   const filterField = ({ target }) => {
     setChosenField(target.value);
+    setUsedFilters((prev) => [...prev, target.value]);
   };
 
   const filterComparison = ({ target }) => {
@@ -85,8 +88,7 @@ function Filter() {
         value={ chosenField }
         onChange={ (e) => filterField(e) }
       >
-        { FILTER_FIELDS.map((field, index) => (
-          dropdownOption(field, index))) }
+        { filterFields.map((field) => dropdownOption(field)) }
       </select>
       <select
         data-testid="comparison-filter"

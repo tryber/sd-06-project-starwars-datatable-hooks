@@ -21,13 +21,13 @@ function Table() {
   ];
   const ZERO = 0;
 
-  const headElement = () => HEAD.map((e, index) => (
-    <th key={ `${e}-${index}` }>{ e }</th>));
+  const headElement = () => HEAD.map((e) => (
+    <th key={ `head${e}` }>{ e }</th>));
 
   const rowElement = (planet) => (
-    <tr>
-      { HEAD.map((key, index) => (
-        <td key={ `${key}-${index}-${planet}` }>
+    <tr key={ planet }>
+      { HEAD.map((key) => (
+        <td key={ `${key}-${planet}` }>
           { planet[key] }
         </td>
       ))}
