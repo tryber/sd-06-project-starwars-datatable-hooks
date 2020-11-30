@@ -7,8 +7,6 @@ function Filters() {
     backupData,
     filters,
     setFilters,
-    // changedData,
-    // setChangedData,
   } = useContext(StarWarsContext);
 
   function changeField(e, field) {
@@ -39,9 +37,9 @@ function Filters() {
   function handleClick() {
     // console.log(filters.column);
     if (filters.comparison === 'maior que') {
-      console.log(filters.column);
+      // console.log(filters.column);
       // console.log(data.results[0][filters.column]);
-      console.log(data.results);
+      // console.log(data.results);
       const filtered = data.results
         .filter((result) => Number(result[filters.column]) > Number(filters.value));
         // .filter((result) => result[filters.column] === filters.value);
@@ -51,7 +49,7 @@ function Filters() {
       });
     // setChangedData(true);
     } else if (filters.comparison === 'menor que') {
-      console.log(filters.column, filters.comparison, filters.value);
+      // console.log(filters.column, filters.comparison, filters.value);
       const filtered = data.results
         .filter((result) => Number(result[filters.column]) < Number(filters.value));
         // .filter((result) => result[filters.column] === filters.value);
@@ -61,7 +59,7 @@ function Filters() {
       });
     // setChangedData(true);
     } else if (filters.comparison === 'igual a') {
-      console.log(filters.column, filters.comparison, filters.value);
+      // console.log(filters.column, filters.comparison, filters.value);
       const filtered = data.results
         .filter((result) => Number(result[filters.column]) === Number(filters.value));
         // .filter((result) => result[filters.column] === filters.value);
@@ -73,14 +71,39 @@ function Filters() {
     }
   }
 
+  function clearFilters() {
+    const filtered = backupData.results;
+    setData({
+      ...data,
+      results: filtered,
+    });
+
+    setFilters({
+      column: 'population',
+      comparison: 'maior que',
+      value: 0,
+    });
+
+    document.getElementById('textFilter').value = '';
+  }
+
   return (
     <div>
       <input
+        id="textFilter"
         type="text"
         onChange={ handleChange }
         placeholder="Search by name"
         data-testid="name-filter"
       />
+      <div data-testid="filter">
+        <button
+          type="button"
+          onClick={ clearFilters }
+        >
+          X
+        </button>
+      </div>
       <br />
       <select
         name="column"
@@ -93,6 +116,15 @@ function Filters() {
         <option value="rotation_period">rotation_period</option>
         <option value="surface_water">surface_water</option>
       </select>
+      <div data-testid="filter">
+        <button
+          type="button"
+          onClick={ clearFilters }
+        >
+          X
+        </button>
+      </div>
+
       <select
         name="comparison"
         data-testid="comparison-filter"
@@ -102,6 +134,15 @@ function Filters() {
         <option value="menor que">menor que</option>
         <option value="igual a">igual a</option>
       </select>
+      <div data-testid="filter">
+        <button
+          type="button"
+          onClick={ clearFilters }
+        >
+          X
+        </button>
+      </div>
+
       <input
         type="number"
         name="value"
@@ -109,6 +150,14 @@ function Filters() {
         placeholder={ 0 }
         onChange={ (e) => changeField(e, 'value') }
       />
+      <div data-testid="filter">
+        <button
+          type="button"
+          onClick={ clearFilters }
+        >
+          X
+        </button>
+      </div>
       <button
         type="button"
         data-testid="button-filter"
