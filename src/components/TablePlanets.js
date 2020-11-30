@@ -5,11 +5,8 @@ function TablePlanets() {
   const { contexts } = useContext(StarWarsContext);
   const {
     planets,
-    setPlanets,
     filters,
-    comparison,
-    wichColumn,
-    filterNumber,
+    setFilters,
   } = contexts;
 
   const headersTable = [
@@ -29,29 +26,103 @@ function TablePlanets() {
   ];
 
   const numericFilterComparsion = () => {
-    const filterPlanets = planets.filter((any) => {
-      const convertNumber = any[wichColumn];
-      switch (comparison) {
-      case 'menor que':
-        return Number(convertNumber) < Number(filterNumber);
-      case 'igual a':
-        return Number(convertNumber) === Number(filterNumber);
-      case 'maior que':
-        return Number(convertNumber) > Number(filterNumber);
-      default:
-        break;
-      }
-      return true;
-    });
-    return setPlanets(filterPlanets);
+    console.log('Planetas em numericFilterComparison:', planets);
+    if (filters.filterByNumericValues.length < 1) {
+      return planets;
+    }
+    const initialCounter = 0;
+    let filterPlanets = planets;
+    for (let i = initialCounter; i < filters.filterByNumericValues.length; i += 1) {
+      filterPlanets = filterPlanets.filter((any) => {
+        const convertNumber = any[filters.filterByNumericValues[i].column];
+        switch (filters.filterByNumericValues[i].comparisons) {
+        case 'menor que':
+          return Number(convertNumber) < Number(
+            filters.filterByNumericValues[i].number,
+          );
+        case 'igual a':
+          return Number(convertNumber) === Number(
+            filters.filterByNumericValues[i].number,
+          );
+        case 'maior que':
+          return Number(convertNumber) > Number(
+            filters.filterByNumericValues[i].number,
+          );
+        default:
+          break;
+        }
+        return true;
+      });
+    }
+    return filterPlanets;
   };
 
   useEffect(() => {
     numericFilterComparsion();
   }, [filters.filterByNumericValues]);
 
+  const handleClearFilters = (name) => {
+    console.log(name);
+    const removeFiltered = filters
+      .filterByNumericValues.filter((any) => any.column !== name);
+    setFilters({
+      ...filters,
+      filterByNumericValues: (removeFiltered),
+    });
+  };
+
+  const handleSortFiters = (selectedColumn) => {
+    console.log(selectedColumn);
+    const filteredByColumn = planets.filter((any) => any.name === selectedColumn);
+    console.log(filteredByColumn);
+  };
+
   return (
     <div>
+      <div>
+        { filters.filterByNumericValues.map((filter, index) => (
+          <div key={ index } data-testid="filter">
+            { `${filter.column} ${filter.comparisons} ${filter.number}` }
+            <button
+              type="button"
+              name={ filter.column }
+              onClick={ ({ target }) => handleClearFilters(target.name) }
+            >
+              X
+            </button>
+          </div>
+        )) }
+      </div>
+      <select
+        data-testid="column-sort"
+        onClick={ ({ target }) => handleSortFiters(target.value) }
+      >
+        <option>Selecione a Coluna</option>
+        {headersTable.map((headers) => (
+          <option
+            key={ headers }
+            value={ headers }
+          >
+            { headers }
+          </option>
+        ))}
+      </select>
+      <label htmlFor="asc">
+        <input
+          id="asc"
+          type="radio"
+          data-testid="column-sort-input-asc"
+        />
+        Ascendente
+      </label>
+      <label htmlFor="dsc">
+        <input
+          id="dsc"
+          type="radio"
+          data-testid="column-sort-input-desc"
+        />
+        Descentende
+      </label>
       <table>
         <thead>
           <tr>
@@ -60,7 +131,7 @@ function TablePlanets() {
           </tr>
         </thead>
         <tbody>
-          {planets
+          {numericFilterComparsion()
             .filter((planet) => planet.name.toLowerCase()
               .includes(filters.filterByName.name.toLowerCase())).map(
               (
