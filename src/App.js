@@ -1,5 +1,6 @@
 import React from 'react';
 import Provider from './context/Provider';
+import './App.css';
 import {
   FilterByName, FilterByNumbers, OrderOptions, Filters, Table, Footer,
 } from './components';

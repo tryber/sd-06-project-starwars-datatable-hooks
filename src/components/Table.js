@@ -84,8 +84,8 @@ function Table() {
   };
 
   return planets.length !== ZERO && (
-    <table className="table">
-      <thead>
+    <table className="table table-striped">
+      <thead className="thead-dark">
         <tr>
           {renderTableHeader(planets[0])}
         </tr>

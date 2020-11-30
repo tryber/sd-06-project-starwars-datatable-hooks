@@ -8,18 +8,18 @@ function FilterByName() {
   } = useContext(StarWarsContext);
 
   return (
-    <section className="filters">
-      <label htmlFor="name-filter">
+    <section className="navbar navbar-expand-lg navbar-light bg-light">
+      <span className="navbar-brand">
         Search for planet:
-        <input
-          data-testid="name-filter"
-          type="text"
-          id="name-filter"
-          name="name-filter"
-          onChange={ (ev) => setFilterByName(ev.target.value) }
-          value={ name }
-        />
-      </label>
+      </span>
+      <input
+        className="form-control mr-sm-2"
+        data-testid="name-filter"
+        type="text"
+        name="name-filter"
+        onChange={ (ev) => setFilterByName(ev.target.value) }
+        value={ name }
+      />
     </section>
   );
 }

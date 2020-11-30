@@ -14,10 +14,11 @@ function FilterByNumbers() {
   const [valueFilter, setValueFilter] = useState(zero);
 
   return (
-    <section>
-      <label htmlFor="column-filter">
+    <section className="form-inline">
+      <label className="navbar-brand" htmlFor="column-filter">
         Filter by:
         <select
+          className="form-control"
           data-testid="column-filter"
           id="column-filter"
           value={ columnFilter }
@@ -29,6 +30,7 @@ function FilterByNumbers() {
         </select>
       </label>
       <select
+        className="form-control"
         data-testid="comparison-filter"
         value={ comparisonFilter }
         onChange={ (ev) => setComparisionFilter(ev.target.value) }
@@ -38,6 +40,7 @@ function FilterByNumbers() {
         <option value="igual a">igual a</option>
       </select>
       <input
+        className="form-control m-3"
         data-testid="value-filter"
         type="number"
         name="value-filter"
@@ -45,6 +48,7 @@ function FilterByNumbers() {
         onChange={ (ev) => setValueFilter(ev.target.value) }
       />
       <button
+        className="btn btn-outline-success my-2 my-sm-0"
         data-testid="button-filter"
         type="button"
         onClick={ () => setFilterNumericOptions(

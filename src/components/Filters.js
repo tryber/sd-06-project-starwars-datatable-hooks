@@ -9,15 +9,23 @@ function Filters() {
   return (
     <section>
       {filterByNumericValues.map((filter, index) => (
-        <div data-testid="filter" key={ index }>
-          <span>
-            {filter.column}
-            {' '}
-            {filter.comparison}
-            {' '}
-            {filter.value}
-          </span>
-          <button type="button" onClick={ () => deleteNumericFilter(filter) }>X</button>
+        <div className="list-group" data-testid="filter" key={ index }>
+          <div className="list-group-item">
+            <span>
+              {filter.column}
+              {' '}
+              {filter.comparison}
+              {' '}
+              {filter.value}
+            </span>
+            <button
+              className="btn btn-dark"
+              type="button"
+              onClick={ () => deleteNumericFilter(filter) }
+            >
+              X
+            </button>
+          </div>
         </div>
       ))}
     </section>

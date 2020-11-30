@@ -15,7 +15,7 @@ function Provider({ children }) {
     'films', 'created', 'edited'];
 
   const numericOptions = ['population', 'orbital_period', 'diameter',
-  'rotation_period', 'surface_water'];
+    'rotation_period', 'surface_water'];
 
   const fetchPlanets = async () => {
     const response = await StarWarsAPI();
