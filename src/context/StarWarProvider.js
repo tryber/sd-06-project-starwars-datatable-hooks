@@ -5,7 +5,17 @@ import StarWarsContext from './StarWarsContext';
 
 function StarWarProvider({ children }) {
   const [data, setData] = useState([]); // Api
-  const [searchTerm, setSearchTerm] = useState(''); // Procura termo
+  const [searchTerm, setSearchTerm] = useState(
+    {
+      filters:
+        {
+          filterByName:
+            {
+              name: '',
+            },
+        },
+    },
+  ); // Procura termo
 
   const dataApi = async () => {
     const dataResponse = await StarWarsAPI();

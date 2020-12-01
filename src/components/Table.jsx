@@ -12,6 +12,8 @@ function StarWarsTable() {
     dataApi();
   }, []);
 
+  const { filters: { filterByName: { name } } } = searchTerm;
+
   return (
     <table className="table table-striped table-dark table-hover">
       <thead>
@@ -33,7 +35,7 @@ function StarWarsTable() {
       </thead>
       <tbody>
         {data.filter((element) => element.name.toLowerCase()
-          .includes(searchTerm.toLowerCase()))
+          .includes(name.toLowerCase()))
           .map((element) => (
             <tr key={ element.name }>
               <td>{ element.name }</td>

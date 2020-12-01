@@ -3,7 +3,17 @@ import StarWarsContext from '../context/StarWarsContext';
 
 function SearchInput() {
   const { searchTerm, setSearchTerm } = useContext(StarWarsContext);
+  const { filters: { filterByName: { name } } } = searchTerm;
 
+  function handleInput(value) {
+    const objectInput = {
+      ...searchTerm,
+      filters: { ...searchTerm.filters,
+        filterByName: { ...searchTerm.filterByName,
+          name: value } },
+    };
+    setSearchTerm(objectInput);
+  }
   return (
     <div className="input-group input-group-sm mb-3">
       <br />
@@ -16,8 +26,8 @@ function SearchInput() {
         id="search"
         className="form-control"
         data-testid="name-filter"
-        onChange={ (ev) => setSearchTerm(ev.target.value) }
-        value={ searchTerm }
+        onChange={ (ev) => handleInput(ev.target.value) }
+        value={ name }
       />
       <br />
     </div>
