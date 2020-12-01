@@ -5,6 +5,7 @@ function StarWarsTable() {
   const {
     data,
     dataApi,
+    searchTerm,
   } = useContext(StarWarsContext);
 
   useEffect(() => { // componentWillMount()

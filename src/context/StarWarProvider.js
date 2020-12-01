@@ -4,7 +4,8 @@ import StarWarsAPI from '../service/StarWarsAPI';
 import StarWarsContext from './StarWarsContext';
 
 function StarWarProvider({ children }) {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState([]); // Api
+  const [searchTerm, setSearchTerm] = useState(''); // Procura termo
 
   const dataApi = async () => {
     const dataResponse = await StarWarsAPI();
@@ -14,6 +15,8 @@ function StarWarProvider({ children }) {
   const value = { // Todos children terão acesso ao data/dataApi
     data,
     dataApi,
+    searchTerm,
+    setSearchTerm,
   };
 
   return (
