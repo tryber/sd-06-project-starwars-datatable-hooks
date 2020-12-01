@@ -12,7 +12,7 @@ function StarWarsTable() {
   }, []);
 
   return (
-    <table className="table">
+    <table className="warsTable">
       <thead>
         <tr>
           <th>name</th>

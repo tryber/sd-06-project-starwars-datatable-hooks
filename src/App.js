@@ -1,11 +1,11 @@
 import React from 'react';
 import StarWarProvider from './context/StarWarProvider';
-import StarWarsTable from './components/StarWarsTable';
+import Table from './components/Table';
 
 function App() {
   return (
     <StarWarProvider>
-      <StarWarsTable />
+      <Table />
     </StarWarProvider>
   );
 }
