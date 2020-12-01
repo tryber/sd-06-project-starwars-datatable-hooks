@@ -11,7 +11,7 @@ function StarWarProvider({ children }) {
     setData(dataResponse);
   };
 
-  const value = {// Todos children terão acesso ao data/dataApi
+  const value = { // Todos children terão acesso ao data/dataApi
     data,
     dataApi,
   };
