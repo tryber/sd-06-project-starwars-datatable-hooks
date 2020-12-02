@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function SearchSelected() {
-  const { byValue, setByValue } = useContext(StarWarsContext);
+  const { setByValue } = useContext(StarWarsContext);
 
   const aboutArray = ['population', 'orbital_period',
     'diameter', 'rotation_period', 'surface_water'];
