@@ -9,7 +9,7 @@ function SearchSelected() {
   const lengthArray = ['maior que', 'menor que', 'igual a'];
 
   const [about, setAbout] = useState('population');
-  const [length, setLength] = useState('maior que');
+  const [lengthType, setLengthType] = useState('maior que');
   const [value, setValue] = useState('');
 
   return (
@@ -17,6 +17,7 @@ function SearchSelected() {
       <br />
       <select
         data-testid="column-filter"
+        // onChange={ (event) => console.log(event.target) }
         onChange={ (event) => setAbout(event.target.value) }
       >
         {aboutArray.map((aboutElement, index) => (
@@ -31,7 +32,7 @@ function SearchSelected() {
       {' '}
       <select
         data-testid="comparison-filter"
-        onChange={ (event) => setLength(event.target.value) }
+        onChange={ (event) => setLengthType(event.target.value) }
       >
         {lengthArray.map((lengthElement, index) => (
           <option
@@ -53,8 +54,8 @@ function SearchSelected() {
         data-testid="button-filter"
         type="button"
         className="btn btn-success"
-        onClick={ () => setByValue([...byValue,
-          { about, length, value }]) }
+        onClick={ () => setByValue([
+          { about, lengthType, value }]) }
       >
         Filter
       </button>

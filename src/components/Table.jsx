@@ -6,11 +6,36 @@ function StarWarsTable() {
     data,
     dataApi,
     searchTerm,
+    byValue,
   } = useContext(StarWarsContext);
 
   useEffect(() => { // componentWillMount()
     dataApi();
   }, []);
+
+  // console.log(data);
+  function masterFilter() {
+    let initialArray = [];
+    const magicNumber = 0;
+    if (byValue.length === magicNumber) return data;
+
+    const arrayLength = byValue.map((element) => {
+      if (element.lengthType === 'maior que') {
+        initialArray = data.filter((dataElement) => (
+          (element.value < parseInt(dataElement[element.about], 10))));
+      }
+      if (element.lengthType === 'menor que') {
+        initialArray = data.filter((dataElement) => (
+          (element.value > parseInt(dataElement[element.about], 10))));
+      }
+      if (element.lengthType === 'igual a') {
+        initialArray = data.filter((dataElement) => (
+          (element.value === dataElement[element.about])));
+      }
+      return initialArray;
+    });
+    return arrayLength[0];
+  }
 
   const { filters: { filterByName: { name } } } = searchTerm;
 
@@ -34,8 +59,9 @@ function StarWarsTable() {
         </tr>
       </thead>
       <tbody>
-        {data.filter((element) => element.name.toLowerCase()
-          .includes(name.toLowerCase()))
+        {masterFilter() && masterFilter()
+          .filter((element) => element.name.toLowerCase()
+            .includes(name.toLowerCase()))
           .map((element) => (
             <tr key={ element.name }>
               <td>{ element.name }</td>
