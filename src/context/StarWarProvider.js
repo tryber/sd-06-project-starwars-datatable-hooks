@@ -16,6 +16,7 @@ function StarWarProvider({ children }) {
         },
     },
   ); // Procura termo
+  const [byValue, setByValue] = useState([]);
 
   const dataApi = async () => {
     const dataResponse = await StarWarsAPI();
@@ -27,6 +28,8 @@ function StarWarProvider({ children }) {
     dataApi,
     searchTerm,
     setSearchTerm,
+    byValue,
+    setByValue,
   };
 
   return (
