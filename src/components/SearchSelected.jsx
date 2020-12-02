@@ -1,50 +1,60 @@
-import React from 'react';
-// import StarWarsContext from '../context/StarWarsContext';
+import React, { useContext, useState } from 'react';
+import StarWarsContext from '../context/StarWarsContext';
 
 function SearchSelected() {
+  const { byValue, setByValue } = useContext(StarWarsContext);
+
   const aboutArray = ['population', 'orbital_period',
     'diameter', 'rotation_period', 'surface_water'];
   const lengthArray = ['maior que', 'menor que', 'igual a'];
+
+  const [about, setAbout] = useState('population');
+  const [length, setLength] = useState('maior que');
+  const [value, setValue] = useState('');
 
   return (
     <div className="form-group">
       <br />
       <select
         data-testid="column-filter"
+        onChange={ (event) => setAbout(event.target.value) }
       >
-        {aboutArray.map((about, index) => (
+        {aboutArray.map((aboutElement, index) => (
           <option
             className="btn btn-secondary btn-lg dropdown-toggle"
             key={ index }
-            value={ about }
+            value={ aboutElement }
           >
-            { about }
+            { aboutElement }
           </option>))}
       </select>
       {' '}
       <select
         data-testid="comparison-filter"
+        onChange={ (event) => setLength(event.target.value) }
       >
-        {lengthArray.map((length, index) => (
+        {lengthArray.map((lengthElement, index) => (
           <option
             className="btn btn-secondary btn-lg dropdown-toggle"
             key={ index }
-            value={ length }
+            value={ lengthElement }
           >
-            { length }
+            { lengthElement }
           </option>))}
       </select>
       {' '}
       <input
         type="number"
         data-testid="value-filter"
+        onChange={ (event) => setValue(event.target.value) }
       />
       {' '}
       <button
         data-testid="button-filter"
         type="button"
         className="btn btn-success"
-        // onClick={ () =>  }
+        onClick={ () => setByValue([...byValue,
+          { about, length, value }]) }
       >
         Filter
       </button>
