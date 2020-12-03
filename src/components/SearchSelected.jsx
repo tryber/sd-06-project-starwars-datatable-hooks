@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function SearchSelected() {
-  const { setByValue } = useContext(StarWarsContext);
+  const { setSearchTerm } = useContext(StarWarsContext);
 
   const aboutArray = ['population', 'orbital_period',
     'diameter', 'rotation_period', 'surface_water'];
@@ -11,6 +11,16 @@ function SearchSelected() {
   const [about, setAbout] = useState('population');
   const [lengthType, setLengthType] = useState('maior que');
   const [value, setValue] = useState('');
+
+  function setByValue(filter) {
+    setSearchTerm((searchTerm) => (
+      {
+        ...searchTerm,
+        filters: { ...searchTerm.filters,
+          filterByNumericValues: [...searchTerm.filters.filterByNumericValues, filter] },
+      }
+    ));
+  }
 
   return (
     <div className="form-group">
@@ -54,8 +64,9 @@ function SearchSelected() {
         data-testid="button-filter"
         type="button"
         className="btn btn-success"
-        onClick={ () => setByValue([
-          { about, lengthType, value }]) }
+        onClick={ () => setByValue(
+          { column: about, comparison: lengthType, value },
+        ) }
       >
         Filter
       </button>

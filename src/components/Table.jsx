@@ -6,35 +6,35 @@ function StarWarsTable() {
     data,
     dataApi,
     searchTerm,
-    byValue,
   } = useContext(StarWarsContext);
 
+  const byValue = searchTerm.filters.filterByNumericValues;
   useEffect(() => { // componentWillMount()
     dataApi();
   }, []);
 
   // console.log(data);
   function masterFilter() {
-    let initialArray = [];
+    let initialArray = data;
     const magicNumber = 0;
     if (byValue.length === magicNumber) return data;
 
-    const arrayLength = byValue.map((element) => {
-      if (element.lengthType === 'maior que') {
-        initialArray = data.filter((dataElement) => (
-          (element.value < parseInt(dataElement[element.about], 10))));
+    byValue.forEach((element) => {
+      if (element.comparison === 'maior que') {
+        initialArray = initialArray.filter((dataElement) => (
+          (element.value < parseInt(dataElement[element.column], 10))));
       }
-      if (element.lengthType === 'menor que') {
-        initialArray = data.filter((dataElement) => (
-          (element.value > parseInt(dataElement[element.about], 10))));
+      if (element.comparison === 'menor que') {
+        initialArray = initialArray.filter((dataElement) => (
+          (element.value > parseInt(dataElement[element.column], 10))));
       }
-      if (element.lengthType === 'igual a') {
-        initialArray = data.filter((dataElement) => (
-          (element.value === dataElement[element.about])));
+      if (element.comparison === 'igual a') {
+        initialArray = initialArray.filter((dataElement) => (
+          (element.value === dataElement[element.column])));
       }
       return initialArray;
     });
-    return arrayLength[0];
+    return initialArray;
   }
 
   const { filters: { filterByName: { name } } } = searchTerm;

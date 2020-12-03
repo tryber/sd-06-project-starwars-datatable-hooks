@@ -5,19 +5,19 @@ import StarWarsContext from './StarWarsContext';
 
 function StarWarProvider({ children }) {
   const [data, setData] = useState([]); // Api
+  const [byValue, setByValue] = useState([]);
   const [searchTerm, setSearchTerm] = useState(
     {
       filters:
+      {
+        filterByName:
         {
-          filterByName:
-            {
-              name: '',
-            },
-          filterByNumericValues: [],
+          name: '',
         },
+        filterByNumericValues: [],
+      },
     },
   ); // Procura termo
-  const [byValue, setByValue] = useState([]);
 
   const dataApi = async () => {
     const dataResponse = await StarWarsAPI();
@@ -35,7 +35,7 @@ function StarWarProvider({ children }) {
 
   return (
     <StarWarsContext.Provider value={ value }>
-      { children }
+      { children}
     </StarWarsContext.Provider>
   );
 }
