@@ -13,6 +13,7 @@ function StarWarProvider({ children }) {
             {
               name: '',
             },
+          filterByNumericValues: [],
         },
     },
   ); // Procura termo

@@ -9,8 +9,7 @@ function SearchInput() {
     const objectInput = {
       ...searchTerm,
       filters: { ...searchTerm.filters,
-        filterByName: { ...searchTerm.filterByName,
-          name: value } },
+        filterByName: { name: value } },
     };
     setSearchTerm(objectInput);
   }
