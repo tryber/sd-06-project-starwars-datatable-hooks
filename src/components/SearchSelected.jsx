@@ -2,10 +2,10 @@ import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function SearchSelected() {
-  const { setSearchTerm } = useContext(StarWarsContext);
+  const { setSearchTerm, searchTerm } = useContext(StarWarsContext);
 
-  const aboutArray = ['population', 'orbital_period',
-    'diameter', 'rotation_period', 'surface_water'];
+  // const aboutArray = ['population', 'orbital_period',
+  //   'diameter', 'rotation_period', 'surface_water'];
   const lengthArray = ['maior que', 'menor que', 'igual a'];
 
   const [about, setAbout] = useState('population');
@@ -13,24 +13,37 @@ function SearchSelected() {
   const [value, setValue] = useState('');
 
   function setByValue(filter) {
-    setSearchTerm((searchTerm) => (
+    setSearchTerm((searchTermParam) => (
       {
-        ...searchTerm,
-        filters: { ...searchTerm.filters,
-          filterByNumericValues: [...searchTerm.filters.filterByNumericValues, filter] },
+        ...searchTermParam,
+        filters: { ...searchTermParam.filters,
+          filterByNumericValues:
+           [...searchTermParam.filters.filterByNumericValues, filter] },
       }
     ));
   }
+
+  const setDropDown = () => {
+    let aboutArray = [
+      ' ', 'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+    ];
+
+    const dropDownArray = searchTerm.filters.filterByNumericValues
+      .map((elementDropDown) => Object.values(elementDropDown)[0]);
+
+    aboutArray = aboutArray
+      .filter((elementAbout) => !dropDownArray.includes(elementAbout));
+    return aboutArray;
+  };
 
   return (
     <div className="form-group">
       <br />
       <select
         data-testid="column-filter"
-        // onChange={ (event) => console.log(event.target) }
         onChange={ (event) => setAbout(event.target.value) }
       >
-        {aboutArray.map((aboutElement, index) => (
+        {setDropDown().map((aboutElement, index) => (
           <option
             className="btn btn-secondary btn-lg dropdown-toggle"
             key={ index }
