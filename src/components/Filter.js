@@ -4,7 +4,6 @@ import AppContext from '../context/AppContext';
 function Filter() {
   const {
     setName,
-    FilteredPlanets,
     setFilteredPlanets,
     planets,
     usedFilters,
