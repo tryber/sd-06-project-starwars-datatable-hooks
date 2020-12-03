@@ -17,4 +17,8 @@ function StarWarsProvider({ children }) {
   );
 }
 
+StarWarsProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
 export default StarWarsProvider; //  disponibilizo de forma global
