@@ -3,12 +3,13 @@ import NumericFilter from './NumericFilter';
 import TextFilter from './TextFilter';
 
 function Filters() {
-  const submitionHandler = (event) => {
+
+  const handleSubmit = (event) => {
     event.preventDefault();
     console.log('Form submitted')
   };
   return (
-    <form onSubmit={ submitionHandler }>
+    <form onSubmit={ handleSubmit }>
       <TextFilter />
       <NumericFilter />
     </form>

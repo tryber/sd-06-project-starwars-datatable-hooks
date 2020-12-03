@@ -3,9 +3,23 @@ import StarWarsContext from '../context/StarWarsContext';
 
 function TextFilter() {
   const {
-    textSearch,
-    setTextSearch,
+    filters,
+    setFilters,
   } = useContext(StarWarsContext);
+
+  const onChange = (event) => {
+    const { name, value } = event.target;
+    setFilters((prevState) => ({
+      ...prevState,
+      filters: {
+        ...prevState.filters,
+        filterByName: {
+          ...prevState.filters.filterByName,
+          [name]: value,
+        },
+      },
+    }));
+  };
 
   return (
     <label htmlFor="text-input">
@@ -13,10 +27,11 @@ function TextFilter() {
       <input
         type="text"
         id="text-input"
+        name="name"
         data-testid="name-filter"
         placeholder="Type planet name"
-        onChange={ (event) => setTextSearch(event.target.value) }
-        value={ textSearch }
+        onChange={ (event) => onChange(event) }
+        value={ filters.filters.filterByName.name }
       />
     </label>
   );
