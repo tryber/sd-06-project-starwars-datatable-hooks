@@ -6,8 +6,8 @@ function Filter() {
     setName,
     setFilteredPlanets,
     planets,
-    usedFilters,
-    setUsedFilters,
+    filters,
+    setFilters,
     filterFields,
     setFilterFields,
   } = useContext(AppContext);
@@ -43,19 +43,19 @@ function Filter() {
           Number(planet[chosenField]) === Number(chosenValue)
           && planet[chosenField] !== 'unknown')));
       }
-      if (usedFilters.numericFilters.length > ZERO) {
-        setUsedFilters((prev) => ({ ...prev,
-          numericFilters: [...prev.numericFilters,
-            {
-              column: chosenField,
-              comparison: chosenComparison,
-              value: chosenValue,
-            },
-          ],
+      if (filters.filterByNumericValues.length === ZERO) {
+        setFilters((prev) => ({
+          ...prev.filterByName,
+          filterByNumericValues: [{
+            column: chosenField,
+            comparison: chosenComparison,
+            value: chosenValue,
+          }],
         }));
       } else {
-        setUsedFilters((prev) => ({ ...prev,
-          numericFilters: [{
+        setFilters((prev) => ({
+          ...prev.filterByName,
+          filterByNumericValues: [...prev.filterByNumericValues, {
             column: chosenField,
             comparison: chosenComparison,
             value: chosenValue,
@@ -65,7 +65,6 @@ function Filter() {
       setFilterFields(filterFields.filter((field) => chosenField !== field));
     }
   };
-
   const arrangeFilter = (value, field, compare) => {
     if (value !== ZERO) {
       switch (compare) {
@@ -90,11 +89,10 @@ function Filter() {
   };
 
   const removeFilter = ({ target }) => {
-    console.log(target);
-    setUsedFilters(usedFilters.numericFilters.filter((field) => field
+    setFilters(filters.filterByNumericValues.filter((field) => field
       .column !== target.value));
     setFilteredPlanets(planets);
-    usedFilters.numericFilters.map((filter) => arrangeFilter(filter));
+    filters.filterByNumericValues.map((filter) => arrangeFilter(filter));
   };
 
   const filterField = ({ target }) => {
@@ -120,24 +118,21 @@ function Filter() {
     </option>
   );
 
-  const renderUsedFilters = () => (
-    usedFilters.numericFilters
-      .map((filter) => (
-        <div
-          className="filter"
-          type="button"
-          data-testid="filter"
-          key={ filter }
-        >
-          { filter.column }
-          <button
-            onClick={ (e) => removeFilter(e) }
-            type="button"
-          >
-            x
-          </button>
-        </div>))
-  );
+  /* const renderUsedFilters = (filter) => (
+    <div
+      className="filter"
+      data-testid="filter"
+      key={ filter }
+    >
+      { filter.column }
+      <button
+        onClick={ (e) => removeFilter(e) }
+        type="button"
+      >
+        x
+      </button>
+    </div>
+  ); */
 
   return (
     <div>
@@ -184,7 +179,23 @@ function Filter() {
           Filtrar
         </button>
       </form>
-      { usedFilters.numericFilters && renderUsedFilters() }
+      { filters.filterByNumericValues
+        && filters.filterByNumericValues
+          .map((filter) => (
+            <div
+              className="filter"
+              data-testid="filter"
+              key={ filter }
+            >
+              { filter.column }
+              <button
+                type="button"
+                onClick={ (e) => removeFilter(e) }
+              >
+                x
+              </button>
+            </div>
+          ))}
     </div>
   );
 }
