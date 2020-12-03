@@ -22,7 +22,7 @@ function Table() {
   const ZERO = 0;
 
   const headElement = () => HEAD.map((e) => (
-    <th key={ `head${e}` }>{ e }</th>));
+    <th key={ e }>{ e }</th>));
 
   const rowElement = (planet) => (
     <tr key={ planet }>

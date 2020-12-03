@@ -5,7 +5,10 @@ import AppContext from './AppContext';
 function Provider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [filteredPlanets, setFilteredPlanets] = useState([]);
-  const [usedFilters, setUsedFilters] = useState([]);
+  const [usedFilters, setUsedFilters] = useState(
+    { name: '',
+      numericFilters: [] },
+  );
   const [name, setName] = useState('');
   const [filters, setFilters] = useState({ });
   const [filterFields, setFilterFields] = useState([
