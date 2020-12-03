@@ -84,10 +84,9 @@ const response = {
       diameter: '7200',
       climate: 'frozen',
       gravity: '1.1 standard',
-      terrain: 'tundra, ice caves, mountain ranges',
-      surface_water: '100',
-      population: 'unknown',
-      residents: [],
+      terrain: 'tundra, ice caves, mountain ranges',e="col">population</th>
+      th scope="col">population<e="col">population</th>
+      th scope="col">population<
       films: [
         'https://swapi-trybe.herokuapp.com/api/films/2/',
       ],

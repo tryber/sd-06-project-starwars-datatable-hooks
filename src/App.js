@@ -1,13 +1,17 @@
 import React from 'react';
-import table from './components/table';
+import StarWarsProvider from './context/StarWarsProvider';
+import SearchInputs from './components/SearchInputs';
+import Table from './components/Table';
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      pagina inicial
-      <table />
-    </div>
+    <StarWarsProvider>
+      <main>
+        <SearchInputs />
+        <Table />
+      </main>
+    </StarWarsProvider>
   );
 }
 
