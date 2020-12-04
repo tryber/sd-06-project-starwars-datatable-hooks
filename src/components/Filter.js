@@ -178,7 +178,9 @@ function Filter() {
           value={ chosenField }
           onChange={ (e) => filterField(e) }
         >
-          { dropDownFilterValues.filter((options) => !filters.filterByNumericValues.map((c) => c.column).includes(options)).map((field) => dropdownOption(field)) }
+          { dropDownFilterValues.filter((options) => !filters.filterByNumericValues
+            .map((c) => c.column).includes(options))
+            .map((field) => dropdownOption(field)) }
         </select>
         <select
           data-testid="comparison-filter"
