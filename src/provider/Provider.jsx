@@ -8,7 +8,7 @@ const StarWarsProvider = ({ children }) => {
   const [filterNumber, setFilterNumber] = useState([]);
   const [order, setOrder] = useState({});
 
-  const infos = {
+  const globalContext = {
     dataApi,
     setDataApi,
     filterName: filterName.filterByName,
@@ -20,7 +20,7 @@ const StarWarsProvider = ({ children }) => {
   };
 
   return (
-    <StarWarsContext.Provider value={ infos }>
+    <StarWarsContext.Provider value={ globalContext }>
       {children}
     </StarWarsContext.Provider>
   );
