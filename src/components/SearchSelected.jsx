@@ -36,6 +36,10 @@ function SearchSelected() {
     return aboutArray;
   };
 
+  function handleElementX(index) {
+    console.log(index);
+  }
+
   return (
     <div className="form-group">
       <br />
@@ -84,6 +88,20 @@ function SearchSelected() {
         Filter
       </button>
       <br />
+      <div>
+        {' '}
+        { searchTerm.filters.filterByNumericValues.map((elementX, index) => (
+          <div key={ index } data-testid="filter">
+            <button
+              type="button"
+              onClick={ () => handleElementX(index) }
+            >
+              X
+            </button>
+            { `${elementX.column} ${elementX.comparison} ${elementX.value}` }
+          </div>
+        )) }
+      </div>
     </div>
   );
 }
