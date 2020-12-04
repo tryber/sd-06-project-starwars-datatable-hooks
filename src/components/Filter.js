@@ -9,6 +9,22 @@ const dropDownFilterValues = [
   'surface_water',
 ];
 
+const HEAD = [
+  'name',
+  'diameter',
+  'climate',
+  'created',
+  'edited',
+  'films',
+  'gravity',
+  'orbital_period',
+  'population',
+  'rotation_period',
+  'surface_water',
+  'terrain',
+  'url',
+];
+
 function Filter() {
   const {
     setName,
@@ -73,7 +89,7 @@ function Filter() {
       setFilterFields(filterFields.filter((field) => chosenField !== field));
     }
   };
-  const arrangeFilter = ({ column: field, comparison: compare, value }) => {
+  /* const arrangeFilter = ({ column: field, comparison: compare, value }) => {
     if (value !== ZERO) {
       switch (compare) {
       case 'maior que':
@@ -94,7 +110,7 @@ function Filter() {
       setFilterFields(filterFields.filter((fieldAvalable) => chosenField
         !== fieldAvalable));
     }
-  };
+  }; */
 
   const removeFilter = ({ column }) => {
     setFilters((prev) => ({ ...prev,
@@ -206,6 +222,7 @@ function Filter() {
               </button>
             </div>
           ))}
+      { HEAD.map((column) => dropdownOption(column)) }
     </div>
   );
 }
