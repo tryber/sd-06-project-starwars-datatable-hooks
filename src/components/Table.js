@@ -25,9 +25,12 @@ function Table() {
     <th key={ e }>{ e }</th>));
 
   const rowElement = (planet) => (
-    <tr key={ planet }>
+    <tr key={ planet.name }>
       { HEAD.map((key) => (
-        <td key={ `${key}-${planet}` }>
+        <td
+          key={ `${key}-${planet.name}` }
+          data-testid={ key === 'name' ? 'planet-name' : '' }
+        >
           { planet[key] }
         </td>
       ))}

@@ -1,6 +1,14 @@
 import React, { useContext, useState } from 'react';
 import AppContext from '../context/AppContext';
 
+const testeMtoDoido = [
+  'population',
+  'orbital_period',
+  'diameter',
+  'rotation_period',
+  'surface_water',
+]
+
 function Filter() {
   const {
     setName,
@@ -65,7 +73,7 @@ function Filter() {
       setFilterFields(filterFields.filter((field) => chosenField !== field));
     }
   };
-  const arrangeFilter = (value, field, compare) => {
+  const arrangeFilter = ({ column: field, comparison: compare, value }) => {
     if (value !== ZERO) {
       switch (compare) {
       case 'maior que':
@@ -88,11 +96,13 @@ function Filter() {
     }
   };
 
-  const removeFilter = ({ target }) => {
-    setFilters(filters.filterByNumericValues.filter((field) => field
-      .column !== target.value));
+  const removeFilter = ({ column }) => {
+    setFilters((prev) => ({ ...prev,
+      filterByNumericValues: filters.filterByNumericValues
+        .filter((field) => field.column !== column),
+    }));
     setFilteredPlanets(planets);
-    filters.filterByNumericValues.map((filter) => arrangeFilter(filter));
+    // filters.filterByNumericValues.map((filter) => arrangeFilter(filter));
   };
 
   const filterField = ({ target }) => {
@@ -152,7 +162,7 @@ function Filter() {
           value={ chosenField }
           onChange={ (e) => filterField(e) }
         >
-          { filterFields.map((field) => dropdownOption(field)) }
+          { testeMtoDoido.filter((options) => !filters.filterByNumericValues.map((c) => c.column).includes(options)).map((field) => dropdownOption(field)) }
         </select>
         <select
           data-testid="comparison-filter"
@@ -190,7 +200,7 @@ function Filter() {
               { filter.column }
               <button
                 type="button"
-                onClick={ (e) => removeFilter(e) }
+                onClick={ () => removeFilter(filter) }
               >
                 x
               </button>

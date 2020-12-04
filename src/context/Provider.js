@@ -8,7 +8,7 @@ function Provider({ children }) {
   const [filters, setFilters] = useState(
     {
       filterByName: { },
-      filterByNumericValues: [{ }],
+      filterByNumericValues: [],
     },
   );
   const [name, setName] = useState('');
