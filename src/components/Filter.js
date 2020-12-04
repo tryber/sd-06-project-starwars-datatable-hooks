@@ -1,13 +1,13 @@
 import React, { useContext, useState } from 'react';
 import AppContext from '../context/AppContext';
 
-const testeMtoDoido = [
+const dropDownFilterValues = [
   'population',
   'orbital_period',
   'diameter',
   'rotation_period',
   'surface_water',
-]
+];
 
 function Filter() {
   const {
@@ -162,7 +162,7 @@ function Filter() {
           value={ chosenField }
           onChange={ (e) => filterField(e) }
         >
-          { testeMtoDoido.filter((options) => !filters.filterByNumericValues.map((c) => c.column).includes(options)).map((field) => dropdownOption(field)) }
+          { dropDownFilterValues.filter((options) => !filters.filterByNumericValues.map((c) => c.column).includes(options)).map((field) => dropdownOption(field)) }
         </select>
         <select
           data-testid="comparison-filter"

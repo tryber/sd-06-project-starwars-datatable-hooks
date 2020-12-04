@@ -9,6 +9,10 @@ function Provider({ children }) {
     {
       filterByName: { },
       filterByNumericValues: [],
+      order: {
+        column: '',
+        sort: '',
+      },
     },
   );
   const [name, setName] = useState('');
