@@ -1,28 +1,33 @@
-import React, { useContext } from 'react';
-import StarWarsContext from '../context/StarWarsContext';
+import React from 'react';
 
-function NumericFilter() {
-  const columnFilters = ['population', 'orbital_period', 'diameter',
-    'rotation_period', 'surface_water',
-  ];
-  const comparisonFilters = ['maior que', 'menor que', 'igual a'];
-
+function NumericFilter(props) {
   const {
-    setFilters,
-  } = useContext(StarWarsContext);
+    setNumericFiltersData,
+    columnFilters,
+    comparisonFilters,
+  } = props;
+  
 
-  const handleInputChange = (event) => {
+  const onChange = (event) => {
     const { name, value } = event.target;
+    const valueToRegister = name === 'value' ? parseInt(value) : value;
+    console.log('Valor pra registrar:', valueToRegister);
+    console.log('Tipo do valor:', typeof valueToRegister);
+    setNumericFiltersData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
-
+ 
   return (
     <div>
       <label htmlFor="column-filter">
         Column Filter:
         <select
           id="column-filter"
-          name="column-filter"
+          name="column"
           data-testid="column-filter"
+          onChange={ (event) => onChange(event) }
         >
           {columnFilters.map((category, index) => (
             <option key={ index } value={ category }>{ category }</option>
@@ -33,8 +38,9 @@ function NumericFilter() {
         Filter by:
         <select
           id="comparison-filter"
-          name="comparison-filter"
+          name="comparison"
           data-testid="comparison-filter"
+          onChange={ (event) => onChange(event) }
         >
           {comparisonFilters.map((comparison, index) => (
             <option key={ index } value={ comparison }>{ comparison }</option>
@@ -46,9 +52,10 @@ function NumericFilter() {
         <input
           type="number"
           id="value-filter"
-          name="value-filter"
-          value=""
+          name="value"
+          value={ setNumericFiltersData.value }
           data-testid="value-filter"
+          onChange={ (event) => onChange(event) }
         />
       </label>
       <button type="submit" data-testid="button-filter">Apply Filter</button>

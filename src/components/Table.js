@@ -8,24 +8,56 @@ function Table() {
     tableHeaders,
     isFetching,
     filters,
+    hasNumericFilters,
     makeInitialSetup,
+    generateFilteredData,
     // mockedInitialSetup,
   } = useContext(StarWarsContext);
 
-  const { filters: { filterByName: { name: planetName  } } } = filters;
-  // troca esse name aí pra namePlanet ou algo do tipo
-  // muda lá também no parâmetro de getFilteredPlanetsByUser
-  
+  const { filters: { filterByName: { name: planetSearch  } } } = filters;
+  const { filters: { filterByNumericValues } } = filters;
   useEffect(() => {
     makeInitialSetup();
     // mockedInitialSetup();
   }, []);
 
-  const getFilteredPlanetsByUser = (planets, searchTerm) => (
-    planets.filter((planet) => (
-      planet.name.toLowerCase().includes(searchTerm.toLowerCase())
+  const getFilteredPlanetsByUser = () => {
+    if (hasNumericFilters) {
+      console.log('Filter by numeric values', filterByNumericValues);
+      console.log('Elemento do numeric filter', filterByNumericValues[0]);
+      console.log('Prop do numeric filter', filterByNumericValues[0].column);
+      data.forEach((planet) => {
+        const columnProp = filterByNumericValues[0].column;
+        const valueProp = filterByNumericValues[0].value;
+        console.log('Column prop', columnProp);
+        console.log('Value prop' ,valueProp);
+        console.log(typeof valueProp);
+        console.log('Prop dinamicamente', planet[columnProp]);
+        console.log(typeof planet[columnProp]);
+        console.log(parseInt(planet[columnProp]) === parseInt(valueProp));
+      });
+      const filteredResults = data.filter((planet) => {
+        const columnProp = filterByNumericValues[0].column;
+        const valueProp = filterByNumericValues[0].value;
+        return parseInt(planet[columnProp]) === parseInt(valueProp)
+      });
+      console.log('Filtered Results:', filteredResults);
+      // Agora foi, eram strings os dois valores de comparação
+      // chamar:
+      // const columnProp = filterByNumericValues[0].column;
+      // const valueProp = filterByNumericValues[0].value;
+      // Criar um array externo, que vai ser alterado a cada
+      // caso do forEach.
+      // Passar essa lógica de volta pro Provider
+    }
+    hasNumericFilters
+      ? console.log('Provider informou que TEM filtros')
+      : console.log('Provider informou que NÃO tem filtros')
+    return data.filter((planet) => (
+      
+      planet.name.toLowerCase().includes(planetSearch.toLowerCase())
     ))
-  );
+  };
 
   const renderTable = () => (
     <table className="table">
@@ -37,7 +69,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {getFilteredPlanetsByUser(data, planetName).map((planet) => (
+        {getFilteredPlanetsByUser().map((planet) => (
           <tr key={ planet.name }>
             {Object.values(planet).map((planetValue, index) => (
               <td key={ index }>{ planetValue }</td>
