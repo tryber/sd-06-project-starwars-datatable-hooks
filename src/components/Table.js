@@ -3,7 +3,7 @@ import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
   const { data, text } = useContext(StarWarsContext);
-  console.log(data.length);
+
   return (
     <div>
       <table border="1">
@@ -28,7 +28,7 @@ function Table() {
           {data.filter((planet) => planet.name.includes(text))
             .map((position, index) => (
               <tr key={ index }>
-                <td>{position.name}</td>
+                <td data-testid="planet-name">{position.name}</td>
                 <td>{position.rotation_period}</td>
                 <td>{position.orbital_period}</td>
                 <td>{position.diameter}</td>

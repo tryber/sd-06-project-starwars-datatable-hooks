@@ -5,21 +5,20 @@ import Table from './components/Table';
 import EntryText from './components/EntryText';
 
 function App() {
-  // const filterIniti = {
-  //   filters: {
-  //     filterByName: {
-  //       name: '',
-  //     },
-  //   },
-  // };
-  // const [filtersName, setFilterName] = useState(filterIniti);
   const [planetsList, setPlanetsList] = useState([]);
   const [planetsData, setPlanetsData] = useState([]);
   const [entryText, setEntryText] = useState('');
 
   useEffect(() => {
     async function fetchPlanets() {
+      const zero = 0;
+      const negativoNumber = -1;
       const listPlanets = await requestApiStarWars();
+      listPlanets.sort((a, b) => {
+        if (a.name < b.name) return negativoNumber;
+        if (a.name > b.name) return 1;
+        return zero;
+      });
       setPlanetsList(listPlanets);
       setPlanetsData(listPlanets);
     }
@@ -31,10 +30,22 @@ function App() {
     if (text) {
       const filterName = planetsList.filter((planet) => planet.name.includes(text));
       setPlanetsData(filterName);
-      console.log('filter');
     } else {
       setPlanetsData(listOrigin);
-      console.log('orign');
+    }
+  }
+
+  async function selectOrder(col, type) {
+    if (type === 'DESC') {
+      const listOrderUpdate = planetsData;
+      listOrderUpdate.sort((a, b) => b[col] - a[col]);
+      const list = listOrderUpdate.concat();
+      setPlanetsData(list);
+    } else {
+      const listOrderUpdate = planetsData;
+      listOrderUpdate.sort((a, b) => a[col] - b[col]);
+      const list = listOrderUpdate.concat();
+      setPlanetsData(list);
     }
   }
 
@@ -68,9 +79,11 @@ function App() {
     <StarWarsContext.Provider
       value={
         {
+          orderFunc: selectOrder,
           data: planetsData,
           handle: handleOnchange,
           filtersFunc: filtersSelectNumbers,
+          funcFilterText: filterByText,
           text: entryText }
       }
     >

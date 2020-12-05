@@ -28,7 +28,7 @@ const mockFetch = () => {
     }));
 }
 
-describe.only('Faça uma requisição para o endpoint `/planets` da API de Star Wars e preencha uma tabela com os dados retornados, com exceção dos da coluna `residents`', () => {
+describe('Faça uma requisição para o endpoint `/planets` da API de Star Wars e preencha uma tabela com os dados retornados, com exceção dos da coluna `residents`', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
 
@@ -84,7 +84,7 @@ describe.only('Faça uma requisição para o endpoint `/planets` da API de Star 
   });
 });
 
-describe.only('Filtre a tabela através de um texto, inserido num *campo de texto*, exibindo somente os planetas cujos nomes incluam o texto digitado', () => {
+describe('Filtre a tabela através de um texto, inserido num *campo de texto*, exibindo somente os planetas cujos nomes incluam o texto digitado', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
 
@@ -98,10 +98,10 @@ describe.only('Filtre a tabela através de um texto, inserido num *campo de text
   it('Filtra planetas que possuem a letra "o" no nome', async () => {
     await act(async () => {
       render(<App />);
-      const input = await screen.findByTestId(INPUT_FILTER_NAME_SELECTOR);
-      fireEvent.change(input, { target: { value: 'o' } });
     });
 
+    const input = await screen.findByTestId(INPUT_FILTER_NAME_SELECTOR);
+    fireEvent.change(input, { target: { value: 'o' } });
     expect(await screen.findAllByRole(ROW_ROLE_SELECTOR)).toHaveLength(8);
     const planetNames = ['Coruscant', 'Dagobah', 'Endor', 'Hoth', 'Kamino', 'Naboo', 'Tatooine'];
     for (let planetName of planetNames) {
@@ -112,10 +112,10 @@ describe.only('Filtre a tabela através de um texto, inserido num *campo de text
   it('Filtra planetas que possuem a letra "oo" no nome', async () => {
     await act(async () => {
       render(<App />);
-      const input = await screen.findByTestId(INPUT_FILTER_NAME_SELECTOR);
-      fireEvent.change(input, { target: { value: 'oo' } });
     });
 
+    const input = await screen.findByTestId(INPUT_FILTER_NAME_SELECTOR);
+    fireEvent.change(input, { target: { value: 'oo' } });
     expect(await screen.findAllByRole(ROW_ROLE_SELECTOR)).toHaveLength(3);
     const planetNames = ['Naboo', 'Tatooine'];
     for (let planetName of planetNames) {
@@ -126,9 +126,10 @@ describe.only('Filtre a tabela através de um texto, inserido num *campo de text
   it('Realiza vários filtros em sequência', async () => {
     await act(async () => {
       render(<App />);
-      const input = await screen.findByTestId(INPUT_FILTER_NAME_SELECTOR);
-      fireEvent.change(input, { target: { value: 'o' } });
     });
+
+    const input = await screen.findByTestId(INPUT_FILTER_NAME_SELECTOR);
+    fireEvent.change(input, { target: { value: 'o' } });
     let planetNames = [];
     expect(await screen.findAllByRole(ROW_ROLE_SELECTOR)).toHaveLength(8);
     planetNames = ['Coruscant', 'Dagobah', 'Endor', 'Hoth', 'Kamino', 'Naboo', 'Tatooine'];
@@ -158,7 +159,7 @@ describe.only('Filtre a tabela através de um texto, inserido num *campo de text
   });
 });
 
-describe.only('Crie um filtro para valores numéricos', () => {
+describe('Crie um filtro para valores numéricos', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
 
@@ -248,7 +249,7 @@ describe.only('Crie um filtro para valores numéricos', () => {
   });
 });
 
-describe.only('Não utilize filtros repetidos', () => {
+describe('Não utilize filtros repetidos', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
 

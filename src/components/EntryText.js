@@ -1,59 +1,67 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function EntryText() {
   const listLength = 0;
-  const initFiters = {
-    filterByNumericValues: [
+  // const initFiters = {
+  //   filterByNumericValues: [],
+  // };
 
-    ],
-  };
-  const { handle, entryText, filtersFunc } = useContext(StarWarsContext);
-  const [filters, setFilters] = useState(initFiters);
+  const { handle,
+    entryText,
+    filtersFunc,
+    funcFilterText,
+    orderFunc } = useContext(StarWarsContext);
+
+  // const [filters, setFilters] = useState(initFiters);
   const [column, setColumn] = useState('');
   const [comparison, setComparison] = useState('');
   const [value, setValue] = useState('');
+  const [columnOrder, setColumnOrder] = useState('');
+  const [order, setOrder] = useState('');
 
   function handleChange(event, input) {
     const filter = event.target.value;
     if (input === 'column') setColumn(filter);
     if (input === 'comparison') setComparison(filter);
     if (input === 'value') setValue(filter);
+    if (input === 'sort') setColumnOrder(filter);
+    if (input === 'radio') setOrder(filter);
+  }
 
-    // this.setState({
-    //   form: { ...form, [input]: event.target.value },
-    // });
-    // if (input === 'currency') {
-    //   const curName = currencys.filter((curren) => curren.code === event.target.value)
-    //     .flatMap((currName) => currName.name);
-    //   this.setState({ form:
-    //     { ...form, currencyName: curName[0], [input]: event.target.value },
-    //   });
-    // }
+  function resetFilter(event, col) {
+    funcFilterText('');
+    const optionSelect = document.querySelector(`#${col}`);
+    // const buttonX = document.querySelector(`#button-${col}`);
+    optionSelect.style.visibility = 'visible';
+    event.target.parentNode.remove();
   }
 
   function selectVerifyFilters() {
-    if (filters.filterByNumericValues.length > listLength) {
-      // console.log(filters.filterByNumericValues[0].column);
-      if (filters.filterByNumericValues[0].column.includes('population')) {
-        const optionSelect = document.querySelector('#population');
-        optionSelect.style.visibility = 'hidden';
-      }
-    }
+    const fatherDivButton = document.querySelector('#buttons-filters');
+    const button = document.createElement('button');
+    const divFilter = document.createElement('div');
+    const optionSelect = document.querySelector(`#${column}`);
+    optionSelect.style.visibility = 'hidden';
+
+    button.innerText = 'X';
+    button.type = 'button';
+    button.id = `button-${column}`;
+    button.onclick = (event) => resetFilter(event, `${column}`);
+    divFilter.setAttribute('data-testid', 'filter');
+    fatherDivButton.appendChild(divFilter);
+    divFilter.appendChild(button);
   }
 
-  useEffect(() => {
-    selectVerifyFilters();
-  });
-
   function handleClick() {
-    // const { value, column, comparison } = this.state;
     if (column.length > listLength && comparison.length
       > listLength && value.length > listLength) {
-      setFilters((prevState) => (
-        { filterByNumericValues:
-          [...prevState.filterByNumericValues, { value, comparison, column }],
-        }));
+      // const filter = filters;
+      // setFilters((prevState) => (
+      //   { filterByNumericValues:
+      //     [...prevState.filterByNumericValues, { value, comparison, column }],
+      //   }));
+      selectVerifyFilters();
     }
     filtersFunc(column, comparison, value);
   }
@@ -83,16 +91,16 @@ function EntryText() {
           <option id="population" value="population">
             population
           </option>
-          <option value="orbital_period">
+          <option id="orbital_period" value="orbital_period">
             orbital_period
           </option>
-          <option value="diameter">
+          <option id="diameter" value="diameter">
             diameter
           </option>
-          <option value="rotation_period">
+          <option id="rotation_period" value="rotation_period">
             rotation_period
           </option>
-          <option value="surface_water">
+          <option id="surface_water" value="surface_water">
             surface_water
           </option>
         </select>
@@ -132,6 +140,64 @@ function EntryText() {
       >
         Filtrar
       </button>
+      <label htmlFor="faixa-filter">
+        Ordenação
+        <select
+          data-testid="column-sort"
+          id="sort"
+          onChange={ (event) => handleChange(event, 'sort') }
+        >
+          <option value="">
+            Selecione
+          </option>
+          <option id="sort-population" value="population">
+            population
+          </option>
+          <option id="sort-orbital_period" value="orbital_period">
+            orbital_period
+          </option>
+          <option id="sort-diameter" value="diameter">
+            diameter
+          </option>
+          <option id="sort-rotation_period" value="rotation_period">
+            rotation_period
+          </option>
+          <option id="sort-surface_water" value="surface_water">
+            surface_water
+          </option>
+        </select>
+      </label>
+      <label htmlFor="asc">
+        Crescente
+        <input
+          testid="column-sort-input-asc"
+          id="asc"
+          type="radio"
+          value="ASC"
+          name="sort-order"
+          onChange={ (event) => handleChange(event, 'radio') }
+        />
+      </label>
+      <label htmlFor="desc">
+        Decrescente
+        <input
+          data-testid="column-sort-input-desc"
+          id="desc"
+          type="radio"
+          value="DESC"
+          name="sort-order"
+          onChange={ (event) => handleChange(event, 'radio') }
+        />
+
+      </label>
+      <button
+        type="button"
+        onClick={ () => orderFunc(columnOrder, order) }
+        data-testid="column-sort-button"
+      >
+        Ordenar
+      </button>
+      <div id="buttons-filters" />
     </div>);
 }
 
