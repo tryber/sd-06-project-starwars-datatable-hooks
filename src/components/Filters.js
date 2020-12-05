@@ -90,7 +90,7 @@ function Filters() {
   }
 
   function sortPlanets() {
-    const minusOne = -1;
+    // const minusOne = -1;
     const zero = 0;
     const dados = data;
 
@@ -98,7 +98,7 @@ function Filters() {
       dados.results.sort(
         (a, b) => (Number((a[filterOrder.column]) > Number(b[filterOrder.column]))
           ? 1
-          : minusOne),
+          : -1),
       );
     // console.log(dados.results);
     } else if (filterOrder.sort === 'DESC') {
@@ -120,7 +120,7 @@ function Filters() {
         if (Number(one) < Number(two)) {
           return 1;
         }
-        return minusOne;
+        return -1;
 
         // (one < two) ? 1 : -1;
       });
@@ -135,7 +135,7 @@ function Filters() {
   useEffect(() => {
     const dados = data;
     // console.log(dados);
-    dados.results.sort((a, b) => ((a.name > b.name) ? 1 : minusOne));
+    dados.results.sort((a, b) => ((a.name > b.name) ? 1 : -1));
     setData({
       ...data,
       dados });
