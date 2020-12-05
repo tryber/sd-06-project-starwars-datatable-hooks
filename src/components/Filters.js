@@ -91,7 +91,6 @@ function Filters() {
 
   function sortPlanets() {
     const minusOne = -1;
-    const zero = 0;
     const dados = data;
 
     if (filterOrder.sort === 'ASC') {
