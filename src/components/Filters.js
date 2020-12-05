@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Filters() {
@@ -7,6 +7,8 @@ function Filters() {
     backupData,
     filters,
     setFilters,
+    filterOrder,
+    setFilterOrder,
   } = useContext(StarWarsContext);
 
   function changeField(e, field) {
@@ -87,6 +89,60 @@ function Filters() {
     document.getElementById('textFilter').value = '';
   }
 
+  function sortPlanets() {
+    const minusOne = -1;
+    const zero = 0;
+    const dados = data;
+
+    if (filterOrder.sort === 'ASC') {
+      dados.results.sort(
+        (a, b) => (Number((a[filterOrder.column]) > Number(b[filterOrder.column]))
+          ? 1
+          : minusOne),
+      );
+    // console.log(dados.results);
+    } else if (filterOrder.sort === 'DESC') {
+      dados.results.sort((a, b) => {
+        /// ///
+        let one;
+        if (a[filterOrder.column] === 'unknown') {
+          one = zero;
+        } else {
+          one = a[filterOrder.column];
+        }
+        let two;
+        if (b[filterOrder.column] === 'unknown') {
+          two = zero;
+        } else {
+          two = b[filterOrder.column];
+        }
+        /// ///
+        if (Number(one) < Number(two)) {
+          return 1;
+        }
+        return minusOne;
+
+        // (one < two) ? 1 : -1;
+      });
+      // console.log(filterOrder);
+    }
+    setData({
+      ...data,
+      dados });
+    // console.log(data.results);
+  }
+
+  useEffect(() => {
+    const dados = data;
+    // console.log(dados);
+    dados.results.sort((a, b) => ((a.name > b.name) ? 1 : minusOne));
+    setData({
+      ...data,
+      dados });
+  }, []);
+
+  // console.log(filterOrder);
+
   return (
     <div>
       <input
@@ -164,6 +220,70 @@ function Filters() {
         onClick={ handleClick }
       >
         Adicionar filtro
+      </button>
+
+      <br />
+
+      {/* Ordenar por coluna */}
+      <select
+        name="order"
+        data-testid="column-sort"
+        onChange={ (e) => setFilterOrder({
+          ...filterOrder,
+          column: e.target.value,
+        }) }
+      >
+        <option value="name">Name</option>
+        <option value="rotation_period">rotation_period</option>
+        <option value="orbital_period">orbital_period</option>
+        <option value="diameter">diameter</option>
+        <option value="climate">climate</option>
+        <option value="created">created</option>
+        <option value="edited">edited</option>
+        <option value="gravity">gravity</option>
+        <option value="population">population</option>
+        <option value="surface_water">surface_water</option>
+        <option value="terrain">terrain</option>
+        <option value="films">films</option>
+        <option value="URL">URL</option>
+      </select>
+
+      <label htmlFor="asc">
+        <input
+          type="radio"
+          id="asc"
+          name="orderRadio"
+          value="ASC"
+          data-testid="column-sort-input-asc"
+          onChange={ () => setFilterOrder({
+            ...filterOrder,
+            sort: 'ASC',
+          }) }
+        />
+        ASC
+      </label>
+
+      <label htmlFor="desc">
+        <input
+          type="radio"
+          id="desc"
+          name="orderRadio"
+          value="DESC"
+          data-testid="column-sort-input-desc"
+          onChange={ () => setFilterOrder({
+            ...filterOrder,
+            sort: 'DESC',
+          }) }
+        />
+        DESC
+      </label>
+
+      <button
+        type="button"
+        data-testid="column-sort-button"
+        onClick={ sortPlanets }
+      >
+        Ordenar
       </button>
     </div>
   );

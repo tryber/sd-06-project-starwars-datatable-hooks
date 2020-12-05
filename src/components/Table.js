@@ -22,6 +22,10 @@ function Table() {
     fetchApi();
   }, []);
 
+  // useEffect(() => {
+  //   if (data) {}
+  // }, []);
+
   // function handleFilters(e) {
   //   setBackupData(data);
   //   let newResults;
@@ -41,7 +45,6 @@ function Table() {
   // }
 
   if (data) {
-    // const fields = handleFilters(data.results).map((result) => (
     const fields = data.results.map((result) => (
       <tr key={ result.url }>
         <td data-testid="planet-name">{result.name}</td>
@@ -58,7 +61,6 @@ function Table() {
         <td>{result.films}</td>
         <td>{result.url}</td>
       </tr>
-
     ));
 
     return (

@@ -336,30 +336,30 @@ describe('Apague o filtro de valores numéricos e desfaça as filtragens dos dad
   });
 });
 
-// describe('Ordene as colunas de forma ascendente ou descendente', () => {
-//   beforeAll(mockFetch);
-//   beforeEach(cleanup);
+describe('Ordene as colunas de forma ascendente ou descendente', () => {
+  beforeAll(mockFetch);
+  beforeEach(cleanup);
 
-//   it('Verifica ordenação inicial', async () => {
-//     await act(async () => {
-//       render(<App />);
-//     });
-//     const expected = ['Alderaan', 'Bespin', 'Coruscant', 'Dagobah', 'Endor', 'Hoth', 'Kamino', 'Naboo', 'Tatooine', 'Yavin IV' ];
-//     const planets = await screen.findAllByTestId(PLANET_NAME_SELECTOR);
-//     const actual = planets.map(planet => planet.innerHTML);
-//     expect(actual).toEqual(expected);
-//   });
+  it('Verifica ordenação inicial', async () => {
+    await act(async () => {
+      render(<App />);
+    });
+    const expected = ['Alderaan', 'Bespin', 'Coruscant', 'Dagobah', 'Endor', 'Hoth', 'Kamino', 'Naboo', 'Tatooine', 'Yavin IV' ];
+    const planets = await screen.findAllByTestId(PLANET_NAME_SELECTOR);
+    const actual = planets.map(planet => planet.innerHTML);
+    expect(actual).toEqual(expected);
+  });
 
-//   it('ordena os planetas do mais populoso para o menos populoso', async () => {
-//     await act(async () => {
-//       render(<App />);
-//     });
-//     fireEvent.change(await screen.findByTestId(SORT_COLUMN_SELECTOR), { target: { value: 'orbital_period' }});
-//     fireEvent.click(await screen.findByTestId(SORT_ORDER_DESC_SELECTOR));
-//     fireEvent.click(await screen.findByTestId(SORT_APPLY_SELECTOR));
-//     const expected = ['Bespin', 'Yavin IV', 'Hoth', 'Kamino', 'Endor', 'Coruscant', 'Alderaan', 'Dagobah', 'Naboo', 'Tatooine'];
-//     const planets = await screen.findAllByTestId(PLANET_NAME_SELECTOR);
-//     const actual = planets.map(planet => planet.innerHTML);
-//     expect(actual).toEqual(expected);
-//   });
-// });
+  it('ordena os planetas do mais populoso para o menos populoso', async () => {
+    await act(async () => {
+      render(<App />);
+    });
+    fireEvent.change(await screen.findByTestId(SORT_COLUMN_SELECTOR), { target: { value: 'orbital_period' }});
+    fireEvent.click(await screen.findByTestId(SORT_ORDER_DESC_SELECTOR));
+    fireEvent.click(await screen.findByTestId(SORT_APPLY_SELECTOR));
+    const expected = ['Bespin', 'Yavin IV', 'Hoth', 'Kamino', 'Endor', 'Coruscant', 'Alderaan', 'Dagobah', 'Naboo', 'Tatooine'];
+    const planets = await screen.findAllByTestId(PLANET_NAME_SELECTOR);
+    const actual = planets.map(planet => planet.innerHTML);
+    expect(actual).toEqual(expected);
+  });
+});

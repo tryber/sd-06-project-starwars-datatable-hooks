@@ -12,6 +12,10 @@ function Provider({ children }) {
     comparison: 'maior que',
     value: 0,
   });
+  const [filterOrder, setFilterOrder] = useState({
+    column: 'name',
+    sort: 'ASC',
+  });
 
   const contextValue = {
     isFetching,
@@ -24,6 +28,8 @@ function Provider({ children }) {
     setFilters,
     changedData,
     setChangedData,
+    filterOrder,
+    setFilterOrder,
   };
 
   return (
