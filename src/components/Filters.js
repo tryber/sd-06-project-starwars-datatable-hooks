@@ -40,7 +40,6 @@ function Filters() {
     <form onSubmit={handleSubmit}>
       <TextFilter />
       <NumericFilter
-        numericFiltersData={ numericFiltersData }
         setNumericFiltersData={ setNumericFiltersData }
         columnFilters={ columnFilters }
         comparisonFilters={ comparisonFilters }

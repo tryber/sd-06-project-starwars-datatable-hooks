@@ -98,6 +98,10 @@ function StarWarsProvider({ children }) {
 
   };
 
+  useEffect(() => {
+    makeInitialSetup();
+    // mockedInitialSetup();
+  }, []);
 
   useEffect (() => {
     const { filters: { filterByNumericValues } } = filters;
@@ -112,7 +116,6 @@ function StarWarsProvider({ children }) {
     columnFilters,
     comparisonFilters,
     getFilteredPlanets,
-    makeInitialSetup,
     setFilters,
     // mockedInitialSetup,
   };

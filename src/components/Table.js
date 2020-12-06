@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 import Loading from './Loading';
 
@@ -6,15 +6,8 @@ function Table() {
   const {
     tableHeaders,
     isFetching,
-    makeInitialSetup,
     getFilteredPlanets,
-    // mockedInitialSetup,
   } = useContext(StarWarsContext);
-
-  useEffect(() => {
-    makeInitialSetup();
-    // mockedInitialSetup();
-  }, []);
 
   const renderTable = () => (
     <table className="table">
