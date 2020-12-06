@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 function NumericFilter(props) {
   const {
@@ -6,19 +7,24 @@ function NumericFilter(props) {
     columnFilters,
     comparisonFilters,
   } = props;
-  
 
   const onChange = (event) => {
     const { name: objectKey, value, type } = event.target;
-    const processedValue = type === 'number'
-      ? (isNaN(parseInt(value)) ? 0: parseInt(value))
-      : value;
+    const defaultValue = 0;
+    let processedValue = null;
+    if (type === 'number') {
+      processedValue = Number(value);
+    } else if (!Number.isNaN(Number(value))) {
+      processedValue = defaultValue;
+    } else {
+      processedValue = value;
+    }
     setNumericFiltersData((prevState) => ({
       ...prevState,
       [objectKey]: processedValue,
     }));
   };
- 
+
   return (
     <div>
       <label htmlFor="column-filter">
@@ -62,5 +68,11 @@ function NumericFilter(props) {
     </div>
   );
 }
+
+NumericFilter.propTypes = {
+  setNumericFiltersData: PropTypes.func.isRequired,
+  columnFilters: PropTypes.arrayOf(PropTypes.string).isRequired,
+  comparisonFilters: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
 
 export default NumericFilter;

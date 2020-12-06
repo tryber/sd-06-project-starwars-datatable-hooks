@@ -5,8 +5,6 @@ import removeKeyFromObject from '../helpers/removeKeyFromObject';
 // import mockFetchPlanetsInfo from '../services/mockApiServices';
 import StarWarsContext from './StarWarsContext';
 
-
-
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
   const [tableHeaders, setTableHeaders] = useState([]);
@@ -14,17 +12,19 @@ function StarWarsProvider({ children }) {
   const [hasNumericFilters, setHasNumericFilters] = useState(false);
 
   const initialFiltersState = {
-  filters: {
-    filterByName: {
-      name: '',
+    filters: {
+      filterByName: {
+        name: '',
+      },
+      filterByNumericValues: [],
     },
-    filterByNumericValues: [],
-  },
-};
+  };
   const [filters, setFilters] = useState(initialFiltersState);
   const [columnFilters, setColumnFilters] = useState(
-    ['population', 'orbital_period', 'diameter',
-    'rotation_period', 'surface_water']
+    [
+      'population', 'orbital_period', 'diameter',
+      'rotation_period', 'surface_water',
+    ],
   );
   const comparisonFilters = ['maior que', 'menor que', 'igual a'];
 
@@ -48,44 +48,52 @@ function StarWarsProvider({ children }) {
   const getFilteredPlanets = () => {
     let dataForFiltering = [...data];
     let auxFilter;
-    const { filters: { filterByName: { name: planetSearch  } } } = filters;
+    const { filters: { filterByName: { name: planetSearch } } } = filters;
     const { filters: { filterByNumericValues } } = filters;
     if (hasNumericFilters) {
       filterByNumericValues.forEach((currentFilter) => {
         const { column, comparison, value } = currentFilter;
         switch (comparison) {
-          case 'maior que':
-            auxFilter = dataForFiltering.filter((planet) => (
-              parseInt(planet[column]) > value
-            ));
-            dataForFiltering = [...auxFilter];
-            break;
-          case 'menor que':
-            auxFilter = dataForFiltering.filter((planet) => (
-              parseInt(planet[column]) < value
-            ));
-            dataForFiltering = [...auxFilter];
-            break;
-          case 'igual a':
-            auxFilter = dataForFiltering.filter((planet) => (
-              parseInt(planet[column]) === value
-            ));
-            dataForFiltering = [...auxFilter];
-            break;
-          default:
-            console.log('Ocorreu um erro na informação de comparação');
-        } 
+        case 'maior que':
+          auxFilter = dataForFiltering.filter((planet) => (
+            Number(planet[column]) > value
+          ));
+          dataForFiltering = [...auxFilter];
+          break;
+        case 'menor que':
+          auxFilter = dataForFiltering.filter((planet) => (
+            Number(planet[column]) < value
+          ));
+          dataForFiltering = [...auxFilter];
+          break;
+        case 'igual a':
+          auxFilter = dataForFiltering.filter((planet) => (
+            Number(planet[column]) === value
+          ));
+          dataForFiltering = [...auxFilter];
+          break;
+        default:
+          console.log('Ocorreu um erro na informação de comparação');
+        }
       });
     }
 
-    hasNumericFilters
-      ? console.log('Provider informou que TEM filtros')
-      : console.log('Provider informou que NÃO tem filtros')
-    
     return dataForFiltering.filter((planet) => (
       planet.name.toLowerCase().includes(planetSearch.toLowerCase())
-    ))
+    ));
+  };
 
+  const applyFilter = (filterToApply) => {
+    setFilters((prevState) => ({
+      ...prevState,
+      filters: {
+        ...prevState.filters,
+        filterByNumericValues: [
+          ...prevState.filters.filterByNumericValues,
+          filterToApply,
+        ],
+      },
+    }));
   };
 
   useEffect(() => {
@@ -93,13 +101,13 @@ function StarWarsProvider({ children }) {
     // mockedInitialSetup();
   }, []);
 
-  useEffect (() => {
+  useEffect(() => {
     const { filters: { filterByNumericValues } } = filters;
+    const minArraySize = 0;
     console.log('Filters foi alterado');
-    filterByNumericValues.length > 0 && setHasNumericFilters(true);
+    setHasNumericFilters(filterByNumericValues.length > minArraySize);
     console.log('Ptovider filters state:', filterByNumericValues);
   }, [filters]);
-  
   const contextValue = {
     tableHeaders,
     isFetching,
@@ -108,6 +116,8 @@ function StarWarsProvider({ children }) {
     comparisonFilters,
     getFilteredPlanets,
     setFilters,
+    setColumnFilters,
+    applyFilter,
     // mockedInitialSetup,
   };
 

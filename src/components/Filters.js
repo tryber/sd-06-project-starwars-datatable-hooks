@@ -5,18 +5,18 @@ import TextFilter from './TextFilter';
 
 function Filters() {
   const {
-    setFilters,
     columnFilters,
     comparisonFilters,
+    applyFilter,
   } = useContext(StarWarsContext);
-  
+
   const initialNumericFiltersState = {
     column: columnFilters[0],
     comparison: comparisonFilters[0],
     value: 0,
   };
   const [numericFiltersData, setNumericFiltersData] = useState(
-    {...initialNumericFiltersState}
+    { ...initialNumericFiltersState },
   );
 
   const handleSubmit = (event) => {
@@ -24,20 +24,11 @@ function Filters() {
     console.log('Filters to be applied');
     console.table(numericFiltersData);
     console.log('--------------');
-    setFilters((prevState) => ({
-      ...prevState,
-      filters: {
-        ...prevState.filters,
-        filterByNumericValues: [
-          ...prevState.filters.filterByNumericValues,
-          numericFiltersData,
-        ],
-      },
-    }));
-
+    applyFilter(numericFiltersData);
   };
+
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={ handleSubmit }>
       <TextFilter />
       <NumericFilter
         setNumericFiltersData={ setNumericFiltersData }
