@@ -3,7 +3,8 @@ import StarWarsContext from '../context/StarWarsContext';
 
 export default function Table() {
   const INITIAL_PLANETS = 0;
-  const { planets, fetchPlanets, loading, filters: { filterByName: { name } } } = useContext(StarWarsContext);
+  const { planets, fetchPlanets, loading,
+    filters: { filterByName: { name } } } = useContext(StarWarsContext);
 
   const filteredPlanets = name
     ? planets.filter((planet) => planet.name.match(`${name}`) && planet)
