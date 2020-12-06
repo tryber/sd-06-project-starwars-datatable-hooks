@@ -50,7 +50,6 @@ function StarWarsProvider({ children }) {
     let auxFilter;
     const { filters: { filterByName: { name: planetSearch  } } } = filters;
     const { filters: { filterByNumericValues } } = filters;
-    console.log('Original data copy', dataForFiltering);
     if (hasNumericFilters) {
       filterByNumericValues.forEach((currentFilter) => {
         const { column, comparison, value } = currentFilter;
@@ -107,6 +106,7 @@ function StarWarsProvider({ children }) {
     const { filters: { filterByNumericValues } } = filters;
     console.log('Filters foi alterado');
     filterByNumericValues.length > 0 && setHasNumericFilters(true);
+    console.log('Ptovider filters state:', filterByNumericValues);
   }, [filters]);
   
   const contextValue = {

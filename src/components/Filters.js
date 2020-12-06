@@ -29,7 +29,7 @@ function Filters() {
       filters: {
         ...prevState.filters,
         filterByNumericValues: [
-          //...prevState.filters.filterByNumericValues, #habilitar depois
+          ...prevState.filters.filterByNumericValues,
           numericFiltersData,
         ],
       },
