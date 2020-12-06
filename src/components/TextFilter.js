@@ -8,14 +8,14 @@ function TextFilter() {
   } = useContext(StarWarsContext);
 
   const onChange = (event) => {
-    const { name, value } = event.target;
+    const { name: objectKey, value } = event.target;
     setFilters((prevState) => ({
       ...prevState,
       filters: {
         ...prevState.filters,
         filterByName: {
           ...prevState.filters.filterByName,
-          [name]: value,
+          [objectKey]: value,
         },
       },
     }));

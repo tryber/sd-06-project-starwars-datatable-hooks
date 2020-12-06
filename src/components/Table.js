@@ -22,26 +22,43 @@ function Table() {
   }, []);
 
   const getFilteredPlanetsByUser = () => {
+    let dataForFiltering = [...data];
+    let auxFilter;
+    console.log('Original data copy', dataForFiltering);
     if (hasNumericFilters) {
-      console.log('Filter by numeric values', filterByNumericValues);
-      console.log('Elemento do numeric filter', filterByNumericValues[0]);
-      console.log('Prop do numeric filter', filterByNumericValues[0].column);
-      data.forEach((planet) => {
-        const columnProp = filterByNumericValues[0].column;
-        const valueProp = filterByNumericValues[0].value;
-        console.log('Column prop', columnProp);
-        console.log('Value prop' ,valueProp);
-        console.log(typeof valueProp);
-        console.log('Prop dinamicamente', planet[columnProp]);
-        console.log(typeof planet[columnProp]);
-        console.log(parseInt(planet[columnProp]) === parseInt(valueProp));
+      filterByNumericValues.forEach((currentFilter) => {
+        const { column, comparison, value } = currentFilter;
+        console.log(column);
+        console.log(comparison);
+        console.log(value);
+        switch (comparison) {
+          case 'maior que':
+            console.log('>');
+            auxFilter = dataForFiltering.filter((planet) => (
+              parseInt(planet[column]) > value
+            ));
+            dataForFiltering = [...auxFilter];
+            break;
+          case 'menor que':
+            console.log('<');
+            auxFilter = dataForFiltering.filter((planet) => (
+              parseInt(planet[column]) < value
+            ));
+            dataForFiltering = [...auxFilter];
+            break;
+          case 'igual a':
+            console.log('=');
+            auxFilter = dataForFiltering.filter((planet) => (
+              parseInt(planet[column]) === value
+            ));
+            dataForFiltering = [...auxFilter];
+            break;
+          default:
+            console.log('Ocorreu um erro na informação de comparação');
+        } 
       });
-      const filteredResults = data.filter((planet) => {
-        const columnProp = filterByNumericValues[0].column;
-        const valueProp = filterByNumericValues[0].value;
-        return parseInt(planet[columnProp]) === parseInt(valueProp)
-      });
-      console.log('Filtered Results:', filteredResults);
+      
+      // return parseInt(planet[columnProp]) === valueProp
       // Agora foi, eram strings os dois valores de comparação
       // chamar:
       // const columnProp = filterByNumericValues[0].column;
@@ -50,11 +67,12 @@ function Table() {
       // caso do forEach.
       // Passar essa lógica de volta pro Provider
     }
+
     hasNumericFilters
       ? console.log('Provider informou que TEM filtros')
       : console.log('Provider informou que NÃO tem filtros')
-    return data.filter((planet) => (
-      
+    
+    return dataForFiltering.filter((planet) => (
       planet.name.toLowerCase().includes(planetSearch.toLowerCase())
     ))
   };
