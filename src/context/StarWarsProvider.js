@@ -45,43 +45,59 @@ function StarWarsProvider({ children }) {
     setIsFetching(false);
   };
 
-
-  const generateFilteredData = () => {
-    const { filters: { filterByName: { name: filteredName } } } = filters;
+  const getFilteredPlanets = () => {
+    let dataForFiltering = [...data];
+    let auxFilter;
+    const { filters: { filterByName: { name: planetSearch  } } } = filters;
     const { filters: { filterByNumericValues } } = filters;
-    //const [{ column, comparison, value }] = filterByNumericValues;
+    console.log('Original data copy', dataForFiltering);
+    if (hasNumericFilters) {
+      filterByNumericValues.forEach((currentFilter) => {
+        const { column, comparison, value } = currentFilter;
+        switch (comparison) {
+          case 'maior que':
+            auxFilter = dataForFiltering.filter((planet) => (
+              parseInt(planet[column]) > value
+            ));
+            dataForFiltering = [...auxFilter];
+            break;
+          case 'menor que':
+            auxFilter = dataForFiltering.filter((planet) => (
+              parseInt(planet[column]) < value
+            ));
+            dataForFiltering = [...auxFilter];
+            break;
+          case 'igual a':
+            auxFilter = dataForFiltering.filter((planet) => (
+              parseInt(planet[column]) === value
+            ));
+            dataForFiltering = [...auxFilter];
+            break;
+          default:
+            console.log('Ocorreu um erro na informação de comparação');
+        } 
+      });
+      
+      // return parseInt(planet[columnProp]) === valueProp
+      // Agora foi, eram strings os dois valores de comparação
+      // chamar:
+      // const columnProp = filterByNumericValues[0].column;
+      // const valueProp = filterByNumericValues[0].value;
+      // Criar um array externo, que vai ser alterado a cada
+      // caso do forEach.
+      // Passar essa lógica de volta pro Provider
+    }
 
-    // Fazer uma função que checa na mão grande os maior que
-    // fazendo o filtro pra cada if (if do maior que, etc)
-    // Fazer filtros sucessivos, ao invés de cheio de &&
-    // Para cada elemento do array de filtros (o filterByNumericValues)
-    // chamar essa função descrita acima
-    // usar planet[column]
-    console.log('generateFilteredData called');
-    console.log('filterByNumericValues', filterByNumericValues);
-    console.log('filterByNumericValues[0]', filterByNumericValues[0]);
-    //const [{ column }] = filterByNumericValues[0];
-    // const filterResult = data.filter((planet) => {
-    //   if (comparison === 'maior que') {
-    //     return planet[column] > value;
-    //   }
-    //   if (comparison === 'menor que') {
-    //     return planet[column] < value;
-    //   }
-    //   if (comparison === 'igual a') {
-    //     return planet[column] === value;
-    //   }
-    // });
-    // console.log('filter results', filterResult);
+    hasNumericFilters
+      ? console.log('Provider informou que TEM filtros')
+      : console.log('Provider informou que NÃO tem filtros')
+    
+    return dataForFiltering.filter((planet) => (
+      planet.name.toLowerCase().includes(planetSearch.toLowerCase())
+    ))
 
-    /*
-    Filter properties
-    column: // population, orbital_period, diameter, etc
-    comparison: '',
-    value: 0,
-    */
-  
   };
+
 
   useEffect (() => {
     const { filters: { filterByNumericValues } } = filters;
@@ -90,14 +106,12 @@ function StarWarsProvider({ children }) {
   }, [filters]);
   
   const contextValue = {
-    data,
     tableHeaders,
     isFetching,
     filters,
     columnFilters,
     comparisonFilters,
-    hasNumericFilters,
-    generateFilteredData,
+    getFilteredPlanets,
     makeInitialSetup,
     setFilters,
     // mockedInitialSetup,
