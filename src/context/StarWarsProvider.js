@@ -76,15 +76,6 @@ function StarWarsProvider({ children }) {
             console.log('Ocorreu um erro na informação de comparação');
         } 
       });
-      
-      // return parseInt(planet[columnProp]) === valueProp
-      // Agora foi, eram strings os dois valores de comparação
-      // chamar:
-      // const columnProp = filterByNumericValues[0].column;
-      // const valueProp = filterByNumericValues[0].value;
-      // Criar um array externo, que vai ser alterado a cada
-      // caso do forEach.
-      // Passar essa lógica de volta pro Provider
     }
 
     hasNumericFilters

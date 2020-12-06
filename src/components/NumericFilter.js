@@ -10,7 +10,6 @@ function NumericFilter(props) {
 
   const onChange = (event) => {
     const { name: objectKey, value, type } = event.target;
-    // const processedValue = type === 'number' ? parseInt(value) : value;
     const processedValue = type === 'number'
       ? (isNaN(parseInt(value)) ? 0: parseInt(value))
       : value;
