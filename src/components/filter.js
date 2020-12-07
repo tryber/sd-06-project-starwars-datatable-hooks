@@ -10,13 +10,13 @@ function Filters() {
   const removeFilter = (e) => {
     const id = parseInt(e.target.id, 5);
 
-    const arrayColumn = column.filter((index) => index !== id);
+    const arrayColumn = column.filter((element, index) => index !== id);
     setColumn(arrayColumn);
 
-    const arrayComparison = comparar.filter((index) => index !== id);
+    const arrayComparison = comparar.filter((element, index) => index !== id);
     setComparar(arrayComparison);
 
-    const arrayValue = value.filter((index) => index !== id);
+    const arrayValue = value.filter((element, index) => index !== id);
     setValue(arrayValue);
   };
 
