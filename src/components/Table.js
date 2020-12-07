@@ -40,7 +40,7 @@ function Table() {
 
   const PLANETS_FROM_API = async () => {
     const RESULT = await sWAPI();
-    return setPlanets(RESULT.results);
+    return setPlanets(RESULT);
   };
 
   const tableFilterStructure = () => (

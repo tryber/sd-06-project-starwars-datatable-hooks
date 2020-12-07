@@ -1,3 +1,4 @@
+import { queryAllByAttribute, queryByRole } from '@testing-library/react';
 import React, { useContext, useState } from 'react';
 import AppContext from '../context/AppContext';
 
@@ -28,6 +29,7 @@ const HEAD = [
 function Filter() {
   const {
     setName,
+    // filteredPlanets,
     setFilteredPlanets,
     planets,
     filters,
@@ -114,6 +116,7 @@ function Filter() {
 
   const removeFilter = ({ column }) => {
     setFilters((prev) => ({ ...prev,
+      ...prev.filterByName,
       filterByNumericValues: filters.filterByNumericValues
         .filter((field) => field.column !== column),
     }));
@@ -127,6 +130,16 @@ function Filter() {
 
   const filterComparison = ({ target }) => {
     setChosenComparison(target.value);
+  };
+
+  const filterSort = ({ target }) => {
+    setFilters((prev) => ({
+      ...prev,
+      order: {
+        column: target.value,
+        sort: prev.order.sort,
+      },
+    }));
   };
 
   const filterValue = ({ target }) => {
@@ -144,21 +157,57 @@ function Filter() {
     </option>
   );
 
-  /* const renderUsedFilters = (filter) => (
-    <div
-      className="filter"
-      data-testid="filter"
-      key={ filter }
-    >
-      { filter.column }
-      <button
-        onClick={ (e) => removeFilter(e) }
-        type="button"
-      >
-        x
-      </button>
-    </div>
-  ); */
+  // const uncheckOtherRadio = (chosenOrder) => {
+  //   const OTHER_BTN = chosenOrder === 'ASC' ? 'dsc' : 'asc';
+  //   document.querySelector(`#column-sort-input-${OTHER_BTN}`)
+  //     .disabled = true;
+  // };
+
+  const setSort = ({ target }) => {
+    setFilters((prev) => ({
+      ...prev,
+      order: {
+        column: prev.order.column,
+        sort: target.value,
+      },
+    }));
+    // uncheckOtherRadio(target.value);
+  };
+
+  const sortTable = () => {
+    const { order: { column, sort } } = filters;
+    if (sort === 'ASC') {
+      setFilteredPlanets(
+        dropDownFilterValues.includes(column)
+          ? planets.sort((a, b) => a[column] - (b[column]))
+          : planets.sort((a, b) => a[column] > b[column]),
+      );
+    } else {
+      setFilteredPlanets(
+        dropDownFilterValues.includes(column)
+          ? planets.sort((a, b) => (b[column]) - (a[column]))
+          : planets.sort((a, b) => a[column] < b[column]),
+      );
+    }
+  };
+
+  /* const planetas = [
+   { name: "Tatooine", rotation_period: "23", orbital_period: "304" },
+   { name: "Alderaan", rotation_period: "24", orbital_period: "364" },
+   { name: "Yavin IV", rotation_period: "24", orbital_period: "4818" },
+   { name: "Hoth", rotation_period: "23", orbital_period: "549" },
+   { name: "Dagobah", rotation_period: "23", orbital_period: "341" },
+   { name: "Bespin", rotation_period: "12", orbital_period: "5110" },
+   { name: "Endor", rotation_period: "18", orbital_period: "402" },
+   { name: "Naboo", rotation_period: "26", orbital_period: "312" },
+   { name: "Coruscant", rotation_period: "24", orbital_period: "368" },
+   { name: "Kamino", rotation_period: "27", orbital_period: "463" },
+];
+
+planetas.sort((a, b) => a[name] - b[name])
+planetas.sort((a, b) => a[name] > b[name]))
+
+  */
 
   return (
     <div>
@@ -224,7 +273,48 @@ function Filter() {
               </button>
             </div>
           ))}
-      { HEAD.map((column) => dropdownOption(column)) }
+      <select
+        data-testid="column-sort"
+        value={ filters.order ? filters.order.column : HEAD[0] }
+        onChange={ (e) => filterSort(e) }
+      >
+        { HEAD.map((column) => dropdownOption(column)) }
+      </select>
+      <div>
+        <label
+          htmlFor="column-sort-input-asc"
+        >
+          Ascendente
+          <input
+            onChange={ (e) => setSort(e) }
+            type="radio"
+            data-testid="column-sort-input-asc"
+            id="column-sort-input-asc"
+            name="column-sort-input-asc"
+            value="ASC"
+          />
+        </label>
+        <label
+          htmlFor="column-sort-input-dsc"
+        >
+          Descendente
+          <input
+            onChange={ (e) => setSort(e) }
+            type="radio"
+            data-testid="column-sort-input-desc"
+            id="column-sort-input-dsc"
+            name="column-sort-input-dsc"
+            value="DSC"
+          />
+        </label>
+      </div>
+      <button
+        data-testid="column-sort-button"
+        type="button"
+        onClick={ sortTable }
+      >
+        Ordenar
+      </button>
     </div>
   );
 }

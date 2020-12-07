@@ -10,7 +10,7 @@ function Provider({ children }) {
       filterByName: { },
       filterByNumericValues: [],
       order: {
-        column: '',
+        column: 'name',
         sort: '',
       },
     },
