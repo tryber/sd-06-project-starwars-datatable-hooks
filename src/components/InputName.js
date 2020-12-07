@@ -24,6 +24,7 @@ function InputFilters() {
   return (
     <div>
       <form>
+        <h1>Filtro de Planetas de Star Wars</h1>
         <div>
           <input type="text" data-testid="name-filter" onChange={ handleChange } />
         </div>
