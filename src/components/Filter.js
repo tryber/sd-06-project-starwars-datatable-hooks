@@ -1,4 +1,3 @@
-import { queryAllByAttribute, queryByRole } from '@testing-library/react';
 import React, { useContext, useState } from 'react';
 import AppContext from '../context/AppContext';
 
@@ -179,7 +178,8 @@ function Filter() {
     if (sort === 'ASC') {
       setFilteredPlanets(
         dropDownFilterValues.includes(column)
-          ? planets.sort((a, b) => a[column] - (b[column]))
+          ? planets.sort((a, b) => a[column] - b[column])
+          // .localeCompare(b[column], undefined, { numeric: true }))
           : planets.sort((a, b) => a[column] > b[column]),
       );
     } else {
