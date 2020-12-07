@@ -13,22 +13,22 @@ function Table() {
     InfoPlanets();
   }, [InfoPlanets]);
 
-  const dinamicFilter = () => {
+  const filterTables = (data) => {
     let resultFilter = data;
 
-    comparar.forEach((comparison, index) => {
+    comparar.forEach((string, index) => {
       const culumn = column[index];
-      if (comparison === 'maior') {
+      if (string === 'maior') {
         resultFilter = resultFilter.filter(
           (element) => parseInt(element[culumn], 10) > parseInt(value[index], 10),
         );
       }
-      if (comparison === 'menor que') {
+      if (string === 'menor que') {
         resultFilter = resultFilter.filter(
           (element) => parseInt(element[column], 10) < parseInt(value[index], 10),
         );
       }
-      if (comparison === 'igual a') {
+      if (string === 'igual a') {
         resultFilter = resultFilter.filter(
           (element) => parseInt(element[column], 10) === parseInt(value[index], 10),
         );
@@ -39,7 +39,7 @@ function Table() {
 
   return (
     <tbody>
-      {dinamicFilter(data)
+      {filterTables(data)
         .filter((element) => element.name.toUpperCase().includes(inputText.toUpperCase()))
         .map((line) => (
           <tr key={ line.name }>

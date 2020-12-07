@@ -41,7 +41,7 @@ function Filters() {
       </thead>
       {column.map((element, index) => (
         <span key={ index } data-testid="filter">
-          {`${column[index]} ${comparar[index]} que ${value[index]}`}
+          {`${column[index]} ${comparar[index]} - ${value[index]}`}
           <button
             type="button"
             key={ index }
