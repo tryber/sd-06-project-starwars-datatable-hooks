@@ -5,14 +5,21 @@ import StarWarsContext from './StarWarsContext';
 
 function StarWarsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
-  // const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
   const getApiStar = async () => {
     const starWarsOffers = await fetchApiStar();
     setPlanets(starWarsOffers.results);
   };
 
   return (
-    <StarWarsContext.Provider value={ { planets, getApiStar } }>
+    <StarWarsContext.Provider
+      value={ {
+        planets,
+        getApiStar,
+        searchTerm,
+        setSearchTerm,
+      } }
+    >
       { children }
     </StarWarsContext.Provider>
   );
