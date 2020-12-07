@@ -39,8 +39,9 @@ function Table() {
   const { planets, setPlanets, name, filteredPlanets } = useContext(AppContext);
 
   const PLANETS_FROM_API = async () => {
-    const RESULT = await sWAPI();
-    return setPlanets(RESULT);
+    const RESULT = (await sWAPI()).sort((a, b) => a.name > b.name);
+    console.log(RESULT);
+    setPlanets(RESULT);
   };
 
   const tableFilterStructure = () => (
