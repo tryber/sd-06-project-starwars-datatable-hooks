@@ -40,7 +40,6 @@ function Table() {
 
   const PLANETS_FROM_API = async () => {
     const RESULT = (await sWAPI()).sort((a, b) => a.name > b.name);
-    console.log(RESULT);
     setPlanets(RESULT);
   };
 
