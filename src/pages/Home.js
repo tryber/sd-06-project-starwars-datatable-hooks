@@ -1,32 +1,18 @@
-import React, { useEffect, useContext } from 'react';
-import fetchAPI from '../servises/fetchAPI';
-import Header from '../components/Header';
-import Table from '../components/TablePlanets';
+import React from 'react';
 import InputName from '../components/InputName';
-import StarWarsContext from '../context/StarWarsContext';
+import TablePlanets from '../components/TablePlanets';
+import Provider from '../context/Provider';
 
-function HomePage() {
-  const { setData, setHeader } = useContext(StarWarsContext);
-
-  useEffect(() => {
-    async function fetchApiPlanets() {
-      const result = await fetchAPI();
-      setData(result);
-      setHeader(Object.keys(result[0]));
-    }
-    fetchApiPlanets();
-  }, [setData, setHeader]);
-
+function Home() {
   return (
-    <section>
-      <InputName />
-      <table>
-        <Header />
-        <Table />
-      </table>
-    </section>
-
+    <Provider>
+      <div>
+        <InputName />
+        <table>
+          <TablePlanets />
+        </table>
+      </div>
+    </Provider>
   );
 }
-
-export default HomePage;
+export default Home;

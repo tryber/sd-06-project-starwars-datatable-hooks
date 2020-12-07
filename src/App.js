@@ -1,11 +1,10 @@
 import React from 'react';
-import Provider from './context/Provider';
 import Home from './pages/Home';
 
-export default function App() {
+function App() {
   return (
-    <Provider>
-      <Home />
-    </Provider>
+    <Home />
   );
 }
+
+export default App;
