@@ -7,7 +7,6 @@ function SearchSelected() {
   // const aboutArray = ['population', 'orbital_period',
   //   'diameter', 'rotation_period', 'surface_water'];
   const lengthArray = ['maior que', 'menor que', 'igual a'];
-
   const [about, setAbout] = useState('population');
   const [lengthType, setLengthType] = useState('maior que');
   const [value, setValue] = useState('');
@@ -25,7 +24,7 @@ function SearchSelected() {
 
   const setDropDown = () => {
     let aboutArray = [
-      ' ', 'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+      'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
     ];
 
     const dropDownArray = searchTerm.filters.filterByNumericValues
@@ -38,6 +37,15 @@ function SearchSelected() {
 
   function handleElementX(index) {
     console.log(index);
+    const arrayOfFilters = [...searchTerm.filters.filterByNumericValues]; // filtros salvos
+    arrayOfFilters.splice(index, 1); // retiro filtro usando o index advindo do x
+    setSearchTerm((searchTermParam) => (
+      {
+        ...searchTermParam,
+        filters: { ...searchTermParam.filters,
+          filterByNumericValues: arrayOfFilters },
+      }
+    ));
   }
 
   return (
@@ -81,9 +89,11 @@ function SearchSelected() {
         data-testid="button-filter"
         type="button"
         className="btn btn-success"
-        onClick={ () => setByValue(
-          { column: about, comparison: lengthType, value },
-        ) }
+        onClick={ () => {
+          if (value === '' || about === '') return;
+          setByValue({ column: about, comparison: lengthType, value });
+          setAbout(setDropDown()[1]);
+        } }
       >
         Filter
       </button>
