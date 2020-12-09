@@ -363,6 +363,5 @@ O avaliador automático não necessariamente avalia seu projeto na ordem em que 
 
 ## REVISANDO UM PULL REQUEST
 
-Use o conteúdo sobre [Code Review](https://course.betrybe.com/real-life-engineer/code-review/) para te ajudar a revisar os _Pull Requests_.
-
 #VQV 🚀
+  

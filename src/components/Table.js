@@ -7,9 +7,9 @@ function Table() {
   useEffect(() => {
     getApiStar();
   }, []); // componentDidMount qdo carrega a 1ª vez
-  useEffect(() => {
-    getApiStar();
-  }, [searchTerm]); // componentUpData - qdo atualiza
+  // useEffect(() => {
+  //  // getApiStar();
+  // }, [searchTerm]); // componentUpData - qdo atualiza
 
   return (
     <form>
