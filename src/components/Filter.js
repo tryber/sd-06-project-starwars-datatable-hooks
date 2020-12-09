@@ -173,20 +173,29 @@ function Filter() {
     // uncheckOtherRadio(target.value);
   };
 
+  const sortNumber = (a, b, column) => {
+    return (
+      a[column] === 'unknown' || b[column] === 'unknown'
+        ? -1
+        : parseInt(a[column], 10) - parseInt(b[column], 10)
+      // parseInt(a[column], 10) - parseInt(b[column], 10)
+    );
+  };
+
   const sortTable = () => {
     const { order: { column, sort } } = filters;
     if (sort === 'ASC') {
       setFilteredPlanets(
         dropDownFilterValues.includes(column)
-          ? planets.sort((a, b) => a[column] - b[column])
-          // .localeCompare(b[column], undefined, { numeric: true }))
-          : planets.sort((a, b) => a[column] > b[column]),
+          ? planets.sort((a, b) => sortNumber(a, b, column))
+          : planets.sort((a, b) => a[column].localeCompare(b[column])),
       );
     } else {
       setFilteredPlanets(
         dropDownFilterValues.includes(column)
-          ? planets.sort((a, b) => (b[column]) - (a[column]))
-          : planets.sort((a, b) => a[column] < b[column]),
+          ? planets.sort((a, b) => (
+            Number(b[column]) - Number(a[column])))
+          : planets.sort((a, b) => b[column].localeCompare(a[column])),
       );
     }
   };
