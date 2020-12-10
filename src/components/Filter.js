@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import AppContext from '../context/AppContext';
 
 const dropDownFilterValues = [
@@ -28,7 +28,6 @@ const HEAD = [
 function Filter() {
   const {
     setName,
-    // filteredPlanets,
     setFilteredPlanets,
     planets,
     filters,
@@ -36,6 +35,9 @@ function Filter() {
     filterFields,
     setFilterFields,
   } = useContext(AppContext);
+
+  const [localColumn, setLocalColumn] = useState('name');
+  const [localSort, setLocalSort] = useState('ASC');
 
   const COMPARISON_TYPE = ['maior que', 'menor que', 'igual a'];
   const ZERO = 0;
@@ -71,6 +73,7 @@ function Filter() {
       if (filters.filterByNumericValues.length === ZERO) {
         setFilters((prev) => ({
           ...prev.filterByName,
+          order: { ...prev.order },
           filterByNumericValues: [{
             column: chosenField,
             comparison: chosenComparison,
@@ -80,6 +83,7 @@ function Filter() {
       } else {
         setFilters((prev) => ({
           ...prev.filterByName,
+          order: { ...prev.order },
           filterByNumericValues: [...prev.filterByNumericValues, {
             column: chosenField,
             comparison: chosenComparison,
@@ -115,7 +119,7 @@ function Filter() {
 
   const removeFilter = ({ column }) => {
     setFilters((prev) => ({ ...prev,
-      ...prev.filterByName,
+      ...prev,
       filterByNumericValues: filters.filterByNumericValues
         .filter((field) => field.column !== column),
     }));
@@ -131,15 +135,16 @@ function Filter() {
     setChosenComparison(target.value);
   };
 
-  const filterSort = ({ target }) => {
+ /*  const filterSort = ({ target }) => {
     setFilters((prev) => ({
-      ...prev,
+      ...prev.filterByName,
+      ...prev.filterByNumericValues,
       order: {
         column: target.value,
         sort: prev.order.sort,
       },
     }));
-  };
+  }; */
 
   const filterValue = ({ target }) => {
     setChosenValue(target.value);
@@ -162,28 +167,28 @@ function Filter() {
   //     .disabled = true;
   // };
 
-  const setSort = ({ target }) => {
+  const updateOrder = () => {
     setFilters((prev) => ({
       ...prev,
       order: {
-        column: prev.order.column,
-        sort: target.value,
+        column: localColumn,
+        sort: localSort,
       },
     }));
     // uncheckOtherRadio(target.value);
   };
 
-  const sortNumber = (a, b, column) => {
-    return (
-      a[column] === 'unknown' || b[column] === 'unknown'
-        ? -1
-        : parseInt(a[column], 10) - parseInt(b[column], 10)
-      // parseInt(a[column], 10) - parseInt(b[column], 10)
-    );
-  };
+  const sortNumber = (a, b, column) => (
+    // console.log(a, b, column)
+    /* a[column] === 'unknown' || b[column] === 'unknown'
+      ? -1
+      :  */
+    parseInt(a[column], 10) - parseInt(b[column], 10)
+    // parseInt(a[column], 10) - parseInt(b[column], 10)
+  );
 
   const sortTable = () => {
-    const { order: { column, sort } } = filters;
+    const { column, sort } = filters.order;
     if (sort === 'ASC') {
       setFilteredPlanets(
         dropDownFilterValues.includes(column)
@@ -193,8 +198,7 @@ function Filter() {
     } else {
       setFilteredPlanets(
         dropDownFilterValues.includes(column)
-          ? planets.sort((a, b) => (
-            Number(b[column]) - Number(a[column])))
+          ? planets.sort((a, b) => sortNumber(b, a, column))
           : planets.sort((a, b) => b[column].localeCompare(a[column])),
       );
     }
@@ -284,8 +288,8 @@ planetas.sort((a, b) => a[name] > b[name]))
           ))}
       <select
         data-testid="column-sort"
-        value={ filters.order ? filters.order.column : HEAD[0] }
-        onChange={ (e) => filterSort(e) }
+        value={ localColumn }
+        onChange={ (e) => setLocalColumn(e.target.value) }
       >
         { HEAD.map((column) => dropdownOption(column)) }
       </select>
@@ -295,11 +299,11 @@ planetas.sort((a, b) => a[name] > b[name]))
         >
           Ascendente
           <input
-            onChange={ (e) => setSort(e) }
+            onChange={ (e) => setLocalSort(e.target.value) }
             type="radio"
             data-testid="column-sort-input-asc"
             id="column-sort-input-asc"
-            name="column-sort-input-asc"
+            name="column-sort-input"
             value="ASC"
           />
         </label>
@@ -308,11 +312,11 @@ planetas.sort((a, b) => a[name] > b[name]))
         >
           Descendente
           <input
-            onChange={ (e) => setSort(e) }
+            onChange={ (e) => setLocalSort(e.target.value) }
             type="radio"
             data-testid="column-sort-input-desc"
             id="column-sort-input-dsc"
-            name="column-sort-input-dsc"
+            name="column-sort-input"
             value="DSC"
           />
         </label>
@@ -320,7 +324,7 @@ planetas.sort((a, b) => a[name] > b[name]))
       <button
         data-testid="column-sort-button"
         type="button"
-        onClick={ sortTable }
+        onClick={ updateOrder }
       >
         Ordenar
       </button>

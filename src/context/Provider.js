@@ -11,7 +11,7 @@ function Provider({ children }) {
       filterByNumericValues: [],
       order: {
         column: 'name',
-        sort: '',
+        sort: 'ASC',
       },
     },
   );
@@ -23,6 +23,22 @@ function Provider({ children }) {
     'rotation_period',
     'surface_water',
   ]);
+  const [HEAD] = useState([
+    'name',
+    'diameter',
+    'climate',
+    'created',
+    'edited',
+    'films',
+    'gravity',
+    'orbital_period',
+    'population',
+    'rotation_period',
+    'surface_water',
+    'terrain',
+    'url',
+  ]);
+
   const contextValue = {
     planets,
     setPlanets,
@@ -34,6 +50,7 @@ function Provider({ children }) {
     setFilters,
     filterFields,
     setFilterFields,
+    HEAD,
   };
 
   return (

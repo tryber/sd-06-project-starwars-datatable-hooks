@@ -2,52 +2,62 @@ import React, { useContext, useEffect } from 'react';
 import AppContext from '../context/AppContext';
 import sWAPI from '../services/sWAPI';
 import Filter from './Filter';
+import TableRow from './TableRow';
 
 function Table() {
-  const HEAD = [
-    'name',
-    'diameter',
-    'climate',
-    'created',
-    'edited',
-    'films',
-    'gravity',
-    'orbital_period',
+  const {
+    planets,
+    setPlanets,
+    filteredPlanets,
+    name,
+    HEAD,
+    filters,
+  } = useContext(AppContext);
+
+  const dropDownFilterValues = [
     'population',
+    'orbital_period',
+    'diameter',
     'rotation_period',
     'surface_water',
-    'terrain',
-    'url',
   ];
+
   const ZERO = 0;
 
   const headElement = () => HEAD.map((e) => (
     <th key={ e }>{ e }</th>));
-
-  const rowElement = (planet) => (
-    <tr key={ planet.name }>
-      { HEAD.map((key) => (
-        <td
-          key={ `${key}-${planet.name}` }
-          data-testid={ key === 'name' ? 'planet-name' : '' }
-        >
-          { planet[key] }
-        </td>
-      ))}
-    </tr>);
-
-  const { planets, setPlanets, name, filteredPlanets } = useContext(AppContext);
 
   const PLANETS_FROM_API = async () => {
     const RESULT = await sWAPI();
     setPlanets(RESULT);
   };
 
+  const sortTable = (a, b) => {
+    console.log(filters)
+    const { column, sort } = filters.order;
+    if (sort === 'ASC') {
+      return (
+        dropDownFilterValues.includes(column)
+          ? parseInt(a[column], 10) - parseInt(b[column], 10)
+          : a[column].localeCompare(b[column])
+      );
+    }
+    return (
+      dropDownFilterValues.includes(column)
+        ? parseInt(b[column], 10) - parseInt(a[column], 10)
+        : b[column].localeCompare(a[column])
+    );
+  };
+
   const tableFilterStructure = () => (
     filteredPlanets.length > ZERO
-      ? filteredPlanets.map((planet) => rowElement(planet))
-      : planets.filter((planet) => planet.name.includes(name))
-        .map((planet) => rowElement(planet))
+      ? filteredPlanets
+        .sort(sortTable)
+        .map((planet) => TableRow(planet))
+      : planets
+        .sort(sortTable)
+        .filter((planet) => planet.name.includes(name))
+        .map((planet) => TableRow(planet))
   );
 
   useEffect(() => {
