@@ -182,7 +182,7 @@ function Filter() {
     // console.log(a, b, column)
     a[column] === 'unknown' || b[column] === 'unknown'
       ? -1
-      : 
+      :
     parseInt(a[column], 10) - parseInt(b[column], 10)
     // parseInt(a[column], 10) - parseInt(b[column], 10)
   ); */
