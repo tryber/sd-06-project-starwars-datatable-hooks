@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
+import './TableCSS.css';
 
 function Table() {
   const { planets, isLoading } = useContext(StarWarsContext);
