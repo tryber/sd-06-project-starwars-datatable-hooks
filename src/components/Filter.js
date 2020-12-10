@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import AppContext from '../context/AppContext';
 
 const dropDownFilterValues = [
@@ -135,7 +135,7 @@ function Filter() {
     setChosenComparison(target.value);
   };
 
- /*  const filterSort = ({ target }) => {
+  /*  const filterSort = ({ target }) => {
     setFilters((prev) => ({
       ...prev.filterByName,
       ...prev.filterByNumericValues,
@@ -187,7 +187,7 @@ function Filter() {
     // parseInt(a[column], 10) - parseInt(b[column], 10)
   );
 
-  const sortTable = () => {
+  /* const sortTable = () => {
     const { column, sort } = filters.order;
     if (sort === 'ASC') {
       setFilteredPlanets(
@@ -202,7 +202,7 @@ function Filter() {
           : planets.sort((a, b) => b[column].localeCompare(a[column])),
       );
     }
-  };
+  }; */
 
   /* const planetas = [
    { name: "Tatooine", rotation_period: "23", orbital_period: "304" },

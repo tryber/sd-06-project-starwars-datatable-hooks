@@ -33,7 +33,6 @@ function Table() {
   };
 
   const sortTable = (a, b) => {
-    console.log(filters)
     const { column, sort } = filters.order;
     if (sort === 'ASC') {
       return (
