@@ -178,14 +178,14 @@ function Filter() {
     // uncheckOtherRadio(target.value);
   };
 
-  const sortNumber = (a, b, column) => (
+  /* const sortNumber = (a, b, column) => (
     // console.log(a, b, column)
-    /* a[column] === 'unknown' || b[column] === 'unknown'
+    a[column] === 'unknown' || b[column] === 'unknown'
       ? -1
-      :  */
+      : 
     parseInt(a[column], 10) - parseInt(b[column], 10)
     // parseInt(a[column], 10) - parseInt(b[column], 10)
-  );
+  ); */
 
   /* const sortTable = () => {
     const { column, sort } = filters.order;
