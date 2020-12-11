@@ -1,8 +1,7 @@
-import React, { useContext } from 'react';
-import AppContext from '../context/AppContext';
+import React from 'react';
 
-function TableRow(planetObject) {
-  const { HEAD } = useContext(AppContext);
+function TableRow(planetObject, HEAD) {
+  // const { HEAD } = useContext(AppContext);
   const { name } = planetObject;
   return (
     <tr key={ name }>

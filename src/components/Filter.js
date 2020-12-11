@@ -55,15 +55,56 @@ function Filter() {
     }
   }, [filtersUpdated]);
 
+  const ZERO = 0;
+
+  const manageMultipleFilter = ({ column, comparison, value }) => {
+    console.log('manageMultipleFilter');
+    if (value !== ZERO) {
+      switch (comparison) {
+      case 'maior que':
+        setFilteredPlanets(planets.filter((planet) => (
+          Number(planet[column]) > Number(value)
+          && planet[column] !== 'unknown')));
+        break;
+      case 'menor que':
+        setFilteredPlanets(planets.filter((planet) => (
+          Number(planet[column]) < Number(value)
+          && planet[column] !== 'unknown')));
+        break;
+      default:
+        setFilteredPlanets(planets.filter((planet) => (
+          Number(planet[column]) === Number(value)
+          && planet[column] !== 'unknown')));
+      }
+      /* setFilters((prev) => ({
+        ...prev.filterByName,
+        order: { ...prev.order },
+        filterByNumericValues: [...prev.filterByNumericValues, {
+          column: chosenField,
+          comparison: chosenComparison,
+          value: chosenValue,
+        }],
+      }));
+      setFilterFields(filterFields.filter((field) => chosenField !== field)); */
+    }
+    setFiltersUpdated(!filtersUpdated);
+  };
+
   useEffect(() => {
     setChosenField(filterFields[0]);
+    if (filters.filterByNumericValues.length > 0) {
+      filters.filterByNumericValues.map((filter) => (
+        manageMultipleFilter(filter)
+      ));
+    } else {
+      setFilteredPlanets([]);
+    }
   }, [filterFields]);
 
   const [localColumn, setLocalColumn] = useState('name');
   const [localSort, setLocalSort] = useState('ASC');
 
   const COMPARISON_TYPE = ['maior que', 'menor que', 'igual a'];
-  const ZERO = 0;
   const [chosenComparison, setChosenComparison] = useState('maior que');
   const [chosenValue, setChosenValue] = useState(ZERO);
 

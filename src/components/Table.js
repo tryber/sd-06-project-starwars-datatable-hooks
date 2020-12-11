@@ -52,11 +52,11 @@ function Table() {
     filteredPlanets.length > ZERO
       ? filteredPlanets
         .sort(sortTable)
-        .map((planet) => TableRow(planet))
+        .map((planet) => TableRow(planet, HEAD))
       : planets
         .sort(sortTable)
         .filter((planet) => planet.name.includes(name))
-        .map((planet) => TableRow(planet))
+        .map((planet) => TableRow(planet, HEAD))
   );
 
   useEffect(() => {
