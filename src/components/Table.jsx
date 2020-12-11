@@ -13,7 +13,6 @@ function StarWarsTable() {
     dataApi();
   }, []);
 
-  // console.log(data);
   function masterFilter() {
     let initialArray = data;
     const magicNumber = 0;
@@ -36,7 +35,23 @@ function StarWarsTable() {
     });
     return initialArray;
   }
-
+  const orderToMe = (a, b) => {
+    const numericColumn = [
+      'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+    ];
+    const magicNumber = -1;
+    const { column, sort } = searchTerm.filters.order;
+    if (numericColumn.includes(column)) {
+      if (sort === 'ASC') {
+        return (a[column] - b[column]);
+      }
+      return (b[column] - a[column]);
+    }
+    if (sort === 'ASC') {
+      return (a[column] > b[column] ? 1 : magicNumber);
+    }
+    return (a[column] < b[column] ? 1 : magicNumber);
+  };
   const { filters: { filterByName: { name } } } = searchTerm;
 
   return (
@@ -59,12 +74,12 @@ function StarWarsTable() {
         </tr>
       </thead>
       <tbody>
-        {masterFilter() && masterFilter()
+        {masterFilter() && masterFilter().sort(orderToMe)
           .filter((element) => element.name.toLowerCase()
             .includes(name.toLowerCase()))
           .map((element) => (
             <tr key={ element.name }>
-              <td>{ element.name }</td>
+              <td data-testid="planet-name">{ element.name }</td>
               <td>{ element.rotation_period }</td>
               <td>{ element.orbital_period }</td>
               <td>{ element.diameter }</td>

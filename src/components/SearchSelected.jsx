@@ -4,8 +4,6 @@ import StarWarsContext from '../context/StarWarsContext';
 function SearchSelected() {
   const { setSearchTerm, searchTerm } = useContext(StarWarsContext);
 
-  // const aboutArray = ['population', 'orbital_period',
-  //   'diameter', 'rotation_period', 'surface_water'];
   const lengthArray = ['maior que', 'menor que', 'igual a'];
   const [about, setAbout] = useState('population');
   const [lengthType, setLengthType] = useState('maior que');
@@ -36,7 +34,6 @@ function SearchSelected() {
   };
 
   function handleElementX(index) {
-    console.log(index);
     const arrayOfFilters = [...searchTerm.filters.filterByNumericValues]; // filtros salvos
     arrayOfFilters.splice(index, 1); // retiro filtro usando o index advindo do x
     setSearchTerm((searchTermParam) => (
@@ -44,6 +41,24 @@ function SearchSelected() {
         ...searchTermParam,
         filters: { ...searchTermParam.filters,
           filterByNumericValues: arrayOfFilters },
+      }
+    ));
+  }
+  const sortArray = ['name', 'rotation_period', 'orbital_period', 'diameter', 'climate',
+    'gravity', 'terrain', 'surface_water', 'population', 'films',
+    'created', 'edited', 'url',
+  ];
+  const [radio, setRadio] = useState('ASC');
+  const [columnRadio, setColumnRadio] = useState('Name');
+  function handleSort() {
+    setSearchTerm((searchTermParam) => (
+      {
+        ...searchTermParam,
+        filters: { ...searchTermParam.filters,
+          order: {
+            column: columnRadio,
+            sort: radio,
+          } },
       }
     ));
   }
@@ -112,6 +127,49 @@ function SearchSelected() {
           </div>
         )) }
       </div>
+      {' '}
+      <select
+        data-testid="column-sort"
+        onChange={ (event) => setColumnRadio(event.target.value) }
+      >
+        {sortArray.map((sortElement, index) => (
+          <option
+            className="btn btn-secondary btn-lg dropdown-toggle"
+            key={ index }
+            value={ sortElement }
+          >
+            { sortElement }
+          </option>))}
+      </select>
+      <label htmlFor="ascending">
+        <input
+          id="ascending"
+          type="radio"
+          name="sort"
+          data-testid="column-sort-input-asc"
+          value="ASC"
+          onClick={ () => setRadio('ASC') }
+        />
+        Crescente
+      </label>
+      <label htmlFor="descending">
+        <input
+          id="descending"
+          type="radio"
+          name="sort"
+          data-testid="column-sort-input-desc"
+          value="DESC"
+          onClick={ () => setRadio('DESC') }
+        />
+        Descrencente
+      </label>
+      <button
+        type="button"
+        data-testid="column-sort-button"
+        onClick={ handleSort }
+      >
+        Sort
+      </button>
     </div>
   );
 }

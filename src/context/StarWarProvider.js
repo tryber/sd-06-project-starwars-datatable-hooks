@@ -15,6 +15,10 @@ function StarWarProvider({ children }) {
           name: '',
         },
         filterByNumericValues: [],
+        order: {
+          column: 'name',
+          sort: 'ASC',
+        },
       },
     },
   ); // Procura termo
