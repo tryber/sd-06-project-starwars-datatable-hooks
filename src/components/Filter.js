@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import AppContext from '../context/AppContext';
 
 const dropDownFilterValues = [
@@ -27,14 +27,37 @@ const HEAD = [
 
 function Filter() {
   const {
-    setName,
-    setFilteredPlanets,
     planets,
+    setFilteredPlanets,
     filters,
     setFilters,
+    setName,
     filterFields,
     setFilterFields,
   } = useContext(AppContext);
+
+  const [chosenField, setChosenField] = useState(filterFields[0]);
+  const [filtersUpdated, setFiltersUpdated] = useState(false);
+  const COMPONENT_DID_MOUNT = useRef();
+
+  useEffect(() => {
+    if (COMPONENT_DID_MOUNT.current) {
+      setFilters((prev) => ({
+        filterByName: { ...prev.filterByName },
+        filterByNumericValues: prev.filterByNumericValues.concat({
+          column: filterFields[0],
+          comparison: 'maior que',
+          value: 0,
+        }),
+        order: { ...prev.order },
+      }));
+      COMPONENT_DID_MOUNT.current = true;
+    }
+  }, [filtersUpdated]);
+
+  useEffect(() => {
+    setChosenField(filterFields[0]);
+  }, [filterFields]);
 
   const [localColumn, setLocalColumn] = useState('name');
   const [localSort, setLocalSort] = useState('ASC');
@@ -42,7 +65,6 @@ function Filter() {
   const COMPARISON_TYPE = ['maior que', 'menor que', 'igual a'];
   const ZERO = 0;
   const [chosenComparison, setChosenComparison] = useState('maior que');
-  const [chosenField, setChosenField] = useState('population');
   const [chosenValue, setChosenValue] = useState(ZERO);
 
   const handleChange = (event) => {
@@ -53,7 +75,7 @@ function Filter() {
   };
 
   const manageFilter = () => {
-    if (chosenValue !== ZERO) {
+    if (chosenValue !== ZERO && filterFields.includes(chosenField)) {
       switch (chosenComparison) {
       case 'maior que':
         setFilteredPlanets(planets.filter((planet) => (
@@ -70,31 +92,25 @@ function Filter() {
           Number(planet[chosenField]) === Number(chosenValue)
           && planet[chosenField] !== 'unknown')));
       }
-      if (filters.filterByNumericValues.length === ZERO) {
-        setFilters((prev) => ({
-          ...prev.filterByName,
-          order: { ...prev.order },
-          filterByNumericValues: [{
-            column: chosenField,
-            comparison: chosenComparison,
-            value: chosenValue,
-          }],
-        }));
-      } else {
-        setFilters((prev) => ({
-          ...prev.filterByName,
-          order: { ...prev.order },
-          filterByNumericValues: [...prev.filterByNumericValues, {
-            column: chosenField,
-            comparison: chosenComparison,
-            value: chosenValue,
-          }],
-        }));
-      }
+      setFilters((prev) => ({
+        ...prev.filterByName,
+        order: { ...prev.order },
+        filterByNumericValues: [...prev.filterByNumericValues, {
+          column: chosenField,
+          comparison: chosenComparison,
+          value: chosenValue,
+        }],
+      }));
       setFilterFields(filterFields.filter((field) => chosenField !== field));
     }
+    setFiltersUpdated(!filtersUpdated);
   };
-  /* const arrangeFilter = ({ column: field, comparison: compare, value }) => {
+
+  useEffect(() => {
+    manageFilter();
+  }, [filters]);
+
+  /*  const arrangeFilter = ({ column: field, comparison: compare, value }) => {
     if (value !== ZERO) {
       switch (compare) {
       case 'maior que':
@@ -123,8 +139,6 @@ function Filter() {
       filterByNumericValues: filters.filterByNumericValues
         .filter((field) => field.column !== column),
     }));
-    setFilteredPlanets(planets);
-    // filters.filterByNumericValues.map((filter) => arrangeFilter(filter));
   };
 
   const filterField = ({ target }) => {
@@ -161,12 +175,6 @@ function Filter() {
     </option>
   );
 
-  // const uncheckOtherRadio = (chosenOrder) => {
-  //   const OTHER_BTN = chosenOrder === 'ASC' ? 'dsc' : 'asc';
-  //   document.querySelector(`#column-sort-input-${OTHER_BTN}`)
-  //     .disabled = true;
-  // };
-
   const updateOrder = () => {
     setFilters((prev) => ({
       ...prev,
@@ -175,7 +183,6 @@ function Filter() {
         sort: localSort,
       },
     }));
-    // uncheckOtherRadio(target.value);
   };
 
   /* const sortNumber = (a, b, column) => (
@@ -269,7 +276,7 @@ planetas.sort((a, b) => a[name] > b[name]))
           Filtrar
         </button>
       </form>
-      { filters.filterByNumericValues
+      { filters.filterByNumericValues.length > ZERO
         && filters.filterByNumericValues
           .map((filter) => (
             <div
