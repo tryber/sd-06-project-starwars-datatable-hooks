@@ -3,9 +3,8 @@ import DataContext from '../context/DataContext';
 import THeader from './THeader';
 import TBody from './TBody';
 
-const apiEndPoint = 'https://swapi-trybe.herokuapp.com/api/planets/';
-
 async function fetchPlanets() {
+  const apiEndPoint = 'https://swapi-trybe.herokuapp.com/api/planets/';
   let data;
   try {
     const apiRequest = await fetch(apiEndPoint);

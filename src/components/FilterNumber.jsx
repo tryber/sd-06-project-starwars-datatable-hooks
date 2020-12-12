@@ -12,7 +12,7 @@ export const numericColumnsOptions = [
 
 const comparisonOptions = ['', 'maior que', 'menor que', 'igual a'];
 
-const FilterNumber = () => {
+function FilterNumber() {
   const [localFilter, setLocalFilter] = useState(
     { column: '', comparison: '', value: '' },
   );
@@ -71,6 +71,6 @@ const FilterNumber = () => {
       )}
     </div>
   );
-};
+}
 
 export default FilterNumber;

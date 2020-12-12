@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import DataContext from '../context/DataContext';
 
-const FilterName = () => {
+function FilterName() {
   const { dataApi, setFilterName } = useContext(DataContext);
   const zero = 0;
   return (
@@ -20,6 +20,6 @@ const FilterName = () => {
       )}
     </div>
   );
-};
+}
 
 export default FilterName;

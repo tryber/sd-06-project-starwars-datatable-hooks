@@ -2,43 +2,39 @@ import React, { useContext, useEffect } from 'react';
 import DataContext from '../context/DataContext';
 import { numericColumnsOptions } from './FilterNumber';
 
-const filterByNumber = (planets, filter) => {
-  if (filter.comparison === 'maior que') {
-    return planets
-      .filter((planet) => Number(planet[filter.column]) > Number(filter.value));
-  }
-  if (filter.comparison === 'menor que') {
-    return planets
-      .filter((planet) => Number(planet[filter.column]) < Number(filter.value));
-  }
-  if (filter.comparison === 'igual a') {
-    return planets
-      .filter((planet) => Number(planet[filter.column]) === Number(filter.value));
-  }
-  return planets;
-};
-
-const ASC = (a, b) => {
-  const minusOne = -1;
-  const { order } = useContext(DataContext);
-  if (numericColumnsOptions.includes(order.column)) {
-    return a[order.column] - b[order.column];
-  }
-  return a[order.column] > b[order.column] ? 1 : minusOne;
-};
-
-const DESC = (a, b) => {
-  const minusOne = -1;
-  const { order } = useContext(DataContext);
-  if (numericColumnsOptions.includes(order.column)) {
-    return b[order.column] - a[order.column];
-  }
-  return b[order.column] > a[order.column] ? minusOne : 1;
-};
-
 function TBody() {
   const { dataApi,
     filterName, filterNumber, order, setOrder } = useContext(DataContext);
+
+  const filterByNumber = (planets, filter) => {
+    if (filter.comparison === 'maior que') {
+      return planets
+        .filter((planet) => Number(planet[filter.column]) > Number(filter.value));
+    }
+    if (filter.comparison === 'menor que') {
+      return planets
+        .filter((planet) => Number(planet[filter.column]) < Number(filter.value));
+    }
+    if (filter.comparison === 'igual a') {
+      return planets
+        .filter((planet) => Number(planet[filter.column]) === Number(filter.value));
+    }
+    return planets;
+  };
+  const ASC = (a, b) => {
+    const minusOne = -1;
+    if (numericColumnsOptions.includes(order.column)) {
+      return a[order.column] - b[order.column];
+    }
+    return a[order.column] > b[order.column] ? 1 : minusOne;
+  };
+  const DESC = (a, b) => {
+    const minusOne = -1;
+    if (numericColumnsOptions.includes(order.column)) {
+      return b[order.column] - a[order.column];
+    }
+    return b[order.column] > a[order.column] ? minusOne : 1;
+  };
 
   useEffect(() => {
     setOrder({ column: 'name', sort: 'ASC' });

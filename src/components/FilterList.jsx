@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import DataContext from '../context/DataContext';
 
-const FilterList = () => {
+function FilterList() {
   const zero = 0;
   const { filterNumber, setFilterNumber } = useContext(DataContext);
   const removeFilter = (index) => {
@@ -30,6 +30,6 @@ const FilterList = () => {
       ))}
     </div>
   );
-};
+}
 
 export default FilterList;
