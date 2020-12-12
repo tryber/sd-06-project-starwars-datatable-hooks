@@ -35,8 +35,8 @@ const FilterNumber = () => {
         <div>
           <select
             data-testid="column-filter"
-            onChange={ (event) => setLocalFilter(
-              { ...localFilter, column: event.target.value },
+            onChange={ (e) => setLocalFilter(
+              { ...localFilter, column: e.target.value },
             ) }
           >
             {remainingColumns.map((column) => (
@@ -45,8 +45,8 @@ const FilterNumber = () => {
           </select>
           <select
             data-testid="comparison-filter"
-            onChange={ (event) => setLocalFilter(
-              { ...localFilter, comparison: event.target.value },
+            onChange={ (e) => setLocalFilter(
+              { ...localFilter, comparison: e.target.value },
             ) }
           >
             {comparisonOptions.map((eachComparison, index) => (
@@ -56,8 +56,8 @@ const FilterNumber = () => {
           <input
             data-testid="value-filter"
             type="number"
-            onChange={ (event) => setLocalFilter(
-              { ...localFilter, value: event.target.value },
+            onChange={ (e) => setLocalFilter(
+              { ...localFilter, value: e.target.value },
             ) }
           />
           <button
