@@ -1,18 +1,23 @@
 import React from 'react';
-import Header from './components/Header';
-import InputFilters from './components/InputFilters';
 import Table from './components/Table';
 import DataProvider from './context/DataProvider';
+import FilterName from './components/FilterName';
+import FilterNumber from './components/FilterNumber';
+import FilterBonus from './components/FilterBonus';
+import FilterList from './components/FilterList';
+import './App.css';
 
 function App() {
   return (
     <DataProvider>
       <div>
-        <InputFilters />
-        <table>
-          <Header />
-          <Table />
-        </table>
+        <FilterName />
+        <FilterNumber />
+        <FilterList />
+        <FilterBonus />
+      </div>
+      <div>
+        <Table />
       </div>
     </DataProvider>
   );

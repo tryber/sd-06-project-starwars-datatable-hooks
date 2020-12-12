@@ -1,55 +1,44 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import DataContext from '../context/DataContext';
+import THeader from './THeader';
+import TBody from './TBody';
+
+const apiEndPoint = 'https://swapi-trybe.herokuapp.com/api/planets/';
+
+async function fetchPlanets() {
+  let data;
+  try {
+    const apiRequest = await fetch(apiEndPoint);
+    const response = await apiRequest.json();
+    data = await response.results;
+  } catch (error) {
+    console.log(error.message);
+  }
+  return data;
+}
 
 function Table() {
-  const { contextValue: { getInfoPlanets, data, inputText,
-    columnFilter, 
-    comparisonFilter, 
-    valueFilter, 
-     } } = useContext(DataContext);
+  const { dataApi, setDataApi } = useContext(DataContext);
 
   useEffect(() => {
-    getInfoPlanets();
-  }, []);
+    async function getPlanets() {
+      const data = await fetchPlanets();
+      setDataApi(data);
+    }
+    getPlanets();
+  }, [setDataApi]);
 
-  const dinamicFilter = (data) => {
-    let resultFilter = data;
-    comparisonFilter.forEach((comparison, index) => {
-      if (comparison === 'maior') {
-        resultFilter = resultFilter.filter(element => parseInt(element[columnFilter[index]], 10) > parseInt(valueFilter[index], 10))
-      } else if (comparison === 'menor que') {
-        resultFilter = resultFilter.filter(element => parseInt(element[columnFilter[index]], 10) < parseInt(valueFilter[index], 10))
-      } else if (comparison === 'igual a') {
-        resultFilter = resultFilter.filter(element => parseInt(element[columnFilter[index]], 10) === parseInt(valueFilter[index], 10))
-      }
-    })
-    return resultFilter;
-  }
-
+  const zero = 0;
   return (
-    <tbody>
-      {dinamicFilter(data)
-      .filter(element => element.name.toUpperCase().includes(inputText.toUpperCase()))
-      .map((line) => {
-        return (
-          <tr key={line.name} >
-            <td>{line.name}</td>
-            <td>{line.climate}</td>
-            <td>{line.diameter}</td>
-            <td>{line.edited}</td>
-            <td>{line.films}</td>
-            <td>{line.gravity}</td>
-            <td>{line.orbital_period}</td>
-            <td>{line.population}</td>
-            <td>{line.rotation_period}</td>
-            <td>{line.surface_water}</td>
-            <td>{line.terrain}</td>
-            <td>{line.created}</td>
-            <td>{line.url}</td>
-          </tr>
-        );
-      })}
-    </tbody>
+    <div>
+      {dataApi.length === zero && <h5>Loading...</h5>}
+      {dataApi.length !== zero && (
+        <table>
+          <THeader />
+          <TBody />
+        </table>
+      )}
+    </div>
   );
 }
 

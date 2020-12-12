@@ -1,57 +1,33 @@
 import React, { useState } from 'react';
-import propTypes from 'prop-types';
-import fetchPlanets from '../services/Api';
+import Proptypes from 'prop-types';
 import DataContext from './DataContext';
 
-function DataProvider({ children }) {
-  const [data, setData] = useState([]);
-  const [inputText, setInputText] = useState('');
-  const [columnFilter, setColumnFilter] = useState([]);
-  const [comparisonFilter, setComparisonFilter] = useState([]);
-  const [valueFilter, setValueFilter] = useState([]);
-  const [result, setResult] = useState([]);
+const DataProvider = ({ children }) => {
+  const [dataApi, setDataApi] = useState([]);
+  const [filterName, setFilterName] = useState({ filterByName: { name: '' } });
+  const [filterNumber, setFilterNumber] = useState([]);
+  const [order, setOrder] = useState({});
 
-  const getInfoPlanets = async () => {
-    const infoPlanets = await fetchPlanets();
-    setData(infoPlanets);
-    setResult(infoPlanets);
-  };
-
-  const handleChange = (e) => {
-    const inputInfo = e.target.value;
-    const dataFilter = data
-      .filter((element) => element.name.toUpperCase()
-        .includes(inputInfo.toUpperCase()));
-    setResult(dataFilter);
-    setInputText(inputInfo);
-  };
-
-  const contextValue = {
-    data,
-    setData,
-    inputText,
-    setInputText,
-    getInfoPlanets,
-    handleChange,
-    columnFilter,
-    setColumnFilter,
-    comparisonFilter,
-    setComparisonFilter,
-    valueFilter,
-    setValueFilter,
-    result,
-    setResult,
+  const globalContext = {
+    dataApi,
+    setDataApi,
+    filterName: filterName.filterByName,
+    setFilterName,
+    filterNumber,
+    setFilterNumber,
+    order,
+    setOrder,
   };
 
   return (
-    <DataContext.Provider value={ { contextValue } }>
-      { children }
+    <DataContext.Provider value={ globalContext }>
+      {children}
     </DataContext.Provider>
   );
-}
+};
 
 DataProvider.propTypes = {
-  children: propTypes.arrayOf(propTypes.object).isRequired,
+  children: Proptypes.arrayOf(Proptypes.element).isRequired,
 };
 
 export default DataProvider;
