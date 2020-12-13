@@ -21,14 +21,14 @@ function TBody() {
     }
     return planets;
   };
-  const ASC = (a, b) => {
+  const orderCrescent = (a, b) => {
     const minusOne = -1;
     if (numericColumnsOptions.includes(order.column)) {
       return a[order.column] - b[order.column];
     }
     return a[order.column] > b[order.column] ? 1 : minusOne;
   };
-  const DESC = (a, b) => {
+  const orderDecrescent = (a, b) => {
     const minusOne = -1;
     if (numericColumnsOptions.includes(order.column)) {
       return b[order.column] - a[order.column];
@@ -50,7 +50,7 @@ function TBody() {
     <tbody>
       {allPlanets
         .filter((planet) => planet.name.includes(filterName.name))
-        .sort(order.sort === 'ASC' || order.sort === '' ? ASC : DESC)
+        .sort(order.sort === 'ASC' || order.sort === '' ? orderCrescent : orderDecrescent)
         .map((planet) => (
           <tr key={ planet.name }>
             <td data-testid="planet-name" key={ planet.name }>{planet.name}</td>
