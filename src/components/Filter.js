@@ -28,6 +28,7 @@ const HEAD = [
 function Filter() {
   const {
     planets,
+    filteredPlanets,
     setFilteredPlanets,
     filters,
     setFilters,
@@ -57,9 +58,9 @@ function Filter() {
 
   const ZERO = 0;
 
-  const manageMultipleFilter = ({ column, comparison, value }) => {
+  const manageMultipleFilter = ({ column, comparison, value }, index) => {
     console.log('manageMultipleFilter');
-    if (value !== ZERO) {
+    if (index === ZERO) {
       switch (comparison) {
       case 'maior que':
         setFilteredPlanets(planets.filter((planet) => (
@@ -76,25 +77,32 @@ function Filter() {
           Number(planet[column]) === Number(value)
           && planet[column] !== 'unknown')));
       }
-      /* setFilters((prev) => ({
-        ...prev.filterByName,
-        order: { ...prev.order },
-        filterByNumericValues: [...prev.filterByNumericValues, {
-          column: chosenField,
-          comparison: chosenComparison,
-          value: chosenValue,
-        }],
-      }));
-      setFilterFields(filterFields.filter((field) => chosenField !== field)); */
+    } else {
+      switch (comparison) {
+      case 'maior que':
+        setFilteredPlanets(filteredPlanets.filter((planet) => (
+          Number(planet[column]) > Number(value)
+          && planet[column] !== 'unknown')));
+        break;
+      case 'menor que':
+        setFilteredPlanets(filteredPlanets.filter((planet) => (
+          Number(planet[column]) < Number(value)
+          && planet[column] !== 'unknown')));
+        break;
+      default:
+        setFilteredPlanets(filteredPlanets.filter((planet) => (
+          Number(planet[column]) === Number(value)
+          && planet[column] !== 'unknown')));
+      }
     }
     setFiltersUpdated(!filtersUpdated);
   };
 
   useEffect(() => {
     setChosenField(filterFields[0]);
-    if (filters.filterByNumericValues.length > 0) {
-      filters.filterByNumericValues.map((filter) => (
-        manageMultipleFilter(filter)
+    if (filters.filterByNumericValues.length > ZERO) {
+      filters.filterByNumericValues.map((filter, index) => (
+        manageMultipleFilter(filter, index)
       ));
     } else {
       setFilteredPlanets([]);
@@ -148,7 +156,8 @@ function Filter() {
   };
 
   useEffect(() => {
-    manageFilter();
+    filters.filterByNumericValues
+      .map((filter, index) => manageMultipleFilter(filter, index));
   }, [filters]);
 
   /*  const arrangeFilter = ({ column: field, comparison: compare, value }) => {
