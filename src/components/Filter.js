@@ -28,7 +28,6 @@ const HEAD = [
 function Filter() {
   const {
     planets,
-    filteredPlanets,
     setFilteredPlanets,
     filters,
     setFilters,
@@ -39,6 +38,7 @@ function Filter() {
 
   const [chosenField, setChosenField] = useState(filterFields[0]);
   const [filtersUpdated, setFiltersUpdated] = useState(false);
+  const [localPlanets, setLocalPlanets] = useState([]);
   const COMPONENT_DID_MOUNT = useRef();
 
   useEffect(() => {
@@ -59,43 +59,43 @@ function Filter() {
   const ZERO = 0;
 
   const manageMultipleFilter = ({ column, comparison, value }, index) => {
-    console.log('manageMultipleFilter');
     if (index === ZERO) {
       switch (comparison) {
       case 'maior que':
-        setFilteredPlanets(planets.filter((planet) => (
+        setLocalPlanets(planets.filter((planet) => (
           Number(planet[column]) > Number(value)
           && planet[column] !== 'unknown')));
         break;
       case 'menor que':
-        setFilteredPlanets(planets.filter((planet) => (
+        setLocalPlanets(planets.filter((planet) => (
           Number(planet[column]) < Number(value)
           && planet[column] !== 'unknown')));
         break;
       default:
-        setFilteredPlanets(planets.filter((planet) => (
+        setLocalPlanets(planets.filter((planet) => (
           Number(planet[column]) === Number(value)
           && planet[column] !== 'unknown')));
       }
     } else {
       switch (comparison) {
       case 'maior que':
-        setFilteredPlanets(filteredPlanets.filter((planet) => (
+        setLocalPlanets(localPlanets.filter((planet) => (
           Number(planet[column]) > Number(value)
           && planet[column] !== 'unknown')));
         break;
       case 'menor que':
-        setFilteredPlanets(filteredPlanets.filter((planet) => (
+        setLocalPlanets(localPlanets.filter((planet) => (
           Number(planet[column]) < Number(value)
           && planet[column] !== 'unknown')));
         break;
       default:
-        setFilteredPlanets(filteredPlanets.filter((planet) => (
+        setLocalPlanets(localPlanets.filter((planet) => (
           Number(planet[column]) === Number(value)
           && planet[column] !== 'unknown')));
       }
     }
-    setFiltersUpdated(!filtersUpdated);
+    console.log(localPlanets);
+    // setFiltersUpdated(!filtersUpdated);
   };
 
   useEffect(() => {
@@ -104,6 +104,7 @@ function Filter() {
       filters.filterByNumericValues.map((filter, index) => (
         manageMultipleFilter(filter, index)
       ));
+      setFiltersUpdated(!filtersUpdated);
     } else {
       setFilteredPlanets([]);
     }
