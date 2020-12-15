@@ -8,7 +8,9 @@ function TextFilter() {
   } = useContext(StarWarsContext);
 
   const onChange = (event) => {
+    console.log('Text Filter fazendo alteração no setFilters');
     const { name: objectKey, value } = event.target;
+
     setFilters((prevState) => ({
       ...prevState,
       filters: {

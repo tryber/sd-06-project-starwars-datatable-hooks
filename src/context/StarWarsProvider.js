@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import fetchPlanetsInfo from '../services/apiServices';
 import removeKeyFromObject from '../helpers/removeKeyFromObject';
+import compareAndFilterArrays from '../helpers/compareAndFilterArrays';
 // import mockFetchPlanetsInfo from '../services/mockApiServices';
 import StarWarsContext from './StarWarsContext';
 
@@ -25,6 +26,10 @@ function StarWarsProvider({ children }) {
       'population', 'orbital_period', 'diameter',
       'rotation_period', 'surface_water',
     ],
+  );
+  const [selectedColumnFilters, setSelectedColumnFilters] = useState([]);
+  const [availableColumnFilters, setAvailableColumnFilters] = useState(
+    [...columnFilters],
   );
   const comparisonFilters = ['maior que', 'menor que', 'igual a'];
 
@@ -96,6 +101,12 @@ function StarWarsProvider({ children }) {
     }));
   };
 
+  const saveSelectedColumnFilter = (selectedColumn) => {
+    console.log('saveSelectedColumnFilter chamado');
+    console.log('A coluna selecionada foi: ', selectedColumn);
+    setSelectedColumnFilters([...selectedColumnFilters, selectedColumn]);
+  };
+
   useEffect(() => {
     makeInitialSetup();
     // mockedInitialSetup();
@@ -106,8 +117,17 @@ function StarWarsProvider({ children }) {
     const minArraySize = 0;
     console.log('Filters foi alterado');
     setHasNumericFilters(filterByNumericValues.length > minArraySize);
-    console.log('Ptovider filters state:', filterByNumericValues);
+    console.log('Provider filters state:', filterByNumericValues);
   }, [filters]);
+
+  useEffect(() => {
+    const filteredAvailableColumns = compareAndFilterArrays(
+      columnFilters, selectedColumnFilters,
+    );
+    console.log('Colunas disponíveis', filteredAvailableColumns);
+    setAvailableColumnFilters(filteredAvailableColumns);
+  }, [selectedColumnFilters]);
+
   const contextValue = {
     tableHeaders,
     isFetching,
@@ -118,6 +138,8 @@ function StarWarsProvider({ children }) {
     setFilters,
     setColumnFilters,
     applyFilter,
+    saveSelectedColumnFilter,
+    availableColumnFilters,
     // mockedInitialSetup,
   };
 

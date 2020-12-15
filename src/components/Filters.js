@@ -1,17 +1,20 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 import NumericFilter from './NumericFilter';
 import TextFilter from './TextFilter';
 
 function Filters() {
   const {
-    columnFilters,
     comparisonFilters,
     applyFilter,
+    saveSelectedColumnFilter,
+    availableColumnFilters,
   } = useContext(StarWarsContext);
 
+  console.log('Available filters:', availableColumnFilters);
+
   const initialNumericFiltersState = {
-    column: columnFilters[0],
+    column: availableColumnFilters[0],
     comparison: comparisonFilters[0],
     value: 0,
   };
@@ -25,14 +28,19 @@ function Filters() {
     console.table(numericFiltersData);
     console.log('--------------');
     applyFilter(numericFiltersData);
+    saveSelectedColumnFilter(numericFiltersData.column);
   };
+
+  useEffect(() => {
+    setNumericFiltersData({ ...initialNumericFiltersState });
+  }, [availableColumnFilters]);
 
   return (
     <form onSubmit={ handleSubmit }>
       <TextFilter />
       <NumericFilter
         setNumericFiltersData={ setNumericFiltersData }
-        columnFilters={ columnFilters }
+        columnFilters={ availableColumnFilters }
         comparisonFilters={ comparisonFilters }
       />
     </form>
