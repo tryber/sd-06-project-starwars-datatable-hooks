@@ -41,21 +41,6 @@ function Filter() {
   const [localPlanets, setLocalPlanets] = useState([]);
   const COMPONENT_DID_MOUNT = useRef();
 
-  useEffect(() => {
-    if (COMPONENT_DID_MOUNT.current) {
-      setFilters((prev) => ({
-        filterByName: { ...prev.filterByName },
-        filterByNumericValues: prev.filterByNumericValues.concat({
-          column: filterFields[0],
-          comparison: 'maior que',
-          value: 0,
-        }),
-        order: { ...prev.order },
-      }));
-      COMPONENT_DID_MOUNT.current = true;
-    }
-  }, [filtersUpdated]);
-
   const ZERO = 0;
 
   const manageMultipleFilter = ({ column, comparison, value }, index) => {
@@ -94,19 +79,44 @@ function Filter() {
           && planet[column] !== 'unknown')));
       }
     }
-    console.log(localPlanets);
-    // setFiltersUpdated(!filtersUpdated);
+    setFiltersUpdated(!filtersUpdated);
   };
 
   useEffect(() => {
+    setFilteredPlanets(localPlanets);
+  }, [localPlanets]);
+
+  useEffect(() => {
+    if (COMPONENT_DID_MOUNT.current) {
+      setFilters((prev) => ({
+        filterByName: { ...prev.filterByName },
+        filterByNumericValues: prev.filterByNumericValues.concat({
+          column: filterFields[0],
+          comparison: 'maior que',
+          value: 0,
+        }),
+        order: { ...prev.order },
+      }));
+      COMPONENT_DID_MOUNT.current = true;
+      filters.map((filter, index) => manageMultipleFilter(filter, index));
+    }
+  }, [filtersUpdated]);
+
+  useEffect(() => {
+    const { filterByName, filterByNumericValues, order } = filters;
     setChosenField(filterFields[0]);
-    if (filters.filterByNumericValues.length > ZERO) {
-      filters.filterByNumericValues.map((filter, index) => (
+    if (filterByNumericValues.length > ZERO
+      || filterByName.length > ZERO
+      || order.sort !== ''
+    ) {
+      filterByNumericValues.map((filter, index) => (
         manageMultipleFilter(filter, index)
       ));
       setFiltersUpdated(!filtersUpdated);
     } else {
+      console.log('filteredPlanets = []')
       setFilteredPlanets([]);
+
     }
   }, [filterFields]);
 
@@ -126,30 +136,15 @@ function Filter() {
 
   const manageFilter = () => {
     if (chosenValue !== ZERO && filterFields.includes(chosenField)) {
-      switch (chosenComparison) {
-      case 'maior que':
-        setFilteredPlanets(planets.filter((planet) => (
-          Number(planet[chosenField]) > Number(chosenValue)
-          && planet[chosenField] !== 'unknown')));
-        break;
-      case 'menor que':
-        setFilteredPlanets(planets.filter((planet) => (
-          Number(planet[chosenField]) < Number(chosenValue)
-          && planet[chosenField] !== 'unknown')));
-        break;
-      default:
-        setFilteredPlanets(planets.filter((planet) => (
-          Number(planet[chosenField]) === Number(chosenValue)
-          && planet[chosenField] !== 'unknown')));
-      }
+      const chosenFilter = {
+        column: chosenField,
+        comparison: chosenComparison,
+        value: chosenValue,
+      };
       setFilters((prev) => ({
         ...prev.filterByName,
         order: { ...prev.order },
-        filterByNumericValues: [...prev.filterByNumericValues, {
-          column: chosenField,
-          comparison: chosenComparison,
-          value: chosenValue,
-        }],
+        filterByNumericValues: [...prev.filterByNumericValues, chosenFilter],
       }));
       setFilterFields(filterFields.filter((field) => chosenField !== field));
     }
@@ -157,32 +152,13 @@ function Filter() {
   };
 
   useEffect(() => {
-    filters.filterByNumericValues
-      .map((filter, index) => manageMultipleFilter(filter, index));
-  }, [filters]);
-
-  /*  const arrangeFilter = ({ column: field, comparison: compare, value }) => {
-    if (value !== ZERO) {
-      switch (compare) {
-      case 'maior que':
-        setFilteredPlanets(planets.filter((planet) => (
-          Number(planet[field]) > Number(value)
-          && planet[field] !== 'unknown')));
-        break;
-      case 'menor que':
-        setFilteredPlanets(planets.filter((planet) => (
-          Number(planet[field]) < Number(value)
-          && planet[field] !== 'unknown')));
-        break;
-      default:
-        setFilteredPlanets(planets.filter((planet) => (
-          Number(planet[field]) === Number(value)
-          && planet[field] !== 'unknown')));
-      }
-      setFilterFields(filterFields.filter((fieldAvalable) => chosenField
-        !== fieldAvalable));
+    const { filterByNumericValues } = filters;
+    if (filterByNumericValues.length > ZERO) {
+      filterByNumericValues.map((filter, index) => manageMultipleFilter(filter, index));
+    } else {
+      setFilteredPlanets([]);
     }
-  }; */
+  }, [filters]);
 
   const removeFilter = ({ column }) => {
     setFilters((prev) => ({ ...prev,
@@ -200,17 +176,6 @@ function Filter() {
     setChosenComparison(target.value);
   };
 
-  /*  const filterSort = ({ target }) => {
-    setFilters((prev) => ({
-      ...prev.filterByName,
-      ...prev.filterByNumericValues,
-      order: {
-        column: target.value,
-        sort: prev.order.sort,
-      },
-    }));
-  }; */
-
   const filterValue = ({ target }) => {
     setChosenValue(target.value);
   };
@@ -226,7 +191,7 @@ function Filter() {
     </option>
   );
 
-  const updateOrder = () => {
+  const updateSort = () => {
     setFilters((prev) => ({
       ...prev,
       order: {
@@ -234,54 +199,11 @@ function Filter() {
         sort: localSort,
       },
     }));
+    setFiltersUpdated(!filtersUpdated);
   };
 
-  /* const sortNumber = (a, b, column) => (
-    // console.log(a, b, column)
-    a[column] === 'unknown' || b[column] === 'unknown'
-      ? -1
-      :
-    parseInt(a[column], 10) - parseInt(b[column], 10)
-    // parseInt(a[column], 10) - parseInt(b[column], 10)
-  ); */
-
-  /* const sortTable = () => {
-    const { column, sort } = filters.order;
-    if (sort === 'ASC') {
-      setFilteredPlanets(
-        dropDownFilterValues.includes(column)
-          ? planets.sort((a, b) => sortNumber(a, b, column))
-          : planets.sort((a, b) => a[column].localeCompare(b[column])),
-      );
-    } else {
-      setFilteredPlanets(
-        dropDownFilterValues.includes(column)
-          ? planets.sort((a, b) => sortNumber(b, a, column))
-          : planets.sort((a, b) => b[column].localeCompare(a[column])),
-      );
-    }
-  }; */
-
-  /* const planetas = [
-   { name: "Tatooine", rotation_period: "23", orbital_period: "304" },
-   { name: "Alderaan", rotation_period: "24", orbital_period: "364" },
-   { name: "Yavin IV", rotation_period: "24", orbital_period: "4818" },
-   { name: "Hoth", rotation_period: "23", orbital_period: "549" },
-   { name: "Dagobah", rotation_period: "23", orbital_period: "341" },
-   { name: "Bespin", rotation_period: "12", orbital_period: "5110" },
-   { name: "Endor", rotation_period: "18", orbital_period: "402" },
-   { name: "Naboo", rotation_period: "26", orbital_period: "312" },
-   { name: "Coruscant", rotation_period: "24", orbital_period: "368" },
-   { name: "Kamino", rotation_period: "27", orbital_period: "463" },
-];
-
-planetas.sort((a, b) => a[name] - b[name])
-planetas.sort((a, b) => a[name] > b[name]))
-
-  */
-
   return (
-    <div>
+    <div key="filter-main-tag">
       <form>
         <label htmlFor="name">
           Name
@@ -333,7 +255,7 @@ planetas.sort((a, b) => a[name] > b[name]))
             <div
               className="filter"
               data-testid="filter"
-              key={ filter }
+              key={ filter.column }
             >
               { filter.column }
               <button
@@ -382,7 +304,7 @@ planetas.sort((a, b) => a[name] > b[name]))
       <button
         data-testid="column-sort-button"
         type="button"
-        onClick={ updateOrder }
+        onClick={ updateSort }
       >
         Ordenar
       </button>
