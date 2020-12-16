@@ -9,6 +9,7 @@ function NameFilter() {
     setFilters({
       ...filters,
       filters: {
+        ...filters.filters,
         filterByName: {
           name: typingName,
         },
