@@ -12,8 +12,27 @@ function Table() {
     const dataHeaders = Object.keys(data[0])
       .filter((item) => item !== 'residents');
     const nameToFilter = filters.filters.filterByName.name;
-    const filteredData = data
+    const filtersToApply = filters.filters.filterByNumericValue;
+    const nameFilteredData = data
       .filter(({ name }) => name.toLowerCase().includes(nameToFilter));
+    const filteredData = nameFilteredData
+      .filter((planet) => filtersToApply.reduce((passed, filter) => {
+        const { column, comparison, value } = filter;
+        switch (comparison) {
+        case 'maior que':
+          passed = passed && parseInt(planet[`${column}`], 10) > value;
+          break;
+        case 'menor que':
+          passed = passed && parseInt(planet[`${column}`], 10) < value;
+          break;
+        case 'igual a':
+          passed = passed && parseInt(planet[`${column}`], 10) === value;
+          break;
+        default:
+          passed = false;
+        }
+        return passed;
+      }, true));
     return (
       <table>
         <tbody>

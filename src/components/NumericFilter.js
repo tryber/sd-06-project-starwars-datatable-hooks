@@ -100,7 +100,13 @@ function NumericFilter() {
           data-testid="value-filter"
         />
       </label>
-      <button type="button" onClick={ sendFilter }>send filter</button>
+      <button
+        data-testid="button-filter"
+        type="button"
+        onClick={ sendFilter }
+      >
+        Send filter
+      </button>
     </div>
   );
 }
