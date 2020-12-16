@@ -1,0 +1,15 @@
+  copyPlanets = copyPlanets.filter((copyPlanet) => {
+
+  //     if (filterByNumericValues.comparison === 'maior que') {
+  //       const colunm = filterByNumericValues.colunm;
+  //       return copyPlanet[colunm] > filterByNumericValues.value;
+  //     }
+  //     if (filterByNumericValues.comparison === 'menor que') {
+  //       return copyPlanet.colunm < filterByNumericValues.value;
+  //     }
+  //     if (filterByNumericValues.comparison === 'igual') {
+  //       return copyPlanets;
+  //     }
+  //     return copyPlanets;
+  //   });
+  // }

@@ -1,20 +1,15 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function SearchInputs() {
   const { searchTerm,
     setSearchTerm,
-    column,
-    comparison,
-    value } = useContext(StarWarsContext);
-  /* Como acessar a propriedade do objeto
-  const carro = { rodas: 4, portas: 2, Abs: true }
-  1 - dot notation - objeto.propriedade  => carro.rodas
-  2 - usando variável - objeto['propriedade'] =>  carro['rodas']
-  3 - extra - let propriedade = 'Abs'
-    console.log(carro[propriedade]) // true
-    o filtro - pega os valores colum filter, comparison filter e o valor numerico
-  */
+    filterByNumericValues,
+    setFilterByNumericValues } = useContext(StarWarsContext);
+  const [column, setColumn] = useState(''); // estado local
+  const [comparison, setComparison] = useState('');
+  const [value, setValue] = useState('');
+
   return (
     <header>
       Pesquisa
@@ -26,7 +21,12 @@ function SearchInputs() {
         value={ searchTerm }
         data-testid="name-filter"
       />
-      <select className="btn" data-testid="column-filter" value={ column }>
+      <select
+        className="btn"
+        data-testid="column-filter"
+        value={ column }
+        onChange={ (event) => setColumn(event.target.value) }
+      >
         <option>population</option>
         <option>orbital_period</option>
         <option>diameter</option>
@@ -34,7 +34,12 @@ function SearchInputs() {
         <option>surface_water</option>
         <option>diameter</option>
       </select>
-      <select className="btn" data-testid="comparison-filter" value={ comparison }>
+      <select
+        className="btn"
+        data-testid="comparison-filter"
+        value={ comparison }
+        onChange={ (event) => setComparison(event.target.value) }
+      >
         <option>maior que</option>
         <option>menor que</option>
         <option>igual a</option>
@@ -45,12 +50,13 @@ function SearchInputs() {
         type="number"
         name="value-filter"
         id="value-filter"
+        onChange={ (event) => setValue(event.target.value) }
       />
       <button
         type="button"
         className="btn"
-        onChange={ (event) => setSearchTerm(event.target.value) }
-        value={ searchTerm }
+        onClick={ () => setFilterByNumericValues([...filterByNumericValues,
+          { column, comparison, value }]) }
         data-testid="button-filter"
       >
         add filter
@@ -61,11 +67,7 @@ function SearchInputs() {
 }
 
 export default SearchInputs;
-// Crie um filtro para valores numéricos
-// ✕ Renderiza o filtro de coluna (4543ms)
-// ✕ Renderiza o filtro de comparação (4532ms)
-// ✓ Renderiza o campo para o valor do filtro (50ms)
-// ✓ Renderiza o botão para executar a filtragem (26ms)
+
 // ✕ Filtra utilizando a comparação "menor que" (4527ms)
 // ✕ Filtra utilizando a comparação "maior que" (4541ms)
 // ✕ Filtra utilizando a comparação "igual a" (4541ms)
