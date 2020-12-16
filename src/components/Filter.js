@@ -114,9 +114,8 @@ function Filter() {
       ));
       setFiltersUpdated(!filtersUpdated);
     } else {
-      console.log('filteredPlanets = []')
+      console.log('filteredPlanets = []');
       setFilteredPlanets([]);
-
     }
   }, [filterFields]);
 
