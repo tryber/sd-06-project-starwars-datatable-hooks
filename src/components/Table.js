@@ -26,7 +26,7 @@ function Table() {
           passed = passed && parseInt(planet[`${column}`], 10) < value;
           break;
         case 'igual a':
-          passed = passed && parseInt(planet[`${column}`], 10) === value;
+          passed = passed && parseInt(planet[`${column}`], 10) === parseInt(value, 10);
           break;
         default:
           passed = false;
