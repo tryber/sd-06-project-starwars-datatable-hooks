@@ -3,25 +3,37 @@ import StarWarsContext from '../context/StarWarsContext';
 
 function NumericFilter() {
   const { filters, setFilters } = useContext(StarWarsContext);
-  const [column, setColumn] = useState('');
-  const [comparison, setComparison] = useState('');
-  const [value, setValue] = useState();
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
+  const initialValue = 0;
+  const [value, setValue] = useState(initialValue);
   const columns = [
     'population',
     'orbital_period',
-    'diameter', 'rotation_period',
+    'diameter',
+    'rotation_period',
     'surface_water',
   ];
-  const filteredColumns = filters.filters.filterByNumericValue
-    .map((indvidualFilter) => indvidualFilter.column);
-  console.log('Filtered Columns: ', filteredColumns);
-
-  let availableColumns = [...columns];
-  console.log('Available Columns: ', availableColumns);
+  const comparisonTypes = [
+    'maior que',
+    'menor que',
+    'igual a',
+  ];
+  const [availableColumns, setAvailableColumns] = useState([...columns]);
 
   const onColumnChange = ({ target }) => {
     const selectedColumn = target.value;
     setColumn(selectedColumn);
+  };
+
+  const onComparisonChange = ({ target }) => {
+    const selectedComparison = target.value;
+    setComparison(selectedComparison);
+  };
+
+  const onvalueChange = ({ target }) => {
+    const selectedValue = target.value;
+    setValue(selectedValue);
   };
 
   const sendFilter = () => {
@@ -40,20 +52,53 @@ function NumericFilter() {
         ],
       },
     });
-    availableColumns = availableColumns.splice(availableColumns.indexOf(column), 1);
+    const newAvailableColumns = availableColumns
+      .filter((individualColumn) => individualColumn !== column);
+    setAvailableColumns(newAvailableColumns);
+    console.log(filters);
   };
 
   return (
     <div>
       <label htmlFor="select-filter">
         Select a column:
-        <select onChange={ onColumnChange } value={ column } data-testid="column-filter">
+        <select
+          id="select-filter"
+          onChange={ onColumnChange }
+          value={ column }
+          data-testid="column-filter"
+        >
           { availableColumns.map((nonFilteredColumn, index) => (
             <option key={ index } value={ nonFilteredColumn }>
               { nonFilteredColumn }
             </option>
           ))}
         </select>
+      </label>
+      <label htmlFor="comparison-filter">
+        Comparison:
+        <select
+          id="comparison-filter"
+          onChange={ onComparisonChange }
+          value={ comparison }
+          data-testid="comparison-filter"
+        >
+          { comparisonTypes.map((type, index) => (
+            <option key={ index } value={ type }>
+              { type }
+            </option>
+          ))}
+        </select>
+      </label>
+      <label htmlFor="value-filter">
+        value:
+        <input
+          type="number"
+          id="value-filter"
+          onChange={ onvalueChange }
+          value={ value }
+          data-testid="value-filter"
+        />
       </label>
       <button type="button" onClick={ sendFilter }>send filter</button>
     </div>
