@@ -157,7 +157,7 @@ StarWarsProvider.propTypes = {
 export default StarWarsProvider;
 
 /*
-  IN CASE OF API FAILURE
+  // IN CASE OF API FAILURE
   // Remova depois que a API retornar
   const getMockedPlanetsInfo = async () => {
     const planetsInfo = mockFetchPlanetsInfo();

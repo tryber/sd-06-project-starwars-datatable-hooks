@@ -1,12 +1,23 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useContext } from 'react';
+import StarWarsContext from '../context/StarWarsContext';
 
-function NumericFilter(props) {
+function NumericFilter() {
   const {
-    setNumericFiltersData,
     columnFilters,
     comparisonFilters,
-  } = props;
+    applyFilter,
+    saveSelectedColumnFilter,
+    availableColumnFilters,
+  } = useContext(StarWarsContext);
+
+  const initialNumericFiltersState = {
+    column: availableColumnFilters[0],
+    comparison: comparisonFilters[0],
+    value: 0,
+  };
+  const [numericFiltersData, setNumericFiltersData] = useState(
+    { ...initialNumericFiltersState },
+  );
 
   const onChange = (event) => {
     const { name: objectKey, value, type } = event.target;
@@ -23,6 +34,14 @@ function NumericFilter(props) {
       ...prevState,
       [objectKey]: processedValue,
     }));
+  };
+
+  const applyFilterButtonClick = () => {
+    console.log('Filters to be applied');
+    console.table(numericFiltersData);
+    console.log('--------------');
+    applyFilter(numericFiltersData);
+    saveSelectedColumnFilter(numericFiltersData.column);
   };
 
   return (
@@ -64,15 +83,15 @@ function NumericFilter(props) {
           onChange={ (event) => onChange(event) }
         />
       </label>
-      <button type="submit" data-testid="button-filter">Apply Filter</button>
+      <button
+        type="button"
+        data-testid="button-filter"
+        onClick={ () => applyFilterButtonClick() }
+      >
+        Apply Filter
+      </button>
     </div>
   );
 }
-
-NumericFilter.propTypes = {
-  setNumericFiltersData: PropTypes.func.isRequired,
-  columnFilters: PropTypes.arrayOf(PropTypes.string).isRequired,
-  comparisonFilters: PropTypes.arrayOf(PropTypes.string).isRequired,
-};
 
 export default NumericFilter;
