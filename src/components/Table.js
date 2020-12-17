@@ -26,7 +26,10 @@ function Table() {
         if (comparison === 'menor que') {
           return copyPlanet[column] < Number(value);
         }
-        if (comparison === 'igual a') return copyPlanet[column] === Number(value);
+        if (comparison === 'igual a') {
+          return copyPlanet[column] === (value);
+        }
+        return null;
       });
     }
     return copyPlanets;
