@@ -10,32 +10,25 @@ function Table() {
   useEffect(() => {
     getApiStar();
   }, []); // componentDidMount qdo carrega a 1ª vez
-  // useEffect(() => {
-  //  // getApiStar();
-  // }, [searchTerm]); // componentUpData - qdo atualiza
 
-  function numericFilter(batatinha) {
+  function numericFilter(listPlanets) {
     const number = 0;
-    let copyPlanets = batatinha;
-    console.log(' filter', filterByNumericValues);
-    copyPlanets = copyPlanets.filter((copyPlanet) => {
-      if (filterByNumericValues.length === number) {
-        console.log('VAZIO', filterByNumericValues);
-        return true;
-      }
-      const { colunm } = filterByNumericValues[0];
-      if (filterByNumericValues[0].comparison === 'maior que') {
-        console.log('> q', copyPlanet);
-        return copyPlanet[colunm] > Number(filterByNumericValues[0].value);
-      }
-      if (filterByNumericValues[0].comparison === 'menor que') {
-        console.log('< q', copyPlanet);
-        return copyPlanet[colunm] < Number(filterByNumericValues[0].value);
-      }
-      console.log('testando');
-      return copyPlanet[colunm] === Number(filterByNumericValues[0].value);
-    });
-    console.log('linha 38', copyPlanets);
+    let copyPlanets = listPlanets;
+    for (let index = number; index < filterByNumericValues.length; index += 1) {
+      copyPlanets = copyPlanets.filter((copyPlanet) => {
+        if (filterByNumericValues.length === number) {
+          return true;
+        }
+        const { column, comparison, value } = filterByNumericValues[index];
+        if (comparison === 'maior que') {
+          return copyPlanet[column] > Number(value);
+        }
+        if (comparison === 'menor que') {
+          return copyPlanet[column] < Number(value);
+        }
+        if (comparison === 'igual a') return copyPlanet[column] === Number(value);
+      });
+    }
     return copyPlanets;
   }
   return (

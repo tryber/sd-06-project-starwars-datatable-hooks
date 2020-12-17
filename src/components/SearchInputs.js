@@ -6,8 +6,8 @@ function SearchInputs() {
     setSearchTerm,
     filterByNumericValues,
     setFilterByNumericValues } = useContext(StarWarsContext);
-  const [column, setColumn] = useState(''); // estado local
-  const [comparison, setComparison] = useState('');
+  const [column, setColumn] = useState('population'); // estado local
+  const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState('');
 
   return (
