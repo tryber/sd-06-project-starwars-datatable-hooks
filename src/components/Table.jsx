@@ -1,10 +1,11 @@
 import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import StarWarsContext from '../context/StarWarsContext';
+import Planet from './Planet'
 
 export default function Table(props) {
-  const { getAPI } = useContext(StarWarsContext);
-  const { planets } = props;
+  const { getAPI, planets, filters } = useContext(StarWarsContext);
+  const name = filters.filterByName.name;
   const columns = planets[0] && Object.keys(planets[0]);
 
   useEffect(() => {
@@ -13,6 +14,8 @@ export default function Table(props) {
 
   const numberOfPlanets = 13;
   const numberOfColumns = 12;
+
+  const filteredPlanets = planets.filter(planet => planet.name.includes(name))
 
   return (
     <table className="table">
@@ -23,12 +26,7 @@ export default function Table(props) {
         </tr>
       </thead>
       <tbody>
-        {planets.map((row) => (
-          <tr key={ columns }>
-            {columns
-              .map((column) => (<td key={ column.name }>{row[column]}</td>))
-              .filter((place, index) => index <= numberOfPlanets)}
-          </tr>))}
+        {filteredPlanets.map((planet) => (<Planet planet={planet}/>))}
       </tbody>
     </table>
 

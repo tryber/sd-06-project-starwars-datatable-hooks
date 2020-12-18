@@ -3,8 +3,7 @@ import Table from './Table';
 import StarWarsContext from '../context/StarWarsContext';
 
 export default function Filter() {
-  const { planets } = useContext(StarWarsContext);
-  const [filters, setFilters] = useState('');
+  const { planets, filters, setFilters } = useContext(StarWarsContext);
   const someTrue = -1;
 
   // function handleFilter({ target: { name, value } }) {
@@ -13,11 +12,12 @@ export default function Filter() {
 
   function search(rows) {
     return rows.filter(
-      (row) => row.name
-        .toLowerCase()
-        .indexOf(filters) > someTrue || row.climate
-        .toLowerCase().indexOf(filters) > someTrue,
+      (row) => row.name.toLowerCase().indexOf(filters) > someTrue
     );
+  }
+  function handleChange(e){
+    setFilters({...filters, filterByName:{name:e.target.value}})
+
   }
 
   return (
@@ -25,10 +25,10 @@ export default function Filter() {
       <input
         data-testeid="name-filter"
         type="text"
-        value={ filters }
-        onChange={ (e) => setFilters(e.target.value) }
+        value={ filters.filterByName.name }
+        onChange={ handleChange }
       />
-      <Table planets={ search(planets) } />
+      {/*<Table planets={ search(planets) } />*/}
     </div>
   );
 }
