@@ -14,8 +14,8 @@ export default function Filter() {
   function search(rows) {
     return rows.filter(
       (row) =>
-      row.name.toLowerCase().indexOf(filters) > someTrue
-      || row.climate.toLowerCase().indexOf(filters) > someTrue
+        row.name.toLowerCase().indexOf(filters) > someTrue
+        || row.climate.toLowerCase().indexOf(filters) > someTrue,
     );
   }
 

@@ -13,7 +13,7 @@ export default function Table(props) {
 
   const numberOfPlanets = 13;
   const numberOfColumns = 12;
-  
+
   return (
     <table className="table">
       <thead>
