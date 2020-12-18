@@ -4,27 +4,32 @@ import StarWarsContext from '../context/StarWarsContext';
 
 export default function Filter() {
   const { planets } = useContext(StarWarsContext);
-  const [query, setQuery] = useState('');
+  const [filters, setFilters] = useState('');
+  const someTrue = -1;
 
-  function search(planetas) {
-    const columns = planetas[0] && Object.keys(planetas[0]);
-    const someTrue = -1;
+  // function handleFilter({ target: { name, value } }) {
+  //   if (name === 'filterByName') setQuery({ [name]: { name: value } });
+  // }
 
-    return planetas.filter(((planeta) => columns.some(
-      (column) => planeta[column].toString().toLowerCase()
-        .indexOf(query.toLowerCase()) > someTrue,
-    )));
+  function search(rows) {
+    return rows.filter(
+      (row) =>
+      row.name.toLowerCase().indexOf(filters) > someTrue ||
+      row.climate.toLowerCase().indexOf(filters) > someTrue
+    ) 
   }
+  
 
   return (
     <div>
-      <input type="text" data-testeid="name-filter" />
       <input
+        data-testeid="name-filter"
         type="text"
-        value={ query }
-        onChange={ (e) => setQuery(e.target.value) }
+        value={ filters }
+        onChange={ (e) => setFilters(e.target.value) }
       />
       <Table planets={ search(planets) } />
+
     </div>
   );
 }
