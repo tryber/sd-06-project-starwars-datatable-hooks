@@ -5,9 +5,9 @@ import StarWarsProvider from './provider/StarWarsProvider';
 
 function App() {
   return (
-    <StarWarsProvider >
+    <StarWarsProvider>
       <Filter />
-      {/*<Table />*/}
+      { /*<Table />*/ }
     </StarWarsProvider>
   );
 }
