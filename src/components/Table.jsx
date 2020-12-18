@@ -6,7 +6,7 @@ export default function Table(props) {
   const { getAPI } = useContext(StarWarsContext);
   const { planets } = props;
   const columns = planets[0] && Object.keys(planets[0]);
-  
+
   useEffect(() => {
     getAPI();
   }, []);
