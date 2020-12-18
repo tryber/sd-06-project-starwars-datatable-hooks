@@ -16,7 +16,7 @@ export default function Filter() {
       (row) => row.name
         .toLowerCase()
         .indexOf(filters) > someTrue || row.climate
-          .toLowerCase().indexOf(filters) > someTrue,
+        .toLowerCase().indexOf(filters) > someTrue,
     );
   }
 
