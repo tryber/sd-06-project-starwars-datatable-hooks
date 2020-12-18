@@ -7,7 +7,7 @@ function App() {
   return (
     <StarWarsProvider>
       <Filter />
-      { /*<Table />*/ }
+      {/* <Table /> */}
     </StarWarsProvider>
   );
 }
