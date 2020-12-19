@@ -4,6 +4,7 @@ import Table from './components/Table';
 import ActiveFilters from './components/ActiveFilters';
 import NameFilter from './components/NameFilter';
 import NumericFilter from './components/NumericFilter';
+import OrderFilter from './components/OrderFilter';
 import './App.css';
 // import SWAPIFetch from './services/SWAPIFetch';
 
@@ -12,6 +13,7 @@ function App() {
     <Provider>
       <NameFilter />
       <NumericFilter />
+      <OrderFilter />
       <ActiveFilters />
       <Table />
     </Provider>

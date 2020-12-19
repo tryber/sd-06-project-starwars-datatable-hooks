@@ -57,7 +57,7 @@ function NumericFilter() {
   return (
     <div>
       <label htmlFor="select-filter">
-        Select a column:
+        Select a column to filter:
         <select
           id="select-filter"
           onChange={ onColumnChange }
