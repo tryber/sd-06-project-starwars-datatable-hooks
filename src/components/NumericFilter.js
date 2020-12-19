@@ -31,7 +31,7 @@ function NumericFilter() {
     { ...initialNumericFiltersState },
   );
 
-  const renderColumnFilterDropDown = () => {
+  const renderColumnFilters = () => {
     return (
       <select
         id="column-filter"
@@ -102,7 +102,7 @@ function NumericFilter() {
     <div>
       <label htmlFor="column-filter">
         Column Filter:
-        { hasAvailableColumnFilters ? renderColumnFilterDropDown() : renderDisabledDropDown() }
+        { hasAvailableColumnFilters ? renderColumnFilters() : renderDisabledDropDown() }
       </label>
       <label htmlFor="comparison-filter">
         Filter by:
