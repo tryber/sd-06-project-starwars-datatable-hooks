@@ -12,7 +12,7 @@ function Table() {
     const dataHeaders = Object.keys(data[0])
       .filter((item) => item !== 'residents');
     const nameToFilter = filters.filters.filterByName.name;
-    const filtersToApply = filters.filters.filterByNumericValue;
+    const filtersToApply = filters.filters.filterByNumericValues;
     const nameFilteredData = data
       .filter(({ name }) => name.toLowerCase().includes(nameToFilter));
     const filteredData = nameFilteredData

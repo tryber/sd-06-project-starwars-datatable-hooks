@@ -2,24 +2,21 @@ import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function NumericFilter() {
-  const { filters, setFilters } = useContext(StarWarsContext);
-  const [column, setColumn] = useState('population');
+  const {
+    filters,
+    setFilters,
+    availableColumns,
+    setAvailableColumns,
+  } = useContext(StarWarsContext);
+  const [column, setColumn] = useState('diameter');
   const [comparison, setComparison] = useState('maior que');
   const initialValue = 0;
   const [value, setValue] = useState(initialValue);
-  const columns = [
-    'population',
-    'orbital_period',
-    'diameter',
-    'rotation_period',
-    'surface_water',
-  ];
   const comparisonTypes = [
     'maior que',
     'menor que',
     'igual a',
   ];
-  const [availableColumns, setAvailableColumns] = useState([...columns]);
 
   const onColumnChange = ({ target }) => {
     const selectedColumn = target.value;
@@ -46,8 +43,8 @@ function NumericFilter() {
       ...filters,
       filters: {
         ...filters.filters,
-        filterByNumericValue: [
-          ...filters.filters.filterByNumericValue,
+        filterByNumericValues: [
+          ...filters.filters.filterByNumericValues,
           newFilter,
         ],
       },
@@ -55,7 +52,6 @@ function NumericFilter() {
     const newAvailableColumns = availableColumns
       .filter((individualColumn) => individualColumn !== column);
     setAvailableColumns(newAvailableColumns);
-    console.log(filters);
   };
 
   return (
@@ -68,7 +64,7 @@ function NumericFilter() {
           value={ column }
           data-testid="column-filter"
         >
-          { availableColumns.map((nonFilteredColumn, index) => (
+          { availableColumns.sort().map((nonFilteredColumn, index) => (
             <option key={ index } value={ nonFilteredColumn }>
               { nonFilteredColumn }
             </option>

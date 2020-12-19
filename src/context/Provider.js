@@ -11,9 +11,18 @@ function Provider({ children }) {
       filterByName: {
         name: '',
       },
-      filterByNumericValue: [],
+      filterByNumericValues: [],
     },
   });
+  const columns = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
+  const [availableColumns, setAvailableColumns] = useState([...columns]);
+
   const getData = async () => {
     const { results } = await SWAPIFetch('planets/');
     setData(results);
@@ -43,6 +52,8 @@ function Provider({ children }) {
     filters,
     setFilters,
     getData,
+    availableColumns,
+    setAvailableColumns,
   };
   return (
     <StarWarsContext.Provider value={ contextData }>
