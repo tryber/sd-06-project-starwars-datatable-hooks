@@ -1,27 +1,22 @@
 import React from 'react';
-import logo from './logo.svg';
+import Provider from './context/Provider';
+import Table from './components/Table';
+import ActiveFilters from './components/ActiveFilters';
+import NameFilter from './components/NameFilter';
+import NumericFilter from './components/NumericFilter';
+import OrderFilter from './components/OrderFilter';
 import './App.css';
+// import SWAPIFetch from './services/SWAPIFetch';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={ logo } className="App-logo" alt="logo" />
-        <p>
-          Edit
-          <code>src/App.js</code>
-          and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider>
+      <NameFilter />
+      <NumericFilter />
+      <OrderFilter />
+      <ActiveFilters />
+      <Table />
+    </Provider>
   );
 }
 
