@@ -87,14 +87,14 @@ function NumericFilter() {
     const newSelectedColumnFilters = [...filterByNumericValues, filtersData]
       .map((element) => element.column);
 
-    const filtrosDisponiveis = compareAndFilterArrays(
+    const newAvailableColumnFilters = compareAndFilterArrays(
       columnFilters, newSelectedColumnFilters
     );
-    console.log('Filtros disponíveis do state: ', filtrosDisponiveis);
+    console.log('Filtros disponíveis do state: ', newAvailableColumnFilters);
 
     setFiltersData({
       ...filtersData,
-      column: filtrosDisponiveis.length > 0 ? filtrosDisponiveis[0] : undefined
+      column: newAvailableColumnFilters.length > 0 ? newAvailableColumnFilters[0] : undefined
     });
   };
 
