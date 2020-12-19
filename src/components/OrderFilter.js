@@ -78,7 +78,13 @@ function OrderFilter() {
             value="DESC"
           />
         </label>
-        <button type="button" onClick={ handleSendOrder }>Send order</button>
+        <button
+          type="button"
+          onClick={ handleSendOrder }
+          data-testid="column-sort-button"
+        >
+          Send order
+        </button>
       </div>
     );
   }
