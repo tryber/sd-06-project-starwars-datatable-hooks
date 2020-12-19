@@ -1,23 +1,65 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import compareAndFilterArrays from '../helpers/compareAndFilterArrays';
 import StarWarsContext from '../context/StarWarsContext';
 
 function NumericFilter() {
   const {
+    filters,
     columnFilters,
     comparisonFilters,
     applyFilter,
-    saveSelectedColumnFilter,
-    availableColumnFilters,
   } = useContext(StarWarsContext);
+
+  const { filters: { filterByNumericValues } } = filters;
+
+  const currentSelectedColumnFilters = filterByNumericValues.map((element) => (
+    element.column
+  ));
+
+  const availableColumnFilters = compareAndFilterArrays(
+    columnFilters, currentSelectedColumnFilters
+  );
+
+  const hasAvailableColumnFilters = availableColumnFilters && availableColumnFilters.length > 0;
 
   const initialNumericFiltersState = {
     column: availableColumnFilters[0],
     comparison: comparisonFilters[0],
     value: 0,
   };
-  const [numericFiltersData, setNumericFiltersData] = useState(
+  const [filtersData, setFiltersData] = useState(
     { ...initialNumericFiltersState },
   );
+
+  const renderColumnFilterDropDown = () => {
+    return (
+      <select
+        id="column-filter"
+        name="column"
+        data-testid="column-filter"
+        onChange={(event) => onChange(event)}
+      >
+        {availableColumnFilters
+          .map((category, index) => (
+            <option key={index} value={category}>{category}</option>
+          ))}
+      </select>
+    );
+  };
+
+  const renderDisabledDropDown = () => {
+    return (
+      <select
+        id="column-filter"
+        name="column"
+        data-testid="column-filter"
+        onChange={(event) => onChange(event)}
+        disabled
+      >
+        <option>No more options</option>
+      </select>
+    );
+  };
 
   const onChange = (event) => {
     const { name: objectKey, value, type } = event.target;
@@ -30,7 +72,7 @@ function NumericFilter() {
     } else {
       processedValue = value;
     }
-    setNumericFiltersData((prevState) => ({
+    setFiltersData((prevState) => ({
       ...prevState,
       [objectKey]: processedValue,
     }));
@@ -38,26 +80,29 @@ function NumericFilter() {
 
   const applyFilterButtonClick = () => {
     console.log('Filters to be applied');
-    console.table(numericFiltersData);
+    console.table(filtersData);
     console.log('--------------');
-    applyFilter(numericFiltersData);
-    saveSelectedColumnFilter(numericFiltersData.column);
+    applyFilter(filtersData);
+
+    const newSelectedColumnFilters = [...filterByNumericValues, filtersData]
+      .map((element) => element.column);
+
+    const filtrosDisponiveis = compareAndFilterArrays(
+      columnFilters, newSelectedColumnFilters
+    );
+    console.log('Filtros disponíveis do state: ', filtrosDisponiveis);
+
+    setFiltersData({
+      ...filtersData,
+      column: filtrosDisponiveis.length > 0 ? filtrosDisponiveis[0] : undefined
+    });
   };
 
   return (
     <div>
       <label htmlFor="column-filter">
         Column Filter:
-        <select
-          id="column-filter"
-          name="column"
-          data-testid="column-filter"
-          onChange={ (event) => onChange(event) }
-        >
-          {columnFilters.map((category, index) => (
-            <option key={ index } value={ category }>{ category }</option>
-          ))}
-        </select>
+        { hasAvailableColumnFilters ? renderColumnFilterDropDown() : renderDisabledDropDown() }
       </label>
       <label htmlFor="comparison-filter">
         Filter by:
@@ -65,10 +110,10 @@ function NumericFilter() {
           id="comparison-filter"
           name="comparison"
           data-testid="comparison-filter"
-          onChange={ (event) => onChange(event) }
+          onChange={(event) => onChange(event)}
         >
           {comparisonFilters.map((comparison, index) => (
-            <option key={ index } value={ comparison }>{ comparison }</option>
+            <option key={index} value={comparison}>{comparison}</option>
           ))}
         </select>
       </label>
@@ -78,15 +123,15 @@ function NumericFilter() {
           type="number"
           id="value-filter"
           name="value"
-          value={ setNumericFiltersData.value }
+          min={0}
           data-testid="value-filter"
-          onChange={ (event) => onChange(event) }
+          onChange={(event) => onChange(event)}
         />
       </label>
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ () => applyFilterButtonClick() }
+        onClick={() => applyFilterButtonClick()}
       >
         Apply Filter
       </button>

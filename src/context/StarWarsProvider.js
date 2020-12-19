@@ -27,10 +27,6 @@ function StarWarsProvider({ children }) {
       'rotation_period', 'surface_water',
     ],
   );
-  const [selectedColumnFilters, setSelectedColumnFilters] = useState([]);
-  const [availableColumnFilters, setAvailableColumnFilters] = useState(
-    [...columnFilters],
-  );
   const comparisonFilters = ['maior que', 'menor que', 'igual a'];
 
   const getPlanetsInfo = async () => {
@@ -101,12 +97,6 @@ function StarWarsProvider({ children }) {
     }));
   };
 
-  const saveSelectedColumnFilter = (selectedColumn) => {
-    console.log('saveSelectedColumnFilter chamado');
-    console.log('A coluna selecionada foi: ', selectedColumn);
-    setSelectedColumnFilters([...selectedColumnFilters, selectedColumn]);
-  };
-
   useEffect(() => {
     makeInitialSetup();
     // mockedInitialSetup();
@@ -115,18 +105,10 @@ function StarWarsProvider({ children }) {
   useEffect(() => {
     const { filters: { filterByNumericValues } } = filters;
     const minArraySize = 0;
-    console.log('Filters foi alterado');
+    // console.log('Filters foi alterado');
     setHasNumericFilters(filterByNumericValues.length > minArraySize);
     console.log('Provider filters state:', filterByNumericValues);
   }, [filters]);
-
-  useEffect(() => {
-    const filteredAvailableColumns = compareAndFilterArrays(
-      columnFilters, selectedColumnFilters,
-    );
-    console.log('Colunas disponíveis', filteredAvailableColumns);
-    setAvailableColumnFilters(filteredAvailableColumns);
-  }, [selectedColumnFilters]);
 
   const contextValue = {
     tableHeaders,
@@ -138,8 +120,6 @@ function StarWarsProvider({ children }) {
     setFilters,
     setColumnFilters,
     applyFilter,
-    saveSelectedColumnFilter,
-    availableColumnFilters,
     // mockedInitialSetup,
   };
 
