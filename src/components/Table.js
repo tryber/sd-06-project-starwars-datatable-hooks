@@ -71,8 +71,6 @@ function Table() {
                   { header.split('_').join(' ') }
                 </th>))}
           </tr>
-          { console.log(filteredData)}
-          { console.log(parseFloat('2000000'))}
           { dataToShow.map((planet, index) => (
             <tr key={ index }>
               { dataHeaders.map((info, i) => (

@@ -32,23 +32,6 @@ function Provider({ children }) {
     setData(results);
     setIsFetching(false);
   };
-  // useEffect(() => {
-  //   getData();
-  // }, []);
-  // const planetsResults = async () => {
-  //   setIsFetching(true);
-  //   const endpoint = 'planets/';
-  //   const planetsFetch = await SWAPI(endpoint);
-  //   setPlanetsInfo(planetsFetch.results);
-  //   setIsFetching(false);
-  //   console.log(planetsInfo);
-  // };
-  // if (isFetching === false && planetsInfo.length !== 0) {
-  //   const dataHeaders = Object.keys(planetsResults[0])
-  //     .filter((item) => item !== 'residents');
-  //   console.log(dataHeaders);
-  //   console.log(planetsInfo);
-  // }
   const contextData = {
     data,
     setData,
