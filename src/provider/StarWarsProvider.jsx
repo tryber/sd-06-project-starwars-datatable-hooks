@@ -11,6 +11,11 @@ function StarWarsProvider({ children }) {
     setPlanets(response);
   }
   const [filters, setFilters] = useState({ filterByName:{ name:'' } });
+  const [numericFilter, setNumericFilter] = useState({ 
+    column:'',
+    comparison:'',
+    value:'',
+  })
 
   return (
     <StarWarsContext.Provider
