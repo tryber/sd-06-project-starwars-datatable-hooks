@@ -10,7 +10,7 @@ function StarWarsProvider({ children }) {
     const response = await APIFetcher();
     setPlanets(response);
   }
-  const [filters, setFilters] = useState({ filterByName:{ name:'' } });
+  const [filters, setFilters] = useState({ filterByName: { name:'' } });
   const [numericFilter, setNumericFilter] = useState({ 
     column:'',
     comparison:'',
@@ -24,6 +24,7 @@ function StarWarsProvider({ children }) {
         getAPI,
         filters,
         setFilters,
+        setNumericFilter,
       } }
     >
       {children}
