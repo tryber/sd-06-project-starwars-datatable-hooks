@@ -16,7 +16,7 @@ function Filters() {
       <TextFilter />
       <NumericFilter />
       {filterByNumericValues.map((numericFilter, index) => (
-        <AppliedFilter  key={ index } numericFilter={ numericFilter } />
+        <AppliedFilter key={ index } numericFilter={ numericFilter } />
       ))}
     </div>
   );

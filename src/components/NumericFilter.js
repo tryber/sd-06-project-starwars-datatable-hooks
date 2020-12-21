@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import compareAndFilterArrays from '../utils/compareAndFilterArrays';
 import StarWarsContext from '../context/StarWarsContext';
 
@@ -17,10 +17,12 @@ function NumericFilter() {
   ));
 
   const availableColumnFilters = compareAndFilterArrays(
-    columnFilters, currentSelectedColumnFilters
+    columnFilters, currentSelectedColumnFilters,
   );
 
-  const hasAvailableColumnFilters = availableColumnFilters && availableColumnFilters.length > 0;
+  const hasAvailableColumnFilters = (
+    availableColumnFilters && availableColumnFilters.length
+  );
 
   const initialNumericFiltersState = {
     column: availableColumnFilters[0],
@@ -30,86 +32,6 @@ function NumericFilter() {
   const [filtersData, setFiltersData] = useState(
     { ...initialNumericFiltersState },
   );
-
-  const renderFilters = () => {
-    return (
-      <div>
-        <label htmlFor="column-filter">
-          Column Filter:
-        <select
-            id="column-filter"
-            name="column"
-            data-testid="column-filter"
-            onChange={(event) => onChange(event)}
-          >
-            {availableColumnFilters
-              .map((category, index) => (
-                <option key={index} value={category}>{category}</option>
-              ))}
-          </select>
-        </label>
-        <label htmlFor="comparison-filter">
-          Filter by:
-        <select
-            id="comparison-filter"
-            name="comparison"
-            data-testid="comparison-filter"
-            onChange={(event) => onChange(event)}
-          >
-            {comparisonFilters.map((comparison, index) => (
-              <option key={index} value={comparison}>{comparison}</option>
-            ))}
-          </select>
-        </label>
-        <label htmlFor="value-filter">
-          Value:
-        <input
-            type="number"
-            id="value-filter"
-            name="value"
-            min={0}
-            data-testid="value-filter"
-            onChange={(event) => onChange(event)}
-          />
-        </label>
-        <button
-          type="button"
-          data-testid="button-filter"
-          onClick={() => applyFilterButtonClick()}
-        >
-          Apply Filter
-      </button>
-      </div>
-    );
-  };
-
-  const renderDisabledFilters = () => {
-    return (
-      <div>
-        <label>
-          Column Filter:
-        <select disabled>
-          <option>No filters available</option>
-          </select>
-        </label>
-        <label>
-          Filter by:
-        <select disabled>
-            {comparisonFilters.map((comparison, index) => (
-              <option key={index} value={comparison}>{comparison}</option>
-            ))}
-          </select>
-        </label>
-        <label>
-          Value:
-        <input disabled/>
-        </label>
-        <button disabled>
-          Apply Filter
-      </button>
-      </div>
-    );
-  };
 
   const onChange = (event) => {
     const { name: objectKey, value, type } = event.target;
@@ -135,14 +57,90 @@ function NumericFilter() {
       .map((element) => element.column);
 
     const newAvailableColumnFilters = compareAndFilterArrays(
-      columnFilters, newSelectedColumnFilters
+      columnFilters, newSelectedColumnFilters,
     );
 
     setFiltersData({
       ...filtersData,
-      column: newAvailableColumnFilters.length > 0 ? newAvailableColumnFilters[0] : undefined
+      column: newAvailableColumnFilters.length ? newAvailableColumnFilters[0] : undefined,
     });
   };
+
+  const renderFilters = () => (
+    <div>
+      <label htmlFor="column-filter">
+        Column Filter:
+        <select
+          id="column-filter"
+          name="column"
+          data-testid="column-filter"
+          onChange={ (event) => onChange(event) }
+        >
+          {availableColumnFilters
+            .map((category, index) => (
+              <option key={ index } value={ category }>{ category }</option>
+            ))}
+        </select>
+      </label>
+      <label htmlFor="comparison-filter">
+        Filter by:
+        <select
+          id="comparison-filter"
+          name="comparison"
+          data-testid="comparison-filter"
+          onChange={ (event) => onChange(event) }
+        >
+          {comparisonFilters.map((comparison, index) => (
+            <option key={ index } value={ comparison }>{ comparison }</option>
+          ))}
+        </select>
+      </label>
+      <label htmlFor="value-filter">
+        Value:
+        <input
+          type="number"
+          id="value-filter"
+          name="value"
+          min={ 0 }
+          data-testid="value-filter"
+          onChange={ (event) => onChange(event) }
+        />
+      </label>
+      <button
+        type="button"
+        data-testid="button-filter"
+        onClick={ () => applyFilterButtonClick() }
+      >
+        Apply Filter
+      </button>
+    </div>
+  );
+
+  const renderDisabledFilters = () => (
+    <div>
+      <label htmlFor="column-filter">
+        Column Filter:
+        <select id="column-filter" disabled>
+          <option>No filters available</option>
+        </select>
+      </label>
+      <label htmlFor="comparison-filter">
+        Filter by:
+        <select id="comparison-filter" disabled>
+          {comparisonFilters.map((comparison, index) => (
+            <option key={ index } value={ comparison }>{ comparison }</option>
+          ))}
+        </select>
+      </label>
+      <label htmlFor="value-filter">
+        Value:
+        <input id="value-filter" disabled />
+      </label>
+      <button type="button" disabled>
+        Apply Filter
+      </button>
+    </div>
+  );
 
   return (
     <div>
