@@ -31,33 +31,83 @@ function NumericFilter() {
     { ...initialNumericFiltersState },
   );
 
-  const renderColumnFilters = () => {
+  const renderFilters = () => {
     return (
-      <select
-        id="column-filter"
-        name="column"
-        data-testid="column-filter"
-        onChange={(event) => onChange(event)}
-      >
-        {availableColumnFilters
-          .map((category, index) => (
-            <option key={index} value={category}>{category}</option>
-          ))}
-      </select>
+      <div>
+        <label htmlFor="column-filter">
+          Column Filter:
+        <select
+            id="column-filter"
+            name="column"
+            data-testid="column-filter"
+            onChange={(event) => onChange(event)}
+          >
+            {availableColumnFilters
+              .map((category, index) => (
+                <option key={index} value={category}>{category}</option>
+              ))}
+          </select>
+        </label>
+        <label htmlFor="comparison-filter">
+          Filter by:
+        <select
+            id="comparison-filter"
+            name="comparison"
+            data-testid="comparison-filter"
+            onChange={(event) => onChange(event)}
+          >
+            {comparisonFilters.map((comparison, index) => (
+              <option key={index} value={comparison}>{comparison}</option>
+            ))}
+          </select>
+        </label>
+        <label htmlFor="value-filter">
+          Value:
+        <input
+            type="number"
+            id="value-filter"
+            name="value"
+            min={0}
+            data-testid="value-filter"
+            onChange={(event) => onChange(event)}
+          />
+        </label>
+        <button
+          type="button"
+          data-testid="button-filter"
+          onClick={() => applyFilterButtonClick()}
+        >
+          Apply Filter
+      </button>
+      </div>
     );
   };
 
-  const renderDisabledDropDown = () => {
+  const renderDisabledFilters = () => {
     return (
-      <select
-        id="column-filter"
-        name="column"
-        data-testid="column-filter"
-        onChange={(event) => onChange(event)}
-        disabled
-      >
-        <option>No more options</option>
-      </select>
+      <div>
+        <label>
+          Column Filter:
+        <select disabled>
+          <option>No filters available</option>
+          </select>
+        </label>
+        <label>
+          Filter by:
+        <select disabled>
+            {comparisonFilters.map((comparison, index) => (
+              <option key={index} value={comparison}>{comparison}</option>
+            ))}
+          </select>
+        </label>
+        <label>
+          Value:
+        <input disabled/>
+        </label>
+        <button disabled>
+          Apply Filter
+      </button>
+      </div>
     );
   };
 
@@ -96,41 +146,7 @@ function NumericFilter() {
 
   return (
     <div>
-      <label htmlFor="column-filter">
-        Column Filter:
-        { hasAvailableColumnFilters ? renderColumnFilters() : renderDisabledDropDown() }
-      </label>
-      <label htmlFor="comparison-filter">
-        Filter by:
-        <select
-          id="comparison-filter"
-          name="comparison"
-          data-testid="comparison-filter"
-          onChange={(event) => onChange(event)}
-        >
-          {comparisonFilters.map((comparison, index) => (
-            <option key={index} value={comparison}>{comparison}</option>
-          ))}
-        </select>
-      </label>
-      <label htmlFor="value-filter">
-        Value:
-        <input
-          type="number"
-          id="value-filter"
-          name="value"
-          min={0}
-          data-testid="value-filter"
-          onChange={(event) => onChange(event)}
-        />
-      </label>
-      <button
-        type="button"
-        data-testid="button-filter"
-        onClick={() => applyFilterButtonClick()}
-      >
-        Apply Filter
-      </button>
+      { hasAvailableColumnFilters ? renderFilters() : renderDisabledFilters() }
     </div>
   );
 }
