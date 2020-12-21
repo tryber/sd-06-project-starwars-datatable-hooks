@@ -1,13 +1,22 @@
-import React, { useContext } from 'react';
-import { PlanetContext } from "../components/PlanetContext/";
+import React from 'react';
+import '../App.css';
 
-const Navbar = () => {
-  const { planets } = useContext(PlanetContext);
-  return (
-    <div className="navbar">
-      {planets.map((planet) => (<p key={ planet.id }>{planet.name}</p>))}
-    </div>
-  );
-};
+const Navbar = () => (
+  <div className="navbar">
+    <h3>star wars - much to learn, i have</h3>
+    <p>
+      <strong>
+        Obi-Wan:
+      </strong>
+      But Master Yoda says I should be mindful of the future.
+    </p>
+    <p>
+      <strong>
+        Qui-Gon Jinn:
+      </strong>
+      But not at the expense of the moment.
+    </p>
+  </div>
+);
 
 export default Navbar;
