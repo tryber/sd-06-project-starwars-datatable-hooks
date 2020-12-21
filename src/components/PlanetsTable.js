@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import { PlanetContext } from '../contexts/PlanetContext';
+import { PlanetContext } from '../context/PlanetContext';
 import PlanetRow from './PlanetRow';
-import headers from '../services/headers';
-import { filterContext } from '../contexts/FilterContext';
+import headers from '../services/Headers';
+import { filterContext } from '../context/FilterContext';
 
 function getColumnValue(planet, column) {
   switch (column) {

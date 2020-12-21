@@ -8,7 +8,7 @@ const PlanetContextProvider = (props) => {
   const [planets] = useState([
     { name: 'Tattoine', id: uuidv4() },
   ]);
-  const [planets, setPlanets] = useState();
+  const [planetas, setPlanets] = useState();
 
   useEffect(() => {
     async function fetchPlanets() {

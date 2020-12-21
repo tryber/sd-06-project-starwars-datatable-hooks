@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { filterContext } from '../contexts/FilterContext';
-import headers from '../services/headers';
+import { filterContext } from '../context/FilterContext';
+import headers from '../services/Headers';
 
 const Filters = () => {
   const { filterActions } = useContext(filterContext);
