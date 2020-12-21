@@ -79,9 +79,6 @@ function NumericFilter() {
   };
 
   const applyFilterButtonClick = () => {
-    console.log('Filters to be applied');
-    console.table(filtersData);
-    console.log('--------------');
     applyFilter(filtersData);
 
     const newSelectedColumnFilters = [...filterByNumericValues, filtersData]
@@ -90,7 +87,6 @@ function NumericFilter() {
     const newAvailableColumnFilters = compareAndFilterArrays(
       columnFilters, newSelectedColumnFilters
     );
-    console.log('Filtros disponíveis do state: ', newAvailableColumnFilters);
 
     setFiltersData({
       ...filtersData,

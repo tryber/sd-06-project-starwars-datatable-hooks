@@ -38,9 +38,7 @@ function StarWarsProvider({ children }) {
   };
 
   const makeInitialSetup = async () => {
-    // console.log("Retrieving API info")
     const planetsInfo = await getPlanetsInfo();
-    // console.log('Request response:', planetsInfo);
     setData(planetsInfo);
     setTableHeaders(Object.keys(planetsInfo[0]));
     setIsFetching(false);
@@ -74,7 +72,7 @@ function StarWarsProvider({ children }) {
           dataForFiltering = [...auxFilter];
           break;
         default:
-          console.log('Ocorreu um erro na informação de comparação');
+          console.log('Comparison information error');
         }
       });
     }
@@ -85,6 +83,7 @@ function StarWarsProvider({ children }) {
   };
 
   const applyFilter = (filterToApply) => {
+    // precisa desse prevState mesmo???
     setFilters((prevState) => ({
       ...prevState,
       filters: {
@@ -97,6 +96,20 @@ function StarWarsProvider({ children }) {
     }));
   };
 
+  const deleteFilter = (filterToDelete) => {
+    const { filters: { filterByNumericValues } } = filters;
+    const newFilters = filterByNumericValues.filter((currFilter) => (
+      currFilter.column !== filterToDelete
+    ));
+    setFilters({
+      ...filters,
+      filters: {
+        ...filters.filters,
+        filterByNumericValues: newFilters,
+      },
+    });
+  };
+
   useEffect(() => {
     makeInitialSetup();
     // mockedInitialSetup();
@@ -105,9 +118,7 @@ function StarWarsProvider({ children }) {
   useEffect(() => {
     const { filters: { filterByNumericValues } } = filters;
     const minArraySize = 0;
-    // console.log('Filters foi alterado');
     setHasNumericFilters(filterByNumericValues.length > minArraySize);
-    console.log('Provider filters state:', filterByNumericValues);
   }, [filters]);
 
   const contextValue = {
@@ -120,6 +131,7 @@ function StarWarsProvider({ children }) {
     setFilters,
     setColumnFilters,
     applyFilter,
+    deleteFilter,
     // mockedInitialSetup,
   };
 
@@ -149,9 +161,9 @@ export default StarWarsProvider;
 
   // Remova depois que a API retornar
   const mockedInitialSetup = async () => {
-    console.log('Retrieving API info');
+    console.log('Retrieving  MOCKED API info');
     const planetsInfo = await getMockedPlanetsInfo();
-    console.log('Request response:', planetsInfo);
+    console.log('Request MOCKED response:', planetsInfo);
     setData(planetsInfo);
     setTableHeaders(Object.keys(planetsInfo[0]));
     setIsFetching(false);
