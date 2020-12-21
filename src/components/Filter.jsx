@@ -1,14 +1,12 @@
-import React, { useState, useContext } from 'react';
-import Table from './Table';
+import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 export default function Filter() {
-  const { planets, filters, setFilters } = useContext(StarWarsContext);
-  const someTrue = -1;
+  const { filters, setFilters } = useContext(StarWarsContext);
 
   function handleChange(e){
-    setFilters({...filters, filterByName:{name:e.target.value}})
-  }
+    setFilters({ ...filters, filterByName:{name:e.target.value }})
+  };
 
   return (
     <div>

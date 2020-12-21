@@ -10,8 +10,7 @@ function StarWarsProvider({ children }) {
     const response = await APIFetcher();
     setPlanets(response);
   }
-  const [filters, setFilters] = useState({filterByName:{name:''}});
-  const [options, setOptions] = useState(planets);
+  const [filters, setFilters] = useState({ filterByName:{ name:'' } });
 
   return (
     <StarWarsContext.Provider
@@ -20,7 +19,6 @@ function StarWarsProvider({ children }) {
         getAPI,
         filters,
         setFilters,
-        options,
       } }
     >
       {children}

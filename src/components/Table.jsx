@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import StarWarsContext from '../context/StarWarsContext';
 import Planet from './Planet'
 
-export default function Table(props) {
+export default function Table() {
   const { getAPI, planets, filters } = useContext(StarWarsContext);
   const name = filters.filterByName.name;
   const columns = planets[0] && Object.keys(planets[0]);
@@ -11,10 +11,10 @@ export default function Table(props) {
   useEffect(() => {
     getAPI();
   }, []);
-  
+
   const numberOfColumns = 12;
 
-  const filteredPlanets = planets.filter(planet => planet.name.includes(name))
+  const filteredPlanets = planets.filter(planet => planet.name.includes(name));
 
   return (
     <table className="table">
