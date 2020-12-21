@@ -46,10 +46,17 @@ function StarWarsProvider({ children }) {
   const getFilteredPlanets = () => {
     let dataForFiltering = [...data];
     let auxFilter;
-    const { filters: { filterByName: { name: planetSearch } } } = filters;
-    const { filters: { filterByNumericValues } } = filters;
+
+    const {
+      filters: {
+        filterByName: { name: planetSearch },
+        filterByNumericValues,
+      },
+    } = filters;
+
     const minArraySize = 0;
     const hasNumericFilters = filterByNumericValues.length > minArraySize;
+
     if (hasNumericFilters) {
       filterByNumericValues.forEach((currentFilter) => {
         const { column, comparison, value } = currentFilter;
