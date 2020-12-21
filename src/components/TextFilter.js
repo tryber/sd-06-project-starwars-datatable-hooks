@@ -10,16 +10,16 @@ function TextFilter() {
   const onChange = (event) => {
     const { name: objectKey, value } = event.target;
 
-    setFilters((prevState) => ({
-      ...prevState,
+    setFilters({
+      ...filters,
       filters: {
-        ...prevState.filters,
+        ...filters.filters,
         filterByName: {
-          ...prevState.filters.filterByName,
+          ...filters.filters.filterByName,
           [objectKey]: value,
         },
       },
-    }));
+    });
   };
 
   return (

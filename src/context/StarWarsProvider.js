@@ -84,16 +84,16 @@ function StarWarsProvider({ children }) {
 
   const applyFilter = (filterToApply) => {
     // precisa desse prevState mesmo???
-    setFilters((prevState) => ({
-      ...prevState,
+    setFilters({
+      ...filters,
       filters: {
-        ...prevState.filters,
+        ...filters.filters,
         filterByNumericValues: [
-          ...prevState.filters.filterByNumericValues,
+          ...filters.filters.filterByNumericValues,
           filterToApply,
         ],
       },
-    }));
+    });
   };
 
   const deleteFilter = (filterToDelete) => {
