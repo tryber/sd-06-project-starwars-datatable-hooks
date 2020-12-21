@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import compareAndFilterArrays from '../helpers/compareAndFilterArrays';
+import compareAndFilterArrays from '../utils/compareAndFilterArrays';
 import StarWarsContext from '../context/StarWarsContext';
 
 function NumericFilter() {

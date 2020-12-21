@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import fetchPlanetsInfo from '../services/apiServices';
-import removeKeyFromObject from '../helpers/removeKeyFromObject';
-import compareAndFilterArrays from '../helpers/compareAndFilterArrays';
 // import mockFetchPlanetsInfo from '../services/mockApiServices';
+import removeKeyFromObject from '../utils/removeKeyFromObject';
 import StarWarsContext from './StarWarsContext';
 
 function StarWarsProvider({ children }) {
