@@ -10,7 +10,6 @@ function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
   const [tableHeaders, setTableHeaders] = useState([]);
   const [isFetching, setIsFetching] = useState(true);
-  const [hasNumericFilters, setHasNumericFilters] = useState(false);
 
   const initialFiltersState = {
     filters: {
@@ -49,6 +48,8 @@ function StarWarsProvider({ children }) {
     let auxFilter;
     const { filters: { filterByName: { name: planetSearch } } } = filters;
     const { filters: { filterByNumericValues } } = filters;
+    const minArraySize = 0;
+    const hasNumericFilters = filterByNumericValues.length > minArraySize;
     if (hasNumericFilters) {
       filterByNumericValues.forEach((currentFilter) => {
         const { column, comparison, value } = currentFilter;
@@ -114,12 +115,6 @@ function StarWarsProvider({ children }) {
     makeInitialSetup();
     // mockedInitialSetup();
   }, []);
-
-  useEffect(() => {
-    const { filters: { filterByNumericValues } } = filters;
-    const minArraySize = 0;
-    setHasNumericFilters(filterByNumericValues.length > minArraySize);
-  }, [filters]);
 
   const contextValue = {
     tableHeaders,
