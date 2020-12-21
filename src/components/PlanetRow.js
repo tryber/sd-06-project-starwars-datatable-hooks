@@ -17,7 +17,7 @@ const PlanetRow = ({ planet }) => {
     edited,
     url,
   } = planet;
-  
+
   return (
     <tr>
       <td data-testid="planet-name">{name}</td>

@@ -11,7 +11,6 @@ function App() {
     <div>
       <Navbar />
       <PlanetContextProvider>
-        <PlanetsTable />
         <FilterContextProvider>
           <Filters />
           <PlanetsTable />
@@ -20,4 +19,5 @@ function App() {
     </div>
   );
 }
+
 export default App;
