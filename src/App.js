@@ -6,6 +6,7 @@ import StarWarsProvider from './provider/StarWarsProvider';
 function App() {
   return (
     <StarWarsProvider>
+      <h1>StarWars: May the Force be with you</h1>
       <Filter />
       <Table />
     </StarWarsProvider>

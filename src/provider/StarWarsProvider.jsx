@@ -11,6 +11,7 @@ function StarWarsProvider({ children }) {
     setPlanets(response);
   }
   const [filters, setFilters] = useState({filterByName:{name:''}});
+  const [options, setOptions] = useState(planets);
 
   return (
     <StarWarsContext.Provider
@@ -19,6 +20,7 @@ function StarWarsProvider({ children }) {
         getAPI,
         filters,
         setFilters,
+        options,
       } }
     >
       {children}

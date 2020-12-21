@@ -11,8 +11,7 @@ export default function Table(props) {
   useEffect(() => {
     getAPI();
   }, []);
-
-  const numberOfPlanets = 13;
+  
   const numberOfColumns = 12;
 
   const filteredPlanets = planets.filter(planet => planet.name.includes(name))
