@@ -1,14 +1,10 @@
 import React, { createContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { v4 as uuidv4 } from 'uuid';
 
 export const PlanetContext = createContext();
 
 const PlanetContextProvider = (props) => {
-  const [planets] = useState([
-    { name: 'Tattoine', id: uuidv4() },
-  ]);
-  const [planetas, setPlanets] = useState();
+  const [planets, setPlanets] = useState();
 
   useEffect(() => {
     async function fetchPlanets() {
@@ -27,7 +23,9 @@ const PlanetContextProvider = (props) => {
     </PlanetContext.Provider>
   );
 };
+
 export default PlanetContextProvider;
+
 PlanetContextProvider.propTypes = {
   children: PropTypes.objectOf().isRequired,
 };
