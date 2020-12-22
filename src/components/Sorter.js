@@ -1,16 +1,36 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Sorter() {
   const { tableHeaders } = useContext(StarWarsContext);
+  const [sortData, setSortData] = useState({
+    column: '',
+    sort: 'ASC',
+  });
+
+  function onChange(event) {
+    const { name: objectKey, value } = event.target;
+    setSortData({
+      ...sortData,
+      [objectKey]: value,
+    });
+  }
+
+  useEffect(() => {
+    setSortData({
+      ...sortData,
+      column: tableHeaders[0],
+    });
+  }, [tableHeaders]);
   return (
     <div>
       <label htmlFor="column-sort">
-        Order by
+        Sort by
         <select
           id="column-sort"
-          name="column-sort"
+          name="column"
           data-testid="column-sort"
+          onChange={ (event) => onChange(event) }
         >
           {tableHeaders.map((header, index) => (
             <option key={ index } value={ header }>{ header }</option>
@@ -22,9 +42,11 @@ function Sorter() {
         <input
           type="radio"
           id="column-sort-input-asc"
-          name="column-sort"
+          name="sort"
           data-testid="column-sort-input-asc"
           value="ASC"
+          checked={ sortData.sort === 'ASC' }
+          onChange={ (event) => onChange(event) }
         />
       </label>
       <label htmlFor="column-sort-input-desc">
@@ -32,16 +54,18 @@ function Sorter() {
         <input
           type="radio"
           id="column-sort-input-desc"
-          name="column-sort"
+          name="sort"
           data-testid="column-sort-input-desc"
           value="DESC"
+          checked={ sortData.sort === 'DESC' }
+          onChange={ (event) => onChange(event) }
         />
       </label>
       <button
         type="button"
         data-testid="column-sort-button"
       >
-          Apply Ordering
+        Apply sort
       </button>
     </div>
   );
