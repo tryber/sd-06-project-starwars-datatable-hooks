@@ -37,6 +37,12 @@ function Sorter() {
           value="DESC"
         />
       </label>
+      <button
+        type="button"
+        data-testid="column-sort-button"
+      >
+          Apply Ordering
+      </button>
     </div>
   );
 }
