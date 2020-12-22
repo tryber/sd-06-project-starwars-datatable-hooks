@@ -17,6 +17,26 @@ function Sorter() {
           ))}
         </select>
       </label>
+      <label htmlFor="column-sort-input-asc">
+        Ascending
+        <input
+          type="radio"
+          id="column-sort-input-asc"
+          name="column-sort"
+          data-testid="column-sort-input-asc"
+          value="ASC"
+        />
+      </label>
+      <label htmlFor="column-sort-input-desc">
+        Descending
+        <input
+          type="radio"
+          id="column-sort-input-desc"
+          name="column-sort"
+          data-testid="column-sort-input-desc"
+          value="DESC"
+        />
+      </label>
     </div>
   );
 }
