@@ -62,19 +62,19 @@ function StarWarsProvider({ children }) {
         switch (comparison) {
         case 'maior que':
           auxFilter = dataForFiltering.filter((planet) => (
-            Number(planet[column]) > value
+            Number(planet[column]) > Number(value)
           ));
           dataForFiltering = [...auxFilter];
           break;
         case 'menor que':
           auxFilter = dataForFiltering.filter((planet) => (
-            Number(planet[column]) < value
+            Number(planet[column]) < Number(value)
           ));
           dataForFiltering = [...auxFilter];
           break;
         case 'igual a':
           auxFilter = dataForFiltering.filter((planet) => (
-            Number(planet[column]) === value
+            Number(planet[column]) === Number(value)
           ));
           dataForFiltering = [...auxFilter];
           break;

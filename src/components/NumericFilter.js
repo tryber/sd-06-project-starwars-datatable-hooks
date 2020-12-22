@@ -27,26 +27,17 @@ function NumericFilter() {
   const initialNumericFiltersState = {
     column: availableColumnFilters[0],
     comparison: comparisonFilters[0],
-    value: 0,
+    value: '0',
   };
   const [filtersData, setFiltersData] = useState(
     { ...initialNumericFiltersState },
   );
 
   const onChange = (event) => {
-    const { name: objectKey, value, type } = event.target;
-    const defaultValue = 0;
-    let processedValue = null;
-    if (type === 'number') {
-      processedValue = Number(value);
-    } else if (!Number.isNaN(Number(value))) {
-      processedValue = defaultValue;
-    } else {
-      processedValue = value;
-    }
+    const { name, value } = event.target;
     setFiltersData((prevState) => ({
       ...prevState,
-      [objectKey]: processedValue,
+      [name]: value,
     }));
   };
 
@@ -101,6 +92,7 @@ function NumericFilter() {
           type="number"
           id="value-filter"
           name="value"
+          value={ filtersData.value }
           min={ 0 }
           data-testid="value-filter"
           onChange={ (event) => onChange(event) }
