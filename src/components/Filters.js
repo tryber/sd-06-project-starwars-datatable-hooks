@@ -3,6 +3,7 @@ import StarWarsContext from '../context/StarWarsContext';
 import AppliedFilter from './AppliedFilter';
 import NumericFilter from './NumericFilter';
 import TextFilter from './TextFilter';
+import Sorter from './Sorter';
 
 function Filters() {
   const {
@@ -18,6 +19,7 @@ function Filters() {
       {filterByNumericValues.map((numericFilter, index) => (
         <AppliedFilter key={ index } numericFilter={ numericFilter } />
       ))}
+      <Sorter />
     </div>
   );
 }
