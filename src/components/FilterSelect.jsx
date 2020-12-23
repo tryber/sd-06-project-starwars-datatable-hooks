@@ -1,14 +1,48 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
-function FilterSelect() {
-  const { numericValuesFilter } = useContext(StarWarsContext);
+function ComparisonInputs() {
+  const magic = 0;
+  // const { data } = useContext(StarWarsContext);
+  const { setFilters, filters } = useContext(StarWarsContext);
+  const [localColumn, setLocalColumn] = useState('');
+  const [localComparison, setLocalComparison] = useState('');
+  const [localValue, setLocalValue] = useState(magic);
+
+  const setLocalState = () => {
+    setFilters({
+      ...filters,
+      filterByNumericValues: [
+        {
+          column: localColumn,
+          comparison: localComparison,
+          value: localValue,
+        },
+      ],
+    });
+  };
+  const reset = () => {
+    setFilters({
+      ...filters,
+      filterByNumericValues: [
+        {
+          column: '',
+          comparison: '',
+          value: '',
+        },
+      ],
+    });
+    setLocalColumn('');
+    setLocalComparison('');
+    setLocalValue('');
+  };
 
   return (
-    <main>
+    <div data-testid="filter">
       <select
         data-testid="column-filter"
-        onChange={ ({ target }) => numericValuesFilter(target.value) }
+        onChange={ ({ target }) => setLocalColumn(target.value) }
+        value={ localColumn }
       >
         <option>population</option>
         <option>orbital_period</option>
@@ -18,16 +52,34 @@ function FilterSelect() {
       </select>
       <select
         data-testid="comparison-filter"
-        onChange={ ({ target }) => numericValuesFilter(target.value) }
+        onChange={ ({ target }) => setLocalComparison(target.value) }
+        value={ localComparison }
       >
         <option>maior que</option>
-        <option>igual a</option>
         <option>menor que</option>
+        <option>igual a</option>
       </select>
-      <input type="number" data-testid="value-filter" />
-      <button type="button" data-testid="button-filter">Filtrar</button>
-    </main>
+      <input
+        data-testid="value-filter"
+        type="number"
+        onChange={ ({ target }) => setLocalValue(target.value) }
+        value={ localValue }
+      />
+      <button
+        data-testid="filter"
+        type="button"
+        onClick={ () => reset() }
+      >
+        X
+      </button>
+      <button
+        type="button"
+        data-testid="button-filter"
+        onClick={ setLocalState }
+      >
+        Adicionar filtro
+      </button>
+    </div>
   );
 }
-
-export default FilterSelect;
+export default ComparisonInputs;
