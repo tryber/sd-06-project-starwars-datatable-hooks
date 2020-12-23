@@ -5,7 +5,9 @@ function Table() {
   const { planets,
     getApiStar,
     searchTerm,
-    filterByNumericValues } = useContext(StarWarsContext);
+    filterByNumericValues,
+    // filterByOrderValues,
+  } = useContext(StarWarsContext);
 
   useEffect(() => {
     getApiStar();
@@ -20,11 +22,11 @@ function Table() {
           return true;
         }
         const { column, comparison, value } = filterByNumericValues[index];
-        if (comparison === 'maior que') {
-          return copyPlanet[column] > Number(value);
-        }
         if (comparison === 'menor que') {
           return copyPlanet[column] < Number(value);
+        }
+        if (comparison === 'maior que') {
+          return copyPlanet[column] > Number(value);
         }
         if (comparison === 'igual a') {
           return copyPlanet[column] === (value);
@@ -34,6 +36,7 @@ function Table() {
     }
     return copyPlanets;
   }
+
   return (
     <form>
       <table className="table">
