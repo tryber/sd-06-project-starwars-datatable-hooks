@@ -138,7 +138,10 @@ function Table() {
           { data
             .filter((element) => tableFilter(element))
             .filter((e) => e.name.toLowerCase()
-              .includes(name.toLowerCase())).sort(order.sort === 'ASC' || order.sort === '' ? orderCrescent : orderDecrescent)
+              .includes(name.toLowerCase()))
+            .sort(
+              order.sort === 'ASC' || order.sort === '' ? orderCrescent : orderDecrescent,
+            )
             .map((planet) => (
               <tr key={ planet }>
                 <td data-testid="planet-name" key={ planet.name }>{ planet.name }</td>
