@@ -4,10 +4,48 @@ import Loading from './Loading';
 
 function Table() {
   const {
+    filters,
     tableHeaders,
     isFetching,
     getFilteredPlanets,
   } = useContext(StarWarsContext);
+
+  const { filters: { order } } = filters;
+
+  const filteredPlanets = getFilteredPlanets();
+  const numericColumns = [
+    'rotation_period',
+    'orbital_period',
+    'diameter',
+    'surface_water',
+    'population',
+  ];
+
+  // inspired by: https://morioh.com/p/9caf3015e0c0
+  const filteredAndSortedPlanets = filteredPlanets
+    .sort((a, b) => {
+      const varA = (
+        numericColumns.includes(order.column)
+        ? Number(a[order.column])
+        : a[order.column].toLowerCase()
+      );
+      const varB = (
+        numericColumns.includes(order.column)
+        ? Number(b[order.column])
+        : b[order.column].toLowerCase()
+      );
+
+      let comparison = 0;
+      if (varA > varB) {
+        comparison = 1;
+      } else if (varA < varB) {
+        comparison = -1;
+      }
+      return (
+        (order.sort === 'ASC') ? comparison : comparison * -1
+      );
+    }
+    );
 
   const renderTable = () => (
     <table className="table">
@@ -19,10 +57,12 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {getFilteredPlanets().map((planet) => (
+        {filteredAndSortedPlanets.map((planet) => (
           <tr key={ planet.name }>
-            {Object.values(planet).map((planetValue, index) => (
-              <td key={ index }>{ planetValue }</td>
+            {Object.entries(planet).map((planetEntry, index) => (
+              planetEntry[0] === 'name'
+              ? <td key={ index } data-testid="planet-name">{ planetEntry[1] }</td>
+              : <td key={ index }>{ planetEntry[1] }</td>
             ))}
           </tr>
         ))}
