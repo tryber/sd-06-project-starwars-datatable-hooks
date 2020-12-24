@@ -16,6 +16,10 @@ function StarWarsProvider({ children }) {
         name: '',
       },
       filterByNumericValues: [],
+      order: {
+        column: 'name',
+        sort: 'ASC',
+      },
     },
   };
   const [filters, setFilters] = useState(initialFiltersState);
@@ -89,7 +93,7 @@ function StarWarsProvider({ children }) {
     ));
   };
 
-  const applyFilter = (filterToApply) => {
+  const addFilter = (filterData) => {
     // precisa desse prevState mesmo???
     setFilters({
       ...filters,
@@ -97,8 +101,20 @@ function StarWarsProvider({ children }) {
         ...filters.filters,
         filterByNumericValues: [
           ...filters.filters.filterByNumericValues,
-          filterToApply,
+          filterData,
         ],
+      },
+    });
+  };
+
+  const applySort = (sortData) => {
+    setFilters({
+      ...filters,
+      filters: {
+        ...filters.filters,
+        order: {
+          sortData,
+        }
       },
     });
   };
@@ -131,7 +147,7 @@ function StarWarsProvider({ children }) {
     getFilteredPlanets,
     setFilters,
     setColumnFilters,
-    applyFilter,
+    addFilter,
     deleteFilter,
     // mockedInitialSetup,
   };

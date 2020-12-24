@@ -7,7 +7,7 @@ function NumericFilter() {
     filters,
     columnFilters,
     comparisonFilters,
-    applyFilter,
+    addFilter,
   } = useContext(StarWarsContext);
 
   const { filters: { filterByNumericValues } } = filters;
@@ -41,8 +41,8 @@ function NumericFilter() {
     }));
   };
 
-  const applyFilterButtonClick = () => {
-    applyFilter(filtersData);
+  const addFilterButtonClick = () => {
+    addFilter(filtersData);
 
     const newSelectedColumnFilters = [...filterByNumericValues, filtersData]
       .map((element) => element.column);
@@ -101,7 +101,7 @@ function NumericFilter() {
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ () => applyFilterButtonClick() }
+        onClick={ () => addFilterButtonClick() }
       >
         Apply Filter
       </button>
