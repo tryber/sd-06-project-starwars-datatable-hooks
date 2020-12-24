@@ -26,26 +26,29 @@ function Table() {
     .sort((a, b) => {
       const varA = (
         numericColumns.includes(order.column)
-        ? Number(a[order.column])
-        : a[order.column].toLowerCase()
+          ? Number(a[order.column])
+          : a[order.column].toLowerCase()
       );
       const varB = (
         numericColumns.includes(order.column)
-        ? Number(b[order.column])
-        : b[order.column].toLowerCase()
+          ? Number(b[order.column])
+          : b[order.column].toLowerCase()
       );
 
-      let comparison = 0;
+      const defaultComparisonValue = 0;
+      const ascendingComparisonValue = 1;
+      const descendingComparisonValue = -1;
+      const comparisonInverter = -1;
+      let comparison = defaultComparisonValue;
       if (varA > varB) {
-        comparison = 1;
+        comparison = ascendingComparisonValue;
       } else if (varA < varB) {
-        comparison = -1;
+        comparison = descendingComparisonValue;
       }
       return (
-        (order.sort === 'ASC') ? comparison : comparison * -1
+        (order.sort === 'ASC') ? comparison : comparison * comparisonInverter
       );
-    }
-    );
+    });
 
   const renderTable = () => (
     <table className="table">
@@ -61,8 +64,8 @@ function Table() {
           <tr key={ planet.name }>
             {Object.entries(planet).map((planetEntry, index) => (
               planetEntry[0] === 'name'
-              ? <td key={ index } data-testid="planet-name">{ planetEntry[1] }</td>
-              : <td key={ index }>{ planetEntry[1] }</td>
+                ? <td key={ index } data-testid="planet-name">{ planetEntry[1] }</td>
+                : <td key={ index }>{ planetEntry[1] }</td>
             ))}
           </tr>
         ))}
