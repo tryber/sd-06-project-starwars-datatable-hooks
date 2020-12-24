@@ -107,18 +107,6 @@ function StarWarsProvider({ children }) {
     });
   };
 
-  const applySort = (sortData) => {
-    setFilters({
-      ...filters,
-      filters: {
-        ...filters.filters,
-        order: {
-          sortData,
-        }
-      },
-    });
-  };
-
   const deleteFilter = (filterToDelete) => {
     const { filters: { filterByNumericValues } } = filters;
     const newFilters = filterByNumericValues.filter((currFilter) => (
@@ -129,6 +117,18 @@ function StarWarsProvider({ children }) {
       filters: {
         ...filters.filters,
         filterByNumericValues: newFilters,
+      },
+    });
+  };
+
+  const applySort = (sortData) => {
+    setFilters({
+      ...filters,
+      filters: {
+        ...filters.filters,
+        order: {
+          ...sortData,
+        },
       },
     });
   };
@@ -149,6 +149,7 @@ function StarWarsProvider({ children }) {
     setColumnFilters,
     addFilter,
     deleteFilter,
+    applySort,
     // mockedInitialSetup,
   };
 

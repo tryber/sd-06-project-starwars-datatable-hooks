@@ -2,7 +2,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Sorter() {
-  const { tableHeaders } = useContext(StarWarsContext);
+  const {
+    tableHeaders,
+    applySort,
+  } = useContext(StarWarsContext);
   const [sortData, setSortData] = useState({
     column: '',
     sort: 'ASC',
@@ -64,6 +67,7 @@ function Sorter() {
       <button
         type="button"
         data-testid="column-sort-button"
+        onClick={ () => applySort(sortData) }
       >
         Apply sort
       </button>
