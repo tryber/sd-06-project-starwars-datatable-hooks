@@ -6,6 +6,7 @@ function Sorter() {
     tableHeaders,
     applySort,
   } = useContext(StarWarsContext);
+
   const [sortData, setSortData] = useState({
     column: '',
     sort: 'ASC',

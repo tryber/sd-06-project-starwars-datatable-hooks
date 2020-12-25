@@ -33,15 +33,15 @@ function NumericFilter() {
     { ...initialNumericFiltersState },
   );
 
-  const onChange = (event) => {
+  function onChange(event) {
     const { name, value } = event.target;
-    setFiltersData((prevState) => ({
-      ...prevState,
+    setFiltersData({
+      ...filtersData,
       [name]: value,
-    }));
-  };
+    });
+  }
 
-  const addFilterButtonClick = () => {
+  function addFilterButtonClick() {
     addFilter(filtersData);
 
     const newSelectedColumnFilters = [...filterByNumericValues, filtersData]
@@ -55,84 +55,88 @@ function NumericFilter() {
       ...filtersData,
       column: newAvailableColumnFilters.length ? newAvailableColumnFilters[0] : undefined,
     });
-  };
+  }
 
-  const renderFilters = () => (
-    <div>
-      <label htmlFor="column-filter">
-        Column Filter:
-        <select
-          id="column-filter"
-          name="column"
-          data-testid="column-filter"
-          onChange={ (event) => onChange(event) }
-        >
-          {availableColumnFilters
-            .map((category, index) => (
-              <option key={ index } value={ category }>{ category }</option>
+  function renderFilters() {
+    return (
+      <div>
+        <label htmlFor="column-filter">
+          Column Filter:
+          <select
+            id="column-filter"
+            name="column"
+            data-testid="column-filter"
+            onChange={ (event) => onChange(event) }
+          >
+            {availableColumnFilters
+              .map((category, index) => (
+                <option key={ index } value={ category }>{ category }</option>
+              ))}
+          </select>
+        </label>
+        <label htmlFor="comparison-filter">
+          Filter by:
+          <select
+            id="comparison-filter"
+            name="comparison"
+            data-testid="comparison-filter"
+            onChange={ (event) => onChange(event) }
+          >
+            {comparisonFilters.map((comparison, index) => (
+              <option key={ index } value={ comparison }>{ comparison }</option>
             ))}
-        </select>
-      </label>
-      <label htmlFor="comparison-filter">
-        Filter by:
-        <select
-          id="comparison-filter"
-          name="comparison"
-          data-testid="comparison-filter"
-          onChange={ (event) => onChange(event) }
+          </select>
+        </label>
+        <label htmlFor="value-filter">
+          Value:
+          <input
+            type="number"
+            id="value-filter"
+            name="value"
+            value={ filtersData.value }
+            min={ 0 }
+            data-testid="value-filter"
+            onChange={ (event) => onChange(event) }
+          />
+        </label>
+        <button
+          type="button"
+          data-testid="button-filter"
+          onClick={ () => addFilterButtonClick() }
         >
-          {comparisonFilters.map((comparison, index) => (
-            <option key={ index } value={ comparison }>{ comparison }</option>
-          ))}
-        </select>
-      </label>
-      <label htmlFor="value-filter">
-        Value:
-        <input
-          type="number"
-          id="value-filter"
-          name="value"
-          value={ filtersData.value }
-          min={ 0 }
-          data-testid="value-filter"
-          onChange={ (event) => onChange(event) }
-        />
-      </label>
-      <button
-        type="button"
-        data-testid="button-filter"
-        onClick={ () => addFilterButtonClick() }
-      >
-        Apply Filter
-      </button>
-    </div>
-  );
+          Apply Filter
+        </button>
+      </div>
+    );
+  }
 
-  const renderDisabledFilters = () => (
-    <div>
-      <label htmlFor="column-filter">
-        Column Filter:
-        <select id="column-filter" disabled>
-          <option>No filters available</option>
-        </select>
-      </label>
-      <label htmlFor="comparison-filter">
-        Filter by:
-        <select id="comparison-filter" disabled>
-          {comparisonFilters.map((comparison, index) => (
-            <option key={ index } value={ comparison }>{ comparison }</option>
-          ))}
-        </select>
-      </label>
-      <label htmlFor="value-filter">
-        Value:
-        <input id="value-filter" disabled />
-      </label>
-      <button type="button" disabled>
-        Apply Filter
-      </button>
-    </div>
-  );
+  function renderDisabledFilters() {
+    return (
+      <div>
+        <label htmlFor="column-filter">
+          Column Filter:
+          <select id="column-filter" disabled>
+            <option>No filters available</option>
+          </select>
+        </label>
+        <label htmlFor="comparison-filter">
+          Filter by:
+          <select id="comparison-filter" disabled>
+            {comparisonFilters.map((comparison, index) => (
+              <option key={ index } value={ comparison }>{ comparison }</option>
+            ))}
+          </select>
+        </label>
+        <label htmlFor="value-filter">
+          Value:
+          <input id="value-filter" disabled />
+        </label>
+        <button type="button" disabled>
+          Apply Filter
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div>

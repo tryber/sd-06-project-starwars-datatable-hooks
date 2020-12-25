@@ -50,28 +50,31 @@ function Table() {
       );
     });
 
-  const renderTable = () => (
-    <table className="table">
-      <thead>
-        <tr>
-          {tableHeaders.map((tableHeader, index) => (
-            <th key={ index } scope="col">{ tableHeader }</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {filteredAndSortedPlanets.map((planet) => (
-          <tr key={ planet.name }>
-            {Object.entries(planet).map((planetEntry, index) => (
-              planetEntry[0] === 'name'
-                ? <td key={ index } data-testid="planet-name">{ planetEntry[1] }</td>
-                : <td key={ index }>{ planetEntry[1] }</td>
+  function renderTable() {
+    return (
+      <table className="table">
+        <thead>
+          <tr>
+            {tableHeaders.map((tableHeader, index) => (
+              <th key={ index } scope="col">{ tableHeader }</th>
             ))}
           </tr>
-        ))}
-      </tbody>
-    </table>
-  );
+        </thead>
+        <tbody>
+          {filteredAndSortedPlanets.map((planet) => (
+            <tr key={ planet.name }>
+              {Object.entries(planet).map((planetEntry, index) => (
+                planetEntry[0] === 'name'
+                  ? <td key={ index } data-testid="planet-name">{ planetEntry[1] }</td>
+                  : <td key={ index }>{ planetEntry[1] }</td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+    );
+  }
 
   return (
     <div>

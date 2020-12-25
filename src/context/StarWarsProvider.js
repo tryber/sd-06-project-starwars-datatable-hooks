@@ -39,14 +39,14 @@ function StarWarsProvider({ children }) {
     return planetsWithoutResidentsKey;
   };
 
-  const makeInitialSetup = async () => {
+  async function makeInitialSetup() {
     const planetsInfo = await getPlanetsInfo();
     setData(planetsInfo);
     setTableHeaders(Object.keys(planetsInfo[0]));
     setIsFetching(false);
-  };
+  }
 
-  const getFilteredPlanets = () => {
+  function getFilteredPlanets() {
     let dataForFiltering = [...data];
     let auxFilter;
 
@@ -91,10 +91,9 @@ function StarWarsProvider({ children }) {
     return dataForFiltering.filter((planet) => (
       planet.name.toLowerCase().includes(planetSearch.toLowerCase())
     ));
-  };
+  }
 
-  const addFilter = (filterData) => {
-    // precisa desse prevState mesmo???
+  function addFilter(filterData) {
     setFilters({
       ...filters,
       filters: {
@@ -105,9 +104,9 @@ function StarWarsProvider({ children }) {
         ],
       },
     });
-  };
+  }
 
-  const deleteFilter = (filterToDelete) => {
+  function deleteFilter(filterToDelete) {
     const { filters: { filterByNumericValues } } = filters;
     const newFilters = filterByNumericValues.filter((currFilter) => (
       currFilter.column !== filterToDelete
@@ -119,9 +118,9 @@ function StarWarsProvider({ children }) {
         filterByNumericValues: newFilters,
       },
     });
-  };
+  }
 
-  const applySort = (sortData) => {
+  function applySort(sortData) {
     setFilters({
       ...filters,
       filters: {
@@ -131,7 +130,7 @@ function StarWarsProvider({ children }) {
         },
       },
     });
-  };
+  }
 
   useEffect(() => {
     makeInitialSetup();
@@ -155,7 +154,7 @@ function StarWarsProvider({ children }) {
 
   return (
     <StarWarsContext.Provider value={ contextValue }>
-      { children }
+      { children}
     </StarWarsContext.Provider>
   );
 }
