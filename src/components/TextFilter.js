@@ -7,6 +7,8 @@ function TextFilter() {
     setFilters,
   } = useContext(StarWarsContext);
 
+  const { filters: { filterByName } } = filters;
+
   const onChange = (event) => {
     const { name: objectKey, value } = event.target;
 
@@ -32,7 +34,7 @@ function TextFilter() {
         data-testid="name-filter"
         placeholder="Type planet name"
         onChange={ (event) => onChange(event) }
-        value={ filters.filters.filterByName.name }
+        value={ filterByName.name }
       />
     </label>
   );
