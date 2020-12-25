@@ -31,13 +31,13 @@ function StarWarsProvider({ children }) {
   );
   const comparisonFilters = ['maior que', 'menor que', 'igual a'];
 
-  const getPlanetsInfo = async () => {
+  async function getPlanetsInfo() {
     const planetsInfo = await fetchPlanetsInfo();
     const planetsWithoutResidentsKey = planetsInfo.map((planet) => (
       removeKeyFromObject(planet, 'residents')
     ));
     return planetsWithoutResidentsKey;
-  };
+  }
 
   async function makeInitialSetup() {
     const planetsInfo = await getPlanetsInfo();
