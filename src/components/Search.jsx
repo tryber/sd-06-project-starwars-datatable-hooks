@@ -1,9 +1,10 @@
 import React from 'react';
+import '../css/search.css';
 
 export default function Search() {
   return (
     <div className="search">
-      local de procura
+      <p>area de pesquisa</p>
     </div>
   );
 }

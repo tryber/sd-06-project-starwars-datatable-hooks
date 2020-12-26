@@ -1,0 +1,8 @@
+.header {
+  width: 100%;
+  background: linear-gradient(black, gray, lightgray, white, lightgray, gray, black);
+  height: 70px;
+  text-align: center;
+  vertical-align: center;
+  padding: 8px;
+}
