@@ -4,6 +4,7 @@ import AppliedFilter from './AppliedFilter';
 import NumericFilter from './NumericFilter';
 import TextFilter from './TextFilter';
 import Sorter from './Sorter';
+import './Filters.css';
 
 function Filters() {
   const {
@@ -13,7 +14,7 @@ function Filters() {
   const { filters: { filterByNumericValues } } = filters;
 
   return (
-    <div>
+    <div className="filters-container">
       <TextFilter />
       <NumericFilter />
       {filterByNumericValues.map((numericFilter, index) => (

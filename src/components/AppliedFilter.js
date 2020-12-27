@@ -12,7 +12,7 @@ function AppliedFilter(props) {
       { numericFilter.column }
       <button
         type="button"
-        className="btn-danger"
+        className="btn btn-outline-danger"
         onClick={ () => deleteFilter(numericFilter.column) }
       >
         X

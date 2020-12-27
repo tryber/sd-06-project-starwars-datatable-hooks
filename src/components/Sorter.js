@@ -33,6 +33,7 @@ function Sorter() {
         <select
           id="column-sort"
           name="column"
+          className="form-control"
           data-testid="column-sort"
           onChange={ (event) => onChange(event) }
         >
@@ -67,6 +68,7 @@ function Sorter() {
       </label>
       <button
         type="button"
+        className="btn btn-primary"
         data-testid="column-sort-button"
         onClick={ () => applySort(sortData) }
       >

@@ -65,6 +65,7 @@ function NumericFilter() {
           <select
             id="column-filter"
             name="column"
+            className="form-control"
             data-testid="column-filter"
             onChange={ (event) => onChange(event) }
           >
@@ -79,6 +80,7 @@ function NumericFilter() {
           <select
             id="comparison-filter"
             name="comparison"
+            className="form-control"
             data-testid="comparison-filter"
             onChange={ (event) => onChange(event) }
           >
@@ -93,6 +95,7 @@ function NumericFilter() {
             type="number"
             id="value-filter"
             name="value"
+            className="form-control"
             value={ filtersData.value }
             min={ 0 }
             data-testid="value-filter"

@@ -25,18 +25,22 @@ function TextFilter() {
   };
 
   return (
-    <label htmlFor="text-input">
-      Planet name:
-      <input
-        type="text"
-        id="text-input"
-        name="name"
-        data-testid="name-filter"
-        placeholder="Type planet name"
-        onChange={ (event) => onChange(event) }
-        value={ filterByName.name }
-      />
-    </label>
+    <div>
+      <label htmlFor="text-input">
+        Planet name:
+        <input
+          type="text"
+          id="text-input"
+          name="name"
+          className="border border-primary border-5 rounded"
+          data-testid="name-filter"
+          placeholder="Type planet name"
+          onChange={ (event) => onChange(event) }
+          value={ filterByName.name }
+        />
+      </label>
+
+    </div>
   );
 }
 
