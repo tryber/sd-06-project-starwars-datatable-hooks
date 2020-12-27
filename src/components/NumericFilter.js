@@ -101,6 +101,7 @@ function NumericFilter() {
         </label>
         <button
           type="button"
+          className="btn btn-primary"
           data-testid="button-filter"
           onClick={ () => addFilterButtonClick() }
         >
