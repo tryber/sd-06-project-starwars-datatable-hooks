@@ -2,26 +2,26 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 export default function Filter() {
-  const { filters, setFilters, setNumericFilter } = useContext(StarWarsContext);
+  const { setNameFilter, setNumericFilter } = useContext(StarWarsContext);
 
   function handleChange(e) {
-    setFilters({ ...filters, filterByName: { name: e.target.value } });
+    setNameFilter(e.target.value);
   }
 
   function handleSelect() {
-    const selectedColumn = document.getElementById('column-filter').value;
-    const selectedComparison = document.getElementById('comparison-filter').value;
-    const selectedNumber = document.getElementById('value-filter').value;
+    const selectedColumn = document.getElementById('column').value;
+    const selectedComparison = document.getElementById('comparison').value;
+    const selectedValue = document.getElementById('value').value;
     const selectedFilter = {
       column: selectedColumn,
       comparison: selectedComparison,
-      number: selectedNumber,
+      number: selectedValue,
     };
     setNumericFilter(selectedFilter);
   }
   function eraseFilter() {
     const selectedFilter = {
-      column: 'a',
+      column: '',
       comparison: '',
       number: '',
     };
@@ -30,16 +30,14 @@ export default function Filter() {
 
   return (
     <>
-
       <input
         data-testid="name-filter"
         type="text"
-        value={ filters.filterByName.name }
         onChange={ handleChange }
       />
 
       <div data-testid="filter">
-        <select data-testid="column-filter" id="column-filter">
+        <select data-testid="column-filter" id="column">
           <option value="">Selecione</option>
           <option value="population" key="population">population</option>
           <option value="orbital_period" key="orbital_period">orbital_period</option>
@@ -48,7 +46,7 @@ export default function Filter() {
           <option value="surface_water" key="surface_water">surface_water</option>
         </select>
 
-        <select data-testid="comparison-filter" id="comparison-filter">
+        <select data-testid="comparison-filter" id="comparison">
           <option value="">Selecione</option>
           <option value="maior que">maior que</option>
           <option value="menor que">menor que</option>
@@ -58,7 +56,7 @@ export default function Filter() {
         <input
           data-testid="value-filter"
           type="number"
-          id="value-filter"
+          id="value"
         />
         <button
           data-testid="filter"
@@ -69,14 +67,12 @@ export default function Filter() {
         </button>
       </div>
       <button
-        data-testid="filter"
+        data-testid="button-filter"
         type="button"
         onClick={ handleSelect }
       >
-        Filtrar
+        Find What You Lookin For
       </button>
-
     </>
-
   );
 }

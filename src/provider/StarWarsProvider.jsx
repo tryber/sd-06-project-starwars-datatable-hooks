@@ -1,29 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import StarWarsContext from '../context/StarWarsContext';
 import APIFetcher from '../services/fetch';
 
-function StarWarsProvider({ children }) {
+export default function StarWarsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
-
-  async function getAPI() {
-    const response = await APIFetcher();
-    setPlanets(response);
-  }
-  const [filters, setFilters] = useState({ filterByName: { name: '' } });
+  const [nameFilter, setNameFilter] = useState('');
   const [numericFilter, setNumericFilter] = useState({
     column: '',
     comparison: '',
     value: '',
   });
 
+  async function getAPI() {
+    const response = await APIFetcher();
+    setPlanets(response);
+  }
+
   return (
     <StarWarsContext.Provider
       value={ {
         planets,
         getAPI,
-        filters,
-        setFilters,
+        filters: {
+          filterByName: { name: nameFilter },
+          filterByNumericValues: [numericFilter],
+        },
+        setNameFilter,
         setNumericFilter,
       } }
     >
@@ -36,5 +39,3 @@ function StarWarsProvider({ children }) {
 StarWarsProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
-
-export default StarWarsProvider;

@@ -5,6 +5,8 @@ import Planet from './Planet';
 export default function Table() {
   const { getAPI, planets, filters } = useContext(StarWarsContext);
   const { name } = filters.filterByName;
+  const { filterByNumericValues } = filters;
+  const { column, comparison, value } = filterByNumericValues[0];
   const columns = planets[0] && Object.keys(planets[0]);
 
   useEffect(() => {
@@ -13,8 +15,25 @@ export default function Table() {
 
   const numberOfColumns = 12;
 
-  const filteredPlanets = planets.filter((planet) => planet.name.includes(name));
+  function filterSelect(elements) {
+    switch (true) {
+    case (comparison === ''):
+      return true;
+    case (comparison === 'maior que'):
+      return Number(elements[column]) > Number(value);
+    case (comparison === 'menor que'):
+      return Number(elements[column]) < Number(value);
+    case (comparison === 'igual a'):
+      return Number(elements[column]) === Number(value);
+    default:
+      return false;
+    }
+  }
 
+  const preFilteredPlanets = planets.filter((planetsFilter) => filterSelect(planetsFilter));
+  const filteredPlanets = preFilteredPlanets.filter((planet) => planet.name.includes(name));
+  console.log(filteredPlanets);
+  console.log(preFilteredPlanets);
   return (
     <table className="table">
       <thead>
@@ -25,7 +44,7 @@ export default function Table() {
       </thead>
       <tbody>
         {filteredPlanets
-          .map((planet) => (<Planet key={ planet.id } planet={ planet } />
+          .map((planet) => (<Planet key={ planet.name } planet={ planet } />
           ))}
       </tbody>
     </table>

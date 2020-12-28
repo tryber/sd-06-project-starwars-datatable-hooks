@@ -7,6 +7,7 @@ const Planet = (props) => {
     'diameter', 'climate', 'gravity', 'terrain',
     'surface_water', 'population', 'residents', 'films', 'created', 'edited',
   ];
+  console.log(planet);
   return (
     <tr>
       {attributes
