@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import StarWarsContext from '../context/StarWarsContext';
 import Planet from './Planet';
 
@@ -25,12 +24,11 @@ export default function Table() {
         </tr>
       </thead>
       <tbody>
-        {filteredPlanets.map((planet) => (<Planet planet={ planet } />))}
+        {filteredPlanets
+          .map((planet) => (<Planet key={ planet.id } planet={ planet } />
+          ))}
       </tbody>
     </table>
 
   );
 }
-Table.propTypes = {
-  planets: PropTypes.arrayOf(PropTypes).isRequired,
-};
