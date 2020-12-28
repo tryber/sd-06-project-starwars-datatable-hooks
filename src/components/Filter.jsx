@@ -2,33 +2,31 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 export default function Filter() {
-  const { filters, setFilters, setNumericFilter, } = useContext(StarWarsContext);
+  const { filters, setFilters, setNumericFilter } = useContext(StarWarsContext);
 
   function handleChange(e) {
     setFilters({ ...filters, filterByName: { name: e.target.value } });
   }
 
-  function handleSelect () {
+  function handleSelect() {
     const selectedColumn = document.getElementById('column-filter').value;
     const selectedComparison = document.getElementById('comparison-filter').value;
     const selectedNumber = document.getElementById('value-filter').value;
     const selectedFilter = {
-      column: columnSelect,
-      comparison: comparisonSelect,
-      number: numberSelect,
+      column: selectedColumn,
+      comparison: selectedComparison,
+      number: selectedNumber,
     };
     setNumericFilter(selectedFilter);
   }
-  function eraseFilter () {
+  function eraseFilter() {
     const selectedFilter = {
-      column: columnSelect,
-      comparison: comparisonSelect,
-      number: numberSelect,
-      };
+      column: 'a',
+      comparison: '',
+      number: '',
+    };
     setNumericFilter(selectedFilter);
   }
-
-  
 
   return (
     <>
@@ -42,7 +40,7 @@ export default function Filter() {
 
       <div data-testid="filter">
         <select data-testid="column-filter" id="column-filter">
-        <option value="">Selecione</option>
+          <option value="">Selecione</option>
           <option value="population" key="population">population</option>
           <option value="orbital_period" key="orbital_period">orbital_period</option>
           <option value="diameter" key="diameter">diameter</option>
@@ -58,21 +56,27 @@ export default function Filter() {
         </select>
 
         <input
-        data-testid="value-filter"
-        type="number"
-        id="value-filter"
-      />
+          data-testid="value-filter"
+          type="number"
+          id="value-filter"
+        />
+        <button
+          data-testid="filter"
+          type="button"
+          onClick={ eraseFilter }
+        >
+          X
+        </button>
+      </div>
       <button
         data-testid="filter"
         type="button"
-        onClick={ eraseFilter }
-        >
-          Filtrar
+        onClick={ handleSelect }
+      >
+        Filtrar
       </button>
 
-      </div>
-
     </>
-    
+
   );
 }
