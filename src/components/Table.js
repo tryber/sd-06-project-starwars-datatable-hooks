@@ -6,12 +6,17 @@ function Table() {
     getApiStar,
     searchTerm,
     filterByNumericValues,
-    // filterByOrderValues,
+    orderBy,
+    columnSelect,
   } = useContext(StarWarsContext);
 
   useEffect(() => {
     getApiStar();
   }, []); // componentDidMount qdo carrega a 1ª vez
+
+  // useEffect(() => {
+  //   setOrderBy({ column: 'name', sort: 'ASC' });
+  // }, [setOrderBy]);
 
   function numericFilter(listPlanets) {
     const number = 0;
@@ -36,6 +41,19 @@ function Table() {
     }
     return copyPlanets;
   }
+  const oneNeg = -1;
+  const orderCresc = (a, b) => {
+    if (columnSelect.includes(orderBy.column)) {
+      return a[orderBy.column] - b[orderBy.column];
+    }
+    return a[orderBy.column] > b[orderBy.column] ? 1 : oneNeg;
+  };
+  const orderDesc = (a, b) => {
+    if (columnSelect.includes(orderBy.column)) {
+      return b[orderBy.column] - a[orderBy.column];
+    }
+    return b[orderBy.column] > a[orderBy.column] ? 1 : oneNeg;
+  };
 
   return (
     <form>
@@ -61,9 +79,10 @@ function Table() {
           {numericFilter(planets)
             .filter((planet) => planet.name.toLowerCase()
               .includes(searchTerm))
+            .sort(orderBy.sort === 'ASC' ? orderCresc : orderDesc)
             .map((planet) => (
               <tr key={ planet.name }>
-                <td>{planet.name}</td>
+                <td data-testid="planet-name">{planet.name}</td>
                 <td>{planet.rotation_period}</td>
                 <td>{planet.orbital_period}</td>
                 <td>{planet.diameter}</td>

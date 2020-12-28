@@ -7,6 +7,14 @@ function StarWarsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterByNumericValues, setFilterByNumericValues] = useState([]);
+  const columnSelect = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
+  const [orderBy, setOrderByAscDesc] = useState({ column: 'name', sort: 'ASC' });
   const getApiStar = async () => {
     const starWarsOffers = await fetchApiStar();
     setPlanets(starWarsOffers.results);
@@ -18,6 +26,9 @@ function StarWarsProvider({ children }) {
     setSearchTerm,
     setFilterByNumericValues,
     filterByNumericValues,
+    setOrderByAscDesc,
+    orderBy,
+    columnSelect,
   };
 
   return (

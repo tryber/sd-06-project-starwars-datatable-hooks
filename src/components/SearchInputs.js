@@ -6,23 +6,17 @@ function SearchInputs() {
     setSearchTerm,
     filterByNumericValues,
     setFilterByNumericValues,
-    // setFilterByOrderValues,
-    // filterByOrderValues,
-    // orderAscDesc,
-    setOrderAscDesc,
+    setOrderByAscDesc,
+    columnSelect,
   } = useContext(StarWarsContext);
 
   const [column, setColumn] = useState('population'); // estado local
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState('');
+  const [order, setOrder] = useState({
+    column: 'name', sort: 'ASC',
+  });
 
-  const columnSelect = [
-    'population',
-    'orbital_period',
-    'diameter',
-    'rotation_period',
-    'surface_water',
-  ];
   const columnOptions = [
     'name',
     'population',
@@ -44,12 +38,10 @@ function SearchInputs() {
       filterByNumericValues.filter(({ column: coluna }) => coluna !== elemento),
     )
   );
-  // const orderByFilter = filterByOrderValues.filter(
-  //   ({ colum: orderColum }) => orderColum === column,
-  // );
 
   return (
     <header>
+      <h1>STARWARS FILTROS</h1>
       Pesquisa
       <input
         type="text"
@@ -123,52 +115,53 @@ function SearchInputs() {
           ))
         }
       </div>
-      <form>
-        <fieldset>
-          <div>
-            <label htmlFor="ASC">
-              ASC
-              <input
-                onChange={ (event) => setOrderAscDesc(event.target.value) }
-                type="radio"
-                value="ASC"
-                data-testid="colum-sort-input-asc"
-                name="order"
-                id="ASC"
-              />
-            </label>
-          </div>
-          <label htmlFor="DESC">
-            DESC
-            <input
-              onChange={ (event) => setOrderAscDesc(event.target.value) }
-              type="radio"
-              value="DESC "
-              data-testid="colum-sort-input-desc"
-              name="order"
-              id="DESC"
-            />
-          </label>
-        </fieldset>
-        <select
-          data-testid="column-sort"
-        >
-          {columnOptions.map((options) => (
-            <option key={ options }>
-              {options}
-            </option>
-          ))}
-        </select>
-        <button
-          type="button"
-          data-testid="column-sort-button"
-          onClick={ () => orderByFilter(columnOptions.column) }
-        >
-          Order by
-        </button>
-      </form>
+
+      <div>
+        <h1>FILTRO  ORDEM CRESCENTE E DECRESCENTE</h1>
+        <label htmlFor="ASC">
+          ASC
+          <input
+            onChange={ (event) => setOrder({ ...order, sort: event.target.value }) }
+            type="radio"
+            value="ASC"
+            data-testid="column-sort-input-asc"
+            name="orderAD"
+            id="ASC"
+          />
+        </label>
+
+        <label htmlFor="DESC">
+          DESC
+          <input
+            onChange={ (event) => setOrder({ ...order, sort: event.target.value }) }
+            type="radio"
+            value="DESC"
+            data-testid="column-sort-input-desc"
+            name="orderAD"
+            id="DESC"
+          />
+        </label>
+        <span>
+          <select
+            data-testid="column-sort"
+            onChange={ (event) => setOrder({ ...order, column: event.target.value }) }
+          >
+            {columnOptions.map((options) => (
+              <option key={ options } value={ options }>
+                {options}
+              </option>
+            ))}
+          </select>
+          <button
+            type="button"
+            onClick={ () => setOrderByAscDesc({ ...order }) } // preciso dos valores da option (column) e qual ordenação(asc ou desc)
+            data-testid="column-sort-button"
+          >
+            Order by
+          </button>
+        </span>
+      </div>
     </header>
   );
 }
-
 export default SearchInputs;
