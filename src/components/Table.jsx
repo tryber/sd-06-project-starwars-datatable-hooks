@@ -30,8 +30,10 @@ export default function Table() {
     }
   }
 
-  const preFilteredPlanets = planets.filter((planetsFilter) => filterSelect(planetsFilter));
-  const filteredPlanets = preFilteredPlanets.filter((planet) => planet.name.includes(name));
+  const preFilteredPlanets = planets
+    .filter((planetsFilter) => filterSelect(planetsFilter));
+  const filteredPlanets = preFilteredPlanets
+    .filter((planet) => planet.name.includes(name));
   console.log(filteredPlanets);
   console.log(preFilteredPlanets);
   return (
