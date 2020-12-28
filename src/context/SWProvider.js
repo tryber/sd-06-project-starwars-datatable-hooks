@@ -1,15 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SWContext from './SWContext';
-import fetchSWPlanets from './fetchSWPlanets';
+import fetchPlanetsAPI from '../services/sWservices';
 
 const SWProvider = ( { children } ) => {
 
   const [jobs, setJobs] = useState([]);
 
   const getPlanetSW = async () => {
-    const planetSW = await fetchSWPlanets();
+    const planetSW = await fetchPlanetsAPI();
     setJobs(planetSW)
   };
+
+  useEffect(() => {
+    getPlanetSW();
+  },[]);
 
   return (
     <SWContext.Provider value={ { jobs } }>
