@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
+import './Sorter.css';
 
 function Sorter() {
   const {
@@ -27,8 +28,8 @@ function Sorter() {
     });
   }, [tableHeaders]);
   return (
-    <div>
-      <label htmlFor="column-sort">
+    <div className="sorter-container">
+      <label className="sort-label" htmlFor="column-sort">
         Sort by
         <select
           id="column-sort"
@@ -42,24 +43,26 @@ function Sorter() {
           ))}
         </select>
       </label>
-      <label htmlFor="column-sort-input-asc">
+      <label className="sort-label" htmlFor="column-sort-input-asc">
         Ascending
         <input
           type="radio"
           id="column-sort-input-asc"
           name="sort"
+          className="radio-input"
           data-testid="column-sort-input-asc"
           value="ASC"
           checked={ sortData.sort === 'ASC' }
           onChange={ (event) => onChange(event) }
         />
       </label>
-      <label htmlFor="column-sort-input-desc">
+      <label className="sort-label" htmlFor="column-sort-input-desc">
         Descending
         <input
           type="radio"
           id="column-sort-input-desc"
           name="sort"
+          className="radio-input"
           data-testid="column-sort-input-desc"
           value="DESC"
           checked={ sortData.sort === 'DESC' }

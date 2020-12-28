@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import StarWarsContext from '../context/StarWarsContext';
+import './AppliedFilter.css';
 
 function AppliedFilter(props) {
   const { numericFilter } = props;
@@ -8,15 +9,18 @@ function AppliedFilter(props) {
   const { deleteFilter } = useContext(StarWarsContext);
 
   return (
-    <div data-testid="filter">
-      { numericFilter.column }
-      <button
-        type="button"
-        className="btn btn-outline-danger"
-        onClick={ () => deleteFilter(numericFilter.column) }
-      >
-        X
-      </button>
+    <div>
+      <div data-testid="filter">
+        { numericFilter.column }
+        <button
+          type="button"
+          className="btn btn-outline-danger"
+          onClick={ () => deleteFilter(numericFilter.column) }
+        >
+          X
+        </button>
+      </div>
+
     </div>
   );
 }

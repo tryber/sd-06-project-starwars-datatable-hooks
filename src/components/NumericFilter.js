@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import compareAndFilterArrays from '../utils/compareAndFilterArrays';
 import StarWarsContext from '../context/StarWarsContext';
+import './NumericFilter.css';
 
 function NumericFilter() {
   const {
@@ -59,8 +60,8 @@ function NumericFilter() {
 
   function renderFilters() {
     return (
-      <div>
-        <label htmlFor="column-filter">
+      <div className="numericFilter-container">
+        <label className="dropdown-input" htmlFor="column-filter">
           Column Filter:
           <select
             id="column-filter"
@@ -75,7 +76,7 @@ function NumericFilter() {
               ))}
           </select>
         </label>
-        <label htmlFor="comparison-filter">
+        <label className="dropdown-input" htmlFor="comparison-filter">
           Filter by:
           <select
             id="comparison-filter"
@@ -89,7 +90,7 @@ function NumericFilter() {
             ))}
           </select>
         </label>
-        <label htmlFor="value-filter">
+        <label className=" value-input" htmlFor="value-filter">
           Value:
           <input
             type="number"
@@ -116,7 +117,7 @@ function NumericFilter() {
 
   function renderDisabledFilters() {
     return (
-      <div>
+      <div className="numericFilter-container">
         <label htmlFor="column-filter">
           Column Filter:
           <select id="column-filter" disabled>
@@ -133,7 +134,7 @@ function NumericFilter() {
         </label>
         <label htmlFor="value-filter">
           Value:
-          <input id="value-filter" disabled />
+          <input className="value-input" id="value-filter" disabled />
         </label>
         <button type="button" disabled>
           Apply Filter

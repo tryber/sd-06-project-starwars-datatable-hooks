@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
+import './TextFilter.css';
 
 function TextFilter() {
   const {
@@ -25,14 +26,14 @@ function TextFilter() {
   };
 
   return (
-    <div>
+    <div className="textFilter-container">
       <label htmlFor="text-input">
         Planet name:
         <input
           type="text"
           id="text-input"
           name="name"
-          className="border border-primary border-5 rounded"
+          className="text-input border border-primary border-5 rounded"
           data-testid="name-filter"
           placeholder="Type planet name"
           onChange={ (event) => onChange(event) }
