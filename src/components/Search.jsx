@@ -22,11 +22,11 @@ export default function Search() {
     ));
   }
 
-  function handleInput(value) {
+  function handleInput(valor) {
     const objectInput = {
       ...searchTerm,
       filters: { ...searchTerm.filters,
-        filterByName: { name: value } },
+        filterByName: { name: valor } },
     };
     setSearchTerm(objectInput);
   }
