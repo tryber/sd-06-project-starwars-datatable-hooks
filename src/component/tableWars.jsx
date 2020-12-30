@@ -13,10 +13,9 @@ function TableWars() {
   } = useContext(StarWarsContext);
   const planetTable = planets;
   const handle = () => {
-    const nameLength = planetName.length;
-    const regex = new RegExp(`^${planetName}\\w*`, 'i');
-    const zero = 0;
-    if (nameLength > zero) {
+    console.log(planetName);
+    const regex = new RegExp(`\\w*${planetName}\\w*`, 'i');
+    if (planetName) {
       const planetsFilter = planets
         .filter((filtered) => regex.test(filtered.name));
       setPlanets(planetsFilter);
