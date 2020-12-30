@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import SWContext from '../context/SWContext';
 
 const Table = () => {
-  const { jobs } = useContext(SWContext);
+  const { planets } = useContext(SWContext);
 
   return (
     <table className="table">
