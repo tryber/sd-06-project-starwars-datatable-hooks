@@ -5,7 +5,7 @@ const Table = () => {
   const { jobs } = useContext(SWContext);
 
   return (
-    <table class="table">
+    <table className="table">
       <thead>
         <tr>
           <th scope="col">climate</th>
@@ -25,7 +25,7 @@ const Table = () => {
       </thead>
       <tbody>
         {jobs.map((job) => (
-          <tr key={job.title}>
+          <tr key={job.name}>
             <td>{job.climate}</td>
             <td>{job.created}</td>
             <td>{job.diameter}</td>
