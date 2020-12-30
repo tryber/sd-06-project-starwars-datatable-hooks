@@ -1,9 +1,34 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarContext';
 import Header from './Header';
 
 function TableWars() {
-  const { planets, theadKeys } = useContext(StarWarsContext);
+  const {
+    planets,
+    theadKeys,
+    planetName,
+    setPlanetName,
+    setPlanets,
+    dataPlanet,
+  } = useContext(StarWarsContext);
+  const planetTable = planets;
+  const handle = () => {
+    const nameLength = planetName.length;
+    const regex = new RegExp(`^${planetName}\\w*`, 'i');
+    const zero = 0;
+    if (nameLength > zero) {
+      const planetsFilter = planets
+        .filter((filtered) => regex.test(filtered.name));
+      setPlanets(planetsFilter);
+    } else {
+      dataPlanet();
+    }
+  };
+
+  useEffect(() => {
+    handle();
+  }, [planetName]);
+
   return (
     <div>
       <Header />
@@ -14,6 +39,9 @@ function TableWars() {
           data-testid="name-filter"
           name="filter-planets"
           id="filter-planets"
+          onChange={ ({ target: { value } }) => {
+            setPlanetName(value);
+          } }
         />
       </label>
       <button type="button">Filtrar</button>
@@ -31,7 +59,7 @@ function TableWars() {
         </thead>
         <tbody>
           {
-            planets.map((planet) => (
+            planetTable.map((planet) => (
               <tr key={ planet.name }>
                 <td data-testid="planet-name">{planet.name}</td>
                 <td>{planet.rotation_period}</td>

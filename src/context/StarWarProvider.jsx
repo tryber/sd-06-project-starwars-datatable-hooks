@@ -5,6 +5,7 @@ import StarWarsContext from './StarWarContext';
 function Provider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [theadKeys, setTheadKeys] = useState([]);
+  const [planetName, setPlanetName] = useState('');
 
   const dataPlanet = async () => {
     const response = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
@@ -13,6 +14,9 @@ function Provider({ children }) {
       delete info.residents;
       return info;
     });
+    // if (planetName.length >= 1) {
+    //   infoPlanet = infoPlanet.filter((info) => console.log(info));
+    // }
 
     setPlanets(infoPlanet);
     setTheadKeys(Object.keys(infoPlanet[0]));
@@ -26,6 +30,10 @@ function Provider({ children }) {
     planets,
     theadKeys,
     setTheadKeys,
+    planetName,
+    setPlanetName,
+    setPlanets,
+    dataPlanet,
   };
 
   return (
