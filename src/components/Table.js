@@ -24,21 +24,21 @@ const Table = () => {
         </tr>
       </thead>
       <tbody>
-        {jobs.map((job) => (
-          <tr key={job.name}>
-            <td>{job.climate}</td>
-            <td>{job.created}</td>
-            <td>{job.diameter}</td>
-            <td>{job.edited}</td>
-            <td>{job.name}</td>
-            <td>{job.gravity}</td>
-            <td>{job.name}</td>
-            <td>{job.orbital_period}</td>
-            <td>{job.population}</td>
-            <td>{job.name}</td>
-            <td>{job.rotation_period}</td>
-            <td>{job.surface_water}</td>
-            <td>{job.terrain}</td>
+        {planets.map((planet) => (
+          <tr key={planet.name}>
+            <td>{planet.climate}</td>
+            <td>{planet.created}</td>
+            <td>{planet.diameter}</td>
+            <td>{planet.edited}</td>
+            <td>{planet.name}</td>
+            <td>{planet.gravity}</td>
+            <td>{planet.name}</td>
+            <td>{planet.orbital_period}</td>
+            <td>{planet.population}</td>
+            <td>{planet.name}</td>
+            <td>{planet.rotation_period}</td>
+            <td>{planet.surface_water}</td>
+            <td>{planet.terrain}</td>
           </tr>
         ))}
       </tbody>

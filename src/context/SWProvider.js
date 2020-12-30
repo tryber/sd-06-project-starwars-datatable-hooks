@@ -4,11 +4,11 @@ import fetchPlanetsAPI from '../services/sWservices';
 
 const SWProvider = ( { children } ) => {
 
-  const [jobs, setJobs] = useState([]);
+  const [planets, setplanets] = useState([]);
 
   const getPlanetSW = async () => {
     const planetSW = await fetchPlanetsAPI();
-    setJobs(planetSW)
+    setplanets(planetSW)
   };
 
   useEffect(() => {
@@ -16,7 +16,7 @@ const SWProvider = ( { children } ) => {
   },[]);
 
   return (
-    <SWContext.Provider value={ { jobs } }>
+    <SWContext.Provider value={ { planets } }>
       {children}
     </SWContext.Provider>
   );
