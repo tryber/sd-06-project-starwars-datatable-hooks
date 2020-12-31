@@ -1,45 +1,87 @@
 import React, { useEffect, useContext } from 'react';
 import StarWarsContext from '../../Context/StarWarsContext';
 
+import PlanetsApi from '../../services/apiStarWars';
+
 import StyledTable from './styled';
 
 import Loading from '../Loading';
 
 const Table = () => {
-  const planetsStarWars = useContext(StarWarsContext);
-  const { handleApiPlanets, stateStarWars } = planetsStarWars;
+  const { stateStarWars, setStarWars } = useContext(StarWarsContext);
+
+  const handleApiPlanets = async () => {
+    const planets = await PlanetsApi();
+
+    setStarWars({
+      ...stateStarWars,
+      data: planets,
+    });
+  };
 
   useEffect(() => {
     handleApiPlanets();
+    handleApiPlanets();
   }, []);
 
-  const informationsPlanets = () => {
+  const informationsHeader = () => {
     if (!stateStarWars.data) {
       console.log('ainda nao existe');
     } else {
-      const informationsHeader = Object.keys(stateStarWars.data.results[0])
+      const informations = Object.keys(stateStarWars.data.results[0])
         .filter(((info) => info !== 'residents'));
 
-      return informationsHeader;
+      return informations;
+    }
+  };
+
+  const informationsPlanets = () => {
+    const indexRemove = 9;
+
+    if (!stateStarWars.data) {
+      console.log('ainda nao existe');
+    } else {
+      const informations = stateStarWars.data.results.map((obj) => Object.values(obj));
+      informations.map((info) => info.splice(indexRemove, 1));
+
+      return informations;
+    }
+  };
+
+  const filterTable = () => {
+    if (stateStarWars.filters) {
+      const valueInputFilter = stateStarWars.filters.filterByName.name;
+
+      if (informationsPlanets()) {
+        const filteredPlanet = informationsPlanets()
+          .filter((planet) => planet[0].includes(valueInputFilter));
+
+        console.log(filteredPlanet);
+        return filteredPlanet;
+      }
     }
   };
 
   return (
     <StyledTable>
-      {/* { !stateStarWars.data ? console.log('ainda nao')
-        : stateStarWars.data.results.forEach((hhh) => console.log(hhh)) } */}
+      {/* {console.log(filterTable())} */}
       { !stateStarWars.data ? <Loading /> : (
         <table>
           <thead>
             <tr>
-              { informationsPlanets().map((info) => <th key={ info }>{info}</th>) }
+              { informationsHeader().map((info) => <th key={ info }>{info}</th>) }
             </tr>
           </thead>
           <tbody>
-            { stateStarWars.data.results.map((planet) => (
-              <tr key={ planet.name }>
-                { Object.values(planet).map((item) => <td key={ item }>{item}</td>) }
-              </tr>))}
+            {!stateStarWars.filters
+              ? informationsPlanets().map((inform, i) => (
+                <tr key={ i }>
+                  {inform.map((info, index) => <td key={ index }>{info}</td>)}
+                </tr>))
+              : filterTable().map((inform, i) => (
+                <tr key={ i }>
+                  {inform.map((info, index) => <td key={ index }>{info}</td>)}
+                </tr>))}
           </tbody>
         </table>
       )}
