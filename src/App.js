@@ -1,13 +1,14 @@
 import React from 'react';
+import Header from './components/Header';
 import Table from './components/Table';
-import './App.css';
+import Provider from './context/Provider';
 
 function App() {
   return (
-    <div className="App">
-      <h1> olá </h1>
+    <Provider>
+      <Header />
       <Table />
-    </div>
+    </Provider>
   );
 }
 
