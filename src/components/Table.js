@@ -24,8 +24,8 @@ const Table = () => {
         </tr>
       </thead>
       <tbody>
-        {planets.map((planet) => (
-          <tr key={planet.name}>
+        { planets.map((planet) => (
+          <tr key={ planet.name }>
             <td>{planet.climate}</td>
             <td>{planet.created}</td>
             <td>{planet.diameter}</td>
@@ -40,7 +40,7 @@ const Table = () => {
             <td>{planet.surface_water}</td>
             <td>{planet.terrain}</td>
           </tr>
-        ))}
+        )) }
       </tbody>
     </table>
   );
