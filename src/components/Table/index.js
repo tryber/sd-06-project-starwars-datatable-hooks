@@ -82,13 +82,13 @@ const Table = () => {
       return setFiltered({
         planetFilters:
         stateStarWars.data.results
-          .filter((planet) => planet[column] > value),
+          .filter((planet) => Number(planet[column]) > Number(value)),
       });
     case 'menor que':
       return setFiltered({
         planetFilters:
         stateStarWars.data.results
-          .filter((planet) => planet[column] < value),
+          .filter((planet) => Number(planet[column]) < Number(value)),
       });
     case 'igual a':
       return setFiltered({
@@ -112,6 +112,7 @@ const Table = () => {
   return (
     <StyledTable>
       {/* { stateFiltered && console.log(stateFiltered.planetFilters)} */}
+      {console.log(stateStarWars)}
       { !stateStarWars.data ? <Loading /> : (
         <table>
           <thead>
