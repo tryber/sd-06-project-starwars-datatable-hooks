@@ -62,7 +62,7 @@ const FilterTable = () => {
               data-testid="column-filter"
               onChange={ ({ target }) => valueInputFilter(target) }
             >
-              <option />
+              <option>{}</option>
               <option>population</option>
               <option>orbital_period</option>
               <option>diameter</option>
@@ -79,7 +79,7 @@ const FilterTable = () => {
               data-testid="comparison-filter"
               onChange={ ({ target }) => valueInputFilter(target) }
             >
-              <option />
+              <option>{}</option>
               <option>maior que</option>
               <option>menor que</option>
               <option>igual a</option>
