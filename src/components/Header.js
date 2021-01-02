@@ -24,12 +24,6 @@ const Header = () => {
           }
         />
       </label>
-      <button
-        type="reset"
-        onClick={ handleClick() }
-      >
-        test
-      </button>
     </div>
   );
 };

@@ -5,17 +5,33 @@ import fetchPlanetsAPI from '../services/sWservices';
 
 const SWProvider = ({ children }) => {
   const [planets, setplanets] = useState([]);
+  const [filters, setFilters] = useState({
+    filters: {
+      filterByName: {
+        name: ''
+      }
+    }
+  });
 
   const getPlanetSW = async () => {
     const planetSW = await fetchPlanetsAPI();
     setplanets(planetSW);
   };
 
+  const filteredText = () => {
+    
+  }
+
   useEffect(() => {
     getPlanetSW();
   }, []);
 
-  return <SWContext.Provider value={ { planets } }>{children}</SWContext.Provider>;
+  const value = {
+    planets,
+    filters,
+  }
+
+  return <SWContext.Provider value={ value }>{children}</SWContext.Provider>;
 };
 
 export default SWProvider;
