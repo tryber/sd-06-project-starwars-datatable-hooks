@@ -1,10 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import StarWarsContext from './StarWarsContext';
 
 const StarWarsProvider = ({ children }) => {
   const [stateStarWars, setStarWars] = useState(StarWarsContext);
+
+  useEffect(() => {
+    setStarWars({
+      ...stateStarWars,
+      filters:
+      {
+        filterByName: {
+          name: '',
+        },
+        filterByNumericValues: [
+          {
+            column: '',
+            comparison: '',
+            value: '',
+          },
+        ],
+      },
+    });
+  }, [stateStarWars.data]);
 
   const contextStarWars = {
     stateStarWars,
