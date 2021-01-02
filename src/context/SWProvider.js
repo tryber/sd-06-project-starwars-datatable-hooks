@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import SWContext from './SWContext';
 import fetchPlanetsAPI from '../services/sWservices';
 
