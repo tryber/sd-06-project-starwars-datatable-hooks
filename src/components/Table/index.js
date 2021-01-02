@@ -43,7 +43,7 @@ const Table = () => {
       const informations = stateFiltered.planetFilters.map((obj) => Object.values(obj));
       informations.map((info) => info.splice(indexRemove, 1));
 
-      console.log(informations);
+      // console.log(informations);
 
       return informations;
     }
@@ -68,7 +68,6 @@ const Table = () => {
         const filteredPlanet = informationsPlanets()
           .filter((planet) => planet[0].includes(valueInputFilter));
 
-        // console.log(filteredPlanet);
         return filteredPlanet;
       }
     }
@@ -101,18 +100,22 @@ const Table = () => {
     }
   };
 
+  const deleteFilters = () => {
+    setFiltered(false);
+  };
+
   useEffect(() => {
     setStarWars({
-
       ...stateStarWars,
       filterByParameters,
+      deleteFilters,
     });
   }, [stateStarWars.filters]);
 
   return (
     <StyledTable>
       {/* { stateFiltered && console.log(stateFiltered.planetFilters)} */}
-      {console.log(stateStarWars)}
+      {/* {console.log(stateFiltered)} */}
       { !stateStarWars.data ? <Loading /> : (
         <table>
           <thead>

@@ -5,7 +5,7 @@ import StyledFilter from './styled';
 
 const FilterTable = () => {
   const { stateStarWars, setStarWars } = useContext(StarWarsContext);
-  // const [stateInputName, setInputName] = useState();
+  // const [stateX, setX] = useState();
 
   const valueInputFilter = (target) => {
     setStarWars(
@@ -39,6 +39,7 @@ const FilterTable = () => {
     <StyledFilter>
       {/* {console.log(stateStarWars.filters
         && stateStarWars.filters.filterByNumericValues[0].column)} */}
+      {/* {console.log(stateStarWars)} */}
       <div className="main-filter">
         <span>Filtre os planetas de Star Wars preenchendo os campos abaixo</span>
         <div>
@@ -96,6 +97,17 @@ const FilterTable = () => {
               onChange={ ({ target }) => valueInputFilter(target) }
             />
           </label>
+          {stateStarWars.filters
+              && stateStarWars.filters.filterByNumericValues[0].value !== ''
+            ? (
+              <button
+                type="button"
+                data-testid="filter"
+                onClick={ stateStarWars.deleteFilters }
+              >
+                X
+              </button>
+            ) : ''}
           <button
             type="button"
             data-testid="button-filter"
