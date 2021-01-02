@@ -1,4 +1,19 @@
 .header-container {
-  border: 2px dotted grey;
-  background-color: hotpink;
+  background: linear-gradient(#020024, #000000, #585353);
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem;
+  color: #fff;
+  font-family: 'Audiowide', cursive;
+}
+
+img {
+  width: 5%;
+}
+
+p {
+  font-family: Roboto,Arial,"Helvetica Neue",Helvetica,sans-serif;
+  font-size: 1.5rem;
 }

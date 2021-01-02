@@ -2,13 +2,12 @@
   align-items: baseline;
   display: flex;
   margin: 1rem 0;
-  width: 90%;
 
 }
 
 .sorter-selectors {
   margin-right: 0.2rem;
-  width: 80%;
+  width: 40%;
 }
 
 .column-sort {

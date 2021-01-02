@@ -2,11 +2,10 @@
   align-items: baseline;
   display: flex;
   margin: 1rem 0;
-  width: 90%;
 }
 
 .numericFilter-selectors {
-  width: 80%;
+  width: 40%;
 }
 
 .dropdown-input {
