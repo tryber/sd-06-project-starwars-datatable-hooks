@@ -14,10 +14,10 @@ const Table = () => {
           <th scope="col">edited</th>
           <th scope="col">name</th>
           <th scope="col">gravity</th>
-          <th scope="col">name</th>
+          <th scope="col">residents</th>
           <th scope="col">orbital_period</th>
           <th scope="col">population</th>
-          <th scope="col">name</th>
+          <th scope="col">films</th>
           <th scope="col">rotation_period</th>
           <th scope="col">surface_water</th>
           <th scope="col">terrain</th>
@@ -32,10 +32,10 @@ const Table = () => {
             <td>{planet.edited}</td>
             <td>{planet.name}</td>
             <td>{planet.gravity}</td>
-            <td>{planet.name}</td>
+            <td>{planet.residents}</td>
             <td>{planet.orbital_period}</td>
             <td>{planet.population}</td>
-            <td>{planet.name}</td>
+            <td>{planet.films}</td>
             <td>{planet.rotation_period}</td>
             <td>{planet.surface_water}</td>
             <td>{planet.terrain}</td>
