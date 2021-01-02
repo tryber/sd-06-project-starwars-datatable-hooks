@@ -1,0 +1,17 @@
+.numericFilter-container {
+  align-items: baseline;
+  display: flex;
+  margin: 1rem 0;
+}
+
+.numericFilter-selectors {
+  width: 40%;
+}
+
+.dropdown-input {
+  margin-right: 0.8rem;
+}
+
+.form-control {
+  text-transform: capitalize;
+}

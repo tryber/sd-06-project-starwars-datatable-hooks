@@ -1,0 +1,19 @@
+.sorter-container {
+  align-items: baseline;
+  display: flex;
+  margin: 1rem 0;
+
+}
+
+.sorter-selectors {
+  margin-right: 0.2rem;
+  width: 40%;
+}
+
+.column-sort {
+  margin-right: 0.8rem;
+}
+
+.radio-input {
+  margin: 0 0.8rem;
+}
