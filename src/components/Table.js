@@ -52,8 +52,8 @@ function Table() {
 
   function renderTable() {
     return (
-      <table className="table">
-        <thead>
+      <table className="table table-striped table-bordered table-hover">
+        <thead className="thead-light">
           <tr>
             {tableHeaders.map((tableHeader, index) => (
               <th key={ index } scope="col">{ tableHeader }</th>

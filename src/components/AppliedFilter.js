@@ -10,7 +10,7 @@ function AppliedFilter(props) {
 
   return (
     <div>
-      <div data-testid="filter">
+      <div className="appliedFilter-container" data-testid="filter">
         { numericFilter.column }
         <button
           type="button"
