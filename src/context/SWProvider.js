@@ -7,23 +7,31 @@ import TableLine from '../components/TableLine';
 const SWProvider = ({ children }) => {
   const [planets, setplanets] = useState([]);
   const [filteredPlanets, setFilteredPlanets] = useState([]);
-  const [filters, setFilters] = useState({
-    filters: {
-      filterByName: {
-        name: '',
+  const [searchControl, setSearchControl] = useState({
+    filters:
+      {
+        filterByName: {
+          name: '',
+        },
+        filterByNumericValues: [
+          {
+            column: '',
+            comparison: '',
+            value: '',
+          },
+        ],
       },
-    },
   });
 
   const setFilterByName = (name) => {
-    setFilters({
-      ...filters,
+    setSearchControl({
+      ...searchControl,
       filters: { filterByName: { name } },
     });
   };
 
   const filterPlanetName = (planet) => {
-    if (planet.name.match(new RegExp(filters.filters.filterByName.name, 'i'))) {
+    if (planet.name.match(new RegExp(searchControl.filters.filterByName.name, 'i'))) {
       return true;
     }
     return false;
@@ -54,11 +62,11 @@ const SWProvider = ({ children }) => {
 
   useEffect(() => {
     filterPlanets();
-  }, [filters]);
+  }, [searchControl]);
 
   const value = {
     filteredPlanets,
-    filters,
+    searchControl,
     setFilterByName,
   };
 

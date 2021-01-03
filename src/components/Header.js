@@ -45,13 +45,22 @@ const Header = () => {
         {' '}
         <select data-testid="comparison-filter">
           {comparationArray.map((option, index) => (
-            <option key={index} value={option}>
+            <option key={ index } value={ option }>
               {option}
             </option>
           ))}
         </select>
       </label>
-
+      {' '}
+      <label htmlFor="value-filter">
+        Número:
+        {' '}
+        <input type="number" data-testid="value-filter" />
+      </label>
+      {' '}
+      <button type="button" data-testid="button-filter">
+        Criar Filtro
+      </button>
     </div>
   );
 };
