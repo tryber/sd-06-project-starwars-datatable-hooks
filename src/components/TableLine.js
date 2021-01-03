@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 
 const TableLine = ({ planet }) => (
   <tr>
+    <td>{planet.name}</td>
     <td>{planet.climate}</td>
     <td>{planet.created}</td>
     <td>{planet.diameter}</td>
     <td>{planet.edited}</td>
-    <td>{planet.name}</td>
     <td>{planet.gravity}</td>
     <td>{planet.residents}</td>
     <td>{planet.orbital_period}</td>

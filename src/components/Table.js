@@ -8,11 +8,11 @@ const Table = () => {
     <table className="table">
       <thead>
         <tr>
+          <th scope="col">name</th>
           <th scope="col">climate</th>
           <th scope="col">created</th>
           <th scope="col">diameter</th>
           <th scope="col">edited</th>
-          <th scope="col">name</th>
           <th scope="col">gravity</th>
           <th scope="col">residents</th>
           <th scope="col">orbital_period</th>
