@@ -1,15 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
+import SWContext from '../context/SWContext';
 
 const Header = () => {
-  const [filterName, setFilterName] = useState('');
-
-  const handleChange = (target) => {
-    setFilterName(target.value);
-  };
-
-  const handleClick = () => {
-    console.log(filterName);
-  };
+  const { setFilterByName } = useContext(SWContext);
 
   return (
     <div>
@@ -20,7 +13,7 @@ const Header = () => {
           name="filter"
           data-testid="name-filter"
           onChange={
-            (e) => handleChange(e.target)
+            (e) => setFilterByName(e.target.value)
           }
         />
       </label>

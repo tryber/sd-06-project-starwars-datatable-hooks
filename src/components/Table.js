@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import SWContext from '../context/SWContext';
 
 const Table = () => {
-  const { planets } = useContext(SWContext);
+  const { filteredPlanets } = useContext(SWContext);
 
   return (
     <table className="table">
@@ -24,23 +24,7 @@ const Table = () => {
         </tr>
       </thead>
       <tbody>
-        { planets.map((planet) => (
-          <tr key={ planet.name }>
-            <td>{planet.climate}</td>
-            <td>{planet.created}</td>
-            <td>{planet.diameter}</td>
-            <td>{planet.edited}</td>
-            <td>{planet.name}</td>
-            <td>{planet.gravity}</td>
-            <td>{planet.residents}</td>
-            <td>{planet.orbital_period}</td>
-            <td>{planet.population}</td>
-            <td>{planet.films}</td>
-            <td>{planet.rotation_period}</td>
-            <td>{planet.surface_water}</td>
-            <td>{planet.terrain}</td>
-          </tr>
-        )) }
+        { filteredPlanets }
       </tbody>
     </table>
   );
