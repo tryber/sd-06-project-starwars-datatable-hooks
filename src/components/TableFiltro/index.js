@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import StarWarsContext from '../../Context/StarWarsContext';
 
 import StyledFilter from './styled';
