@@ -72,10 +72,9 @@ const FilterTable = () => {
             </select>
             {stateStarWars.abiliyX
                 && (
-                  <div>
+                  <div data-testid="filter">
                     <button
                       type="button"
-                      data-testid="filter"
                       onClick={ stateStarWars.deleteFilters }
                     >
                       X
@@ -99,10 +98,9 @@ const FilterTable = () => {
             </select>
             {stateStarWars.abiliyX
                 && (
-                  <div>
+                  <div data-testid="filter">
                     <button
                       type="button"
-                      data-testid="filter"
                       onClick={ stateStarWars.deleteFilters }
                     >
                       X
@@ -123,10 +121,9 @@ const FilterTable = () => {
           </label>
           {stateStarWars.abiliyX
                 && (
-                  <div>
+                  <div data-testid="filter">
                     <button
                       type="button"
-                      data-testid="filter"
                       onClick={ stateStarWars.deleteFilters }
                     >
                       X
