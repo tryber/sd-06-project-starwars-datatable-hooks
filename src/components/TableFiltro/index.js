@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import StarWarsContext from '../../Context/StarWarsContext';
 
 import StyledFilter from './styled';
 
 const FilterTable = () => {
   const { stateStarWars, setStarWars } = useContext(StarWarsContext);
-  // const [stateX, setX] = useState();
+  // const [stateX, setX] = useState({ delete: false });
 
   const valueInputFilter = (target) => {
     setStarWars(
@@ -39,7 +39,7 @@ const FilterTable = () => {
     <StyledFilter>
       {/* {console.log(stateStarWars.filters
         && stateStarWars.filters.filterByNumericValues[0].column)} */}
-      {console.log(stateStarWars)}
+      {/* {console.log(stateStarWars)} */}
       <div className="main-filter">
         <span>Filtre os planetas de Star Wars preenchendo os campos abaixo</span>
         <div>
@@ -69,16 +69,19 @@ const FilterTable = () => {
               <option>diameter</option>
               <option>rotation_period</option>
               <option>surface_water</option>
-              {stateStarWars.abiliyX
-                && (
-                  <option
-                    data-testid="filter"
-                    onClick={ console.log('delete') }
-                  >
-                    X
-                  </option>
-                ) }
             </select>
+            {stateStarWars.abiliyX
+                && (
+                  <div>
+                    <button
+                      type="button"
+                      data-testid="filter"
+                      onClick={ stateStarWars.deleteFilters }
+                    >
+                      X
+                    </button>
+                  </div>
+                ) }
           </label>
           <label htmlFor="value">
             Faixa de valor:
@@ -93,16 +96,19 @@ const FilterTable = () => {
               <option>maior que</option>
               <option>menor que</option>
               <option>igual a</option>
-              {stateStarWars.abiliyX
-                && (
-                  <option
-                    data-testid="filter"
-                    onClick={ console.log('delete') }
-                  >
-                    X
-                  </option>
-                ) }
             </select>
+            {stateStarWars.abiliyX
+                && (
+                  <div>
+                    <button
+                      type="button"
+                      data-testid="filter"
+                      onClick={ stateStarWars.deleteFilters }
+                    >
+                      X
+                    </button>
+                  </div>
+                ) }
           </label>
           <label htmlFor="input-value">
             Valor:
@@ -115,6 +121,18 @@ const FilterTable = () => {
               onChange={ ({ target }) => valueInputFilter(target) }
             />
           </label>
+          {stateStarWars.abiliyX
+                && (
+                  <div>
+                    <button
+                      type="button"
+                      data-testid="filter"
+                      onClick={ stateStarWars.deleteFilters }
+                    >
+                      X
+                    </button>
+                  </div>
+                ) }
           {/* {stateStarWars.filters
               && stateStarWars.filters.filterByNumericValues[0].value !== ''
             ? (

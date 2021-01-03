@@ -54,7 +54,7 @@ const Table = () => {
       const informations = stateStarWars.data.results.map((obj) => Object.values(obj));
       informations.map((info) => info.splice(indexRemove, 1));
 
-      // console.log(stateStarWars.data.results);
+      console.log(informations);
 
       return informations;
     }
@@ -77,6 +77,7 @@ const Table = () => {
     setStarWars({
       ...stateStarWars,
       abiliyX: true,
+      deleteX: false,
     });
 
     const { column, comparison, value } = stateStarWars.filters.filterByNumericValues[0];
