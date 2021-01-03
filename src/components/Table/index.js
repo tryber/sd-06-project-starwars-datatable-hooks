@@ -74,6 +74,11 @@ const Table = () => {
   };
 
   const filterByParameters = () => {
+    setStarWars({
+      ...stateStarWars,
+      abiliyX: true,
+    });
+
     const { column, comparison, value } = stateStarWars.filters.filterByNumericValues[0];
 
     switch (comparison) {
@@ -101,6 +106,7 @@ const Table = () => {
   };
 
   const deleteFilters = () => {
+    console.log('delete');
     setFiltered(false);
   };
 

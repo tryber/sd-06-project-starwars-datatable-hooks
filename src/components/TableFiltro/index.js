@@ -39,7 +39,7 @@ const FilterTable = () => {
     <StyledFilter>
       {/* {console.log(stateStarWars.filters
         && stateStarWars.filters.filterByNumericValues[0].column)} */}
-      {/* {console.log(stateStarWars)} */}
+      {console.log(stateStarWars)}
       <div className="main-filter">
         <span>Filtre os planetas de Star Wars preenchendo os campos abaixo</span>
         <div>
@@ -69,6 +69,15 @@ const FilterTable = () => {
               <option>diameter</option>
               <option>rotation_period</option>
               <option>surface_water</option>
+              {stateStarWars.abiliyX
+                && (
+                  <option
+                    data-testid="filter"
+                    onClick={ console.log('delete') }
+                  >
+                    X
+                  </option>
+                ) }
             </select>
           </label>
           <label htmlFor="value">
@@ -84,6 +93,15 @@ const FilterTable = () => {
               <option>maior que</option>
               <option>menor que</option>
               <option>igual a</option>
+              {stateStarWars.abiliyX
+                && (
+                  <option
+                    data-testid="filter"
+                    onClick={ console.log('delete') }
+                  >
+                    X
+                  </option>
+                ) }
             </select>
           </label>
           <label htmlFor="input-value">
@@ -97,7 +115,7 @@ const FilterTable = () => {
               onChange={ ({ target }) => valueInputFilter(target) }
             />
           </label>
-          {stateStarWars.filters
+          {/* {stateStarWars.filters
               && stateStarWars.filters.filterByNumericValues[0].value !== ''
             ? (
               <button
@@ -107,7 +125,7 @@ const FilterTable = () => {
               >
                 X
               </button>
-            ) : ''}
+            ) : ''} */}
           <button
             type="button"
             data-testid="button-filter"
