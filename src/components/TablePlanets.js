@@ -13,7 +13,7 @@ function Table() {
     InfoPlanets();
   }, [InfoPlanets]);
 
-  const filterTables = (data) => {
+  const filterTables = () => {
     let resultFilter = data;
 
     comparar.forEach((string, index) => {
@@ -38,12 +38,12 @@ function Table() {
   };
 
   return (
-    <tbody>
+    <tbody data-testid="column-sort">
       {filterTables(data)
         .filter((element) => element.name.toUpperCase().includes(inputText.toUpperCase()))
         .map((line) => (
           <tr key={ line.name }>
-            <td>{line.name}</td>
+            <td data-testid="planet-name">{line.name}</td>
             <td>{line.climate}</td>
             <td>{line.diameter}</td>
             <td>{line.edited}</td>
