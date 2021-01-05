@@ -19,6 +19,7 @@ export default function Filter() {
     };
     setNumericFilter(selectedFilter);
   }
+
   function eraseFilter() {
     const selectedFilter = {
       column: '',

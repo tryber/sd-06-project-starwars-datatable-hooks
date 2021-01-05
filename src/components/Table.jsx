@@ -6,7 +6,7 @@ export default function Table() {
   const { getAPI, planets, filters } = useContext(StarWarsContext);
   const { name } = filters.filterByName;
   const { filterByNumericValues } = filters;
-  const { column, comparison, value } = filterByNumericValues[0];
+  const { column, comparison, number } = filterByNumericValues[0];
   const columns = planets[0] && Object.keys(planets[0]);
 
   useEffect(() => {
@@ -20,22 +20,24 @@ export default function Table() {
     case (comparison === ''):
       return true;
     case (comparison === 'maior que'):
-      return Number(elements[column]) > Number(value);
+      return Number(elements[column]) > Number(number);
     case (comparison === 'menor que'):
-      return Number(elements[column]) < Number(value);
+      console.log(number);
+      console.log(elements[column]);
+      return Number(elements[column]) < Number(number);
     case (comparison === 'igual a'):
-      return Number(elements[column]) === Number(value);
+      return Number(elements[column]) === Number(number);
     default:
       return false;
     }
   }
-
   const preFilteredPlanets = planets
     .filter((planetsFilter) => filterSelect(planetsFilter));
   const filteredPlanets = preFilteredPlanets
     .filter((planet) => planet.name.includes(name));
   console.log(filteredPlanets);
-  console.log(preFilteredPlanets);
+  // console.log(preFilteredPlanets);
+
   return (
     <table className="table">
       <thead>
