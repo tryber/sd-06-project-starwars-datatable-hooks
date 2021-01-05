@@ -9,7 +9,7 @@ function Header() {
             Em meio a guerra dos clones,
           </p>
           <p>
-            um jovem garoto de 23 anos se vê obrigado a entrar nessa guerra,
+            um jovem garoto de 23 anos se vê obrigado a entrar nesta batalha,
           </p>
           <p>
             sua missão é pegar todas as informações dos planetos e descobrir
