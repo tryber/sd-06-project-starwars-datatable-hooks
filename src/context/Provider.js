@@ -5,6 +5,7 @@ import fetchFunction from '../services/FetchAPI';
 
 function Provider({ children }) {
   const [planets, setPlanets] = useState([]);
+  const [filters, setFilters] = useState({ filterByName: { name: '' } });
 
   useEffect(() => {
     fetchFunction().then((response) => {
@@ -12,7 +13,11 @@ function Provider({ children }) {
     });
   }, []);
 
-  const data = { planets };
+  const data = {
+    planets,
+    filters,
+    setFilters,
+  };
 
   return (
     <StarWarsContext.Provider value={ data }>
