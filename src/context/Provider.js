@@ -5,7 +5,13 @@ import fetchFunction from '../services/FetchAPI';
 
 function Provider({ children }) {
   const [planets, setPlanets] = useState([]);
-  const [filters, setFilters] = useState({ filterByName: { name: '' } });
+  const [filters, setFilters] = useState({
+    filterByName: { name: '' },
+    filterByNumericValues: [{ column: '', comparison: '', value: 0 }],
+  });
+  const [arrFilters, setArrFilters] = useState([
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+  ]);
 
   useEffect(() => {
     fetchFunction().then((response) => {
@@ -17,6 +23,8 @@ function Provider({ children }) {
     planets,
     filters,
     setFilters,
+    arrFilters,
+    setArrFilters,
   };
 
   return (

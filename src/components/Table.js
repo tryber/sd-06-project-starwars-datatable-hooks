@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
+import handleFilterByNumber from '../services/handleFilterByNumber';
 
-function Table() {
+export default function Table() {
   const { planets, filters } = useContext(StarWarsContext);
 
   return (
@@ -25,7 +26,10 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          { planets
+          { planets && handleFilterByNumber(planets,
+            filters.filterByNumericValues[0].comparison,
+            filters.filterByNumericValues[0].column,
+            filters.filterByNumericValues[0].value)
             .filter((planet) => planet.name.includes(filters.filterByName.name))
             .map((planet) => (
               <tr key={ planet.name }>
@@ -49,5 +53,3 @@ function Table() {
     </div>
   );
 }
-
-export default Table;
