@@ -10,7 +10,9 @@ function TableWars() {
     setPlanetName,
     setPlanets,
     dataPlanet,
-    setPlanetFilter,
+    setFilterByNumericValues,
+    setActive,
+    filters,
   } = useContext(StarWarsContext);
   const planetTable = planets;
   // const optionsSelects = planets.map((options) => Object.keys(options));
@@ -34,8 +36,8 @@ function TableWars() {
       comparison: comparisonFilter,
       value: valueFilter,
     };
-    setPlanetFilter(filtered);
-
+    setFilterByNumericValues(filtered);
+    setActive(true);
     const planetsRefined = planets
       .filter((planet) => {
         const valueColumn = parseInt(planet[`${columnSelected}`], 0);
@@ -49,9 +51,27 @@ function TableWars() {
 
   useEffect(() => {}, [planets]);
 
+  const clearFilter = () => {
+    setFilterByNumericValues();
+    setActive(false);
+    dataPlanet();
+  };
+
   useEffect(() => {
     handle();
   }, [planetName]);
+
+  function renderFilters() {
+    if (filters.activeFilter.actived) {
+      return (
+        <h4 data-testid="filter">
+          {filters.activeFilter.info}
+          <button type="button" onClick={ clearFilter }>X</button>
+        </h4>
+      );
+    }
+    return <p>no filters</p>;
+  }
 
   return (
     <div>
@@ -102,6 +122,9 @@ function TableWars() {
           >
             Refinar busca
           </button>
+          {
+            renderFilters()
+          }
         </fieldset>
       </div>
       <table border="1">
