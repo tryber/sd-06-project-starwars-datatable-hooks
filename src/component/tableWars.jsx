@@ -13,7 +13,7 @@ function TableWars() {
     setPlanetFilter,
   } = useContext(StarWarsContext);
   const planetTable = planets;
-  const optionsSelects = planets.map((options) => Object.keys(options));
+  // const optionsSelects = planets.map((options) => Object.keys(options));
   const handle = () => {
     const regex = new RegExp(`\\w*${planetName}\\w*`, 'i');
     if (planetName) {
