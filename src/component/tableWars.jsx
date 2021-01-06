@@ -10,8 +10,10 @@ function TableWars() {
     setPlanetName,
     setPlanets,
     dataPlanet,
+    setPlanetFilter,
   } = useContext(StarWarsContext);
   const planetTable = planets;
+  const optionsSelects = planets.map((options) => Object.keys(options));
   const handle = () => {
     const regex = new RegExp(`\\w*${planetName}\\w*`, 'i');
     if (planetName) {
@@ -27,16 +29,19 @@ function TableWars() {
     const columnSelected = document.getElementById('column').value;
     const comparisonFilter = document.getElementById('comparison').value;
     const valueFilter = parseInt(document.getElementById('valueFilter').value, 0);
+    const filtered = {
+      column: columnSelected,
+      comparison: comparisonFilter,
+      value: valueFilter,
+    };
+    setPlanetFilter(filtered);
 
     const planetsRefined = planets
       .filter((planet) => {
         const valueColumn = parseInt(planet[`${columnSelected}`], 0);
-        console.log(planet[`${columnSelected}`]);
-        if (planet.population !== 'unknown') {
-          if (comparisonFilter === '>') return valueColumn > valueFilter;
-          if (comparisonFilter === '<') return valueColumn < valueFilter;
-          if (comparisonFilter === '=') return valueColumn === valueFilter;
-        }
+        if (comparisonFilter === 'maior que') return valueColumn > valueFilter;
+        if (comparisonFilter === 'menor que') return valueColumn < valueFilter;
+        if (comparisonFilter === 'igual a') return valueColumn === valueFilter;
         return null;
       });
     setPlanets(planetsRefined);
@@ -81,10 +86,10 @@ function TableWars() {
             </select>
           </label>
           <label htmlFor="comparison">
-            <select id="comparison">
-              <option value=">">maior que</option>
-              <option value="<">menor que</option>
-              <option value="=">igual a</option>
+            <select id="comparison" data-testid="comparison-filter">
+              <option value="maior que">maior que</option>
+              <option value="menor que">menor que</option>
+              <option value="igual a">igual a</option>
             </select>
           </label>
           <label htmlFor="valueFilter">
