@@ -26,7 +26,6 @@ function TablePlanets() {
   ];
 
   const numericFilterComparsion = () => {
-    console.log('Planetas em numericFilterComparison:', planets);
     if (filters.filterByNumericValues.length < 1) {
       return planets;
     }
@@ -62,7 +61,6 @@ function TablePlanets() {
   }, [filters.filterByNumericValues]);
 
   const handleClearFilters = (name) => {
-    console.log(name);
     const removeFiltered = filters
       .filterByNumericValues.filter((any) => any.column !== name);
     setFilters({
@@ -71,10 +69,10 @@ function TablePlanets() {
     });
   };
 
-  const handleSortFiters = (selectedColumn) => {
+  const handleSortFilters = (selectedColumn) => {
     console.log(selectedColumn);
     const filteredByColumn = planets.filter((any) => any.name === selectedColumn);
-    console.log(filteredByColumn);
+    console.log('qual coluna selecionada: ', filteredByColumn);
   };
 
   return (
@@ -95,7 +93,7 @@ function TablePlanets() {
       </div>
       <select
         data-testid="column-sort"
-        onClick={ ({ target }) => handleSortFiters(target.value) }
+        onClick={ ({ target }) => handleSortFilters(target.value) }
       >
         <option>Selecione a Coluna</option>
         {headersTable.map((headers) => (
@@ -109,20 +107,30 @@ function TablePlanets() {
       </select>
       <label htmlFor="asc">
         <input
+          name="input-sort"
           id="asc"
           type="radio"
+          value="ASC"
           data-testid="column-sort-input-asc"
         />
         Ascendente
       </label>
       <label htmlFor="dsc">
         <input
+          name="input-sort"
           id="dsc"
           type="radio"
+          value="DESC"
           data-testid="column-sort-input-desc"
         />
         Descentende
       </label>
+      <button
+        type
+        data-testid='column-sort-button'
+      >
+        Ordenar
+      </button>
       <table>
         <thead>
           <tr>

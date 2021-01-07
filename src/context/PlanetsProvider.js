@@ -8,6 +8,10 @@ function PlanetsProvider({ children }) {
   const [filters, setFilters] = useState({
     filterByName: { name: '' },
     filterByNumericValues: [],
+    order: {
+      column: 'Name',
+      sort: 'ASC',
+    },
   });
   const [comparison, setComparison] = useState();
   const [filterNumber, setFilterNumber] = useState();
