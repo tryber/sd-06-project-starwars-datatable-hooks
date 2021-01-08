@@ -17,20 +17,20 @@ function Table() {
     let resultFilter = data;
 
     comparar.forEach((string, index) => {
-      const culumn = column[index];
       if (string === 'maior') {
         resultFilter = resultFilter.filter(
-          (element) => parseInt(element[culumn], 10) > parseInt(value[index], 10),
+          (element) => parseInt(element[column[index]], 10) > parseInt(value[index], 10),
         );
       }
       if (string === 'menor que') {
         resultFilter = resultFilter.filter(
-          (element) => parseInt(element[column], 10) < parseInt(value[index], 10),
+          (element) => parseInt(element[column[index]], 10) < parseInt(value[index], 10),
         );
       }
       if (string === 'igual a') {
         resultFilter = resultFilter.filter(
-          (element) => parseInt(element[column], 10) === parseInt(value[index], 10),
+          (element) => parseInt(element[column[index]],
+            10) === parseInt(value[index], 10),
         );
       }
     });
