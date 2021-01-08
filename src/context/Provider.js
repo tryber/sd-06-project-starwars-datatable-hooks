@@ -7,11 +7,38 @@ function Provider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [filters, setFilters] = useState({
     filterByName: { name: '' },
-    filterByNumericValues: [{ column: '', comparison: '', value: 0 }],
+    filterByNumericValues: [],
+    order: {
+      column: 'name',
+      sort: 'ASC',
+    },
   });
   const [arrFilters, setArrFilters] = useState([
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
   ]);
+  const [deletedFilters, setDeletedFilters] = useState([]);
+  const [searchNumState, setSearchNumState] = useState({
+    column: '',
+    comparison: '',
+    value: 0,
+  });
+  const [sortTableState, setSortTableState] = useState({
+    column: 'name',
+    sort: 'ASC',
+  });
+  const [orderState, setOrderState] = useState(['name',
+    'rotation_period',
+    'orbital_period',
+    'diameter',
+    'climate',
+    'gravity',
+    'terrain',
+    'surface_water',
+    'population',
+    'films',
+    'created',
+    'edited',
+    'url']);
 
   useEffect(() => {
     fetchFunction().then((response) => {
@@ -25,6 +52,14 @@ function Provider({ children }) {
     setFilters,
     arrFilters,
     setArrFilters,
+    searchNumState,
+    setSearchNumState,
+    sortTableState,
+    setSortTableState,
+    deletedFilters,
+    setDeletedFilters,
+    orderState,
+    setOrderState,
   };
 
   return (

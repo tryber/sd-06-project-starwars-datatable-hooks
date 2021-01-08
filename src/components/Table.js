@@ -1,12 +1,55 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 import handleFilterByNumber from '../services/handleFilterByNumber';
+import sortByColumn from '../services/sortByColumn';
 
 export default function Table() {
-  const { planets, filters } = useContext(StarWarsContext);
+  const { planets,
+    filters,
+    setFilters,
+    arrFilters,
+    setArrFilters,
+    deletedFilters,
+    setDeletedFilters } = useContext(StarWarsContext);
+
+  useEffect(() => {
+    handleFilterByNumber(planets,
+      filters.filterByNumericValues);
+  }, [planets, filters, deletedFilters]);
+
+  function handleDelete(event) {
+    const filtro = event.target.id.toString();
+    setDeletedFilters([deletedFilters.filter((elemento) => elemento !== filtro)]);
+    setArrFilters([...arrFilters, filtro]);
+    setFilters({
+      filterByName: filters.filterByName,
+      filterByNumericValues: filters.filterByNumericValues
+        .filter((obj) => obj.column !== filtro),
+      order: filters.order,
+    });
+  }
+
+  const magicZero = 0;
 
   return (
     <div>
+      <span>
+        Remover filtros:
+      </span>
+      { deletedFilters.length > magicZero && deletedFilters.map((element) => (
+        <div
+          key={ element }
+          data-testid="filter"
+        >
+          { element }
+          <button
+            type="button"
+            onClick={ handleDelete }
+            id={ element }
+          >
+            X
+          </button>
+        </div>))}
       <table>
         <thead>
           <tr>
@@ -26,14 +69,13 @@ export default function Table() {
           </tr>
         </thead>
         <tbody>
-          { planets && handleFilterByNumber(planets,
-            filters.filterByNumericValues[0].comparison,
-            filters.filterByNumericValues[0].column,
-            filters.filterByNumericValues[0].value)
+          { sortByColumn(
+            handleFilterByNumber(planets, filters.filterByNumericValues), filters.order,
+          )
             .filter((planet) => planet.name.includes(filters.filterByName.name))
             .map((planet) => (
               <tr key={ planet.name }>
-                <td>{ planet.name }</td>
+                <td data-testid="planet-name">{ planet.name }</td>
                 <td>{ planet.rotation_period }</td>
                 <td>{ planet.orbital_period }</td>
                 <td>{ planet.diameter }</td>

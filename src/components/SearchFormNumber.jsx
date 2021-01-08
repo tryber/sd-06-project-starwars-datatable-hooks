@@ -1,38 +1,38 @@
 import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
-import handleFilterByNumber from '../services/handleFilterByNumber';
 
 export default function SearchFormNumber() {
-  const { filters, setFilters, arrFilters } = useContext(StarWarsContext);
+  const {
+    filters,
+    setFilters,
+    arrFilters,
+    setArrFilters,
+    searchNumState,
+    setSearchNumState,
+    deletedFilters,
+    setDeletedFilters,
+  } = useContext(StarWarsContext);
 
   const handleColumn = (event) => {
     const newValue = event.target.value;
-    const newArrei = [{
-      column: newValue,
-      comparison: filters.filterByNumericValues[0].comparison,
-      value: filters.filterByNumericValues[0].value,
-    }];
-    setFilters({ ...filters, filterByNumericValues: newArrei });
+    setSearchNumState({ ...searchNumState, column: newValue });
   };
 
   const handleComparison = (event) => {
     const newValue = event.target.value;
-    const newArrei = [{
-      column: filters.filterByNumericValues[0].column,
-      comparison: newValue,
-      value: filters.filterByNumericValues[0].value,
-    }];
-    setFilters({ ...filters, filterByNumericValues: newArrei });
+    setSearchNumState({ ...searchNumState, comparison: newValue });
   };
 
   const handleValue = (event) => {
     const newValue = event.target.value;
-    const newArrei = [{
-      column: filters.filterByNumericValues[0].column,
-      comparison: filters.filterByNumericValues[0].comparison,
-      value: newValue,
-    }];
-    setFilters({ ...filters, filterByNumericValues: newArrei });
+    setSearchNumState({ ...searchNumState, value: newValue });
+  };
+
+  const handleFilter = () => {
+    setDeletedFilters([...deletedFilters, searchNumState.column]);
+    setArrFilters(arrFilters.filter((elemento) => elemento !== searchNumState.column));
+    setFilters({ ...filters, filterByNumericValues: [searchNumState] });
+    document.getElementById('numberComparison').value = '';
   };
 
   return (
@@ -41,8 +41,9 @@ export default function SearchFormNumber() {
       <select
         data-testid="column-filter"
         onChange={ handleColumn }
+        defaultValue="Escolha seu filtro"
       >
-        <option disabled selected>Select your filter</option>
+        <option disabled="disabled">Escolha seu filtro</option>
         { arrFilters
           .map((filtro) => (
             <option key={ arrFilters.indexOf(filtro) }>
@@ -53,8 +54,9 @@ export default function SearchFormNumber() {
       <select
         data-testid="comparison-filter"
         onChange={ handleComparison }
+        defaultValue="Escolha sua comparação"
       >
-        <option disabled selected>Select your comparison</option>
+        <option disabled="disabled">Escolha sua comparação</option>
         <option>maior que</option>
         <option>igual a</option>
         <option>menor que</option>
@@ -65,15 +67,18 @@ export default function SearchFormNumber() {
         data-testid="value-filter"
         placeholder="ex:100"
         onChange={ handleValue }
+        id="numberComparison"
+        min="0"
       />
 
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ handleFilterByNumber }
+        onClick={ handleFilter }
       >
         Filtrar
       </button>
+
     </div>
   );
 }
