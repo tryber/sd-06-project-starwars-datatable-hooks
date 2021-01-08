@@ -3,15 +3,21 @@ import PropTypes from 'prop-types';
 
 const Planet = (props) => {
   const { planet } = props;
-  const attributes = ['name', 'rotation_period', 'orbital_period',
-    'diameter', 'climate', 'gravity', 'terrain',
-    'surface_water', 'population', 'residents', 'films', 'created', 'edited',
-  ];
-
   return (
     <tr>
-      {attributes
-        .map((attribute) => (<td key={ attribute }>{planet[attribute]}</td>))}
+      <td data-testid="planet-name">{ planet.name }</td>
+      <td>{ planet.rotation_period }</td>
+      <td>{ planet.orbital_period }</td>
+      <td>{ planet.diameter }</td>
+      <td>{ planet.climate }</td>
+      <td>{ planet.gravity }</td>
+      <td>{ planet.terrain }</td>
+      <td>{ planet.surface_water }</td>
+      <td>{ planet.population }</td>
+      <td>{ planet.films }</td>
+      <td>{ planet.created }</td>
+      <td>{ planet.edited }</td>
+      <td>{ planet.url }</td>
     </tr>
   );
 };

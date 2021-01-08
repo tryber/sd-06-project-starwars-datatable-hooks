@@ -6,6 +6,11 @@ import APIFetcher from '../services/fetch';
 export default function StarWarsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [nameFilter, setNameFilter] = useState('');
+  const [sorting, setSorting] = useState({});
+  const [order, setOrder] = useState({
+    column: 'name',
+    sort: 'ASC',
+  });
   const [numericFilter, setNumericFilter] = useState({
     column: '',
     comparison: '',
@@ -17,6 +22,25 @@ export default function StarWarsProvider({ children }) {
     setPlanets(response);
   }
 
+  function sortOptions(a, b) {
+    const onePositive = 1;
+    const oneNegative = -1;
+    const zero = 0;
+
+    if (order.column === 'name') {
+      if (order.sort === 'ASC') {
+        if (a.name > b.name) return onePositive;
+        if (a.name < b.name) return oneNegative;
+      } else {
+        if (a.name < b.name) return onePositive;
+        if (a.name > b.name) return oneNegative;
+      }
+      return zero;
+    }
+    if (order.sort === 'ASC') return a[order.column] - b[order.column];
+    return b[order.column] - a[order.column];
+  }
+
   return (
     <StarWarsContext.Provider
       value={ {
@@ -26,6 +50,11 @@ export default function StarWarsProvider({ children }) {
           filterByName: { name: nameFilter },
           filterByNumericValues: [numericFilter],
         },
+        setOrder,
+        sortOptions,
+        setPlanets,
+        sorting,
+        setSorting,
         setNameFilter,
         setNumericFilter,
       } }

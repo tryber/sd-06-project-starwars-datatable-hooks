@@ -3,7 +3,7 @@ import StarWarsContext from '../context/StarWarsContext';
 import Planet from './Planet';
 
 export default function Table() {
-  const { getAPI, planets, filters } = useContext(StarWarsContext);
+  const { getAPI, planets, filters, sortOptions } = useContext(StarWarsContext);
   const { name } = filters.filterByName;
   const { filterByNumericValues } = filters;
   const { column, comparison, number } = filterByNumericValues[0];
@@ -22,8 +22,6 @@ export default function Table() {
     case (comparison === 'maior que'):
       return Number(elements[column]) > Number(number);
     case (comparison === 'menor que'):
-      console.log(number);
-      console.log(elements[column]);
       return Number(elements[column]) < Number(number);
     case (comparison === 'igual a'):
       return Number(elements[column]) === Number(number);
@@ -31,12 +29,13 @@ export default function Table() {
       return false;
     }
   }
-  const preFilteredPlanets = planets
+
+  const filteredPlanets = planets
     .filter((planetsFilter) => filterSelect(planetsFilter));
-  const filteredPlanets = preFilteredPlanets
+  const preFilteredPlanets = filteredPlanets
     .filter((planet) => planet.name.includes(name));
-  console.log(filteredPlanets);
-  // console.log(preFilteredPlanets);
+  const sortedPlanets = preFilteredPlanets
+    .sort((planetA, planetB) => sortOptions(planetA, planetB));
 
   return (
     <table className="table">
@@ -47,8 +46,11 @@ export default function Table() {
         </tr>
       </thead>
       <tbody>
-        {filteredPlanets
-          .map((planet) => (<Planet key={ planet.name } planet={ planet } />
+        {sortedPlanets
+          .map((planet) => (<Planet
+            key={ planet.name }
+            planet={ planet }
+          />
           ))}
       </tbody>
     </table>

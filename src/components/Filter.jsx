@@ -2,12 +2,14 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 export default function Filter() {
-  const { setNameFilter, setNumericFilter } = useContext(StarWarsContext);
+  const {
+    setNameFilter,
+    setNumericFilter,
+  } = useContext(StarWarsContext);
 
   function handleChange(e) {
     setNameFilter(e.target.value);
   }
-
   function handleSelect() {
     const selectedColumn = document.getElementById('column').value;
     const selectedComparison = document.getElementById('comparison').value;
@@ -74,6 +76,7 @@ export default function Filter() {
       >
         Find What You Lookin For
       </button>
+
     </>
   );
 }
