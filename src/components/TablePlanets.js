@@ -69,11 +69,25 @@ function TablePlanets() {
     });
   };
 
-  const handleSortFilters = (selectedColumn) => {
+  const handleSelectedColumn = (selectedColumn) => {
     console.log(selectedColumn);
-    const filteredByColumn = planets.filter((any) => any.name === selectedColumn);
-    console.log('qual coluna selecionada: ', filteredByColumn);
+    setFilters({
+      ...filters,
+      order: {
+        column: selectedColumn
+      }
+    })
   };
+
+  const orderTypeUpdate = (typeOrder) => {
+    console.log('tipo de ordenação: ', typeOrder);
+    setFilters({
+      ...filters,
+      order: {
+        sort: typeOrder
+      }
+    })
+  }
 
   return (
     <div>
@@ -93,9 +107,8 @@ function TablePlanets() {
       </div>
       <select
         data-testid="column-sort"
-        onClick={ ({ target }) => handleSortFilters(target.value) }
+        onClick={ ({ target }) => handleSelectedColumn(target.value) }
       >
-        <option>Selecione a Coluna</option>
         {headersTable.map((headers) => (
           <option
             key={ headers }
@@ -111,6 +124,7 @@ function TablePlanets() {
           id="asc"
           type="radio"
           value="ASC"
+          onChange={ ({ target }) => orderTypeUpdate(target.value)}
           data-testid="column-sort-input-asc"
         />
         Ascendente
@@ -121,6 +135,7 @@ function TablePlanets() {
           id="dsc"
           type="radio"
           value="DESC"
+          onChange={ ({ target }) => orderTypeUpdate(target.value)}
           data-testid="column-sort-input-desc"
         />
         Descentende
