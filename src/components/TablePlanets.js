@@ -71,23 +71,48 @@ function TablePlanets() {
 
   const handleSelectedColumn = (selectedColumn) => {
     console.log(selectedColumn);
-    setFilters({
-      ...filters,
-      order: {
-        column: selectedColumn
+    setFilters((prevState) => (
+      { ...prevState,
+        order: {
+          ...prevState.order,
+          column: selectedColumn,
+        },
       }
-    })
+    ));
   };
 
   const orderTypeUpdate = (typeOrder) => {
     console.log('tipo de ordenação: ', typeOrder);
-    setFilters({
-      ...filters,
-      order: {
-        sort: typeOrder
+    setFilters((prevState) => (
+      { ...prevState,
+        order: {
+          ...prevState.order,
+          sort: typeOrder,
+        },
       }
-    })
-  }
+    ));
+  };
+
+  const sortPlanets = () => {
+    console.log('Sort planets diz: Hello!');
+    const sortColumnPlanets = planets;
+    console.log('cópia de planets: ', sortColumnPlanets);
+    const negativeOne = -1;
+    const positiveOne = 1;
+    const zero = 0;
+    const testingSort = sortColumnPlanets.sort((a, b) => {
+      const columnSelect = filters.order.column;
+      console.log('O que columnSelect: ', columnSelect);
+      if (a.columnSelect > b.columnSelect) {
+        return positiveOne;
+      }
+      if (a.columnSelect < b.columnSelect) {
+        return negativeOne;
+      }
+      return zero;
+    });
+    console.log('planetas ordenados: ', testingSort);
+  };
 
   return (
     <div>
@@ -124,7 +149,7 @@ function TablePlanets() {
           id="asc"
           type="radio"
           value="ASC"
-          onChange={ ({ target }) => orderTypeUpdate(target.value)}
+          onChange={ ({ target }) => orderTypeUpdate(target.value) }
           data-testid="column-sort-input-asc"
         />
         Ascendente
@@ -135,14 +160,15 @@ function TablePlanets() {
           id="dsc"
           type="radio"
           value="DESC"
-          onChange={ ({ target }) => orderTypeUpdate(target.value)}
+          onChange={ ({ target }) => orderTypeUpdate(target.value) }
           data-testid="column-sort-input-desc"
         />
         Descentende
       </label>
       <button
-        type
-        data-testid='column-sort-button'
+        type="button"
+        data-testid="column-sort-button"
+        onClick={ () => sortPlanets() }
       >
         Ordenar
       </button>
