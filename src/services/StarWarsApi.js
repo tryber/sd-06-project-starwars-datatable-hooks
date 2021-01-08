@@ -4,5 +4,4 @@ const fetchStarWarsApi = async () => {
 
   return data.results;
 };
-
 export default fetchStarWarsApi;

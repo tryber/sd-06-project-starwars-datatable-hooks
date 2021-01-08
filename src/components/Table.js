@@ -3,8 +3,9 @@ import StarWarsContext from '../context/StarWarsContext';
 import './TableCSS.css';
 
 function Table() {
-  const { planets, isLoading } = useContext(StarWarsContext);
-  console.log(planets, isLoading);
+  const { planets, isLoading, filters } = useContext(StarWarsContext);
+  // console.log(isLoading);
+  // console.log(planets);
   return (
     <div>
       { isLoading && 'Loading...' }
@@ -28,7 +29,9 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          { planets.map((planet) => (
+          { planets.filter((planet) => (
+            planet.name.toLowerCase().includes(filters.filterByName.name.toLowerCase())
+          )).map((planet) => (
             <tr key={ planet.name }>
               <td>{ planet.name }</td>
               <td>{ planet.rotation_period }</td>

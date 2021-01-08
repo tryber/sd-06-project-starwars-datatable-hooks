@@ -6,6 +6,7 @@ import fetchStarWarsApi from '../services/StarWarsApi';
 function Provider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [filters, setFilters] = useState({ filterByName: { name: '', } })
 
   useEffect(() => {
     setIsLoading(true);
@@ -15,7 +16,7 @@ function Provider({ children }) {
     setIsLoading(false);
   }, []);
 
-  const data = { planets, isLoading };
+  const data = { planets, isLoading, filters, setFilters };
 
   return (
     <StarWarsContext.Provider value={ data }>
