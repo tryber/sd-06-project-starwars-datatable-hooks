@@ -10,6 +10,10 @@ function DataProvider({ children }) {
   const [comparar, setComparar] = useState([]);
   const [value, setValue] = useState([]);
   const [result, setResult] = useState([]);
+  const [order, setOrder] = useState({
+    column: 'name',
+    sort: 'ASC',
+  });
 
   const handleChange = (e) => {
     const inputInfo = e.target.value;
@@ -41,6 +45,8 @@ function DataProvider({ children }) {
     setValue,
     result,
     setResult,
+    order,
+    setOrder,
   };
 
   return (
