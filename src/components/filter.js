@@ -52,7 +52,7 @@ function Filters() {
           </button>
         </span>
       ))}
-      
+
     </div>
   );
 }

@@ -11,8 +11,8 @@ function DataProvider({ children }) {
   const [value, setValue] = useState([]);
   const [result, setResult] = useState([]);
   const [order, setOrder] = useState({
-    column: 'name',
-    sort: 'ASC',
+    column: 'orbital_period',
+    sort: 'DESC',
   });
 
   const handleChange = (e) => {

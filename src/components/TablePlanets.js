@@ -1,4 +1,4 @@
-import React, { useEffect, useContext,useState } from 'react';
+import React, { useEffect, useContext } from 'react';
 import DataContext from '../context/StarWarsContext';
 
 function Table() {
@@ -9,11 +9,9 @@ function Table() {
     value,
   } } = useContext(DataContext);
 
-  const [compValue, setCompValue] = useState(''); 
-
   useEffect(() => {
     InfoPlanets();
-  }, []);
+  }, [InfoPlanets]);
 
   const filterTables = () => {
     let resultFilter = data;
@@ -40,7 +38,7 @@ function Table() {
   };
 
   return (
-    <tbody data-testid="column-sort">
+    <tbody>
       {filterTables(data)
         .filter((element) => element.name.toUpperCase().includes(inputText.toUpperCase()))
         .map((line) => (
