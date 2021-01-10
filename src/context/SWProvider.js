@@ -7,20 +7,11 @@ import TableLine from '../components/TableLine';
 const SWProvider = ({ children }) => {
   const [planets, setplanets] = useState([]);
   const [filteredPlanets, setFilteredPlanets] = useState([]);
-  const [searchControl, setSearchControl] = useState({
-    filters:
-      {
-        filterByName: {
-          name: '',
-        },
-        filterByNumericValues: [
-          {
-            column: '',
-            comparison: '',
-            value: '',
-          },
-        ],
-      },
+  const [searchControl, setSearchControl] = useState({});
+  const [filterNumber, setFilterNumber] = useState({
+    column: '',
+    comparison: '',
+    value: '',
   });
 
   const setFilterByName = (name) => {
@@ -66,8 +57,14 @@ const SWProvider = ({ children }) => {
 
   const value = {
     filteredPlanets,
-    searchControl,
     setFilterByName,
+    setFilterNumber,
+    filters: {
+      filterByName: {
+        name: searchControl,
+      },
+      filterByNumericValues: [filterNumber],
+    },
   };
 
   return <SWContext.Provider value={ value }>{children}</SWContext.Provider>;

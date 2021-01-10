@@ -1,12 +1,21 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import SWContext from '../context/SWContext';
 
 const Header = () => {
-  const { setFilterByName } = useContext(SWContext);
+  const { setFilterByName, setFilterNumber } = useContext(SWContext);
 
   const options = [
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
   ];
+
+  const resetFilter = () => {
+    const filtering = {
+      column: '',
+      comparison: '',
+      value: '',
+    };
+    setFilterNumber(filtering);
+  };
 
   const comparasionArray = ['maior que', 'menor que', 'igual a'];
 
@@ -53,6 +62,13 @@ const Header = () => {
       {' '}
       <button type="button" data-testid="button-filter">
         Criar Filtro
+      </button>
+      <button
+        data-testid="filter"
+        type="button"
+        onClick={ resetFilter }
+      >
+        X
       </button>
     </div>
   );
