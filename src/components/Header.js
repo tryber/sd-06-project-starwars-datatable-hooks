@@ -1,16 +1,20 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import SWContext from '../context/SWContext';
 
 const Header = () => {
   const { setFilterByName } = useContext(SWContext);
+  const { optionFilter, setOptionFilter } = useState('population');
+  const { comparison, setComparison } = useState('maior que');
 
-  const setOptions = () => {
-    const options = [
-      'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
-    ];
-    return options;
+  const options = [
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+  ];
+
+  const comparasionArray = ['maior que', 'menor que', 'igual a'];
+
+  const setOption = () => {
+    
   };
-  const comparationArray = ['maior que', 'menor que', 'igual a'];
 
   return (
     <div>
@@ -20,19 +24,15 @@ const Header = () => {
           type="text"
           name="filter"
           data-testid="name-filter"
-          onChange={
-            (e) => setFilterByName(e.target.value)
-          }
+          onChange={ (e) => setFilterByName(e.target.value) }
         />
       </label>
       <br />
       <label htmlFor="column-filter">
         Filtro Tipo:
         {' '}
-        <select
-          data-testid="column-filter"
-        >
-          {setOptions().map((optionelement, index) => (
+        <select data-testid="column-filter">
+          {options.map((optionelement, index) => (
             <option key={ index } value={ optionelement }>
               {optionelement}
             </option>
@@ -44,7 +44,7 @@ const Header = () => {
         Comparação:
         {' '}
         <select data-testid="comparison-filter">
-          {comparationArray.map((option, index) => (
+          {comparasionArray.map((option, index) => (
             <option key={ index } value={ option }>
               {option}
             </option>
@@ -54,7 +54,6 @@ const Header = () => {
       {' '}
       <label htmlFor="value-filter">
         Número:
-        {' '}
         <input type="number" data-testid="value-filter" />
       </label>
       {' '}
