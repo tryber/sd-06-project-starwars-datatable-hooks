@@ -13,7 +13,7 @@ const Header = () => {
   const handleClick = () => {
     const columnSelect = document.getElementById('column-filter').value;
     const comparisonSelect = document.getElementById('comparison-filter').value;
-    const numberFilter = document.getElementById('number-filter').value;
+    const numberFilter = document.getElementById('value-filter').value;
     const filtering = {
       column: columnSelect,
       comparison: comparisonSelect,
