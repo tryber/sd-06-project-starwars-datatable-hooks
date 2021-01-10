@@ -12,8 +12,8 @@ function Filters() {
 
   return (
     <div>
-      <input 
-        data-testid='name-filter'
+      <input
+        data-testid="name-filter"
         type="text"
         id="filterByName"
         onChange={ handleOnChange }
