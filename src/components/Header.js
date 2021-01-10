@@ -3,18 +3,12 @@ import SWContext from '../context/SWContext';
 
 const Header = () => {
   const { setFilterByName } = useContext(SWContext);
-  const { optionFilter, setOptionFilter } = useState('population');
-  const { comparison, setComparison } = useState('maior que');
 
   const options = [
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
   ];
 
   const comparasionArray = ['maior que', 'menor que', 'igual a'];
-
-  const setOption = () => {
-    
-  };
 
   return (
     <div>
