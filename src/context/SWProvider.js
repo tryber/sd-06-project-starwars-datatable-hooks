@@ -7,11 +7,17 @@ import TableLine from '../components/TableLine';
 const SWProvider = ({ children }) => {
   const [planets, setplanets] = useState([]);
   const [filteredPlanets, setFilteredPlanets] = useState([]);
-  const [searchControl, setSearchControl] = useState({});
-  const [filterNumber, setFilterNumber] = useState({
-    column: '',
-    comparison: '',
-    value: '',
+  const [searchControl, setSearchControl] = useState({
+    filters: {
+      filterByName: {
+        name: '',
+      },
+      filterByNumericValues: [],
+      order: {
+        column: 'Name',
+        sort: 'ASC',
+      },
+    },
   });
 
   const setFilterByName = (name) => {
@@ -21,12 +27,26 @@ const SWProvider = ({ children }) => {
     });
   };
 
+  const setFilterByNumericValue = (filter) => {
+    setSearchControl({
+      ...searchControl,
+      filters: { filterByNumericValues: [
+        ...searchControl.filters.filterByNumericValues,
+        filter,
+      ] },
+    });
+  };
+
   const filterPlanetName = (planet) => {
     if (planet.name.match(new RegExp(searchControl.filters.filterByName.name, 'i'))) {
       return true;
     }
     return false;
   };
+
+  // const filterByNumeric = (planet) => {
+  //   console.log(planet);
+  // };
 
   const filterPlanets = () => {
     setFilteredPlanets(
@@ -58,13 +78,7 @@ const SWProvider = ({ children }) => {
   const value = {
     filteredPlanets,
     setFilterByName,
-    setFilterNumber,
-    filters: {
-      filterByName: {
-        name: searchControl,
-      },
-      filterByNumericValues: [filterNumber],
-    },
+    setFilterByNumericValue,
   };
 
   return <SWContext.Provider value={ value }>{children}</SWContext.Provider>;

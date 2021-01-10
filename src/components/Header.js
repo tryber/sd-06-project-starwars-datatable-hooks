@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import SWContext from '../context/SWContext';
 
 const Header = () => {
-  const { setFilterByName, setFilterNumber } = useContext(SWContext);
+  const { setFilterByName, setFilterByNumericValue } = useContext(SWContext);
 
   const options = [
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
@@ -19,7 +19,7 @@ const Header = () => {
       comparison: comparisonSelect,
       value: numberFilter,
     };
-    setFilterNumber(filtering);
+    setFilterByNumericValue(filtering);
   };
 
   const resetFilter = () => {
@@ -28,7 +28,7 @@ const Header = () => {
       comparison: '',
       value: '',
     };
-    setFilterNumber(filtering);
+    setFilterByNumericValue(filtering);
   };
 
   return (
