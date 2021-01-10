@@ -8,6 +8,20 @@ const Header = () => {
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
   ];
 
+  const comparasionArray = ['maior que', 'menor que', 'igual a'];
+
+  const handleClick = () => {
+    const columnSelect = document.getElementById('column-filter').value;
+    const comparisonSelect = document.getElementById('comparison-filter').value;
+    const numberFilter = document.getElementById('number-filter').value;
+    const filtering = {
+      column: columnSelect,
+      comparison: comparisonSelect,
+      value: numberFilter,
+    };
+    setFilterNumber(filtering);
+  };
+
   const resetFilter = () => {
     const filtering = {
       column: '',
@@ -16,8 +30,6 @@ const Header = () => {
     };
     setFilterNumber(filtering);
   };
-
-  const comparasionArray = ['maior que', 'menor que', 'igual a'];
 
   return (
     <div>
@@ -35,9 +47,10 @@ const Header = () => {
         Filtro Tipo:
         {' '}
         <select data-testid="column-filter">
-          {options.map((optionelement, index) => (
-            <option key={ index } value={ optionelement }>
-              {optionelement}
+          <option hidden value="">Selecione</option>
+          {options.map((optionElement) => (
+            <option key={ optionElement } value={ optionElement }>
+              {optionElement}
             </option>
           ))}
         </select>
@@ -47,8 +60,9 @@ const Header = () => {
         Comparação:
         {' '}
         <select data-testid="comparison-filter">
-          {comparasionArray.map((option, index) => (
-            <option key={ index } value={ option }>
+          <option hidden value="">Selecione</option>
+          {comparasionArray.map((option) => (
+            <option key={ option } value={ option }>
               {option}
             </option>
           ))}
@@ -60,7 +74,11 @@ const Header = () => {
         <input type="number" data-testid="value-filter" />
       </label>
       {' '}
-      <button type="button" data-testid="button-filter">
+      <button
+        type="button"
+        data-testid="button-filter"
+        onClick={ handleClick }
+      >
         Criar Filtro
       </button>
       <button
