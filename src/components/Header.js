@@ -46,7 +46,7 @@ const Header = () => {
       <label htmlFor="column-filter">
         Filtro Tipo:
         {' '}
-        <select data-testid="column-filter">
+        <select data-testid="column-filter" id="column-filter">
           <option hidden value="">Selecione</option>
           {options.map((optionElement) => (
             <option key={ optionElement } value={ optionElement }>
@@ -59,7 +59,7 @@ const Header = () => {
       <label htmlFor="comparison-filter">
         Comparação:
         {' '}
-        <select data-testid="comparison-filter">
+        <select data-testid="comparison-filter" id="comparison-filter">
           <option hidden value="">Selecione</option>
           {comparasionArray.map((option) => (
             <option key={ option } value={ option }>
@@ -71,7 +71,7 @@ const Header = () => {
       {' '}
       <label htmlFor="value-filter">
         Número:
-        <input type="number" data-testid="value-filter" />
+        <input type="number" data-testid="value-filter" id="value-filter" />
       </label>
       {' '}
       <button
