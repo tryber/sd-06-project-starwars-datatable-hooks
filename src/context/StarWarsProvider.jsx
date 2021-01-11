@@ -6,6 +6,7 @@ import fetchPlanetList from '../services/starWarsService';
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [filters, setFilters] = useState([]);
 
   const getPlanetList = async () => {
     const planetList = await fetchPlanetList();
@@ -17,6 +18,8 @@ function StarWarsProvider({ children }) {
     getPlanetList,
     searchTerm,
     setSearchTerm,
+    filters,
+    setFilters
   };
 
   return (

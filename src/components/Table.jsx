@@ -9,7 +9,8 @@ function Table() {
   }, []);
 
   const filterData = () => {
-    const filtered = data.filter((planet) => planet.name.includes(searchTerm));
+    const filtered = data.filter((planet) => planet.name.toLowerCase()
+      .includes(searchTerm));
     return filtered;
   };
 
