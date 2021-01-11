@@ -6,11 +6,30 @@ import fetchPlanetList from '../services/starWarsService';
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [filters, setFilters] = useState([]);
+  const [filters, setFilters] = useState({
+    filterByNumericValues: [{
+      column: '',
+      comparison: '',
+      value: 0,
+    }],
+  });
 
   const getPlanetList = async () => {
     const planetList = await fetchPlanetList();
     setData(planetList);
+  };
+
+  const filterByNumber = (column, comparison, value) => {
+    setFilters({
+      filterByNumericValues: [
+        ...filters.filterByNumericValues,
+        {
+          column,
+          comparison,
+          value,
+        },
+      ],
+    });
   };
 
   const context = {
@@ -19,7 +38,7 @@ function StarWarsProvider({ children }) {
     searchTerm,
     setSearchTerm,
     filters,
-    setFilters
+    filterByNumber,
   };
 
   return (
@@ -28,7 +47,7 @@ function StarWarsProvider({ children }) {
     </StarWarsContext.Provider>
   );
 }
-// thread do Ricardo Roa no slack falando sobre o tipo da props
+// thread do Ricardo Rosa no slack falando sobre o tipo da props
 StarWarsProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
