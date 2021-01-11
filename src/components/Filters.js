@@ -2,7 +2,15 @@ import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Filters() {
-  const { filters, setFilters } = useContext(StarWarsContext);
+  // const { filters, setFilters } = useContext(StarWarsContext);
+
+  const { filters:
+    { filterByNumericValues }, setFilters, filters } = useContext(StarWarsContext);
+  const handleOnRemoveFilter = (myFilter) => {
+    setFilters({ ...filters,
+      filterByNumericValues: filterByNumericValues.filter((event) => (
+        event !== myFilter)) });
+  };
 
   const [column, setColumn] = useState('');
   const [comparison, setComparison] = useState('');
@@ -76,12 +84,13 @@ function Filters() {
         Filtrar
       </button>
       {filters.filterByNumericValues.map((filter) => (
-        <p key={ filter.column }>
+        <p data-testid="filter" key={ filter.column }>
           { filter.column }
           {' '}
           { filter.comparison }
           {' '}
           { filter.valueComparison }
+          <button type="button" onClick={ () => handleOnRemoveFilter(filter) }>X</button>
         </p>
       ))}
     </div>

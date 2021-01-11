@@ -31,7 +31,6 @@ function Table() {
   return (
     <div>
       { isLoading && 'Loading...' }
-
       <table>
         <thead>
           <tr>
