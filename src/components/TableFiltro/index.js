@@ -1,11 +1,15 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import StarWarsContext from '../../Context/StarWarsContext';
 
 import StyledFilter from './styled';
+import logoStarWars from './logo-star-wars.png';
 
 const FilterTable = () => {
   const { stateStarWars, setStarWars } = useContext(StarWarsContext);
-  // const [stateX, setX] = useState({ delete: false });
+  const [stateSort] = useState({
+    column: '',
+    sort: '',
+  });
 
   const valueInputFilter = (target) => {
     setStarWars(
@@ -30,10 +34,29 @@ const FilterTable = () => {
               && stateStarWars.filters.filterByNumericValues[0].value,
           },
         ],
+        order: {
+          column: stateSort.column,
+          sort: stateSort.sort,
+        },
       },
       },
     );
   };
+
+  // const sort = (submitEvent) => {
+  //   submitEvent.preventDefault();
+
+  //   // console.log(stateSort)
+  //   // setStarWars({
+  //   //   ...setStarWars,
+  //   //   filters: {
+  //   //     order: {
+  //   //       column: stateSort.column,
+  //   //       sort: stateSort.sort,
+  //   //     }
+  //   //   }
+  //   // })
+  // }
 
   return (
     <StyledFilter>
@@ -42,7 +65,7 @@ const FilterTable = () => {
       {/* {console.log(stateStarWars)} */}
       <div className="main-filter">
         <span>Filtre os planetas de Star Wars preenchendo os campos abaixo</span>
-        <div>
+        <div className="container-filters">
           <label htmlFor="input-search">
             Nome:
             <input
@@ -70,18 +93,19 @@ const FilterTable = () => {
               <option>rotation_period</option>
               <option>surface_water</option>
             </select>
-            {stateStarWars.abiliyX
+          </label>
+          {stateStarWars.abiliyX
                 && (
-                  <div data-testid="filter">
+                  <section data-testid="filter" className="button-x">
                     <button
                       type="button"
+                      className="button-x"
                       onClick={ stateStarWars.deleteFilters }
                     >
                       X
                     </button>
-                  </div>
+                  </section>
                 ) }
-          </label>
           <label htmlFor="value">
             Faixa de valor:
             <select
@@ -96,18 +120,19 @@ const FilterTable = () => {
               <option>menor que</option>
               <option>igual a</option>
             </select>
-            {stateStarWars.abiliyX
+          </label>
+          {stateStarWars.abiliyX
                 && (
-                  <div data-testid="filter">
+                  <section data-testid="filter" className="button-x">
                     <button
                       type="button"
+                      className="button-x"
                       onClick={ stateStarWars.deleteFilters }
                     >
                       X
                     </button>
-                  </div>
+                  </section>
                 ) }
-          </label>
           <label htmlFor="input-value">
             Valor:
             <input
@@ -120,27 +145,17 @@ const FilterTable = () => {
             />
           </label>
           {stateStarWars.abiliyX
-                && (
-                  <div data-testid="filter">
-                    <button
-                      type="button"
-                      onClick={ stateStarWars.deleteFilters }
-                    >
-                      X
-                    </button>
-                  </div>
-                ) }
-          {/* {stateStarWars.filters
-              && stateStarWars.filters.filterByNumericValues[0].value !== ''
-            ? (
-              <button
-                type="button"
-                data-testid="filter"
-                onClick={ stateStarWars.deleteFilters }
-              >
-                X
-              </button>
-            ) : ''} */}
+            && (
+              <section data-testid="filter" className="button-x">
+                <button
+                  className="button-x"
+                  type="button"
+                  onClick={ stateStarWars.deleteFilters }
+                >
+                  X
+                </button>
+              </section>
+            ) }
           <button
             type="button"
             data-testid="button-filter"
@@ -148,8 +163,67 @@ const FilterTable = () => {
           >
             Filtrar
           </button>
+
+          {/* <form onSubmit={ valueInputFilter }>
+            <label htmlFor="value">
+              Ordene por coluna:
+              <select
+                id="value"
+                name="comparison"
+                className="select-value"
+                data-testid='column-sort'
+                onChange={ ({ target: { value } }) => setSort({
+                  ...stateSort,
+                  column: value,
+                }) }
+              >
+                <option>{}</option>
+                <option>population</option>
+                <option>orbital_period</option>
+                <option>diameter</option>
+                <option>rotation_period</option>
+                <option>surface_water</option>
+              </select>
+            </label>
+            <label className="label-radio" htmlFor="order">
+              ASC
+              <input
+                id="order"
+                type="radio"
+                name="order"
+                value="ASC"
+                data-testid='column-sort-input-asc'
+                onChange={ ({ target: { value } }) => setSort({
+                  ...stateSort,
+                  sort: value,
+                }) }
+              />
+            </label>
+            <label className="label-radio" htmlFor="order">
+              DESC
+              <input
+                id="order"
+                type="radio"
+                name="order"
+                value="DESC"
+                data-testid='column-sort-input-desc'
+                // onChange={ ({ target: { value } }) => console.log(value) }
+                onChange={ ({ target: { value } }) => setSort({
+                  ...stateSort,
+                  sort: value,
+                }) }
+              />
+            </label>
+            <button
+              type="submit"
+              data-testid='column-sort-button'
+            >
+              Order
+            </button>
+          </form> */}
         </div>
       </div>
+      <img src={ logoStarWars } alt="logoStarWars" />
     </StyledFilter>
   );
 };

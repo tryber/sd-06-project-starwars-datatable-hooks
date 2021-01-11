@@ -17,28 +17,61 @@ const styledFilter = Styled.div`
     }
   }
 
+  img {
+      margin-top: 13px;
+      margin-left: 100px;
+      width: 200px;
+      height: 90px;
+      display: none;
+    }
+
+  .container-filters {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
   div{
     weight: 100%;
-    margin-left: 10px;
 
     label {
-      margin-left: 20px;
+      margin-top: 20px;
+      margin-left: 25px;
+
+      display: flex;
+      flex-direction: column;
     }
 
     select {
-      margin: 20px 10px;
       padding: 1px 80px 1px 0;
+      margin-bottom: 20px;
     }
 
     input {
-      margin: 10px 10px
+      margin-bottom: 20px;
     }
 
     button {
-      padding: 1px 70px 1px 70px;
-      margin-left: 20px;
+      padding: 1px 10px 1px 10px;
+      margin-left: 25px;
+      margin-top: 18px;
+    }
+
+    .button-x {
+      display: flex;
+      margin: 0;
+      margin-left: 3px;
+      margin-top: 9px;
+
+  .label-radio {
+    display: flex;
+  }
+      button {
+        padding: 1px 5px 1px 5px; 
+        margin-right: 0;
     }
   }
+
 
 `;
 
