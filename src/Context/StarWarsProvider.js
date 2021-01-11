@@ -24,7 +24,7 @@ const StarWarsProvider = ({ children }) => {
         order: {
           column: '',
           sort: '',
-        }
+        },
       },
     });
   }, [stateStarWars.data]);
