@@ -2,16 +2,40 @@ import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { data, getPlanetList, searchTerm } = useContext(StarWarsContext).context;
+  const {
+    data,
+    getPlanetList,
+    searchTerm,
+    filters: { filterByNumericValues },
+  } = useContext(StarWarsContext).context;
+  const { column, comparison, value } = filterByNumericValues;
 
   useEffect(() => {
     getPlanetList();
   }, []);
 
   const filterData = () => {
-    const filtered = data.filter((planet) => planet.name.toLowerCase()
-      .includes(searchTerm));
-    return filtered;
+    if (searchTerm !== '') {
+      const filtered = data.filter((e) => e.name.toLowerCase()
+        .includes(searchTerm));
+      return filtered;
+    }
+    if (column !== '') {
+      const filterInputNumbers = data.filter((element) => {
+        if (comparison === 'maior que' && Number(element[column]) > Number(value)) {
+          return element;
+        }
+        if (comparison === 'menor que' && Number(element[column]) < Number(value)) {
+          return element;
+        }
+        if (comparison === 'igual a' && Number(element[column]) === Number(value)) {
+          return element;
+        }
+        return undefined;
+      });
+      return filterInputNumbers;
+    }
+    return data;
   };
 
   return (

@@ -14,11 +14,6 @@ function StarWarsProvider({ children }) {
     }],
   });
 
-  const getPlanetList = async () => {
-    const planetList = await fetchPlanetList();
-    setData(planetList);
-  };
-
   const filterByNumber = (column, comparison, value) => {
     setFilters({
       filterByNumericValues: [
@@ -30,6 +25,11 @@ function StarWarsProvider({ children }) {
         },
       ],
     });
+  };
+
+  const getPlanetList = async () => {
+    const planetList = await fetchPlanetList();
+    setData(planetList);
   };
 
   const context = {
@@ -47,7 +47,7 @@ function StarWarsProvider({ children }) {
     </StarWarsContext.Provider>
   );
 }
-// thread do Ricardo Rosa no slack falando sobre o tipo da props
+// thread do Ricardo Roa no slack falando sobre o tipo da props
 StarWarsProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
