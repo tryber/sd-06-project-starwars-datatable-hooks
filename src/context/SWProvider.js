@@ -20,16 +20,6 @@ const SWProvider = ({ children }) => {
     },
   });
 
-  const rmFilterByNumeric = (newActiveFilters, newAvaliableFilters) => setSearchControl(
-    {
-      ...searchControl,
-      filterByNumericValues: [...newActiveFilters],
-      avaliableFilters: {
-        ...searchControl.avaliableFilters, columnFilters: [...newAvaliableFilters],
-      },
-    },
-  );
-
   const setFilterByName = (name) => {
     setSearchControl({
       filters: { ...searchControl.filters, filterByName: { name } },
@@ -92,7 +82,6 @@ const SWProvider = ({ children }) => {
     setFilterByName,
     setFilterByNumericValue,
     searchControl,
-    rmFilterByNumeric,
   };
 
   return <SWContext.Provider value={ value }>{children}</SWContext.Provider>;
