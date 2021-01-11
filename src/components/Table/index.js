@@ -256,7 +256,13 @@ const Table = () => {
             { stateFiltered || !stateStarWars.filters
               ? informationsPlanets().map((inform, i) => (
                 <tr key={ i }>
-                  {inform.map((info, index) => <td key={ index }>{info}</td>)}
+                  {inform.map((info, index) => (
+                    <td
+                      key={ index }
+                      data-testid="planet-name"
+                    >
+                      {info}
+                    </td>))}
                 </tr>))
               : filterTable().map((inform, i) => (
                 <tr key={ i }>
