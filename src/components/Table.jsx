@@ -10,27 +10,26 @@ function Table() {
   } = useContext(StarWarsContext).context;
   const finalIndex = filterByNumericValues.length - 1;
   const { column, comparison, value } = filterByNumericValues[finalIndex];
-
   useEffect(() => {
     getPlanetList();
   }, []);
 
   const filterData = () => {
     if (searchTerm !== '') {
-      const filtered = data.filter((planet) => planet.name.toLowerCase()
-        .includes(searchTerm.toLowerCase()));
+      const filtered = data.filter((e) => e.name.toLowerCase()
+        .includes(searchTerm));
       return filtered;
     }
     if (column !== '') {
-      const filterInputNumbers = data.filter((planet) => {
-        if (comparison === 'maior que' && Number(planet[column]) > Number(value)) {
-          return planet;
+      const filterInputNumbers = data.filter((element) => {
+        if (comparison === 'maior que' && Number(element[column]) > Number(value)) {
+          return element;
         }
-        if (comparison === 'menor que' && Number(planet[column]) < Number(value)) {
-          return planet;
+        if (comparison === 'menor que' && Number(element[column]) < Number(value)) {
+          return element;
         }
-        if (comparison === 'igual a' && Number(planet[column]) === Number(value)) {
-          return planet;
+        if (comparison === 'igual a' && Number(element[column]) === Number(value)) {
+          return element;
         }
         return undefined;
       });

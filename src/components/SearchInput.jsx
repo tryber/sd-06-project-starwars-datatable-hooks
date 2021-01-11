@@ -2,15 +2,33 @@ import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function SearchInput() {
-  const { searchTerm, setSearchTerm, filterByNumber,
-  } = useContext(StarWarsContext).context;
+  const { searchTerm, setSearchTerm, filterByNumber, filters, setFilters } = useContext(
+    StarWarsContext,
+  ).context;
+  const zero = 0;
   // Estados locais criados para usar no onChange
   const [column, setColumn] = useState('');
   const [comparison, setComparison] = useState('');
-  const [value, setValue] = useState();
+  const [value, setValue] = useState(zero);
 
   const addFilters = () => {
     filterByNumber(column, comparison, value);
+  };
+
+  const removeFilter = () => {
+    setFilters({
+      ...filters,
+      filterByNumericValues: [
+        {
+          column: '',
+          comparison: '',
+          value: 0,
+        },
+      ],
+    });
+    setColumn('');
+    setComparison('');
+    setValue(zero);
   };
 
   return (
@@ -35,7 +53,7 @@ function SearchInput() {
           value={ column }
           onChange={ (event) => setColumn(event.target.value) }
         >
-          <option> </option>
+          <option disabled selected> -- select -- </option>
           <option>population</option>
           <option>orbital_period</option>
           <option>diameter</option>
@@ -49,7 +67,7 @@ function SearchInput() {
         className="form-control"
         onChange={ (event) => setComparison(event.target.value) }
       >
-        <option> </option>
+        <option disabled selected> -- select -- </option>
         <option>maior que</option>
         <option>igual a</option>
         <option>menor que</option>
@@ -61,6 +79,14 @@ function SearchInput() {
         value={ value }
         onChange={ (event) => setValue(event.target.value) }
       />
+      <button
+        className="btn btn-secondary"
+        data-testid="filter"
+        type="button"
+        onClick={ removeFilter }
+      >
+        X
+      </button>
       <button
         type="button"
         data-testid="button-filter"
