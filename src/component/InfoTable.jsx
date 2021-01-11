@@ -1,3 +1,4 @@
+// Agradeço a Leticia, Rebeca, Johnatas, Nonato, Jota, Renato, e minha esposa por acreditarem que eu conseguiria e pelos feedbacks construtivos.
 import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
