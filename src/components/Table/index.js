@@ -65,7 +65,7 @@ const Table = () => {
                 ? 1
                 : minusOne),
           );
-          // console.log(sortPlanets);
+          // console.log(stateFilteredSort.column);
 
           const informations = sortPlanets.map((obj) => Object.values(obj));
           informations.map((info) => info.splice(indexRemove, 1));
@@ -109,10 +109,15 @@ const Table = () => {
     } else if (!stateStarWars.data) {
       console.log('ainda nao existe');
     } else {
-      const informations = stateStarWars.data.results.map((obj) => Object.values(obj));
+      const minusOne = -1;
+
+      const ordenedPlanets = stateStarWars.data.results
+        .sort((planet1, planet2) => ((planet1.name < planet2.name) ? minusOne : 1));
+
+      const informations = ordenedPlanets.map((obj) => Object.values(obj));
       informations.map((info) => info.splice(indexRemove, 1));
 
-      // console.log(informations);
+      // console.log(ordenedPlanets);
 
       return informations;
     }
@@ -125,6 +130,8 @@ const Table = () => {
       if (informationsPlanets()) {
         const filteredPlanet = informationsPlanets()
           .filter((planet) => planet[0].includes(valueInputFilter));
+
+        // console.log(informationsPlanets());
 
         return filteredPlanet;
       }
