@@ -2,9 +2,7 @@ import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function SearchInput() {
-  const { searchTerm, setSearchTerm, filterByNumber } = useContext(
-    StarWarsContext,
-  ).context;
+  const { searchTerm, setSearchTerm, filterByNumber } = useContext(StarWarsContext);
   // Estados locais criados para usar no onChange
   const [column, setColumn] = useState('');
   const [comparison, setComparison] = useState('');
@@ -36,7 +34,7 @@ function SearchInput() {
           value={ column }
           onChange={ (event) => setColumn(event.target.value) }
         >
-          <option disabled selected> -- select -- </option>
+          <option selected> </option>
           <option>population</option>
           <option>orbital_period</option>
           <option>diameter</option>
@@ -50,7 +48,7 @@ function SearchInput() {
         className="form-control"
         onChange={ (event) => setComparison(event.target.value) }
       >
-        <option disabled selected> -- select -- </option>
+        <option selected> </option>
         <option>maior que</option>
         <option>igual a</option>
         <option>menor que</option>
