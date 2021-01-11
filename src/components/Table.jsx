@@ -8,7 +8,8 @@ function Table() {
     searchTerm,
     filters: { filterByNumericValues },
   } = useContext(StarWarsContext).context;
-  const { column, comparison, value } = filterByNumericValues;
+  const finalIndex = filterByNumericValues.length - 1;
+  const { column, comparison, value } = filterByNumericValues[finalIndex];
 
   useEffect(() => {
     getPlanetList();
