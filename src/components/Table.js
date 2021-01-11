@@ -6,6 +6,28 @@ function Table() {
   const { planets, isLoading, filters } = useContext(StarWarsContext);
   // console.log(isLoading);
   // console.log(planets);
+
+  const filterComparison = (results) => {
+    let resultFiltered = results;
+
+    filters.filterByNumericValues.forEach((filter) => {
+      const { column } = filter;
+      const { valueComparison } = filter;
+
+      if (filter.comparison === 'maior que') {
+        resultFiltered = results
+          .filter((planet) => Number(planet[column]) > Number(valueComparison));
+      } else if (filter.comparison === 'menor que') {
+        resultFiltered = results.filter((planet) => (
+          Number(planet[column]) < Number(valueComparison)));
+      } else if (filter.comparison === 'igual a') {
+        resultFiltered = results.filter((planet) => (
+          Number(planet[column]) === Number(valueComparison)));
+      }
+    });
+    return resultFiltered;
+  };
+
   return (
     <div>
       { isLoading && 'Loading...' }
@@ -20,7 +42,7 @@ function Table() {
             <th>Climate</th>
             <th>Gravity</th>
             <th>Terrain</th>
-            <th>Surface_water</th>
+            <th>Surface Water</th>
             <th>Population</th>
             <th>Films</th>
             <th>Created</th>
@@ -29,7 +51,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          { planets.filter((planet) => (
+          { filterComparison(planets).filter((planet) => (
             planet.name.toLowerCase().includes(filters.filterByName.name.toLowerCase())
           )).map((planet) => (
             <tr key={ planet.name }>

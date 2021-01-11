@@ -6,7 +6,10 @@ import fetchStarWarsApi from '../services/StarWarsApi';
 function Provider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [filters, setFilters] = useState({ filterByName: { name: '' } });
+  const [filters, setFilters] = useState({
+    filterByName: { name: '' },
+    filterByNumericValues: [],
+  });
 
   useEffect(() => {
     setIsLoading(true);
