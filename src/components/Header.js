@@ -60,7 +60,7 @@ function Filter() {
         </label>
         {' '}
         <label htmlFor="comparison-filter">
-          Comparação:
+          Comparação :
           {' '}
           <select data-testid="comparison-filter" id="comparison-filter">
             <option hidden value="">
