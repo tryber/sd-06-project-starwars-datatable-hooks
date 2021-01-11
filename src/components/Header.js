@@ -2,7 +2,40 @@ import React, { useContext } from 'react';
 import SWContext from '../context/SWContext';
 
 const Header = () => {
-  const { setFilterByName, setFilterByNumericValue } = useContext(SWContext);
+  const activeFiltersTable = (
+    filterByNumericValues, avaliableFilters, rmFilterByNumeric,
+  ) => (
+    <ul className="list-group">
+      {filterByNumericValues.map(({ column, comparison, value }, index) => (
+        <li className="list-group-item" key={ column } data-testid="filter">
+          {`${column} ${comparison} ${value}`}
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={() => {
+              const newActiveFilters = filterByNumericValues;
+              newActiveFilters.splice(index, 1);
+              const newAvaliableFilters = avaliableFilters.columnFilters;
+              newAvaliableFilters[
+                newAvaliableFilters.findIndex((filter) => filter.name === column)
+              ].avaliable = true;
+              rmFilterByNumeric(newActiveFilters, newAvaliableFilters);
+            } }
+          >
+            X
+          </button>
+        </li>
+      ))}
+    </ul>
+  );
+
+  const {
+    setFilterByName,
+    setFilterByNumericValue,
+    rmFilterByNumeric,
+    searchControl,
+    filterByNumericValues,
+  } = useContext(SWContext);
 
   const options = [
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
@@ -18,15 +51,6 @@ const Header = () => {
       column: columnSelect,
       comparison: comparisonSelect,
       value: numberFilter,
-    };
-    setFilterByNumericValue(filtering);
-  };
-
-  const resetFilter = () => {
-    const filtering = {
-      column: '',
-      comparison: '',
-      value: '',
     };
     setFilterByNumericValue(filtering);
   };
@@ -81,13 +105,7 @@ const Header = () => {
       >
         Criar Filtro
       </button>
-      <button
-        data-testid="filter"
-        type="button"
-        onClick={ resetFilter }
-      >
-        X
-      </button>
+      {activeFiltersTable(filterByNumericValues, searchControl, rmFilterByNumeric)}
     </div>
   );
 };

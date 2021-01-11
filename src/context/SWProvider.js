@@ -20,20 +20,31 @@ const SWProvider = ({ children }) => {
     },
   });
 
+  const rmFilterByNumeric = (newActiveFilters, newAvaliableFilters) => setSearchControl(
+    {
+      ...searchControl,
+      filterByNumericValues: [...newActiveFilters],
+      avaliableFilters: {
+        ...searchControl.avaliableFilters, columnFilters: [...newAvaliableFilters],
+      },
+    },
+  );
+
   const setFilterByName = (name) => {
     setSearchControl({
-      ...searchControl,
-      filters: { filterByName: { name } },
+      filters: { ...searchControl.filters, filterByName: { name } },
     });
   };
 
   const setFilterByNumericValue = (filter) => {
     setSearchControl({
-      ...searchControl,
-      filters: { filterByNumericValues: [
-        ...searchControl.filters.filterByNumericValues,
-        filter,
-      ] },
+      filters: {
+        ...searchControl.filters,
+        filterByNumericValues: [
+          ...searchControl.filters.filterByNumericValues,
+          filter,
+        ],
+      },
     });
   };
 
@@ -44,14 +55,15 @@ const SWProvider = ({ children }) => {
     return false;
   };
 
-  // const filterByNumeric = (planet) => {
-  //   console.log(planet);
-  // };
+  const filterByNumeric = (planet) => {
+    console.log(planet);
+    console.log(searchControl.filters.filterByNumericValues);
+  };
 
   const filterPlanets = () => {
     setFilteredPlanets(
       planets.reduce((acc, planet) => {
-        if (filterPlanetName(planet)) {
+        if (filterPlanetName(planet) && filterByNumeric(planet)) {
           acc.push(<TableLine planet={ planet } key={ planet.name } />);
         }
         return acc;
@@ -79,6 +91,8 @@ const SWProvider = ({ children }) => {
     filteredPlanets,
     setFilterByName,
     setFilterByNumericValue,
+    searchControl,
+    rmFilterByNumeric,
   };
 
   return <SWContext.Provider value={ value }>{children}</SWContext.Provider>;
