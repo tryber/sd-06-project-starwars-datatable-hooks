@@ -256,23 +256,49 @@ const Table = () => {
             { stateFiltered || !stateStarWars.filters
               ? informationsPlanets().map((inform, i) => (
                 <tr key={ i }>
-                  {inform.map((info, index) => (
+                  <td data-testid="planet-name">{inform[0]}</td>
+                  <td>{inform[1]}</td>
+                  <td>{inform[2]}</td>
+                  <td>{inform[3]}</td>
+                  <td>{inform[4]}</td>
+                  <td>{inform[5]}</td>
+                  <td>{inform[6]}</td>
+                  <td>{inform[7]}</td>
+                  <td>{inform[8]}</td>
+                  <td>{inform[9]}</td>
+                  <td>{inform[10]}</td>
+                  <td>{inform[11]}</td>
+                  <td>{inform[12]}</td>
+                  {/* {inform.map((info, index) => (
                     <td
                       key={ index }
                       // data-testid="planet-name"
                     >
                       {info}
-                    </td>))}
+                    </td>))} */}
                 </tr>))
               : filterTable().map((inform, i) => (
                 <tr key={ i }>
-                  {inform.map((info, index) => (
+                  <td data-testid="planet-name">{inform[0]}</td>
+                  <td>{inform[1]}</td>
+                  <td>{inform[2]}</td>
+                  <td>{inform[3]}</td>
+                  <td>{inform[4]}</td>
+                  <td>{inform[5]}</td>
+                  <td>{inform[6]}</td>
+                  <td>{inform[7]}</td>
+                  <td>{inform[8]}</td>
+                  <td>{inform[9]}</td>
+                  <td>{inform[10]}</td>
+                  <td>{inform[11]}</td>
+                  <td>{inform[12]}</td>
+                  {/* {inform.map((info, index) => (
                     <td
                       key={ index }
                       data-testid="planet-name"
                     >
                       {info}
-                    </td>))}
+                    </td>))} */}
                 </tr>))}
           </tbody>
         </table>
