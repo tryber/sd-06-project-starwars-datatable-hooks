@@ -1,13 +1,13 @@
 import React from 'react';
 import './App.css';
-import Table from './component/tableWars';
-import Provider from './context/StarWarProvider';
+import InfoTable from './component/InfoTable';
+import Provider from './context/StarWarsProvider';
 
 function App() {
   return (
     <Provider>
       <div className="App">
-        <Table />
+        <InfoTable />
       </div>
     </Provider>
   );
