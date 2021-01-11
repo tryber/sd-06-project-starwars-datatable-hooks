@@ -6,6 +6,7 @@ import fetchPlanetList from '../services/starWarsService';
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [sort, setSort] = useState({});
   const [filters, setFilters] = useState({
     filterByNumericValues: [{
       column: '',
@@ -39,6 +40,8 @@ function StarWarsProvider({ children }) {
     setSearchTerm,
     filters,
     filterByNumber,
+    sort,
+    setSort,
   };
 
   return (

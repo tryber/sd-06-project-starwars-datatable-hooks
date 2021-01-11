@@ -5,6 +5,7 @@ function SearchInput() {
   const { searchTerm, setSearchTerm, filterByNumber, filters, setFilters } = useContext(
     StarWarsContext,
   ).context;
+
   const zero = 0;
   // Estados locais criados para usar no onChange
   const [column, setColumn] = useState('');
@@ -28,7 +29,7 @@ function SearchInput() {
     });
     setColumn('');
     setComparison('');
-    setValue(zero);
+    setValue();
   };
 
   return (
