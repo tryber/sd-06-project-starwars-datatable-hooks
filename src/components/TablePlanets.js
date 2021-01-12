@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function TablePlanets() {
@@ -8,6 +8,9 @@ function TablePlanets() {
     filters,
     setFilters,
   } = contexts;
+  const [planetFullFiltered, setplanetFullFiltered] = useState([]);
+  const [orderColumn, setOrderColumn] = useState('Name');
+  const [orderDirection, setOrderDirection] = useState('ASC');
 
   const headersTable = [
     'Name',
@@ -53,8 +56,14 @@ function TablePlanets() {
         return true;
       });
     }
-    return filterPlanets;
+    const planetsFiltered = filterPlanets.filter((planet) => planet.name.toLowerCase()
+      .includes(filters.filterByName.name.toLowerCase()));
+    return setplanetFullFiltered(planetsFiltered);
   };
+
+  useEffect(() => {
+    setplanetFullFiltered(planets);
+  }, [planets]);
 
   useEffect(() => {
     numericFilterComparsion();
@@ -69,49 +78,45 @@ function TablePlanets() {
     });
   };
 
-  const handleSelectedColumn = (selectedColumn) => {
-    console.log(selectedColumn);
+  const orderUpdate = () => {
     setFilters((prevState) => (
       { ...prevState,
         order: {
-          ...prevState.order,
-          column: selectedColumn,
-        },
-      }
-    ));
-  };
-
-  const orderTypeUpdate = (typeOrder) => {
-    console.log('tipo de ordenação: ', typeOrder);
-    setFilters((prevState) => (
-      { ...prevState,
-        order: {
-          ...prevState.order,
-          sort: typeOrder,
+          column: orderColumn,
+          sort: orderDirection,
         },
       }
     ));
   };
 
   const sortPlanets = () => {
-    console.log('Sort planets diz: Hello!');
-    const sortColumnPlanets = planets;
-    console.log('cópia de planets: ', sortColumnPlanets);
     const negativeOne = -1;
     const positiveOne = 1;
-    const zero = 0;
-    const testingSort = sortColumnPlanets.sort((a, b) => {
-      const columnSelect = filters.order.column;
-      console.log('O que columnSelect: ', columnSelect);
-      if (a.columnSelect > b.columnSelect) {
-        return positiveOne;
-      }
-      if (a.columnSelect < b.columnSelect) {
+
+    const orderType = filters.order.sort;
+    console.log('tipo de ordenação é: ', orderType);
+    const columnSelect = filters.order.column.toLowerCase().replace(' ', '_');
+    const isNumeric = ['Rotation Period', 'Orbital Period', 'Surface Water', 'Population']
+      .includes(filters.order.column);
+    console.log('O que columnSelect: ', columnSelect);
+
+    if (isNumeric) {
+      planetFullFiltered.sort((a, b) => (
+        Number(a[columnSelect]) - Number(b[columnSelect])
+      ));
+    } else {
+      planetFullFiltered.sort((a, b) => {
+        if (a[columnSelect] >= b[columnSelect]) {
+          return positiveOne;
+        }
         return negativeOne;
-      }
-      return zero;
-    });
-    console.log('planetas ordenados: ', testingSort);
+      });
+    }
+    if (orderType === 'DESC') {
+      return planetFullFiltered.reverse();
+    }
+    console.log('planetas ordenados', planetFullFiltered);
+    return planetFullFiltered;
   };
 
   return (
@@ -132,7 +137,7 @@ function TablePlanets() {
       </div>
       <select
         data-testid="column-sort"
-        onClick={ ({ target }) => handleSelectedColumn(target.value) }
+        onClick={ ({ target }) => setOrderColumn(target.value) }
       >
         {headersTable.map((headers) => (
           <option
@@ -149,7 +154,7 @@ function TablePlanets() {
           id="asc"
           type="radio"
           value="ASC"
-          onChange={ ({ target }) => orderTypeUpdate(target.value) }
+          onChange={ ({ target }) => setOrderDirection(target.value) }
           data-testid="column-sort-input-asc"
         />
         Ascendente
@@ -160,7 +165,7 @@ function TablePlanets() {
           id="dsc"
           type="radio"
           value="DESC"
-          onChange={ ({ target }) => orderTypeUpdate(target.value) }
+          onChange={ ({ target }) => setOrderDirection(target.value) }
           data-testid="column-sort-input-desc"
         />
         Descentende
@@ -168,7 +173,7 @@ function TablePlanets() {
       <button
         type="button"
         data-testid="column-sort-button"
-        onClick={ () => sortPlanets() }
+        onClick={ () => orderUpdate() }
       >
         Ordenar
       </button>
@@ -180,9 +185,8 @@ function TablePlanets() {
           </tr>
         </thead>
         <tbody>
-          {numericFilterComparsion()
-            .filter((planet) => planet.name.toLowerCase()
-              .includes(filters.filterByName.name.toLowerCase())).map(
+          {sortPlanets()
+            .map(
               (
                 {
                   name,
@@ -202,7 +206,7 @@ function TablePlanets() {
                 index,
               ) => (
                 <tr key={ index }>
-                  <td>{name}</td>
+                  <td data-testid="planet-name">{name}</td>
                   <td>{rotationPeriod}</td>
                   <td>{orbitalPeriod}</td>
                   <td>{diameter}</td>
@@ -211,7 +215,7 @@ function TablePlanets() {
                   <td>{terrain}</td>
                   <td>{surfaceWater}</td>
                   <td>{population}</td>
-                  <td>{films.length}</td>
+                  <td>{films}</td>
                   <td>{created}</td>
                   <td>{edited}</td>
                   <td>{url}</td>
