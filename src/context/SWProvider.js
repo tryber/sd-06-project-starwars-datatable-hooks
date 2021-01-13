@@ -12,6 +12,10 @@ function StarWarsProvider({ children }) {
     comparison: '',
     value: '',
   });
+  const [orderFilter, setOrderFilter] = useState({
+    column: '',
+    sort: '',
+  });
 
   const requestPlanetsAPI = async () => {
     const responseAPI = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
@@ -36,10 +40,10 @@ function StarWarsProvider({ children }) {
     headers,
     setFilterName,
     setFilterNumber,
+    orderFilter,
+    setOrderFilter,
     filters: {
-      filterByName: {
-        name: filterName,
-      },
+      filterByName: { name: filterName },
       filterByNumericValues: [filterNumber],
     },
   };
