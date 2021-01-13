@@ -7,6 +7,7 @@ function Table() {
   const { name } = filterByName;
   const { column, comparison, value } = filterByNumericValues[0];
   const [orderBy, setOrderby] = useState({ column: 'name', sort: '' });
+  const [sort, setSort] = useState({ column: 'name', sort: 'ASC' });
   const zero = 0;
   if (data.length && headers.length > zero) {
     setIsLoading(false);
@@ -87,6 +88,13 @@ function Table() {
           </option>
         ))}
       </select>
+      <button
+        type="button"
+        data-testid="column-sort-button"
+        onClick={ () => setSort(orderBy) }
+      >
+        Ordernar
+      </button>
       <table>
         <tr>
           {isLoading ? null : headers.map((tHead) => <th key={ tHead }>{tHead}</th>)}
