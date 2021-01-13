@@ -14,7 +14,9 @@ function Table() {
     callAPI();
   }, []);
 
-  if (data.length === 0) {
+  const zero = 0;
+
+  if (data.length === zero) {
     return <h1>Loading...</h1>;
   }
 
@@ -35,25 +37,23 @@ function Table() {
         <th>edited</th>
         <th>url</th>
       </tr>
-      {data.map((planet) => {
-        return (
-          <tr key="a">
-            <td>{planet.name}</td>
-            <td>{planet.rotation_period}</td>
-            <td>{planet.orbital_period}</td>
-            <td>{planet.diameter}</td>
-            <td>{planet.climate}</td>
-            <td>{planet.gravity}</td>
-            <td>{planet.terrain}</td>
-            <td>{planet.surface_water}</td>
-            <td>{planet.population}</td>
-            <td>{planet.films}</td>
-            <td>{planet.created}</td>
-            <td>{planet.edited}</td>
-            <td>{planet.url}</td>
-          </tr>
-        );
-      })}
+      {data.map((planet) => (
+        <tr key="a">
+          <td>{planet.name}</td>
+          <td>{planet.rotation_period}</td>
+          <td>{planet.orbital_period}</td>
+          <td>{planet.diameter}</td>
+          <td>{planet.climate}</td>
+          <td>{planet.gravity}</td>
+          <td>{planet.terrain}</td>
+          <td>{planet.surface_water}</td>
+          <td>{planet.population}</td>
+          <td>{planet.films}</td>
+          <td>{planet.created}</td>
+          <td>{planet.edited}</td>
+          <td>{planet.url}</td>
+        </tr>
+      ))}
     </table>
   );
 }
