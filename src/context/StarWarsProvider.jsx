@@ -5,9 +5,12 @@ import fetchPlanetList from '../services/starWarsService';
 
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
+  // const [searchTerm, setSearchTerm] = useState('');
   const [sort, setSort] = useState({});
   const [filters, setFilters] = useState({
+    filterByName: {
+      name: '',
+    },
     filterByNumericValues: [{
       column: '',
       comparison: '',
@@ -17,8 +20,8 @@ function StarWarsProvider({ children }) {
 
   const filterByNumber = (column, comparison, value) => {
     setFilters({
+      ...filters,
       filterByNumericValues: [
-        ...filters.filterByNumericValues,
         {
           column,
           comparison,
@@ -33,13 +36,28 @@ function StarWarsProvider({ children }) {
     setData(planetList);
   };
 
+  const getSearchName = (search) => {
+    setFilters({
+      ...filters,
+      filterByName: {
+        name: search,
+      },
+    });
+  };
+
   const context = {
     data,
     getPlanetList,
-    searchTerm,
-    setSearchTerm,
+    getSearchName,
+    // searchTerm,
+    // setSearchTerm,
     filters,
+    setFilters,
     filterByNumber,
+    name: filters.filterByName.name,
+    column: filters.filterByNumericValues[0].column,
+    comparison: filters.filterByNumericValues[0].comparison,
+    value: filters.filterByNumericValues[0].value,
     sort,
     setSort,
   };

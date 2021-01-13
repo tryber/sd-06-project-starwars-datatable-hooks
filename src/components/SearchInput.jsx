@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function SearchInput() {
-  const { searchTerm, setSearchTerm, filterByNumber, filters, setFilters } = useContext(
+  const { getSearchName, filterByNumber, filters, setFilters } = useContext(
     StarWarsContext,
   ).context;
 
@@ -23,13 +23,13 @@ function SearchInput() {
         {
           column: '',
           comparison: '',
-          value: 0,
+          value: '',
         },
       ],
     });
     setColumn('');
     setComparison('');
-    setValue();
+    setValue('');
   };
 
   return (
@@ -42,52 +42,52 @@ function SearchInput() {
           type="text"
           name="search"
           id="search"
-          onChange={ (event) => setSearchTerm(event.target.value) }
-          value={ searchTerm }
+          onChange={ (event) => getSearchName(event.target.value) }
         />
       </label>
-      <label htmlFor="filter-column">
-        Filters:
+      <div data-testid="filter">
+        <label htmlFor="filter-column">
+          Filters:
+          <select
+            data-testid="column-filter"
+            className="form-control"
+            value={ column }
+            onChange={ (event) => setColumn(event.target.value) }
+          >
+            <option disabled selected> -- select -- </option>
+            <option>population</option>
+            <option>orbital_period</option>
+            <option>diameter</option>
+            <option>rotation_period</option>
+            <option>surface_water</option>
+          </select>
+        </label>
         <select
-          data-testid="column-filter"
+          data-testid="comparison-filter"
+          value={ comparison }
           className="form-control"
-          value={ column }
-          onChange={ (event) => setColumn(event.target.value) }
+          onChange={ (event) => setComparison(event.target.value) }
         >
           <option disabled selected> -- select -- </option>
-          <option>population</option>
-          <option>orbital_period</option>
-          <option>diameter</option>
-          <option>rotation_period</option>
-          <option>surface_water</option>
+          <option>maior que</option>
+          <option>igual a</option>
+          <option>menor que</option>
         </select>
-      </label>
-      <select
-        data-testid="comparison-filter"
-        value={ comparison }
-        className="form-control"
-        onChange={ (event) => setComparison(event.target.value) }
-      >
-        <option disabled selected> -- select -- </option>
-        <option>maior que</option>
-        <option>igual a</option>
-        <option>menor que</option>
-      </select>
-      <input
-        data-testid="value-filter"
-        type="number"
-        className="form-control"
-        value={ value }
-        onChange={ (event) => setValue(event.target.value) }
-      />
-      <button
-        className="btn btn-secondary"
-        data-testid="filter"
-        type="button"
-        onClick={ removeFilter }
-      >
-        X
-      </button>
+        <input
+          data-testid="value-filter"
+          type="number"
+          className="form-control"
+          value={ value }
+          onChange={ (event) => setValue(event.target.value) }
+        />
+        <button
+          className="btn btn-secondary"
+          type="button"
+          onClick={ removeFilter }
+        >
+          X
+        </button>
+      </div>
       <button
         type="button"
         data-testid="button-filter"

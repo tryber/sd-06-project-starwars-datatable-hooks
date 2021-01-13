@@ -5,13 +5,13 @@ function Table() {
   const {
     data,
     getPlanetList,
-    searchTerm,
+    name,
     setSort,
     sort,
-    filters: { filterByNumericValues },
+    column,
+    comparison,
+    value,
   } = useContext(StarWarsContext).context;
-  const finalIndex = filterByNumericValues.length - 1;
-  const { column, comparison, value } = filterByNumericValues[finalIndex];
 
   const [orderBy, setOrderby] = useState({ column: 'name', sort: '' });
 
@@ -20,34 +20,18 @@ function Table() {
     setSort({ column: 'name', sort: 'ASC' });
   }, []);
 
-  const filterData = () => {
-    if (searchTerm !== '') {
-      const filtered = data.filter((e) => e.name.toLowerCase()
-        .includes(searchTerm));
-      return filtered;
-    }
-    if (column !== '') {
-      const filterInputNumbers = data.filter((element) => {
-        if (
-          comparison === 'maior que' && Number(element[column]) > Number(value)
-        ) {
-          return element;
-        }
-        if (
-          comparison === 'menor que' && Number(element[column]) < Number(value)
-        ) {
-          return element;
-        }
-        if (
-          comparison === 'igual a' && Number(element[column]) === Number(value)
-        ) {
-          return element;
-        }
-        return undefined;
-      });
-      return filterInputNumbers;
-    }
-    return data;
+  // Passei a função direta na linha 143
+  // const filterData = () => {
+  //   const filtered = data.filter((e) => e.name.toLowerCase()
+  //     .includes(name.toLowerCase()));
+  //   return filtered;
+  // };
+
+  const numericFilter = (element) => {
+    if (comparison === '') return true;
+    if (comparison === 'maior que') return Number(element[column]) > Number(value);
+    if (comparison === 'menor que') return Number(element[column]) < Number(value);
+    if (comparison === 'igual a') return Number(element[column]) === Number(value);
   };
 
   const numericColumnsOptions = [
@@ -154,25 +138,32 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {filterData().sort(
-            sort.sort === 'ASC' || sort.sort === '' ? orderCrescent : orderDecrescent,
-          ).map((planet) => (
-            <tr key={ planet.name }>
-              <td>{planet.name}</td>
-              <td>{planet.rotation_period}</td>
-              <td>{planet.orbital_period}</td>
-              <td>{planet.diameter}</td>
-              <td>{planet.climate}</td>
-              <td>{planet.gravity}</td>
-              <td>{planet.terrain}</td>
-              <td>{planet.surface_water}</td>
-              <td>{planet.population}</td>
-              <td>{planet.films}</td>
-              <td>{planet.created}</td>
-              <td>{planet.edited}</td>
-              <td>{planet.url}</td>
-            </tr>
-          ))}
+          {data
+            .filter((element) => numericFilter(element))
+            .filter((e) => e.name.toLowerCase()
+              .includes(name.toLowerCase()))
+            .sort(
+              sort.sort === 'ASC' || sort.sort === ''
+                ? orderCrescent
+                : orderDecrescent,
+            )
+            .map((planet) => (
+              <tr key={ planet.name }>
+                <td>{planet.name}</td>
+                <td>{planet.rotation_period}</td>
+                <td>{planet.orbital_period}</td>
+                <td>{planet.diameter}</td>
+                <td>{planet.climate}</td>
+                <td>{planet.gravity}</td>
+                <td>{planet.terrain}</td>
+                <td>{planet.surface_water}</td>
+                <td>{planet.population}</td>
+                <td>{planet.films}</td>
+                <td>{planet.created}</td>
+                <td>{planet.edited}</td>
+                <td>{planet.url}</td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </section>
