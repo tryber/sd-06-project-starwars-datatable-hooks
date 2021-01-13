@@ -35,6 +35,30 @@ function Table() {
     return false;
   };
 
+  const numericColumnsOptions = [
+    '',
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
+
+  const orderCrescent = (a, b) => {
+    const subtraction = -1;
+    if (numericColumnsOptions.includes(sort.column)) {
+      return a[sort.column] - b[sort.column];
+    }
+    return a[sort.column] > b[sort.column] ? 1 : subtraction;
+  };
+  const orderDecrescent = (a, b) => {
+    const subtraction = -1;
+    if (numericColumnsOptions.includes(sort.column)) {
+      return b[sort.column] - a[sort.column];
+    }
+    return b[sort.column] < a[sort.column] ? subtraction : 1;
+  };
+
   const handleRadio = (event) => {
     setOrderby({ ...orderBy, sort: event.target.value });
   };
@@ -104,7 +128,13 @@ function Table() {
             ? 'Loading'
             : data
               .filter((planets) => filterOptions(planets))
-              .filter((planet) => planet.name.toLowerCase().includes(name.toLowerCase()))
+              .filter((planet) => planet.name.toLowerCase()
+                .includes(name.toLowerCase()))
+              .sort(
+                sort.sort === 'ASC' || sort.sort === ''
+                  ? orderCrescent
+                  : orderDecrescent,
+              )
               .map((planet) => (
                 <tr key={ planet.name }>
                   <td data-testid="planet-name">{planet.name}</td>
