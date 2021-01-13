@@ -13,9 +13,9 @@ function PlanetsProvider({ children }) {
       sort: 'ASC',
     },
   });
-  const [comparison, setComparison] = useState();
+  const [comparison, setComparison] = useState('maior que');
   const [filterNumber, setFilterNumber] = useState();
-  const [wichColumn, setWichColumn] = useState();
+  const [wichColumn, setWichColumn] = useState('population');
 
   useEffect(() => {
     async function requestPlanets() {

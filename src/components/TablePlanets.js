@@ -8,24 +8,23 @@ function TablePlanets() {
     filters,
     setFilters,
   } = contexts;
-  const [planetFullFiltered, setplanetFullFiltered] = useState([]);
   const [orderColumn, setOrderColumn] = useState('Name');
   const [orderDirection, setOrderDirection] = useState('ASC');
 
   const headersTable = [
-    'Name',
-    'Rotation Period',
-    'Orbital Period',
-    'Diameter',
-    'Climate',
-    'Gravity',
-    'Terrain',
-    'Surface Water',
-    'Population',
-    'Films',
-    'Created',
-    'Edited',
-    'Url',
+    'name',
+    'rotation_period',
+    'orbital_period',
+    'diameter',
+    'climate',
+    'gravity',
+    'terrain',
+    'surface_water',
+    'population',
+    'films',
+    'created',
+    'edited',
+    'url',
   ];
 
   const numericFilterComparsion = () => {
@@ -56,14 +55,8 @@ function TablePlanets() {
         return true;
       });
     }
-    const planetsFiltered = filterPlanets.filter((planet) => planet.name.toLowerCase()
-      .includes(filters.filterByName.name.toLowerCase()));
-    return setplanetFullFiltered(planetsFiltered);
+    return filterPlanets;
   };
-
-  useEffect(() => {
-    setplanetFullFiltered(planets);
-  }, [planets]);
 
   useEffect(() => {
     numericFilterComparsion();
@@ -96,16 +89,17 @@ function TablePlanets() {
     const orderType = filters.order.sort;
     console.log('tipo de ordenação é: ', orderType);
     const columnSelect = filters.order.column.toLowerCase().replace(' ', '_');
-    const isNumeric = ['Rotation Period', 'Orbital Period', 'Surface Water', 'Population']
+    const isNumeric = ['rotation_period', 'orbital_period', 'surface_water', 'population']
       .includes(filters.order.column);
     console.log('O que columnSelect: ', columnSelect);
 
+    const filterPlanets = numericFilterComparsion();
     if (isNumeric) {
-      planetFullFiltered.sort((a, b) => (
+      filterPlanets.sort((a, b) => (
         Number(a[columnSelect]) - Number(b[columnSelect])
       ));
     } else {
-      planetFullFiltered.sort((a, b) => {
+      filterPlanets.sort((a, b) => {
         if (a[columnSelect] >= b[columnSelect]) {
           return positiveOne;
         }
@@ -113,10 +107,9 @@ function TablePlanets() {
       });
     }
     if (orderType === 'DESC') {
-      return planetFullFiltered.reverse();
+      return filterPlanets.reverse();
     }
-    console.log('planetas ordenados', planetFullFiltered);
-    return planetFullFiltered;
+    return filterPlanets;
   };
 
   return (
@@ -185,7 +178,8 @@ function TablePlanets() {
           </tr>
         </thead>
         <tbody>
-          {sortPlanets()
+          {sortPlanets().filter((planet) => planet.name.toLowerCase()
+            .includes(filters.filterByName.name.toLowerCase()))
             .map(
               (
                 {
