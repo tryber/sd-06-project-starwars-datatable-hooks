@@ -3,7 +3,7 @@ import StarWarsContext from '../context/SWContext';
 
 function Filter() {
   const {
-    setFilterName, setFilterNumber, setOrderFilter,
+    setFilterName, setFilterNumber,
   } = useContext(StarWarsContext);
 
   const handleChange = ({ target }) => {
@@ -20,16 +20,6 @@ function Filter() {
       value: numberFilter,
     };
     setFilterNumber(filtering);
-  };
-
-  const handleRadioChange = () => {
-    const radioSelected = document.getElementById('order').value;
-    const sortValueSelected = document.getElementById('sortValue').value;
-    const orderSet = {
-      column: sortValueSelected,
-      sort: radioSelected,
-    };
-    setOrderFilter(orderSet);
   };
 
   const resetFilter = () => {
@@ -97,55 +87,6 @@ function Filter() {
       <button data-testid="button-filter" type="button" onClick={ handleClick }>
         Filtrar
       </button>
-      {' '}
-      <label htmlFor="sortValue">
-        Ordene por coluna:
-        {' '}
-        <select
-          id="sortValue"
-          name="comparison"
-          className="select-value"
-          data-testid="column-sort"
-          onChange={ handleRadioChange }
-        >
-          <option hidden value="">
-            Selecione
-          </option>
-          <option>population</option>
-          <option>orbital_period</option>
-          <option>diameter</option>
-          <option>rotation_period</option>
-          <option>surface_water</option>
-        </select>
-      </label>
-      {' '}
-      <label className="label-radio" htmlFor="order">
-        {' '}
-        ASC
-        {' '}
-        <input
-          id="order"
-          type="radio"
-          name="order"
-          value="ASC"
-          data-testid="column-sort-input-asc"
-          onChange={ handleRadioChange }
-        />
-      </label>
-      {' '}
-      <label className="label-radio" htmlFor="order">
-        {' '}
-        DESC
-        {' '}
-        <input
-          id="order"
-          type="radio"
-          name="order"
-          value="DESC"
-          data-testid="column-sort-input-desc"
-          onChange={ handleRadioChange }
-        />
-      </label>
     </div>
   );
 }

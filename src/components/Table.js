@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context/SWContext';
 
 function Table() {
@@ -6,6 +6,7 @@ function Table() {
   const { filterByName, filterByNumericValues } = filters;
   const { name } = filterByName;
   const { column, comparison, value } = filterByNumericValues[0];
+  const [orderBy, setOrderby] = useState({ column: 'name', sort: '' });
   const zero = 0;
   if (data.length && headers.length > zero) {
     setIsLoading(false);
@@ -33,8 +34,59 @@ function Table() {
     return false;
   };
 
+  const handleRadio = (event) => {
+    setOrderby({ ...orderBy, sort: event.target.value });
+  };
+
+  const handleSelect = (event) => {
+    setOrderby({ ...orderBy, column: event.target.value });
+  };
+
+  const dropBox = [
+    'name',
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+    'climate',
+    'gravity',
+    'terrain',
+  ];
+
   return (
     <div>
+      <div>
+        <label htmlFor="ASC">
+          <input
+            value="ASC"
+            type="radio"
+            data-testid="column-sort-input-asc"
+            name="radio"
+            id="ASC"
+            onChange={ handleRadio }
+          />
+          ASC
+        </label>
+        <label htmlFor="DESC">
+          <input
+            value="DESC"
+            type="radio"
+            data-testid="column-sort-input-desc"
+            name="radio"
+            id="DESC"
+            onChange={ handleRadio }
+          />
+          DESC
+        </label>
+      </div>
+      <select data-testid="column-sort" onChange={ handleSelect }>
+        {dropBox.map((col) => (
+          <option key={ col } value={ col }>
+            {col}
+          </option>
+        ))}
+      </select>
       <table>
         <tr>
           {isLoading ? null : headers.map((tHead) => <th key={ tHead }>{tHead}</th>)}
