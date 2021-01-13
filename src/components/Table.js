@@ -3,9 +3,9 @@ import StarWarsContext from '../context/StarWarsContext';
 import './TableCSS.css';
 
 function Table() {
-  const { planets, isLoading, filters } = useContext(StarWarsContext);
-  // console.log(isLoading);
-  // console.log(planets);
+  const { planets, isLoading,
+    filters:
+    { order }, filters } = useContext(StarWarsContext);
 
   const filterComparison = (results) => {
     let resultFiltered = results;
@@ -26,6 +26,32 @@ function Table() {
       }
     });
     return resultFiltered;
+  };
+
+  const sortSelectedColumn = (a, b) => {
+    let result;
+    const lessOne = -1;
+
+    const columnsWithNumbers = () => (order.column === 'rotation_period'
+    || order.column === 'orbital_period' || order.column === 'surface_water'
+    || order.column === 'diameter' || order.column === 'population');
+
+    if (order.sort === 'ASC' && !columnsWithNumbers()) {
+      result = (a[order.column] > b[order.column] ? 1 : lessOne);
+    }
+    if (order.sort === 'DESC' && columnsWithNumbers()) {
+      result = (parseInt(a[order.column], 10) < parseInt(b[order.column], 10)
+        ? 1 : lessOne);
+    }
+    if (order.sort === 'ASC' && columnsWithNumbers()) {
+      result = (parseInt(a[order.column], 10) > parseInt(b[order.column], 10)
+        ? 1 : lessOne);
+    }
+    if (order.sort === 'DESC' && !columnsWithNumbers()) {
+      result = (a[order.column] < b[order.column] ? 1 : lessOne);
+    }
+
+    return result;
   };
 
   return (
@@ -50,25 +76,28 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          { filterComparison(planets).filter((planet) => (
-            planet.name.toLowerCase().includes(filters.filterByName.name.toLowerCase())
-          )).map((planet) => (
-            <tr key={ planet.name }>
-              <td>{ planet.name }</td>
-              <td>{ planet.rotation_period }</td>
-              <td>{ planet.orbital_period }</td>
-              <td>{ planet.diameter }</td>
-              <td>{ planet.climate }</td>
-              <td>{ planet.gravity }</td>
-              <td>{ planet.terrain }</td>
-              <td>{ planet.surface_water }</td>
-              <td>{ planet.population }</td>
-              <td>{ planet.films }</td>
-              <td>{ planet.created }</td>
-              <td>{ planet.edited }</td>
-              <td>{ planet.url }</td>
-            </tr>
-          ))}
+          { filterComparison(planets)
+            .filter((planet) => (
+              planet.name.toLowerCase()
+                .includes(filters.filterByName.name.toLowerCase())))
+            .sort((a, b) => sortSelectedColumn(a, b))
+            .map((planet) => (
+              <tr key={ planet.name }>
+                <td>{ planet.name }</td>
+                <td>{ planet.rotation_period }</td>
+                <td>{ planet.orbital_period }</td>
+                <td>{ planet.diameter }</td>
+                <td>{ planet.climate }</td>
+                <td>{ planet.gravity }</td>
+                <td>{ planet.terrain }</td>
+                <td>{ planet.surface_water }</td>
+                <td>{ planet.population }</td>
+                <td>{ planet.films }</td>
+                <td>{ planet.created }</td>
+                <td>{ planet.edited }</td>
+                <td>{ planet.url }</td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>

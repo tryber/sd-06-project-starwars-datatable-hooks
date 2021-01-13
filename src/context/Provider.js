@@ -9,6 +9,10 @@ function Provider({ children }) {
   const [filters, setFilters] = useState({
     filterByName: { name: '' },
     filterByNumericValues: [],
+    order: {
+      column: 'Name',
+      sort: 'ASC',
+    },
   });
 
   useEffect(() => {
