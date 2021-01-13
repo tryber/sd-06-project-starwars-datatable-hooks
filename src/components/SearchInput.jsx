@@ -33,7 +33,7 @@ function SearchInput() {
   };
 
   return (
-    <div className="form-inline">
+    <div className="form">
       <label htmlFor="search">
         Search the planet:
         <input
@@ -45,7 +45,7 @@ function SearchInput() {
           onChange={ (event) => getSearchName(event.target.value) }
         />
       </label>
-      <div data-testid="filter">
+      <div data-testid="filter" className="form-inline">
         <label htmlFor="filter-column">
           Filters:
           <select
@@ -87,15 +87,15 @@ function SearchInput() {
         >
           X
         </button>
+        <button
+          type="button"
+          data-testid="button-filter"
+          onClick={ addFilters }
+          className="btn btn-outline-secondary"
+        >
+          Filter
+        </button>
       </div>
-      <button
-        type="button"
-        data-testid="button-filter"
-        onClick={ addFilters }
-        className="btn btn-outline-secondary"
-      >
-        Filter
-      </button>
     </div>
   );
 }
