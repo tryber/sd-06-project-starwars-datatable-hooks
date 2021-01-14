@@ -37,7 +37,8 @@ function Table() {
     || order.column === 'diameter' || order.column === 'population');
 
     if (order.sort === 'ASC' && !columnsWithNumbers()) {
-      result = (a[order.column] > b[order.column] ? 1 : lessOne);
+      result = (a.name > b.name ? 1 : lessOne);
+      // result = (a[order.column] > b[order.column] ? 1 : lessOne);
     }
     if (order.sort === 'DESC' && columnsWithNumbers()) {
       result = (parseInt(a[order.column], 10) < parseInt(b[order.column], 10)
@@ -50,7 +51,6 @@ function Table() {
     if (order.sort === 'DESC' && !columnsWithNumbers()) {
       result = (a[order.column] < b[order.column] ? 1 : lessOne);
     }
-
     return result;
   };
 
