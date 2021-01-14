@@ -10,7 +10,7 @@ function TablePlanets() {
   } = contexts;
   const [orderColumn, setOrderColumn] = useState('Name');
   const [orderDirection, setOrderDirection] = useState('ASC');
-
+  const [showTable, setShowTable] = useState(true);
   const headersTable = [
     'name',
     'rotation_period',
@@ -71,7 +71,18 @@ function TablePlanets() {
     });
   };
 
+  const storageSelectedColumn = (column) => {
+    setOrderColumn(column);
+    setShowTable(false);
+  };
+
+  const storageSelectedSort = (sortType) => {
+    setOrderDirection(sortType);
+    setShowTable(false);
+  };
+
   const orderUpdate = () => {
+    setShowTable(true);
     setFilters((prevState) => (
       { ...prevState,
         order: {
@@ -88,7 +99,7 @@ function TablePlanets() {
 
     const orderType = filters.order.sort;
     console.log('tipo de ordenação é: ', orderType);
-    const columnSelect = filters.order.column.toLowerCase().replace(' ', '_');
+    const columnSelect = filters.order.column.toLowerCase();
     const isNumeric = ['rotation_period', 'orbital_period', 'surface_water', 'population']
       .includes(filters.order.column);
     console.log('O que columnSelect: ', columnSelect);
@@ -130,7 +141,7 @@ function TablePlanets() {
       </div>
       <select
         data-testid="column-sort"
-        onClick={ ({ target }) => setOrderColumn(target.value) }
+        onChange={ ({ target }) => storageSelectedColumn(target.value) }
       >
         {headersTable.map((headers) => (
           <option
@@ -147,7 +158,7 @@ function TablePlanets() {
           id="asc"
           type="radio"
           value="ASC"
-          onChange={ ({ target }) => setOrderDirection(target.value) }
+          onChange={ ({ target }) => storageSelectedSort(target.value) }
           data-testid="column-sort-input-asc"
         />
         Ascendente
@@ -158,7 +169,7 @@ function TablePlanets() {
           id="dsc"
           type="radio"
           value="DESC"
-          onChange={ ({ target }) => setOrderDirection(target.value) }
+          onChange={ ({ target }) => storageSelectedSort(target.value) }
           data-testid="column-sort-input-desc"
         />
         Descentende
@@ -178,7 +189,7 @@ function TablePlanets() {
           </tr>
         </thead>
         <tbody>
-          {sortPlanets().filter((planet) => planet.name.toLowerCase()
+          {(showTable ? sortPlanets().filter((planet) => planet.name.toLowerCase()
             .includes(filters.filterByName.name.toLowerCase()))
             .map(
               (
@@ -215,7 +226,7 @@ function TablePlanets() {
                   <td>{url}</td>
                 </tr>
               ),
-            )}
+            ) : <p>Aguardando ordenação</p>)}
         </tbody>
       </table>
     </div>
