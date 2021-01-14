@@ -4,7 +4,14 @@ import getAPI from '../services/api/api';
 import context from '../services/context/context';
 
 function Table() {
-  const { data, setData } = useContext(context);
+  const {
+    data,
+    setData,
+    filtered,
+    nameFilter,
+    applyNameFilter,
+    filteredResults,
+  } = useContext(context);
 
   async function callAPI() {
     await setData(await getAPI());
@@ -20,45 +27,67 @@ function Table() {
     return <h1>Loading...</h1>;
   }
 
-  return (
-    <table>
-      <thead>
-        <tr>
-          <th>name</th>
-          <th>rotation period</th>
-          <th>orbital period</th>
-          <th>diameter</th>
-          <th>climate</th>
-          <th>gravity</th>
-          <th>terrain</th>
-          <th>surface water</th>
-          <th>population</th>
-          <th>films</th>
-          <th>created</th>
-          <th>edited</th>
-          <th>url</th>
+  const TableHead = (
+    <thead>
+      <tr>
+        <th>name</th>
+        <th>rotation period</th>
+        <th>orbital period</th>
+        <th>diameter</th>
+        <th>climate</th>
+        <th>gravity</th>
+        <th>terrain</th>
+        <th>surface water</th>
+        <th>population</th>
+        <th>films</th>
+        <th>created</th>
+        <th>edited</th>
+        <th>url</th>
+      </tr>
+    </thead>
+  );
+
+  function TableBody() {
+    let temp = [];
+    if (filtered) temp = filteredResults;
+    else temp = data;
+
+    return (
+      temp.map((planet) => (
+        <tr key="a">
+          <td>{planet.name}</td>
+          <td>{planet.rotation_period}</td>
+          <td>{planet.orbital_period}</td>
+          <td>{planet.diameter}</td>
+          <td>{planet.climate}</td>
+          <td>{planet.gravity}</td>
+          <td>{planet.terrain}</td>
+          <td>{planet.surface_water}</td>
+          <td>{planet.population}</td>
+          <td>{planet.films}</td>
+          <td>{planet.created}</td>
+          <td>{planet.edited}</td>
+          <td>{planet.url}</td>
         </tr>
-      </thead>
-      <tbody>
-        {data.map((planet) => (
-          <tr key="a">
-            <td>{planet.name}</td>
-            <td>{planet.rotation_period}</td>
-            <td>{planet.orbital_period}</td>
-            <td>{planet.diameter}</td>
-            <td>{planet.climate}</td>
-            <td>{planet.gravity}</td>
-            <td>{planet.terrain}</td>
-            <td>{planet.surface_water}</td>
-            <td>{planet.population}</td>
-            <td>{planet.films}</td>
-            <td>{planet.created}</td>
-            <td>{planet.edited}</td>
-            <td>{planet.url}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+      ))
+    );
+  }
+
+  return (
+    <>
+      <input
+        type="text"
+        data-testid="name-filter"
+        onChange={ ({ target }) => applyNameFilter(target.value) }
+        value={ nameFilter }
+      />
+      <table>
+        { TableHead }
+        <tbody>
+          { TableBody() }
+        </tbody>
+      </table>
+    </>
   );
 }
 
