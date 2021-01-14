@@ -5,7 +5,6 @@ import SearchInput from './components/SearchInput';
 import Search from './components/Search';
 
 function App() {
-
   return (
     <StarWarsProvider>
       <SearchInput />

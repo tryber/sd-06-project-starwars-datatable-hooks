@@ -9,7 +9,7 @@ export default function Table() {
   } = useContext(StarWarsContext);
 
   const byValue = search.filters.filterByNumericValues;
-  useEffect(() => { 
+  useEffect(() => {
     dataApi();
   }, []);
 

@@ -21,7 +21,7 @@ export default function StarWarsProvider({ children }) {
         },
       },
     },
-  ); 
+  );
 
   const dataApi = async () => {
     const dataResponse = await API();
