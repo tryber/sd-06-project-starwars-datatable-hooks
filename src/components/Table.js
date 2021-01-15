@@ -12,7 +12,6 @@ function Table() {
     nameFilter,
     applyNameFilter,
     filteredResults,
-    sortPlanets,
   } = useContext(context);
 
   async function callAPI() {
