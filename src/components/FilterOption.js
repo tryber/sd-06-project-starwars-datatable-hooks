@@ -9,15 +9,51 @@ const ShowFilterOptions = () => {
     appliedFilters,
     removeFilter,
     availableFilters,
+    columnSort,
+    sortPlanets,
   } = useContext(context);
 
   const zero = 0;
 
   return (
     <div>
-      {/* <select
-        data-testid="column-sort"
-      /> */}
+      <div>
+        <select
+          data-testid="column-sort"
+          onChange={ ({ target }) => sortPlanets(target.value) }
+          value={ columnSort }
+        >
+          <option value="population">population</option>
+          <option value="orbital_period">orbital_period</option>
+          <option value="diameter">diameter</option>
+          <option value="rotation_period">rotation_period</option>
+          <option value="surface_water">surface_water</option>
+        </select>
+        <div>
+          <label htmlFor="column-sort-input-asc">
+            ASC
+            <input
+              onChange={ ({ target }) => sortPlanets('', target.value) }
+              type="radio"
+              data-testid="column-sort-input-asc"
+              id="column-sort-input-asc"
+              name="column-sort-input"
+              value="ASC"
+            />
+          </label>
+          <label htmlFor="column-sort-input-dsc">
+            DSC
+            <input
+              onChange={ ({ target }) => sortPlanets('', target.value) }
+              type="radio"
+              data-testid="column-sort-input-desc"
+              id="column-sort-input-dsc"
+              name="column-sort-input"
+              value="DSC"
+            />
+          </label>
+        </div>
+      </div>
       <select
         data-testid="column-filter"
         onChange={ ({ target }) => {

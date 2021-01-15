@@ -29,6 +29,9 @@ function Provider({ children }) {
     'rotation_period',
     'surface_water',
   ]);
+  const [columnSort, setColumnSort] = useState('population');
+  const [sorting, setSorting] = useState('');
+
   const applyNameFilter = (str) => {
     const results = [];
     data.forEach((planet) => {
@@ -158,6 +161,71 @@ function Provider({ children }) {
     applyNumberFilter('', '', zero, 'remove', tempArr);
   };
 
+  const sortPlanets = (column = '', type = '') => {
+    let tempArr = [...data];
+    if (column !== '' && sorting !== '') {
+      if (sorting === 'ASC') {
+        tempArr.sort((a, b) => parseInt(a[column], 10) - parseInt(b[column], 10));
+      }
+      if (sorting === 'DSC') {
+        tempArr.sort((a, b) => parseInt(b[column], 10) - parseInt(a[column], 10));
+      }
+    }
+    if (columnSort !== '' && type !== '') {
+      if (type === 'ASC') {
+        tempArr.sort((a, b) => parseInt(a[columnSort], 10) - parseInt(b[columnSort], 10));
+      }
+      if (type === 'DSC') {
+        tempArr.sort((a, b) => parseInt(b[columnSort], 10) - parseInt(a[columnSort], 10));
+      }
+    }
+
+    setData(tempArr);
+
+    tempArr = filteredResults;
+
+    if (column !== '' && sorting !== '') {
+      if (sorting === 'ASC') {
+        tempArr.sort((a, b) => parseInt(a[column], 10) - parseInt(b[column], 10));
+      }
+      if (sorting === 'DSC') {
+        tempArr.sort((a, b) => parseInt(b[column], 10) - parseInt(a[column], 10));
+      }
+    }
+    if (columnSort !== '' && type !== '') {
+      if (type === 'ASC') {
+        tempArr.sort((a, b) => parseInt(a[columnSort], 10) - parseInt(b[columnSort], 10));
+      }
+      if (type === 'DSC') {
+        tempArr.sort((a, b) => parseInt(b[columnSort], 10) - parseInt(a[columnSort], 10));
+      }
+    }
+
+    setFilteredResults(tempArr);
+
+    if (column !== '' && sorting !== '') {
+      if (sorting === 'ASC') {
+        tempArr.sort((a, b) => parseInt(a[column], 10) - parseInt(b[column], 10));
+      }
+      if (sorting === 'DSC') {
+        tempArr.sort((a, b) => parseInt(b[column], 10) - parseInt(a[column], 10));
+      }
+    }
+    if (columnSort !== '' && type !== '') {
+      if (type === 'ASC') {
+        tempArr.sort((a, b) => parseInt(a[column], 10) - parseInt(b[column], 10));
+      }
+      if (type === 'DSC') {
+        tempArr.sort((a, b) => parseInt(b[column], 10) - parseInt(a[column], 10));
+      }
+    }
+
+    tempArr = [...filteredResults];
+
+    if (column !== '') setColumnSort(column);
+    if (type !== '') setSorting(type);
+  };
+
   const contextValue = {
     data,
     setData,
@@ -170,6 +238,10 @@ function Provider({ children }) {
     appliedFilters,
     removeFilter,
     availableFilters,
+    columnSort,
+    setColumnSort,
+    setSorting,
+    sortPlanets,
   };
 
   return (
