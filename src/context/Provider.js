@@ -31,14 +31,12 @@ function Provider({ children }) {
   return (
     <Context.Provider
       value={
-        {
-          data,
+        { data,
           dataApi,
           searchTerm,
           setSearchTerm,
           byValue,
-          setByValue,
-        }
+          setByValue }
       }
     >
       { children}

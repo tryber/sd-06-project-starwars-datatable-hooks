@@ -2,7 +2,6 @@ import React, { useEffect, useContext } from 'react';
 import Context from '../context/Context';
 import { trs } from '../service/helper';
 
-
 function StarWarsTable() {
   const {
     data,
