@@ -15,6 +15,9 @@ const ShowFilterOptions = () => {
 
   return (
     <div>
+      {/* <select
+        data-testid="column-sort"
+      /> */}
       <select
         data-testid="column-filter"
         onChange={ ({ target }) => {
@@ -57,14 +60,16 @@ const ShowFilterOptions = () => {
       </button>
       {appliedFilters.map((filter, index) => (
         <div key={ index }>
-          <h4 data-testid="filter">{ filter.columnType }</h4>
-          <button
-            name={ filter.columnType }
-            onClick={ (e) => removeFilter(e) }
-            type="button"
-          >
-            X
-          </button>
+          <div data-testid="filter">
+            { filter.columnType }
+            <button
+              name={ filter.columnType }
+              onClick={ (e) => removeFilter(e) }
+              type="button"
+            >
+              X
+            </button>
+          </div>
         </div>
       ))}
     </div>
