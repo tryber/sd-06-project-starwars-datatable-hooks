@@ -57,7 +57,8 @@ const ShowFilterOptions = () => {
         </div>
         <button
           type="button"
-          onClick={ () => sortPlanets()}
+          onClick={ () => sortPlanets() }
+          data-testid="column-sort-button"
         >
           Sort
         </button>
