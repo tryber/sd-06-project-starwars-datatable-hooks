@@ -57,7 +57,7 @@ function Table() {
           onChange={ ({ target }) => applyNumberFilter('', '', target.value, index) }
           type="number"
         />
-        <input type="button" data-testid="button-filter" value="Que Seja" />
+        <button type="button" data-testid="button-filter">Que Seja</button>
       </div>
     ))
   );
