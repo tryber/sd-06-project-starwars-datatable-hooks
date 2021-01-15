@@ -35,7 +35,7 @@ function Provider({ children }) {
     setNameFilter(str);
   };
 
-  const applyNumberFilter = (column, compare, value, index) => {
+  const applyNumberFilter = ({ column, compare, value }, index) => {
     let filters = [...appliedFilters];
     let temp = {
       columnType: '',
@@ -57,24 +57,22 @@ function Provider({ children }) {
     if (temp.compareType === 'None') temp.compareType = '';
     if (value !== zero) temp.numberFilter = value;
 
-    if (filtered) {
-      const maxIndex = filters.length - 1;
-      if (filters[maxIndex].columnType !== ''
-        && filters[maxIndex].compareType !== '') {
-        const structure = {
-          columnType: '',
-          compareType: 'greater',
-          numberFilter: zero,
-          possibleFilters: [
-            'population',
-            'orbital_period',
-            'diameter',
-            'rotation_period',
-            'surface_water',
-          ],
-        };
-        filters.push(structure);
-      }
+    const maxIndex = filters.length - 1;
+    if (filters[maxIndex].columnType !== ''
+      && filters[maxIndex].compareType !== '') {
+      const structure = {
+        columnType: '',
+        compareType: 'greater',
+        numberFilter: zero,
+        possibleFilters: [
+          'population',
+          'orbital_period',
+          'diameter',
+          'rotation_period',
+          'surface_water',
+        ],
+      };
+      filters.push(structure);
     }
 
     let results = data;
@@ -103,6 +101,7 @@ function Provider({ children }) {
     });
     setFilteredResults(results);
     if (filters[0].columnType === '' && nameFilter === '') setFiltered(false);
+    else setFiltered(true);
 
     let c = [];
     filters.forEach((filter, i) => {
@@ -116,24 +115,9 @@ function Provider({ children }) {
     setAppliedFilters(filters);
   };
 
-  function funcao(valorzinho) {
-    let a = valorzinho;
-    const b = a;
-    a = b;
+  function funcao(object, index) {
+    applyNumberFilter(object, index);
     setFiltered(true);
-    const structure = {
-      columnType: '',
-      compareType: 'greater',
-      numberFilter: zero,
-      possibleFilters: [
-        'population',
-        'orbital_period',
-        'diameter',
-        'rotation_period',
-        'surface_water',
-      ],
-    };
-    setAppliedFilters(appliedFilters.concat(structure));
   }
 
   const contextValue = {
