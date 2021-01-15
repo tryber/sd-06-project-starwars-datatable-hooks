@@ -13,7 +13,6 @@ function Table() {
     filteredResults,
     applyNumberFilter,
     appliedFilters,
-    funcao,
   } = useContext(context);
 
   async function callAPI() {
@@ -26,12 +25,6 @@ function Table() {
 
   const zero = 0;
 
-  const values = {
-    column: '',
-    compare: 'greater',
-    value: zero,
-  };
-
   if (data.length === zero) {
     return <h1>Loading...</h1>;
   }
@@ -41,7 +34,9 @@ function Table() {
       <div key={ index }>
         <select
           data-testid="column-filter"
-          onChange={ ({ target }) => values.column = target.value }
+          onChange={ ({ target }) => {
+            applyNumberFilter(target.value, '', zero, index, false);
+          } }
           value={ filter.columnType }
         >
           <option value="None">None</option>
@@ -51,7 +46,9 @@ function Table() {
         </select>
         <select
           data-testid="comparison-filter"
-          onChange={ ({ target }) => values.compare = target.value }
+          onChange={ ({ target }) => {
+            applyNumberFilter('', target.value, zero, index, false);
+          } }
           value={ filter.compareType }
         >
           {/* <option value="None">None</option> */}
@@ -61,15 +58,16 @@ function Table() {
         </select>
         <input
           data-testid="value-filter"
-          onChange={ ({ target }) => values.value = target.value }
+          onChange={ ({ target }) => {
+            applyNumberFilter('', '', target.value, index, false);
+          } }
           type="number"
         />
         <button
           type="button"
           data-testid="button-filter"
           onClick={ () => {
-            funcao(values, index);
-            console.log(values);
+            applyNumberFilter('', '', zero, index, true);
           } }
         >
           Que Seja

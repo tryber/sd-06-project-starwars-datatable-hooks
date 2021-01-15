@@ -35,7 +35,7 @@ function Provider({ children }) {
     setNameFilter(str);
   };
 
-  const applyNumberFilter = ({ column, compare, value }, index) => {
+  const applyNumberFilter = (column, compare, value, index, trigger) => {
     let filters = [...appliedFilters];
     let temp = {
       columnType: '',
@@ -57,68 +57,66 @@ function Provider({ children }) {
     if (temp.compareType === 'None') temp.compareType = '';
     if (value !== zero) temp.numberFilter = value;
 
-    const maxIndex = filters.length - 1;
-    if (filters[maxIndex].columnType !== ''
+    if (!trigger) filters[index] = temp;
+
+    if (trigger) {
+      const maxIndex = filters.length - 1;
+      if (filters[maxIndex].columnType !== ''
       && filters[maxIndex].compareType !== '') {
-      const structure = {
-        columnType: '',
-        compareType: 'greater',
-        numberFilter: zero,
-        possibleFilters: [
-          'population',
-          'orbital_period',
-          'diameter',
-          'rotation_period',
-          'surface_water',
-        ],
-      };
-      filters.push(structure);
+        const structure = {
+          columnType: '',
+          compareType: 'greater',
+          numberFilter: zero,
+          possibleFilters: [
+            'population',
+            'orbital_period',
+            'diameter',
+            'rotation_period',
+            'surface_water',
+          ],
+        };
+        filters.push(structure);
+      }
+
+      let results = data;
+      filters.forEach((filter) => {
+        if (filter.columnType !== '' && filter.compareType !== '') {
+          const filteredWithNumbers = [];
+          results.forEach((planet) => {
+            if (filter.compareType === 'greater') {
+              if (filter.numberFilter < parseInt(planet[filter.columnType], 10)) {
+                filteredWithNumbers.push(planet);
+              }
+            }
+            if (filter.compareType === 'less') {
+              if (filter.numberFilter > parseInt(planet[filter.columnType], 10)) {
+                filteredWithNumbers.push(planet);
+              }
+            }
+            if (filter.compareType === 'equal') {
+              if (filter.numberFilter === parseInt(planet[filter.columnType], 10)) {
+                filteredWithNumbers.push(planet);
+              }
+            }
+          });
+          results = filteredWithNumbers;
+        }
+      });
+      setFilteredResults(results);
+      if (filters[0].columnType === '' && nameFilter === '') setFiltered(false);
+      else setFiltered(true);
+
+      let c = [];
+      filters.forEach((filter, i) => {
+        if (i > zero) filter.possibleFilters = c;
+        c = [...filter.possibleFilters];
+        const tempIndex = c.findIndex((b) => b === filter.columnType);
+        if (tempIndex > minusOne) c.splice(tempIndex, 1);
+      });
     }
 
-    let results = data;
-    filters.forEach((filter) => {
-      if (filter.columnType !== '' && filter.compareType !== '') {
-        const filteredWithNumbers = [];
-        results.forEach((planet) => {
-          if (filter.compareType === 'greater') {
-            if (filter.numberFilter < parseInt(planet[filter.columnType], 10)) {
-              filteredWithNumbers.push(planet);
-            }
-          }
-          if (filter.compareType === 'less') {
-            if (filter.numberFilter > parseInt(planet[filter.columnType], 10)) {
-              filteredWithNumbers.push(planet);
-            }
-          }
-          if (filter.compareType === 'equal') {
-            if (filter.numberFilter === parseInt(planet[filter.columnType], 10)) {
-              filteredWithNumbers.push(planet);
-            }
-          }
-        });
-        results = filteredWithNumbers;
-      }
-    });
-    setFilteredResults(results);
-    if (filters[0].columnType === '' && nameFilter === '') setFiltered(false);
-    else setFiltered(true);
-
-    let c = [];
-    filters.forEach((filter, i) => {
-      if (i > zero) filter.possibleFilters = c;
-      c = [...filter.possibleFilters];
-      const tempIndex = c.findIndex((b) => b === filter.columnType);
-      if (tempIndex > minusOne) c.splice(tempIndex, 1);
-    });
-
-    setFiltered(false);
     setAppliedFilters(filters);
   };
-
-  function funcao(object, index) {
-    applyNumberFilter(object, index);
-    setFiltered(true);
-  }
 
   const contextValue = {
     data,
@@ -129,7 +127,6 @@ function Provider({ children }) {
     filteredResults,
     applyNumberFilter,
     appliedFilters,
-    funcao,
   };
 
   return (
