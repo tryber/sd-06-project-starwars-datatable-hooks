@@ -12,6 +12,7 @@ function Table() {
     nameFilter,
     applyNameFilter,
     filteredResults,
+    sortPlanets,
   } = useContext(context);
 
   async function callAPI() {
@@ -20,6 +21,7 @@ function Table() {
 
   useEffect(() => {
     callAPI();
+    // sortPlanets();
   }, []);
 
   const zero = 0;

@@ -10,6 +10,8 @@ const ShowFilterOptions = () => {
     removeFilter,
     availableFilters,
     columnSort,
+    setColumnSort,
+    setSorting,
     sortPlanets,
   } = useContext(context);
 
@@ -20,7 +22,7 @@ const ShowFilterOptions = () => {
       <div>
         <select
           data-testid="column-sort"
-          onChange={ ({ target }) => sortPlanets(target.value) }
+          onChange={ ({ target }) => setColumnSort(target.value) }
           value={ columnSort }
         >
           <option value="population">population</option>
@@ -33,7 +35,7 @@ const ShowFilterOptions = () => {
           <label htmlFor="column-sort-input-asc">
             ASC
             <input
-              onChange={ ({ target }) => sortPlanets('', target.value) }
+              onChange={ ({ target }) => setSorting(target.value) }
               type="radio"
               data-testid="column-sort-input-asc"
               id="column-sort-input-asc"
@@ -44,7 +46,7 @@ const ShowFilterOptions = () => {
           <label htmlFor="column-sort-input-dsc">
             DSC
             <input
-              onChange={ ({ target }) => sortPlanets('', target.value) }
+              onChange={ ({ target }) => setSorting(target.value) }
               type="radio"
               data-testid="column-sort-input-desc"
               id="column-sort-input-dsc"
@@ -53,6 +55,12 @@ const ShowFilterOptions = () => {
             />
           </label>
         </div>
+        <button
+          type="button"
+          onClick={ () => sortPlanets()}
+        >
+          Sort
+        </button>
       </div>
       <select
         data-testid="column-filter"
