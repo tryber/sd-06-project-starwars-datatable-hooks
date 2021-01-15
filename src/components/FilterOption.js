@@ -57,7 +57,7 @@ const ShowFilterOptions = () => {
       </button>
       {appliedFilters.map((filter, index) => (
         <div key={ index }>
-          <h4>{ filter.columnType }</h4>
+          <h4 data-testid="filter">{ filter.columnType }</h4>
           <button
             name={ filter.columnType }
             onClick={ (e) => removeFilter(e) }
