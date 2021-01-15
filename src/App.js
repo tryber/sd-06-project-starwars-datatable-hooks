@@ -1,11 +1,14 @@
 import React from 'react';
-import InitialPage from './pages/InitialPage';
+import InitialPage from './Pages/InitialPage';
 import PlanetsContextProvider from './contexts/PlanetsContextProvider';
+import FilterContextProvider from './contexts/FilterContextProvider';
 
 const App = () => (
-  <PlanetsContextProvider>
-    <InitialPage />
-  </PlanetsContextProvider>
+  <FilterContextProvider>
+    <PlanetsContextProvider>
+      <InitialPage />
+    </PlanetsContextProvider>
+  </FilterContextProvider>
 );
 
 export default App;

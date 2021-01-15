@@ -10,7 +10,7 @@ const PlanetsContextProvider = ({ children }) => {
     planetFetcher().then((data) => (setPlanets(data.results)));
   }, []);
   return (
-    <PlanetsContext.Provider value={ { planets: [...planets], setPlanets } }>
+    <PlanetsContext.Provider value={ { allPlanets: planets } }>
       { children }
     </PlanetsContext.Provider>
   );

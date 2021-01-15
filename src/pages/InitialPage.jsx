@@ -1,15 +1,38 @@
 import React from 'react';
-import Table from '../components/Table';
+import TextFilter from '../components/TextFilter';
+import NumericFilters from '../components/NumericFilters';
+import FiltersDisplay from '../components/FiltersDisplay';
+import OrderFilter from '../components/OrderFilter';
 import { PlanetsContext } from '../contexts/PlanetsContextProvider';
+import { FilterContext } from '../contexts/FilterContextProvider';
 
 const InitialPage = () => (
-  <PlanetsContext.Consumer>
-    {({ planets }) => {
-      const zero = 0;
-      if (planets.length === zero) return <div>Loading</div>;
-      return <Table planets={ planets } />;
-    }}
-  </PlanetsContext.Consumer>
+  <FilterContext.Consumer>
+    {
+      ({ allFilters: { filters: { filterByName: { name },
+        filterByNumericValues, order } } }) => (
+        <PlanetsContext.Consumer>
+          {({ allPlanets }) => {
+            const zero = 0;
+            if (allPlanets.length === zero) return <div>Loading</div>;
+            return (
+              <div>
+                <TextFilter />
+                <NumericFilters />
+                <FiltersDisplay />
+                <OrderFilter
+                  allPlanets={ allPlanets }
+                  nameProp={ name }
+                  filterByNumericValuesProp={ filterByNumericValues }
+                  orderProp={ order }
+                />
+              </div>
+            );
+          }}
+        </PlanetsContext.Consumer>
+      )
+    }
+  </FilterContext.Consumer>
 );
 
 export default InitialPage;
