@@ -11,6 +11,8 @@ function Table() {
     nameFilter,
     applyNameFilter,
     filteredResults,
+    applyNumberFilter,
+    appliedFilters,
   } = useContext(context);
 
   async function callAPI() {
@@ -26,6 +28,38 @@ function Table() {
   if (data.length === zero) {
     return <h1>Loading...</h1>;
   }
+
+  const ShowFilterOptions = () => (
+    appliedFilters.map((filter, index) => (
+      <div key={ index }>
+        <select
+          data-testid="column-filter"
+          onChange={ ({ target }) => applyNumberFilter(target.value, '', zero, index) }
+          value={ filter.columnType }
+        >
+          <option value="None">None</option>
+          {filter.possibleFilters.map((column, i) => (
+            <option key={ i } value={ column }>{ column }</option>
+          ))}
+        </select>
+        <select
+          data-testid="comparison-filter"
+          onChange={ ({ target }) => applyNumberFilter('', target.value, zero, index) }
+          value={ filter.compareType }
+        >
+          <option value="None">None</option>
+          <option value="greater">Maior que</option>
+          <option value="less">Menor que</option>
+          <option value="equal">Igual a</option>
+        </select>
+        <input
+          data-testid="value-filter"
+          onChange={ ({ target }) => applyNumberFilter('', '', target.value, index) }
+          type="number"
+        />
+      </div>
+    ))
+  );
 
   const TableHead = (
     <thead>
@@ -53,8 +87,8 @@ function Table() {
     else temp = data;
 
     return (
-      temp.map((planet) => (
-        <tr key="a">
+      temp.map((planet, index) => (
+        <tr key={ index }>
           <td>{planet.name}</td>
           <td>{planet.rotation_period}</td>
           <td>{planet.orbital_period}</td>
@@ -81,6 +115,7 @@ function Table() {
         onChange={ ({ target }) => applyNameFilter(target.value) }
         value={ nameFilter }
       />
+      { ShowFilterOptions() }
       <table>
         { TableHead }
         <tbody>
