@@ -47,16 +47,17 @@ function Table() {
           onChange={ ({ target }) => applyNumberFilter('', target.value, zero, index) }
           value={ filter.compareType }
         >
-          <option value="None">None</option>
-          <option value="greater">Maior que</option>
-          <option value="less">Menor que</option>
-          <option value="equal">Igual a</option>
+          {/* <option value="None">None</option> */}
+          <option value="greater">maior que</option>
+          <option value="less">menor que</option>
+          <option value="equal">igual a</option>
         </select>
         <input
           data-testid="value-filter"
           onChange={ ({ target }) => applyNumberFilter('', '', target.value, index) }
           type="number"
         />
+        <input type="button" data-testid="button-filter" value="Que Seja" />
       </div>
     ))
   );
