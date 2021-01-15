@@ -52,9 +52,9 @@ function Table() {
           value={ filter.compareType }
         >
           {/* <option value="None">None</option> */}
-          <option value="greater">maior que</option>
-          <option value="less">menor que</option>
-          <option value="equal">igual a</option>
+          <option value="maior que">maior que</option>
+          <option value="menor que">menor que</option>
+          <option value="igual a">igual a</option>
         </select>
         <input
           data-testid="value-filter"

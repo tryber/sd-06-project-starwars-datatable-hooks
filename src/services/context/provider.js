@@ -11,7 +11,7 @@ function Provider({ children }) {
   const minusOne = -1;
   const [appliedFilters, setAppliedFilters] = useState([{
     columnType: '',
-    compareType: 'greater',
+    compareType: 'maior que',
     numberFilter: zero,
     possibleFilters: [
       'population',
@@ -39,7 +39,7 @@ function Provider({ children }) {
     let filters = [...appliedFilters];
     let temp = {
       columnType: '',
-      compareType: 'greater',
+      compareType: 'maior que',
       numberFilter: zero,
       possibleFilters: [
         'population',
@@ -65,7 +65,7 @@ function Provider({ children }) {
       && filters[maxIndex].compareType !== '') {
         const structure = {
           columnType: '',
-          compareType: 'greater',
+          compareType: 'maior que',
           numberFilter: zero,
           possibleFilters: [
             'population',
@@ -83,17 +83,17 @@ function Provider({ children }) {
         if (filter.columnType !== '' && filter.compareType !== '') {
           const filteredWithNumbers = [];
           results.forEach((planet) => {
-            if (filter.compareType === 'greater') {
+            if (filter.compareType === 'maior que') {
               if (filter.numberFilter < parseInt(planet[filter.columnType], 10)) {
                 filteredWithNumbers.push(planet);
               }
             }
-            if (filter.compareType === 'less') {
+            if (filter.compareType === 'menor que') {
               if (filter.numberFilter > parseInt(planet[filter.columnType], 10)) {
                 filteredWithNumbers.push(planet);
               }
             }
-            if (filter.compareType === 'equal') {
+            if (filter.compareType === 'igual a') {
               if (filter.numberFilter === planet[filter.columnType]) {
                 filteredWithNumbers.push(planet);
               }
