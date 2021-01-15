@@ -11,7 +11,7 @@ function Provider({ children }) {
   const minusOne = -1;
   const [appliedFilters, setAppliedFilters] = useState([{
     columnType: '',
-    compareType: '',
+    compareType: 'greater',
     numberFilter: zero,
     possibleFilters: [
       'population',
@@ -39,7 +39,7 @@ function Provider({ children }) {
     let filters = [...appliedFilters];
     let temp = {
       columnType: '',
-      compareType: '',
+      compareType: 'greater',
       numberFilter: zero,
       possibleFilters: [
         'population',
@@ -63,7 +63,7 @@ function Provider({ children }) {
         && filters[maxIndex].compareType !== '') {
         const structure = {
           columnType: '',
-          compareType: '',
+          compareType: 'greater',
           numberFilter: zero,
           possibleFilters: [
             'population',
@@ -112,6 +112,7 @@ function Provider({ children }) {
       if (tempIndex > minusOne) c.splice(tempIndex, 1);
     });
 
+    setFiltered(false);
     setAppliedFilters(filters);
   };
 
@@ -120,6 +121,19 @@ function Provider({ children }) {
     const b = a;
     a = b;
     setFiltered(true);
+    const structure = {
+      columnType: '',
+      compareType: 'greater',
+      numberFilter: zero,
+      possibleFilters: [
+        'population',
+        'orbital_period',
+        'diameter',
+        'rotation_period',
+        'surface_water',
+      ],
+    };
+    setAppliedFilters(appliedFilters.concat(structure));
   }
 
   const contextValue = {

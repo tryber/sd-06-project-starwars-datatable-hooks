@@ -58,13 +58,6 @@ function Table() {
           onChange={ ({ target }) => applyNumberFilter('', '', target.value, index) }
           type="number"
         />
-        <button
-          type="button"
-          data-testid="button-filter"
-          onClick={ () => funcao('a') }
-        >
-          Que Seja
-        </button>
       </div>
     ))
   );
@@ -124,6 +117,13 @@ function Table() {
         value={ nameFilter }
       />
       { ShowFilterOptions() }
+      <button
+        type="button"
+        data-testid="button-filter"
+        onClick={ () => funcao('a') }
+      >
+        Que Seja
+      </button>
       <table>
         { TableHead }
         <tbody>
