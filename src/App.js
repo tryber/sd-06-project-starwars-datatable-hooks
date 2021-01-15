@@ -1,5 +1,5 @@
 import React from 'react';
-import InitialPage from './Pages/InitialPage';
+import InitialPage from './pages/InitialPage';
 import PlanetsContextProvider from './contexts/PlanetsContextProvider';
 import FilterContextProvider from './contexts/FilterContextProvider';
 
