@@ -1,52 +1,58 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import Table from './Table';
 import { FilterContext } from '../contexts/FilterContextProvider';
 import { numericColumns } from './NumericFilters';
 
+const zero = 0;
+const um = 1;
+const umNegativo = -1;
 const options = ['ASC', 'DESC'];
-const initialState = { column: 'name', sort: 'ASC' };
-const columnsToOrder = ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
-  'name', 'climate', 'gravity', 'terrain', 'created', 'edited', 'films', 'url'];
+const columnsToOrder = ['population', 'orbital_period', 'diameter',
+  'rotation_period', 'surface_water', 'name', 'climate', 'gravity', 'terrain',
+  'created', 'edited', 'films', 'url'];
 
 const ascendentOrder = (a, b, column) => {
   const nameA = a[column].toUpperCase();
   const nameB = b[column].toUpperCase();
   if (nameA < nameB) {
-    return 1;
+    return um;
   }
   if (nameA > nameB) {
-    return -1;
+    return umNegativo;
   }
-  return 0;
+  return zero;
 };
 
 const descendantOrder = (a, b, column) => {
   const nameA = a[column].toUpperCase();
   const nameB = b[column].toUpperCase();
   if (nameA < nameB) {
-    return -1;
+    return umNegativo;
   }
   if (nameA > nameB) {
-    return 1;
+    return um;
   }
-  return 0;
+  return zero;
 };
 
 const orderSorter = (planets, order) => {
   const { sort, column } = order;
   let orderedPlanets;
   switch (sort) {
-    case 'ASC':
-      orderedPlanets = numericColumns.includes(column) ? planets.sort((a, b) =>
-        (parseInt(b[column], 10) - parseInt(a[column], 10))) :
-        orderedPlanets = planets.sort((a, b) => descendantOrder(a, b, column));
-      break;
-    case 'DESC':
-      orderedPlanets = numericColumns.includes(column) ? orderedPlanets = planets.sort((a, b) =>
-        (parseInt(b[column], 10) - parseInt(a[column], 10))) :
-        planets.sort((a, b) => ascendentOrder(a, b, column));
-      break;
-    default:
+  case 'ASC':
+    orderedPlanets = numericColumns.includes(column)
+      ? planets.sort((a, b) => (
+        (parseInt(b[column], 10) - parseInt(a[column], 10))))
+      : orderedPlanets = planets.sort((a, b) => descendantOrder(a, b, column));
+    break;
+  case 'DESC':
+    orderedPlanets = numericColumns.includes(column)
+      ? orderedPlanets = planets.sort((a, b) => (
+        (parseInt(b[column], 10) - parseInt(a[column], 10))))
+      : planets.sort((a, b) => ascendentOrder(a, b, column));
+    break;
+  default:
   }
   return orderedPlanets;
 };
@@ -57,7 +63,7 @@ const removeUnknown = (arrOriginal, column) => {
   // link:
   // https://stackoverflow.com/questions/5767325/how-can-i-remove-a-specific-item-from-an-array
   const array = [...arrOriginal];
-  let index = 0;
+  let index = zero;
   while (index < array.length) {
     const item = array[index];
     if (item[column] === 'unknown') {
@@ -75,7 +81,7 @@ const filterAll = (planets, name, numericFilter) => {
     filteredPlanets = filteredPlanets.filter((planet) => (planet.name.includes(name)));
   }
 
-  if (numericFilter.length > 0) {
+  if (numericFilter.length > zero) {
     numericFilter.forEach(({ value, comparison, column }) => {
       if (comparison === 'maior que') {
         filteredPlanets = removeUnknown(filteredPlanets, column);
@@ -169,5 +175,12 @@ const OrderFilter = ({ allPlanets, nameProp, filterByNumericValuesProp, orderPro
     </FilterContext.Consumer>
   );
 };
+
+OrderFilter.propTypes = {
+  allPlanets: PropTypes.instanceOf(Array),
+  nameProp: PropTypes.string,
+  filterByNumericValuesProp: PropTypes.instanceOf(Array),
+  orderProp: PropTypes.instanceOf(Object),
+}.isRequired;
 
 export default OrderFilter;

@@ -9,28 +9,31 @@ import { FilterContext } from '../contexts/FilterContextProvider';
 const InitialPage = () => (
   <FilterContext.Consumer>
     {
-      ({ allFilters: { filters: { filterByName: { name },
-        filterByNumericValues, order } } }) => (
-        <PlanetsContext.Consumer>
-          {({ allPlanets }) => {
-            const zero = 0;
-            if (allPlanets.length === zero) return <div>Loading</div>;
-            return (
-              <div>
-                <TextFilter />
-                <NumericFilters />
-                <FiltersDisplay />
-                <OrderFilter
-                  allPlanets={ allPlanets }
-                  nameProp={ name }
-                  filterByNumericValuesProp={ filterByNumericValues }
-                  orderProp={ order }
-                />
-              </div>
-            );
-          }}
-        </PlanetsContext.Consumer>
-      )
+      ({ allFilters }) => {
+        const { filters: { filterByName, filterByNumericValues, order } } = allFilters;
+        const { name } = filterByName;
+        return (
+          <PlanetsContext.Consumer>
+            {({ allPlanets }) => {
+              const zero = 0;
+              if (allPlanets.length === zero) return <div>Loading</div>;
+              return (
+                <div>
+                  <TextFilter />
+                  <NumericFilters />
+                  <FiltersDisplay />
+                  <OrderFilter
+                    allPlanets={ allPlanets }
+                    nameProp={ name }
+                    filterByNumericValuesProp={ filterByNumericValues }
+                    orderProp={ order }
+                  />
+                </div>
+              );
+            }}
+          </PlanetsContext.Consumer>
+        );
+      }
     }
   </FilterContext.Consumer>
 );
