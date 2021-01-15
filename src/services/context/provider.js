@@ -101,7 +101,6 @@ function Provider({ children }) {
     });
     setFilteredResults(results);
     if (filters[0].columnType === '' && nameFilter === '') setFiltered(false);
-    else setFiltered(true);
 
     let c = [];
     filters.forEach((filter, i) => {
@@ -114,6 +113,13 @@ function Provider({ children }) {
     setAppliedFilters(filters);
   };
 
+  function funcao(valorzinho) {
+    let a = valorzinho;
+    const b = a;
+    a = b;
+    setFiltered(true);
+  }
+
   const contextValue = {
     data,
     setData,
@@ -123,6 +129,7 @@ function Provider({ children }) {
     filteredResults,
     applyNumberFilter,
     appliedFilters,
+    funcao,
   };
 
   return (

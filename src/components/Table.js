@@ -13,6 +13,7 @@ function Table() {
     filteredResults,
     applyNumberFilter,
     appliedFilters,
+    funcao,
   } = useContext(context);
 
   async function callAPI() {
@@ -57,7 +58,13 @@ function Table() {
           onChange={ ({ target }) => applyNumberFilter('', '', target.value, index) }
           type="number"
         />
-        <button type="button" data-testid="button-filter">Que Seja</button>
+        <button
+          type="button"
+          data-testid="button-filter"
+          onClick={ () => funcao('a') }
+        >
+          Que Seja
+        </button>
       </div>
     ))
   );
