@@ -94,7 +94,7 @@ function Provider({ children }) {
               }
             }
             if (filter.compareType === 'equal') {
-              if (filter.numberFilter === parseInt(planet[filter.columnType], 10)) {
+              if (filter.numberFilter === planet[filter.columnType]) {
                 filteredWithNumbers.push(planet);
               }
             }
