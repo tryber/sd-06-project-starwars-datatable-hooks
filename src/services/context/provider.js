@@ -22,7 +22,13 @@ function Provider({ children }) {
     ],
   });
   const [appliedFilters, setAppliedFilters] = useState([]);
-
+  const [availableFilters, setAvailableFilters] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
   const applyNameFilter = (str) => {
     const results = [];
     data.forEach((planet) => {
@@ -36,9 +42,18 @@ function Provider({ children }) {
     setNameFilter(str);
   };
 
-  const applyNumberFilter = (column, compare, value, trigger, filtersOverride = zero) => {
+  const applyNumberFilter = (column, compare, value, trigger, filtersOverride = 'as') => {
     let filters = { ...filterToApply };
-    let doneFilters = [...appliedFilters];
+    let doneFilters = [];
+    if (filtersOverride === 'as') doneFilters = [...appliedFilters];
+    else doneFilters = [...filtersOverride];
+    const avFilters = [
+      'population',
+      'orbital_period',
+      'diameter',
+      'rotation_period',
+      'surface_water',
+    ];
     const temp = { ...filterToApply };
     if (!('columnType' in filters)) filters = [temp];
     if (column !== '') temp.columnType = column;
@@ -47,13 +62,18 @@ function Provider({ children }) {
     if (temp.compareType === 'None') temp.compareType = '';
     if (value !== zero) temp.numberFilter = value;
 
-    if (!trigger) filters = temp;
+    if (trigger === 'change') filters = temp;
 
-    if (trigger) {
+    if (trigger === 'add') {
       if (filters.columnType !== ''
       && filters.compareType !== '') {
         doneFilters.push(filters);
       }
+
+      doneFilters.forEach((filter) => {
+        const tempIndex = avFilters.findIndex((a) => a === filter.columnType);
+        if (tempIndex > minusOne) avFilters.splice(tempIndex, 1);
+      });
 
       let results = data;
       doneFilters.forEach((filter) => {
@@ -83,48 +103,50 @@ function Provider({ children }) {
       if (doneFilters.length === zero) setFiltered(false);
       else if (doneFilters.length > zero) setFiltered(true);
 
-      if (filtersOverride !== zero) {
-        filtersOverride.forEach((filter) => {
-          if (filter.columnType !== '' && filter.compareType !== '') {
-            const filteredWithNumbers = [];
-            results.forEach((planet) => {
-              if (filter.compareType === 'maior que') {
-                if (filter.numberFilter < parseInt(planet[filter.columnType], 10)) {
-                  filteredWithNumbers.push(planet);
-                }
-              }
-              if (filter.compareType === 'menor que') {
-                if (filter.numberFilter > parseInt(planet[filter.columnType], 10)) {
-                  filteredWithNumbers.push(planet);
-                }
-              }
-              if (filter.compareType === 'igual a') {
-                if (filter.numberFilter === planet[filter.columnType]) {
-                  filteredWithNumbers.push(planet);
-                }
-              }
-            });
-            results = filteredWithNumbers;
-          }
-        });
-
-        if (filtersOverride.length === zero) setFiltered(false);
-        else if (filtersOverride.length > zero) setFiltered(true);
-
-        doneFilters = [...filtersOverride];
-      }
       setFilteredResults(results);
-
-      let c = [];
-      doneFilters.forEach((filter, i) => {
-        if (i > zero) filter.possibleFilters = c;
-        c = [...filter.possibleFilters];
-        const tempIndex = c.findIndex((b) => b === filter.columnType);
-        if (tempIndex > minusOne) c.splice(tempIndex, 1);
-      });
-      filters.possibleFilters = [...c];
     }
 
+    if (trigger === 'remove') {
+      doneFilters.forEach((filter) => {
+        const tempIndex = avFilters.findIndex((a) => a === filter.columnType);
+        if (tempIndex > minusOne) avFilters.splice(tempIndex, 1);
+        console.log(tempIndex);
+      });
+
+      let results = data;
+      doneFilters.forEach((filter) => {
+        if (filter.columnType !== '' && filter.compareType !== '') {
+          const filteredWithNumbers = [];
+          results.forEach((planet) => {
+            if (filter.compareType === 'maior que') {
+              if (filter.numberFilter < parseInt(planet[filter.columnType], 10)) {
+                filteredWithNumbers.push(planet);
+              }
+            }
+            if (filter.compareType === 'menor que') {
+              if (filter.numberFilter > parseInt(planet[filter.columnType], 10)) {
+                filteredWithNumbers.push(planet);
+              }
+            }
+            if (filter.compareType === 'igual a') {
+              if (filter.numberFilter === planet[filter.columnType]) {
+                filteredWithNumbers.push(planet);
+              }
+            }
+          });
+          results = filteredWithNumbers;
+        }
+      });
+
+      console.log(avFilters);
+
+      if (doneFilters.length === zero) setFiltered(false);
+      else if (doneFilters.length > zero) setFiltered(true);
+
+      setFilteredResults(results);
+    }
+
+    setAvailableFilters(avFilters);
     setAppliedFilters(doneFilters);
     setFilter(filters);
   };
@@ -133,8 +155,7 @@ function Provider({ children }) {
     const tempArr = [...appliedFilters];
     const tempIndex = appliedFilters.findIndex((a) => a.columnType === target.name);
     if (tempIndex > minusOne) tempArr.splice(tempIndex, 1);
-    applyNumberFilter('', '', zero, true, tempArr);
-    setAppliedFilters(tempArr);
+    applyNumberFilter('', '', zero, 'remove', tempArr);
   };
 
   const contextValue = {
@@ -148,6 +169,7 @@ function Provider({ children }) {
     filterToApply,
     appliedFilters,
     removeFilter,
+    availableFilters,
   };
 
   return (
