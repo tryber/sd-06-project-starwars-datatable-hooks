@@ -7,6 +7,18 @@ import fetchPlanetsData from '../services/dataServicesAPI';
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
   const [filteredName, setFilteredName] = useState('');
+  const [filteredColumn, setFilteredColumn] = useState('');
+  const [filteredNumber, setFilteredNumber] = useState('');
+
+  const contextState = {
+    data,
+    filteredName,
+    setFilteredName,
+    filteredColumn,
+    setFilteredColumn,
+    filteredNumber,
+    setFilteredNumber,
+  };
 
   useEffect(() => {
     const getPlanets = async () => {
@@ -18,7 +30,7 @@ function StarWarsProvider({ children }) {
   }, []);
 
   return (
-    <StarWarsContext.Provider value={ { data, setData, filteredName, setFilteredName } }>
+    <StarWarsContext.Provider value={ contextState }>
       { children }
     </StarWarsContext.Provider>
   );
