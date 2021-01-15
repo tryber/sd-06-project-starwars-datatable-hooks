@@ -57,22 +57,24 @@ function Provider({ children }) {
     if (temp.compareType === 'None') temp.compareType = '';
     if (value !== zero) temp.numberFilter = value;
 
-    const maxIndex = filters.length - 1;
-    if (filters[maxIndex].columnType !== ''
-      && filters[maxIndex].compareType !== '') {
-      const structure = {
-        columnType: '',
-        compareType: '',
-        numberFilter: zero,
-        possibleFilters: [
-          'population',
-          'orbital_period',
-          'diameter',
-          'rotation_period',
-          'surface_water',
-        ],
-      };
-      filters.push(structure);
+    if (filtered) {
+      const maxIndex = filters.length - 1;
+      if (filters[maxIndex].columnType !== ''
+        && filters[maxIndex].compareType !== '') {
+        const structure = {
+          columnType: '',
+          compareType: '',
+          numberFilter: zero,
+          possibleFilters: [
+            'population',
+            'orbital_period',
+            'diameter',
+            'rotation_period',
+            'surface_water',
+          ],
+        };
+        filters.push(structure);
+      }
     }
 
     let results = data;
