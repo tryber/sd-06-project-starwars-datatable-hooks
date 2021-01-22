@@ -11,5 +11,5 @@ label, .li-span, .btn {
 }
 
 .list-group-item {
-  margin: auto;
+  margin-left: 15px;
 }

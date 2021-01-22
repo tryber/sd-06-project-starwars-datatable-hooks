@@ -14,6 +14,7 @@ export default function Table() {
   useEffect(() => {
     getPlanetsList();
     setIsLoading(false);
+    // eslint-disable-next-line
   }, []);
 
   const filterDataHandler = (planets) => {
