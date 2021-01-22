@@ -118,36 +118,38 @@ function SearchNumericValue() {
           </button>
         </fieldset>
       </form>
-        {
-          filters.filterByNumericValues.length !== defaultValue && (
-            <fieldset>
-              <legend>Applied Filters</legend>
-              <ul className="list-group">
-                { filters.filterByNumericValues.map((filter) => (
-                  <li
-                    key={ filter.column }
-                    data-testid="filter"
-                    className="list-group-item"
-                  >
+      {
+        filters.filterByNumericValues.length !== defaultValue && (
+          <fieldset>
+            <legend>Applied Filters</legend>
+            <ul className="list-group">
+              { filters.filterByNumericValues.map((filter) => (
+                <li
+                  key={ filter.column }
+                  data-testid="filter"
+                  className="list-group-item"
+                >
+                  <div>
                     <span className="li-span">{ filter.column }</span>
                     <span className="li-span">{ filter.comparison }</span>
                     <span className="li-span">{ filter.value }</span>
-                    <span className="li-span">
-                      <button
-                        type="button"
-                        className="btn btn-light"
-                        name={ filter.column }
-                        onClick={ removeFilterHandler }
-                      >
-                        X
-                      </button>
-                    </span>
-                  </li>
-                )) }
-              </ul>
-            </fieldset>
-          )
-        }
+                  </div>
+                  <span className="li-span">
+                    <button
+                      type="button"
+                      className="btn btn-light"
+                      name={ filter.column }
+                      onClick={ removeFilterHandler }
+                    >
+                      X
+                    </button>
+                  </span>
+                </li>
+              )) }
+            </ul>
+          </fieldset>
+        )
+      }
     </div>
   );
 }

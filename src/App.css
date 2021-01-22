@@ -1,3 +1,7 @@
+body {
+  background-color: rgba(228, 228, 228, 0.822);
+}
+
 label, .li-span, .btn {
   margin-left: 15px;
 }
@@ -11,5 +15,8 @@ label, .li-span, .btn {
 }
 
 .list-group-item {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
   margin-left: 15px;
 }
