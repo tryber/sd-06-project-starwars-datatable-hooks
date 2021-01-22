@@ -63,10 +63,10 @@ export default function Table() {
           <th>Rotation Period</th>
           <th>Surface Water</th>
           <th>Terrain</th>
+          <th>Films</th>
           <th>URL</th>
           <th>Created</th>
           <th>Edited</th>
-          <th>Films</th>
         </tr>
       </thead>
       <tbody>
@@ -83,9 +83,6 @@ export default function Table() {
               <td>{ planet.rotation_period }</td>
               <td>{ planet.surface_water }</td>
               <td>{ planet.terrain }</td>
-              <td>{ planet.url }</td>
-              <td>{ planet.created }</td>
-              <td>{ planet.edited }</td>
               <td>
                 { planet.films.map((film) => (
                   <a
@@ -96,6 +93,9 @@ export default function Table() {
                   </a>
                 )) }
               </td>
+              <td>{ planet.url }</td>
+              <td>{ planet.created }</td>
+              <td>{ planet.edited }</td>
             </tr>
           )) }
       </tbody>
